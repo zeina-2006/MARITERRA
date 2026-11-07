@@ -1,0 +1,2405 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore underwater glider engineering, buoyancy-driven propulsion, hydrodynamic lift, navigation, oceanographic sensors, mission operations, and long-duration marine observation.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Underwater Gliders</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.12), transparent 30%),
+                radial-gradient(circle at 5% 40%, rgba(37, 99, 235, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--white);
+        }
+
+        .container {
+            width: min(1150px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 470px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(90deg, rgba(7, 8, 22, 0.98), rgba(7, 8, 22, 0.65)),
+                radial-gradient(ellipse at 80% 50%, rgba(147, 51, 234, 0.25), transparent 55%);
+        }
+
+        .hero-content {
+            padding: 85px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.5rem, 6vw, 4.7rem);
+            line-height: 1.12;
+            max-width: 850px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 720px;
+            font-size: 1.05rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.08);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            color: var(--purple-light);
+        }
+
+        /* GENERAL SECTIONS */
+
+        section {
+            padding: 85px 0;
+            scroll-margin-top: 85px;
+        }
+
+        .section-heading {
+            margin-bottom: 40px;
+        }
+
+        .section-heading .eyebrow {
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            max-width: 800px;
+            color: var(--text-muted);
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 22px;
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            border-color: rgba(192, 132, 252, 0.45);
+            transform: translateY(-3px);
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.25rem;
+            margin-bottom: 14px;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 22px;
+            color: var(--text-muted);
+        }
+
+        .content-card li {
+            margin-bottom: 9px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .number {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--purple-light);
+            font-weight: bold;
+        }
+
+        .note {
+            border-left: 3px solid var(--purple);
+            padding: 18px 22px;
+            margin: 25px 0;
+            background: rgba(147, 51, 234, 0.08);
+            border-radius: 0 10px 10px 0;
+            color: var(--text-muted);
+        }
+
+        .note strong {
+            color: var(--white);
+        }
+
+        /* COMPARISON */
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            padding: 17px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        th {
+            background: rgba(147, 51, 234, 0.12);
+            color: var(--purple-light);
+        }
+
+        td:first-child {
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* OPERATION FLOW */
+
+        .operation-flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .flow-step {
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            padding: 20px 14px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .flow-step span {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .flow-step h4 {
+            color: var(--white);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .flow-step p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            background: linear-gradient(180deg, rgba(147, 51, 234, 0.06), transparent);
+        }
+
+        .quiz-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .quiz-progress {
+            height: 7px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0 30px;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple-light));
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question h3 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            margin-right: 8px;
+        }
+
+        .option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid rgba(192, 132, 252, 0.12);
+            border-radius: 9px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 12px;
+            padding: 13px 16px;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 13px 23px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(120deg, var(--purple-dark), var(--purple));
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #quizResult {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        #quizResult h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+        }
+
+        #quizResult p {
+            color: var(--text-muted);
+        }
+
+        /* REFERENCES */
+
+        .reference-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .reference-item {
+            padding: 17px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .reference-item a {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .reference-item p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 35px 0;
+            text-align: center;
+            background: rgba(7, 8, 22, 0.8);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .operation-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-content {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .grid-2,
+            .grid-3,
+            .operation-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 21px;
+            }
+
+            .hero {
+                min-height: 420px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 0.78rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#engineering">Engineering</a></li>
+                <li><a href="#navigation">Navigation</a></li>
+                <li><a href="#applications">Applications</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#assessment">Assessment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+
+    <header class="hero">
+        <div class="container hero-content">
+            <div class="eyebrow">Marine Robotics / Topic 04</div>
+
+            <h1>
+                Underwater <span>Gliders</span>
+            </h1>
+
+            <p>
+                Explore the engineering principles behind buoyancy-driven
+                underwater vehicles, hydrodynamic lift, energy-efficient
+                movement, autonomous navigation, and long-duration ocean
+                observation.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">AUTONOMOUS MARINE SYSTEMS</span>
+                <span class="meta-item">BUOYANCY-DRIVEN PROPULSION</span>
+                <span class="meta-item">OCEAN OBSERVATION</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- OVERVIEW -->
+
+        <section id="overview">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">01 / Foundations</div>
+                    <h2>Understanding Underwater Gliders</h2>
+                    <p>
+                        An underwater glider is an autonomous underwater
+                        vehicle that changes its buoyancy to move vertically
+                        and uses hydrodynamic wings to convert that motion
+                        into forward travel.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What Is an Underwater Glider?</h3>
+
+                    <p>
+                        An underwater glider is a specialized uncrewed
+                        underwater platform designed for long-duration
+                        oceanographic observation. Unlike conventional
+                        propeller-driven vehicles, many gliders move through
+                        the water by repeatedly changing their buoyancy.
+                    </p>
+
+                    <p>
+                        When the vehicle becomes slightly negatively buoyant,
+                        it descends. When it becomes positively buoyant,
+                        it ascends. Its wings generate hydrodynamic lift
+                        during these vertical movements, producing a
+                        horizontal component of motion.
+                    </p>
+
+                    <p>
+                        This process allows the vehicle to travel through
+                        the water column using relatively little energy.
+                        Gliders are therefore particularly useful for
+                        collecting repeated measurements over extended
+                        periods.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="content-card">
+                        <span class="number">CORE PRINCIPLE 01</span>
+                        <h3>Buoyancy Control</h3>
+                        <p>
+                            The vehicle changes its effective volume and
+                            buoyancy using an internal buoyancy engine.
+                            This creates controlled sinking and rising
+                            movements.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">CORE PRINCIPLE 02</span>
+                        <h3>Hydrodynamic Lift</h3>
+                        <p>
+                            Wings interact with the surrounding water.
+                            As the glider moves vertically, these surfaces
+                            generate lift and help convert vertical movement
+                            into forward displacement.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">CORE PRINCIPLE 03</span>
+                        <h3>Low-Energy Operation</h3>
+                        <p>
+                            Many underwater gliders do not use a conventional
+                            propulsion motor during normal travel. Their
+                            buoyancy engine and control systems consume
+                            energy while the wings provide hydrodynamic lift.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">CORE PRINCIPLE 04</span>
+                        <h3>Long-Duration Observation</h3>
+                        <p>
+                            Their energy-efficient movement allows some
+                            platforms to operate for weeks or months,
+                            depending on the vehicle, battery configuration,
+                            sensors, communication schedule, and mission.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>Important engineering distinction:</strong>
+                    Underwater gliders are generally considered a specialized
+                    type of AUV. The difference is mainly their propulsion
+                    approach and mission profile, not the absence of
+                    autonomy.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- COMPARISON -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">02 / Platform Comparison</div>
+                    <h2>Underwater Glider vs. AUV vs. ROV</h2>
+                    <p>
+                        These platforms may share sensors and mission
+                        objectives, but their propulsion and operating
+                        architectures are different.
+                    </p>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Underwater Glider</th>
+                                <th>Conventional AUV</th>
+                                <th>ROV</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Primary Movement</td>
+                                <td>Buoyancy changes and wings</td>
+                                <td>Propellers or thrusters</td>
+                                <td>Propellers or thrusters</td>
+                            </tr>
+
+                            <tr>
+                                <td>Connection</td>
+                                <td>Untethered</td>
+                                <td>Usually untethered</td>
+                                <td>Usually tethered</td>
+                            </tr>
+
+                            <tr>
+                                <td>Control</td>
+                                <td>Autonomous mission with remote supervision</td>
+                                <td>Autonomous mission</td>
+                                <td>Typically operator-controlled</td>
+                            </tr>
+
+                            <tr>
+                                <td>Typical Mission</td>
+                                <td>Long-duration ocean measurements</td>
+                                <td>Survey, mapping, inspection</td>
+                                <td>Inspection and intervention</td>
+                            </tr>
+
+                            <tr>
+                                <td>Movement Speed</td>
+                                <td>Generally slow</td>
+                                <td>Generally faster</td>
+                                <td>Varies by vehicle</td>
+                            </tr>
+
+                            <tr>
+                                <td>Energy Strategy</td>
+                                <td>Efficient buoyancy-driven travel</td>
+                                <td>Battery-powered propulsion</td>
+                                <td>Power supplied through tether or onboard system</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note">
+                    These are general platform characteristics, not universal
+                    specifications. Actual designs and capabilities vary
+                    between manufacturers and mission configurations.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ENGINEERING ARCHITECTURE -->
+
+        <section id="engineering">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">03 / Engineering Architecture</div>
+                    <h2>How an Underwater Glider Is Built</h2>
+                    <p>
+                        A glider combines mechanical structures, buoyancy
+                        systems, control electronics, energy storage,
+                        navigation equipment, and scientific payloads.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Pressure-Resistant Hull</h3>
+
+                    <p>
+                        The hull protects internal electronics, batteries,
+                        sensors, and mechanical components from the external
+                        hydrostatic pressure of the ocean.
+                    </p>
+
+                    <p>
+                        Engineers select hull materials and structural
+                        geometry according to the intended operating depth,
+                        pressure rating, weight limitations, corrosion
+                        resistance, and manufacturing requirements.
+                    </p>
+
+                    <ul>
+                        <li>Provides structural protection for internal components.</li>
+                        <li>Maintains watertight integrity.</li>
+                        <li>Supports external wings and sensor installations.</li>
+                        <li>Must withstand pressure at the vehicle's rated depth.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Buoyancy Engine</h3>
+
+                    <p>
+                        The buoyancy engine is one of the most important
+                        systems in an underwater glider. It changes the
+                        vehicle's displaced volume and therefore its
+                        buoyancy relative to the surrounding seawater.
+                    </p>
+
+                    <p>
+                        Many designs use a hydraulic or electromechanical
+                        pumping arrangement to move oil between an internal
+                        reservoir and an external flexible bladder.
+                    </p>
+
+                    <p>
+                        When the external bladder expands, the vehicle's
+                        displaced volume increases. Its mass may remain
+                        approximately constant, but its average density
+                        decreases, making it more positively buoyant.
+                    </p>
+
+                    <p>
+                        When the bladder contracts, displaced volume
+                        decreases and the vehicle becomes less buoyant.
+                        The exact arrangement varies by glider design.
+                    </p>
+
+                    <ul>
+                        <li>Hydraulic pump or syringe mechanism.</li>
+                        <li>Internal oil reservoir.</li>
+                        <li>External flexible bladder.</li>
+                        <li>Valves and fluid pathways.</li>
+                        <li>Position or pressure feedback for system control.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Wings and Hydrodynamic Surfaces</h3>
+
+                    <p>
+                        Glider wings are designed to generate lift as the
+                        vehicle moves through water. They transform part
+                        of the vertical movement into forward movement.
+                    </p>
+
+                    <p>
+                        The wing geometry, angle of attack, vehicle speed,
+                        and surrounding water conditions influence the
+                        aerodynamic-style hydrodynamic forces acting on
+                        the vehicle.
+                    </p>
+
+                    <p>
+                        Unlike a powered aircraft, the glider does not
+                        obtain energy from an engine to maintain forward
+                        motion. Its buoyancy-driven vertical movement
+                        supplies the motion through which the wings
+                        generate lift.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Internal Mass-Shift Mechanism</h3>
+
+                    <p>
+                        Some gliders move an internal mass, battery pack,
+                        or dedicated ballast mechanism to change the
+                        vehicle's pitch and roll.
+                    </p>
+
+                    <p>
+                        This helps control the direction of travel and
+                        attitude during descent and ascent. Some platforms
+                        also use control surfaces or rudders, depending
+                        on their design.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Battery and Power System</h3>
+
+                    <p>
+                        Batteries supply electrical energy to the buoyancy
+                        engine, onboard computer, sensors, navigation
+                        equipment, and communication systems.
+                    </p>
+
+                    <p>
+                        Battery chemistry and configuration depend on
+                        mission duration, operating depth, power demand,
+                        temperature, safety requirements, and maintenance
+                        strategy.
+                    </p>
+
+                    <ul>
+                        <li>Primary batteries may be selected for specific long-duration missions.</li>
+                        <li>Rechargeable batteries can support repeated deployments.</li>
+                        <li>Power management schedules high-energy operations.</li>
+                        <li>Battery monitoring helps estimate remaining mission endurance.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>6. Onboard Computing and Control Electronics</h3>
+
+                    <p>
+                        The onboard computer executes mission instructions,
+                        processes sensor measurements, monitors vehicle
+                        health, and controls the buoyancy and attitude
+                        mechanisms.
+                    </p>
+
+                    <p>
+                        It can also detect abnormal conditions and execute
+                        pre-programmed safety responses, such as changing
+                        the mission profile or attempting to return to
+                        the surface.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>7. Scientific Payload Integration</h3>
+
+                    <p>
+                        The payload is selected according to the scientific
+                        question or operational objective. A glider may
+                        carry several instruments simultaneously, subject
+                        to available payload space, power, weight, and
+                        hydrodynamic constraints.
+                    </p>
+
+                    <ul>
+                        <li>CTD instruments for conductivity, temperature, and pressure.</li>
+                        <li>Dissolved oxygen sensors.</li>
+                        <li>Chlorophyll fluorescence sensors.</li>
+                        <li>Optical backscatter and turbidity sensors.</li>
+                        <li>Acoustic Doppler Current Profilers (ADCPs), when fitted.</li>
+                        <li>Hydrophones for passive acoustic monitoring.</li>
+                        <li>Nutrient and other specialized chemical sensors.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MOVEMENT -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">04 / Movement Mechanics</div>
+                    <h2>The Sawtooth Gliding Pattern</h2>
+                    <p>
+                        Repeated buoyancy adjustments create alternating
+                        descents and ascents through the water column.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="content-card">
+                        <span class="number">PHASE A</span>
+                        <h3>Descending Phase</h3>
+
+                        <p>
+                            The buoyancy system reduces the vehicle's
+                            effective displaced volume. The glider becomes
+                            negatively buoyant and begins descending.
+                        </p>
+
+                        <p>
+                            Its wings generate lift during this movement,
+                            allowing it to travel forward along a sloping
+                            path rather than simply falling vertically.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">PHASE B</span>
+                        <h3>Ascending Phase</h3>
+
+                        <p>
+                            The buoyancy system increases the vehicle's
+                            displaced volume. The glider becomes positively
+                            buoyant and rises toward the surface.
+                        </p>
+
+                        <p>
+                            Its wings again generate lift, allowing forward
+                            movement during the ascent.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Why Is the Pattern Called Sawtooth?</h3>
+
+                    <p>
+                        When depth is plotted against horizontal distance,
+                        the repeated descending and ascending paths create
+                        a zigzag pattern that resembles the teeth of a saw.
+                    </p>
+
+                    <p>
+                        The glider can repeat this cycle many times while
+                        collecting measurements at different depths.
+                        Mission parameters determine the depth range,
+                        pitch, horizontal route, and sampling frequency.
+                    </p>
+                </div>
+
+                <div class="note">
+                    <strong>Engineering insight:</strong>
+                    The glider's forward movement is not produced by
+                    buoyancy alone. Buoyancy creates vertical motion;
+                    hydrodynamic lift from the wings creates the
+                    horizontal component of travel.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- NAVIGATION -->
+
+        <section id="navigation">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">05 / Navigation and Communication</div>
+                    <h2>Navigation, Positioning and Data Exchange</h2>
+                    <p>
+                        Operating underwater creates navigation and
+                        communication constraints that must be considered
+                        when designing a glider mission.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. GPS and Surface Positioning</h3>
+
+                    <p>
+                        GPS signals do not normally penetrate seawater
+                        sufficiently for a submerged glider to receive
+                        a satellite position fix.
+                    </p>
+
+                    <p>
+                        When the vehicle reaches the surface, its GPS
+                        receiver can obtain a position estimate. This
+                        surface fix helps the operator assess the vehicle's
+                        location and correct its navigation plan.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Dead Reckoning and Navigation Estimation</h3>
+
+                    <p>
+                        Between surface position fixes, the vehicle
+                        estimates its movement using its previous position,
+                        heading information, estimated speed, and elapsed
+                        time.
+                    </p>
+
+                    <p>
+                        This approach is known as dead reckoning. Errors
+                        can accumulate over time because of sensor
+                        uncertainty, water currents, and imperfect
+                        estimates of vehicle motion.
+                    </p>
+
+                    <p>
+                        Some gliders use additional navigation sensors
+                        and estimation methods to improve their position
+                        and orientation estimates.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Inertial Measurement Units</h3>
+
+                    <p>
+                        An Inertial Measurement Unit (IMU) typically
+                        contains accelerometers and gyroscopes. It
+                        measures vehicle acceleration and angular
+                        motion, helping the control system estimate
+                        attitude and movement.
+                    </p>
+
+                    <p>
+                        Inertial measurements are useful underwater,
+                        but small sensor errors can accumulate when
+                        integrated over time. They should not be treated
+                        as a perfect position source.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Pressure and Depth Sensors</h3>
+
+                    <p>
+                        Pressure sensors measure surrounding water
+                        pressure. With appropriate calibration and
+                        seawater assumptions, pressure measurements
+                        can be used to estimate depth.
+                    </p>
+
+                    <p>
+                        Depth information helps the vehicle follow
+                        mission limits, control its vertical trajectory,
+                        and avoid exceeding its rated operating depth.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Satellite Communication at the Surface</h3>
+
+                    <p>
+                        Many gliders periodically surface to transmit
+                        selected information and receive updated
+                        instructions using satellite communication.
+                    </p>
+
+                    <p>
+                        Depending on the communication system and
+                        mission configuration, transmitted information
+                        may include position, engineering status,
+                        selected scientific measurements, and mission
+                        updates.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>6. Underwater Communication Limitations</h3>
+
+                    <p>
+                        Radio-frequency satellite communication is
+                        generally unavailable while the vehicle is
+                        submerged. Underwater acoustic communication
+                        may be possible when suitable equipment is
+                        installed, but it has limited bandwidth,
+                        latency, and environmental constraints.
+                    </p>
+
+                    <p>
+                        Consequently, many glider missions rely on
+                        onboard mission logic and stored data between
+                        surface communication sessions.
+                    </p>
+                </div>
+
+                <div class="note">
+                    <strong>Key distinction:</strong>
+                    Surfacing is not merely a recovery step. It can be
+                    an important part of the glider's navigation,
+                    communication, and mission-management strategy.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SENSORS -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">06 / Scientific Instrumentation</div>
+                    <h2>Oceanographic Sensors and Measurements</h2>
+                    <p>
+                        Gliders collect measurements that help researchers
+                        understand physical, chemical, and biological
+                        processes in the ocean.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+
+                    <div class="content-card">
+                        <h3>CTD Sensors</h3>
+                        <p>
+                            Measure conductivity, temperature, and
+                            pressure. These measurements are used to
+                            estimate salinity and characterize water
+                            masses.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Dissolved Oxygen</h3>
+                        <p>
+                            Measures oxygen concentration in seawater.
+                            This helps investigate water quality,
+                            biological activity, and oxygen-depleted
+                            regions.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Chlorophyll Fluorometer</h3>
+                        <p>
+                            Detects fluorescence associated with
+                            chlorophyll, helping researchers study
+                            phytoplankton distribution.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Optical Backscatter</h3>
+                        <p>
+                            Measures light scattered by particles
+                            in the water and can support estimates
+                            of suspended particle concentration.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Acoustic Instruments</h3>
+                        <p>
+                            Hydrophones and other acoustic instruments
+                            can be used to monitor underwater sounds
+                            and marine life activity.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Current Profilers</h3>
+                        <p>
+                            Some platforms carry current-measuring
+                            instruments, including ADCP systems,
+                            to investigate water movement.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="content-card">
+                    <h3>From Raw Measurements to Ocean Knowledge</h3>
+
+                    <p>
+                        Sensor measurements are not automatically
+                        scientific conclusions. Data processing may
+                        require calibration, quality control, time
+                        synchronization, depth correction, sensor
+                        validation, and comparison with independent
+                        observations.
+                    </p>
+
+                    <p>
+                        For example, conductivity and temperature
+                        measurements combined with pressure help
+                        scientists estimate salinity and identify
+                        different water masses.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MISSION OPERATIONS -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">07 / Mission Operations</div>
+                    <h2>How a Glider Mission Works</h2>
+                    <p>
+                        A successful mission requires preparation,
+                        deployment, remote supervision, data management,
+                        and post-mission maintenance.
+                    </p>
+                </div>
+
+                <div class="operation-flow">
+
+                    <div class="flow-step">
+                        <span>01</span>
+                        <h4>Mission Planning</h4>
+                        <p>Define route, depth limits, sensors, and objectives.</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>02</span>
+                        <h4>Preparation</h4>
+                        <p>Check batteries, buoyancy, calibration, and safety.</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>03</span>
+                        <h4>Deployment</h4>
+                        <p>Launch the vehicle and verify initial operation.</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>04</span>
+                        <h4>Monitoring</h4>
+                        <p>Review position, health, and transmitted data.</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>05</span>
+                        <h4>Recovery</h4>
+                        <p>Retrieve the vehicle, download data, and inspect systems.</p>
+                    </div>
+
+                </div>
+
+                <div class="content-card" style="margin-top:25px;">
+                    <h3>Mission Planning Considerations</h3>
+
+                    <ul>
+                        <li>Scientific objectives and required measurements.</li>
+                        <li>Operating depth and pressure rating.</li>
+                        <li>Ocean currents and expected drift.</li>
+                        <li>Bathymetry, seabed clearance, and coastal hazards.</li>
+                        <li>Battery capacity and expected energy consumption.</li>
+                        <li>Communication schedule and satellite coverage.</li>
+                        <li>Weather, sea state, shipping traffic, and recovery arrangements.</li>
+                        <li>Emergency behavior and loss-of-communication procedures.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Remote Piloting and Human Supervision</h3>
+
+                    <p>
+                        Although gliders are autonomous vehicles,
+                        their missions are often supervised by
+                        human operators or scientific teams.
+                    </p>
+
+                    <p>
+                        Operators review vehicle health, transmitted
+                        measurements, navigation estimates, and
+                        environmental conditions. They may update
+                        waypoints, depth limits, or mission parameters
+                        when necessary.
+                    </p>
+
+                    <p>
+                        Autonomy reduces the need for continuous
+                        direct control, but it does not remove the
+                        need for mission planning, risk management,
+                        and operational oversight.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- APPLICATIONS -->
+
+        <section id="applications">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">08 / Practical Applications</div>
+                    <h2>Where Underwater Gliders Are Used</h2>
+                    <p>
+                        Their long endurance and ability to repeatedly
+                        sample different depths make gliders valuable
+                        for ocean observation and environmental research.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Oceanographic Research</h3>
+                        <p>
+                            Gliders collect temperature, salinity,
+                            pressure, and current-related measurements
+                            to study ocean circulation and water-mass
+                            structure.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Climate Research</h3>
+                        <p>
+                            Repeated observations help researchers
+                            investigate ocean heat content, changing
+                            water properties, and processes relevant
+                            to climate variability.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Hurricane Monitoring</h3>
+                        <p>
+                            Gliders can collect subsurface temperature
+                            and salinity information in regions affected
+                            by tropical storms, supporting research
+                            into ocean conditions associated with
+                            storm intensity.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Marine Ecosystem Monitoring</h3>
+                        <p>
+                            Optical, chemical, and acoustic sensors
+                            can help scientists investigate plankton,
+                            oxygen conditions, suspended particles,
+                            and marine animal activity.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Coastal Observation</h3>
+                        <p>
+                            Gliders can monitor coastal water properties
+                            and help researchers study interactions
+                            between currents, temperature, salinity,
+                            and environmental conditions.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Operational Ocean Forecasting</h3>
+                        <p>
+                            Quality-controlled glider observations
+                            may be incorporated into ocean models
+                            and forecasting systems to improve
+                            understanding of subsurface conditions.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REAL WORLD EXAMPLES -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">09 / Real-World Systems</div>
+                    <h2>Examples of Operational Glider Platforms</h2>
+                    <p>
+                        Existing scientific programs demonstrate how
+                        different glider designs support long-duration
+                        ocean observation.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">CASE STUDY 01</span>
+                    <h3>Slocum Gliders — NOAA and Teledyne Webb Research</h3>
+
+                    <p>
+                        Slocum gliders are buoyancy-driven underwater
+                        platforms used for oceanographic measurements.
+                        They can be configured with different scientific
+                        instruments and depth capabilities according
+                        to the mission.
+                    </p>
+
+                    <p>
+                        NOAA's Uncrewed Systems Operations Center
+                        announced the acquisition of a Slocum glider
+                        named Kelpie in 2024. NOAA described it as
+                        capable of scientific missions to 1,000 meters.
+                    </p>
+
+                    <p>
+                        This example illustrates how gliders can
+                        contribute to sustained environmental
+                        observations without requiring a research
+                        vessel to remain continuously alongside them.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">CASE STUDY 02</span>
+                    <h3>Spray Gliders — Woods Hole Oceanographic Institution</h3>
+
+                    <p>
+                        Spray gliders are autonomous underwater
+                        vehicles used to measure ocean temperature,
+                        current velocity, and other properties
+                        at different depths.
+                    </p>
+
+                    <p>
+                        They follow programmed routes and periodically
+                        surface to transmit collected information
+                        and receive updated instructions.
+                    </p>
+
+                    <p>
+                        Their long deployment periods make them
+                        suitable for observing ocean circulation
+                        and changes that occur over weeks or months.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">CASE STUDY 03</span>
+                    <h3>Ocean Observatories Initiative Gliders</h3>
+
+                    <p>
+                        The Ocean Observatories Initiative uses
+                        gliders as mobile observing platforms.
+                        They supplement measurements collected
+                        by fixed ocean observing infrastructure.
+                    </p>
+
+                    <p>
+                        Their missions demonstrate how autonomous
+                        mobile platforms can be integrated into
+                        broader ocean monitoring networks.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CHALLENGES -->
+
+        <section id="challenges">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">10 / Technical Challenges</div>
+                    <h2>Engineering and Operational Challenges</h2>
+                    <p>
+                        Energy efficiency does not make underwater
+                        gliders immune to mechanical, environmental,
+                        navigation, or operational risks.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Hydrostatic Pressure</h3>
+                    <p>
+                        Pressure increases with depth. Hulls, seals,
+                        connectors, sensors, and external components
+                        must remain within their design pressure limits.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Buoyancy System Reliability</h3>
+                    <p>
+                        Leakage, pump failure, blocked fluid pathways,
+                        or incorrect buoyancy calibration can affect
+                        the vehicle's ability to control its vertical
+                        movement.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Navigation Drift</h3>
+                    <p>
+                        Position estimates may become less accurate
+                        between surface GPS fixes. Currents, sensor
+                        errors, and dead-reckoning uncertainty can
+                        cause the vehicle to deviate from its intended
+                        route.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Energy Limitations</h3>
+                    <p>
+                        Although gliders are energy efficient,
+                        batteries still supply all electrical systems.
+                        Excessive communication, sensor operation,
+                        or repeated buoyancy adjustments can reduce
+                        mission endurance.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Ocean Currents and Environmental Conditions</h3>
+                    <p>
+                        Strong currents can move a glider away from
+                        its intended route. Waves, turbulence,
+                        temperature changes, and coastal conditions
+                        may complicate navigation and recovery.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>6. Communication Interruptions</h3>
+                    <p>
+                        Satellite communication is generally available
+                        only when the glider is at the surface.
+                        A failed surfacing event or communication
+                        malfunction may delay data transfer and
+                        remote intervention.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>7. Sensor Accuracy and Calibration</h3>
+                    <p>
+                        Sensor drift, biofouling, contamination,
+                        calibration errors, and data synchronization
+                        problems can reduce scientific data quality.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>8. Recovery and Physical Damage</h3>
+                    <p>
+                        Recovery may be affected by poor weather,
+                        vessel availability, shipping traffic,
+                        inaccurate position estimates, or vehicle
+                        damage.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FUTURE -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">11 / Future Developments</div>
+                    <h2>The Future of Underwater Glider Technology</h2>
+                    <p>
+                        Research is improving the endurance, sensing,
+                        navigation, autonomy, and scientific value
+                        of underwater glider platforms.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Advanced Autonomous Navigation</h3>
+                        <p>
+                            Improved navigation estimation and
+                            mission-planning algorithms can help
+                            gliders respond to changing currents,
+                            environmental conditions, and mission
+                            constraints.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>AI-Assisted Data Analysis</h3>
+                        <p>
+                            Machine learning may help identify
+                            unusual measurements, classify acoustic
+                            signals, detect sensor anomalies, and
+                            prioritize scientific observations.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Improved Energy Systems</h3>
+                        <p>
+                            Better battery technologies and more
+                            efficient electrical components may
+                            extend mission duration and improve
+                            operational reliability.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Advanced Scientific Payloads</h3>
+                        <p>
+                            Smaller and more energy-efficient
+                            sensors can expand the range of
+                            physical, chemical, and biological
+                            measurements collected by gliders.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Coordinated Marine Networks</h3>
+                        <p>
+                            Gliders may work alongside fixed
+                            observatories, research vessels,
+                            surface vehicles, satellites, and
+                            other underwater platforms.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Adaptive Mission Planning</h3>
+                        <p>
+                            Future systems may adjust sampling
+                            locations or mission priorities
+                            in response to detected ocean
+                            features, while remaining subject
+                            to safety constraints and operator
+                            supervision.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- KNOWLEDGE REVIEW -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">12 / Knowledge Review</div>
+                    <h2>Key Engineering Concepts</h2>
+                    <p>
+                        Review the essential principles before
+                        completing the knowledge assessment.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What You Should Understand</h3>
+
+                    <ul>
+                        <li>An underwater glider is a specialized autonomous underwater vehicle.</li>
+                        <li>Its movement is based on buoyancy changes and hydrodynamic lift.</li>
+                        <li>The buoyancy engine changes the vehicle's effective displaced volume.</li>
+                        <li>Wings convert vertical movement into forward travel.</li>
+                        <li>Internal mass shifting can help control pitch and roll.</li>
+                        <li>GPS positioning is normally obtained at the surface.</li>
+                        <li>Dead reckoning estimates movement between position fixes.</li>
+                        <li>Satellite communication is generally performed at the surface.</li>
+                        <li>CTD instruments measure conductivity, temperature, and pressure.</li>
+                        <li>Gliders support long-duration oceanographic observations.</li>
+                        <li>Autonomous operation still requires planning and supervision.</li>
+                        <li>Data quality depends on calibration, validation, and processing.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+
+        <section class="quiz-section" id="assessment">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">13 / Knowledge Assessment</div>
+                    <h2>Underwater Gliders Assessment</h2>
+                    <p>
+                        Test your understanding of glider engineering,
+                        buoyancy, navigation, sensors, operations,
+                        and technical limitations.
+                    </p>
+                </div>
+
+                <div class="quiz-container">
+
+                    <div>
+                        <strong id="progressText">0 of 10 questions answered</strong>
+                        <div class="quiz-progress">
+                            <div class="quiz-progress-bar" id="progressBar"></div>
+                        </div>
+                    </div>
+
+                    <form id="gliderQuiz">
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">01.</span> What is the main propulsion principle used by a conventional underwater glider?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="a">
+                                Continuous propeller rotation.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="b">
+                                Buoyancy changes combined with hydrodynamic lift.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="c">
+                                Surface waves directly pushing the hull.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="d">
+                                A permanently connected towing cable.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. The glider changes its buoyancy to move vertically, while its wings generate lift that creates forward movement.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">02.</span> What happens when a glider increases its displaced volume while its mass remains approximately constant?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="a">
+                                Its average density increases.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="b">
+                                It becomes negatively buoyant.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="c">
+                                It becomes more positively buoyant.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="d">
+                                Its mass automatically doubles.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. Increasing displaced volume while mass remains approximately constant reduces average density and increases positive buoyancy.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="a">
+                            <h3><span class="question-number">03.</span> What is the primary role of the glider's wings?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="a">
+                                Generate hydrodynamic lift during vertical movement.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="b">
+                                Generate GPS satellite signals.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="c">
+                                Store electrical energy.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="d">
+                                Prevent all navigation errors.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: A. The wings generate lift as the vehicle moves through water, converting part of its vertical movement into forward travel.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="d">
+                            <h3><span class="question-number">04.</span> Why does a submerged glider normally need to surface to obtain a GPS position?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="a">
+                                GPS works only in freshwater.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="b">
+                                The glider has no onboard computer.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="c">
+                                GPS requires a propeller to operate.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="d">
+                                Satellite navigation signals do not normally penetrate seawater sufficiently.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: D. GPS signals cannot normally reach a submerged vehicle, so a surface position fix is used.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">05.</span> What does a CTD instrument measure?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="a">
+                                Current, thrust, and direction.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="b">
+                                Conductivity, temperature, and pressure.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="c">
+                                Carbon, turbulence, and depth.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="d">
+                                Communication, telemetry, and data.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. CTD stands for Conductivity, Temperature, and Depth; pressure is commonly measured and used to estimate depth.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">06.</span> What is dead reckoning used for?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="a">
+                                Charging the batteries.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="b">
+                                Measuring dissolved oxygen.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="c">
+                                Estimating movement and position between known position fixes.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="d">
+                                Increasing the vehicle's pressure rating.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. Dead reckoning estimates the current position from a previous position and estimated movement. Errors can accumulate over time.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="a">
+                            <h3><span class="question-number">07.</span> Why are underwater gliders useful for long-duration ocean observation?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="a">
+                                Their buoyancy-driven movement can require relatively little energy.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="b">
+                                They never need electrical energy.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="c">
+                                They can transmit unlimited video underwater.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="d">
+                                They do not experience water currents.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: A. Their energy-efficient movement supports long missions, although batteries are still required for onboard systems and buoyancy control.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="d">
+                            <h3><span class="question-number">08.</span> Which statement about underwater communication is most accurate?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="a">
+                                Satellite internet works normally at every underwater depth.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="b">
+                                GPS signals provide continuous submerged communication.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="c">
+                                Underwater radio always provides high-bandwidth communication.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="d">
+                                Gliders commonly store data underwater and communicate through satellite systems after surfacing.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: D. Many gliders store measurements onboard and transmit selected data and receive commands during surface communication sessions.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">09.</span> What is one major navigation challenge for underwater gliders?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="a">
+                                GPS signals are too strong underwater.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="b">
+                                Position uncertainty can accumulate between surface fixes.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="c">
+                                Water currents have no effect on vehicle movement.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="d">
+                                Pressure sensors cannot measure depth.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. Dead-reckoning errors, currents, and sensor uncertainty can cause position estimates to drift between surface GPS fixes.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">10.</span> Which statement best describes autonomous glider operations?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="a">
+                                Human supervision is never needed.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="b">
+                                The vehicle must remain connected to a research ship.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="c">
+                                The vehicle can execute programmed missions while operators monitor and update it remotely.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="d">
+                                It can operate without sensors or mission planning.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. Autonomy allows the glider to execute mission instructions independently, but human operators still plan, supervise, and manage mission risks.
+                            </div>
+                        </div>
+
+                        <div class="quiz-actions">
+                            <button type="button" class="btn btn-primary" id="submitQuiz">
+                                Submit Assessment
+                            </button>
+
+                            <button type="button" class="btn btn-secondary" id="resetQuiz">
+                                Reset Quiz
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <div id="quizResult" aria-live="polite">
+                        <h3 id="resultTitle">Assessment Result</h3>
+                        <p id="resultScore"></p>
+                        <p id="resultMessage"></p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">14 / Technical References</div>
+                    <h2>Research and Further Reading</h2>
+                    <p>
+                        The following institutional and technical
+                        resources provide additional information
+                        about underwater glider engineering and
+                        oceanographic applications.
+                    </p>
+                </div>
+
+                <div class="reference-list">
+
+                    <div class="reference-item">
+                        <a href="https://oceanservice.noaa.gov/facts/ocean-gliders.html" target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Service — What Is an Ocean Glider?
+                        </a>
+                        <p>
+                            Introduction to buoyancy-driven movement,
+                            wings, and ocean observation applications.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.aoml.noaa.gov/phod/goos/gliders/faq.php" target="_blank" rel="noopener noreferrer">
+                            NOAA AOML — Underwater Glider FAQ
+                        </a>
+                        <p>
+                            Glider operation, scientific measurements,
+                            and satellite data transmission.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.aoml.noaa.gov/proj/hurricane-gliders/" target="_blank" rel="noopener noreferrer">
+                            NOAA AOML — Hurricane Gliders
+                        </a>
+                        <p>
+                            Applications of underwater gliders in
+                            ocean observations supporting hurricane
+                            research.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.whoi.edu/spray-glider/" target="_blank" rel="noopener noreferrer">
+                            Woods Hole Oceanographic Institution — Spray Glider
+                        </a>
+                        <p>
+                            Platform operation and long-duration
+                            oceanographic measurements.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://oceanobservatories.org/marine-technologies/gliders/" target="_blank" rel="noopener noreferrer">
+                            Ocean Observatories Initiative — Gliders
+                        </a>
+                        <p>
+                            Buoyancy-driven systems, sensors,
+                            navigation, and ocean observing networks.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://omao.noaa.gov/uncrewed-systems/news-media/article/growing-noaas-uncrewed-systems-capabilities-new-gliders-and-pilots" target="_blank" rel="noopener noreferrer">
+                            NOAA — Growing Uncrewed Systems Capabilities
+                        </a>
+                        <p>
+                            NOAA's 2024 announcement about its
+                            Slocum glider capabilities and operations.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.teledynemarine.com/" target="_blank" rel="noopener noreferrer">
+                            Teledyne Marine
+                        </a>
+                        <p>
+                            Manufacturer information about marine
+                            robotics and underwater glider platforms.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container">
+            <p>
+                MARITERRA | Marine Technology Education Platform
+            </p>
+
+            <p style="margin-top:8px;">
+                Developed and designed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+
+            <p style="margin-top:8px;">
+                © 2026 MARITERRA. Educational purposes.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const quizForm = document.getElementById("gliderQuiz");
+        const questions = [...document.querySelectorAll(".question")];
+
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+
+        const progressText = document.getElementById("progressText");
+        const progressBar = document.getElementById("progressBar");
+
+        const quizResult = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultScore = document.getElementById("resultScore");
+        const resultMessage = document.getElementById("resultMessage");
+
+        let submitted = false;
+
+        function updateProgress() {
+            const answered = questions.filter(question => {
+                return question.querySelector("input:checked");
+            }).length;
+
+            progressText.textContent =
+                `${answered} of ${questions.length} questions answered`;
+
+            progressBar.style.width =
+                `${(answered / questions.length) * 100}%`;
+        }
+
+        quizForm.addEventListener("change", function () {
+            if (!submitted) {
+                updateProgress();
+            }
+        });
+
+        submitButton.addEventListener("click", function () {
+            if (submitted) return;
+
+            const unanswered = questions.filter(question => {
+                return !question.querySelector("input:checked");
+            });
+
+            if (unanswered.length > 0) {
+                alert(
+                    `Please answer all questions first. Remaining: ${unanswered.length}`
+                );
+
+                unanswered[0].scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            let score = 0;
+
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.answer;
+                const selected = question.querySelector("input:checked");
+
+                const options = question.querySelectorAll(".option");
+                const explanation = question.querySelector(".explanation");
+
+                options.forEach(option => {
+                    const input = option.querySelector("input");
+
+                    input.disabled = true;
+
+                    if (input.value === correctAnswer) {
+                        option.classList.add("correct");
+                    }
+
+                    if (
+                        input.checked &&
+                        input.value !== correctAnswer
+                    ) {
+                        option.classList.add("incorrect");
+                    }
+                });
+
+                if (selected.value === correctAnswer) {
+                    score++;
+                }
+
+                explanation.classList.add("show");
+            });
+
+            submitted = true;
+
+            submitButton.disabled = true;
+
+            const percentage = (score / questions.length) * 100;
+
+            resultTitle.textContent = "Assessment Completed";
+
+            resultScore.textContent =
+                `Your score: ${score} / ${questions.length} (${percentage}%)`;
+
+            if (percentage === 100) {
+                resultMessage.textContent =
+                    "Excellent work. You demonstrated a strong understanding of underwater glider engineering.";
+            } else if (percentage >= 80) {
+                resultMessage.textContent =
+                    "Very good performance. Review the explanations to strengthen your technical understanding.";
+            } else if (percentage >= 60) {
+                resultMessage.textContent =
+                    "Good effort. Revisit the engineering and navigation sections to improve your understanding.";
+            } else {
+                resultMessage.textContent =
+                    "More study is recommended. Review the topic sections and try the assessment again.";
+            }
+
+            quizResult.style.display = "block";
+
+            quizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            submitted = false;
+
+            submitButton.disabled = false;
+
+            questions.forEach(question => {
+                question.querySelectorAll(".option").forEach(option => {
+                    option.classList.remove("correct", "incorrect");
+                });
+
+                question.querySelectorAll("input").forEach(input => {
+                    input.disabled = false;
+                });
+
+                question.querySelector(".explanation").classList.remove("show");
+            });
+
+            quizResult.style.display = "none";
+
+            updateProgress();
+
+            document.getElementById("assessment").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+
+        updateProgress();
+    </script>
+
+</body>
+</html>

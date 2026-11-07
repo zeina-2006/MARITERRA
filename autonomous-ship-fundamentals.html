@@ -1,0 +1,1475 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the fundamentals of Maritime Autonomous Surface Ships, including their definition, operating principles, core technologies, applications, benefits, and challenges.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Autonomous Ship Fundamentals</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101126;
+            --surface-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a8a8c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 8%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.82rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            padding: 100px 0 75px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(147, 51, 234, 0.22);
+            border-radius: 50%;
+            right: -130px;
+            top: 30px;
+            box-shadow: 0 0 80px rgba(147, 51, 234, 0.08);
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            max-width: 850px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 760px;
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.025);
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: var(--purple-light);
+            font-size: 0.78rem;
+        }
+
+        .content-section {
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            margin-bottom: 22px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: var(--purple-light);
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .note {
+            margin: 25px 0;
+            padding: 20px 23px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--surface-light), var(--surface));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(147, 51, 234, 0.65);
+        }
+
+        .card-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .comparison th,
+        .comparison td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison th {
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-size: 0.85rem;
+        }
+
+        .comparison td {
+            color: var(--muted);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.88rem;
+        }
+
+        .steps {
+            display: grid;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: 18px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            margin-bottom: 5px;
+        }
+
+        .step p {
+            margin: 0;
+        }
+
+        .list {
+            padding-left: 22px;
+            color: var(--muted);
+        }
+
+        .list li {
+            margin-bottom: 10px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .quiz-question {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .quiz-question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 11px 13px;
+            margin-top: 9px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 13px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 13px 22px;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .primary-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--purple);
+        }
+
+        #quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--surface-light);
+        }
+
+        #quiz-result h3 {
+            font-size: 1.3rem;
+        }
+
+        #score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--blue);
+            margin: 10px 0;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin-bottom: 14px;
+        }
+
+        footer {
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.78rem;
+            margin: 5px 0;
+        }
+
+        .footer-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .nav {
+                padding: 15px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .hero {
+                padding: 70px 0 55px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                display: block;
+                overflow-x: auto;
+                white-space: normal;
+            }
+
+            .comparison th,
+            .comparison td {
+                min-width: 170px;
+            }
+
+            .content-section {
+                padding: 55px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+        <nav class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="autonomous-ships.html">AUTONOMOUS SHIPS</a>
+            <a href="#content">LESSON</a>
+            <a href="#assessment">ASSESSMENT</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow">AUTONOMOUS SHIPS / TOPIC 01</div>
+
+            <h1>
+                Autonomous Ship
+                <span class="gradient-text">Fundamentals</span>
+            </h1>
+
+            <p>
+                Discover the foundations of maritime autonomous shipping.
+                Understand how intelligent technologies, onboard systems,
+                remote operations, and human supervision are transforming
+                the way ships navigate and operate.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">FOUNDATION LEVEL</span>
+                <span class="meta-item">MARITIME TECHNOLOGY</span>
+                <span class="meta-item">10 QUESTIONS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="content">
+        <div class="container">
+
+            <div class="section-label">01 / Introduction</div>
+            <h2>What Is an Autonomous Ship?</h2>
+
+            <p>
+                An <span class="highlight">autonomous ship</span> is a vessel
+                designed to perform certain operational functions with a
+                varying degree of independence from direct human interaction.
+                Depending on its design and operational concept, it may use
+                automated systems, intelligent software, onboard sensors,
+                remote-control technologies, or combinations of these systems.
+            </p>
+
+            <p>
+                In maritime discussions, the term
+                <span class="highlight">Maritime Autonomous Surface Ship
+                (MASS)</span> is used for a ship that can operate independently
+                of human interaction to varying degrees. The level of
+                independence depends on which functions are automated,
+                remotely controlled, or performed by people onboard.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Important distinction:</strong> Automation and
+                    autonomy are not identical. An automated system follows
+                    predefined instructions or control logic, while an
+                    autonomous system can assess information, select actions,
+                    and perform certain tasks with reduced direct human input.
+                    The actual capabilities depend on the system's design
+                    and approved operating conditions.
+                </p>
+            </div>
+
+            <p>
+                Autonomous shipping does not necessarily mean that a vessel
+                has no crew. Some vessels may retain crew onboard while using
+                advanced decision-support or autonomous functions. Others
+                may be remotely operated from shore-based facilities.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">02 / Core Concepts</div>
+            <h2>Automation, Remote Control, and Autonomy</h2>
+
+            <p>
+                These concepts are related, but they describe different ways
+                of performing and supervising ship operations.
+            </p>
+
+            <div class="grid">
+                <article class="card">
+                    <div class="card-number">CONCEPT 01</div>
+                    <h3>Ship Automation</h3>
+                    <p>
+                        Automated equipment performs specific tasks according
+                        to programmed logic or predefined control rules.
+                        Examples include automatic engine control, alarm
+                        monitoring, and autopilot functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">CONCEPT 02</div>
+                    <h3>Remote Operation</h3>
+                    <p>
+                        A human operator controls or supervises ship functions
+                        from a location outside the vessel, often through a
+                        Remote Operations Centre (ROC) and communication links.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">CONCEPT 03</div>
+                    <h3>Autonomous Operation</h3>
+                    <p>
+                        A system can assess available information and perform
+                        defined operational tasks or select actions without
+                        requiring a human command for every individual step.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">CONCEPT 04</div>
+                    <h3>Human Supervision</h3>
+                    <p>
+                        Human personnel monitor system performance, review
+                        important decisions, intervene when required, and
+                        maintain oversight according to the vessel's
+                        operational arrangements.
+                    </p>
+                </article>
+            </div>
+
+            <div class="note">
+                <p>
+                    A vessel can combine all these approaches. For example,
+                    its engine may be automated, its navigation may be
+                    remotely supervised, and its collision-avoidance system
+                    may perform selected actions autonomously.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">03 / System Architecture</div>
+            <h2>Core Components of an Autonomous Ship</h2>
+
+            <p>
+                An autonomous ship depends on several interconnected
+                technological systems. Each component contributes to the
+                vessel's ability to perceive its surroundings, understand
+                its condition, make decisions, and execute actions.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <div class="card-number">01</div>
+                    <h3>Perception Sensors</h3>
+                    <p>
+                        Sensors collect information about the vessel and its
+                        environment. Examples include radar, cameras, LiDAR,
+                        GNSS receivers, AIS equipment, and weather sensors.
+                        Different sensors provide different types of data
+                        and have different limitations.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">02</div>
+                    <h3>Data Processing Systems</h3>
+                    <p>
+                        Processing systems combine and analyze incoming data.
+                        Sensor fusion can help create a more complete picture
+                        of nearby vessels, obstacles, environmental conditions,
+                        and the ship's own operational state.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">03</div>
+                    <h3>Decision-Making Software</h3>
+                    <p>
+                        Software evaluates available information against
+                        navigation rules, safety constraints, mission
+                        objectives, and operating limits. It may recommend
+                        actions or select actions within its approved scope.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">04</div>
+                    <h3>Navigation and Control Systems</h3>
+                    <p>
+                        These systems support route following, heading
+                        control, speed regulation, steering, and other
+                        vessel-control functions. They translate selected
+                        commands into actions by the ship's equipment.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">05</div>
+                    <h3>Communication Systems</h3>
+                    <p>
+                        Communication links exchange information between
+                        the vessel and shore-based facilities or other
+                        authorized systems. Satellite and radio technologies
+                        may be used, depending on coverage and operational needs.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">06</div>
+                    <h3>Remote Operations Centre</h3>
+                    <p>
+                        A Remote Operations Centre may allow trained
+                        personnel to monitor vessel status, receive alerts,
+                        communicate with the ship, and perform authorized
+                        remote-control functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">07</div>
+                    <h3>Safety and Redundancy Systems</h3>
+                    <p>
+                        Safety systems detect failures and support safe
+                        responses. Redundant equipment, backup power,
+                        fault detection, and emergency procedures can help
+                        maintain or restore essential functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">08</div>
+                    <h3>Cybersecurity Systems</h3>
+                    <p>
+                        Cybersecurity measures protect operational technology,
+                        communication channels, software, and sensitive data
+                        against unauthorized access, manipulation, and
+                        disruption.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">04 / Operating Principles</div>
+            <h2>How Does an Autonomous Ship Work?</h2>
+
+            <p>
+                Although system designs vary, many autonomous functions
+                follow a general cycle: collect data, interpret the situation,
+                select an appropriate action, execute it, and monitor the result.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h3>Data Collection</h3>
+                        <p>
+                            Sensors and navigation equipment collect
+                            information about the ship's position, speed,
+                            heading, surrounding traffic, obstacles, and
+                            environmental conditions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h3>Situation Assessment</h3>
+                        <p>
+                            Processing software analyzes the collected data
+                            and estimates the current operational situation.
+                            It may combine information from multiple sensors
+                            to improve situational awareness.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h3>Decision and Planning</h3>
+                        <p>
+                            The system evaluates possible actions against
+                            the planned route, safety requirements, navigation
+                            rules, and defined operational limits.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h3>Command Execution</h3>
+                        <p>
+                            Authorized control systems may adjust the vessel's
+                            heading, speed, or other functions according to
+                            the selected action and the system's capabilities.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">05</div>
+                    <div>
+                        <h3>Monitoring and Response</h3>
+                        <p>
+                            The system continues monitoring the vessel and
+                            its environment. If a fault or unsafe condition
+                            occurs, it should follow its designed response
+                            procedures and alert human operators when required.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="note">
+                <p>
+                    <strong>Example:</strong> When another vessel is detected,
+                    an autonomous navigation function may estimate its
+                    movement, assess the encounter situation, evaluate
+                    possible actions under applicable collision-prevention
+                    requirements, and carry out an authorized maneuver.
+                    The exact response depends on the vessel's approved
+                    system design and operating mode.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">05 / Comparison</div>
+            <h2>Conventional Ships vs. Autonomous Ships</h2>
+
+            <p>
+                Conventional and autonomous vessels may share many basic
+                maritime systems. The main difference is how operational
+                functions are performed, supervised, and controlled.
+            </p>
+
+            <table class="comparison">
+                <thead>
+                    <tr>
+                        <th>Aspect</th>
+                        <th>Conventional Ship</th>
+                        <th>Autonomous Ship</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Navigation</td>
+                        <td>
+                            Primarily conducted by onboard navigators,
+                            supported by navigation equipment.
+                        </td>
+                        <td>
+                            May use automated or autonomous functions,
+                            with human supervision depending on its mode.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Decision-Making</td>
+                        <td>
+                            Human officers make operational decisions,
+                            supported by onboard systems.
+                        </td>
+                        <td>
+                            Software may recommend or perform selected
+                            decisions within defined limits.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Monitoring</td>
+                        <td>
+                            Mainly performed by the onboard crew and
+                            shipboard monitoring systems.
+                        </td>
+                        <td>
+                            May combine onboard monitoring, automated
+                            alerts, and remote supervision.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Control Location</td>
+                        <td>
+                            Normally controlled from the ship's bridge
+                            and relevant onboard control stations.
+                        </td>
+                        <td>
+                            May be controlled onboard, remotely, or through
+                            autonomous functions.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Human Role</td>
+                        <td>
+                            Crew members directly perform many navigation
+                            and operational tasks.
+                        </td>
+                        <td>
+                            Human involvement varies according to the
+                            vessel's autonomy and operational arrangements.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <p>
+                    Autonomous technology does not automatically make a ship
+                    safer or more efficient in every situation. Performance
+                    depends on system reliability, operating conditions,
+                    maintenance, training, risk controls, and human oversight.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">06 / Applications</div>
+            <h2>Applications of Autonomous Shipping</h2>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Cargo Transportation</h3>
+                    <p>
+                        Autonomous and remotely operated functions can support
+                        cargo-vessel navigation, monitoring, and operational
+                        planning, subject to the vessel's design and approvals.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Port and Coastal Operations</h3>
+                    <p>
+                        Smaller remotely operated or autonomous vessels may
+                        support specific coastal, harbor, and short-distance
+                        transport tasks under suitable operating conditions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Survey and Research Missions</h3>
+                    <p>
+                        Uncrewed surface vessels can collect hydrographic,
+                        oceanographic, and environmental data in areas where
+                        continuous onboard crew presence may be unnecessary.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Offshore Operations</h3>
+                    <p>
+                        Autonomous and remote technologies can support
+                        inspection, monitoring, and selected tasks around
+                        offshore infrastructure.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">07 / Benefits</div>
+            <h2>Potential Benefits of Autonomous Ships</h2>
+
+            <ul class="list">
+                <li>
+                    <strong class="highlight">Improved situational awareness:</strong>
+                    Multiple sensors and data-processing systems can help
+                    operators understand surrounding conditions.
+                </li>
+                <li>
+                    <strong class="highlight">Operational efficiency:</strong>
+                    Intelligent monitoring and planning may improve selected
+                    operational processes.
+                </li>
+                <li>
+                    <strong class="highlight">Reduced exposure to hazardous tasks:</strong>
+                    Remote operation may reduce the need for people to be
+                    physically present in certain dangerous environments.
+                </li>
+                <li>
+                    <strong class="highlight">Consistent monitoring:</strong>
+                    Automated systems can continuously monitor defined
+                    parameters and generate alerts when conditions change.
+                </li>
+                <li>
+                    <strong class="highlight">Potential environmental gains:</strong>
+                    Optimized routes and operating profiles may help reduce
+                    fuel consumption and emissions in suitable cases.
+                </li>
+                <li>
+                    <strong class="highlight">New operational possibilities:</strong>
+                    Remote and autonomous technologies may enable new vessel
+                    designs and specialized maritime services.
+                </li>
+            </ul>
+
+            <div class="note">
+                <p>
+                    These are potential benefits, not guaranteed outcomes.
+                    Their achievement must be demonstrated through testing,
+                    operational evidence, and appropriate safety assessment.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">08 / Challenges</div>
+            <h2>Challenges Facing Autonomous Shipping</h2>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Technical Reliability</h3>
+                    <p>
+                        Sensors, software, control systems, and communication
+                        equipment must operate reliably in demanding marine
+                        environments, including poor visibility and rough seas.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Cybersecurity Threats</h3>
+                    <p>
+                        Connected systems may be exposed to cyberattacks,
+                        unauthorized access, data manipulation, or disruption
+                        of essential vessel functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Communication Limitations</h3>
+                    <p>
+                        Communication links may experience latency, signal
+                        loss, interference, or coverage limitations. Vessels
+                        need safe responses when communication is interrupted.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Legal and Regulatory Issues</h3>
+                    <p>
+                        Responsibilities, certification, watchkeeping,
+                        collision prevention, and remote-operation arrangements
+                        require clear regulatory treatment.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Human Factors</h3>
+                    <p>
+                        Remote operators need suitable training, clear
+                        responsibilities, appropriate interfaces, and the
+                        ability to respond effectively during abnormal events.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Environmental Uncertainty</h3>
+                    <p>
+                        Heavy weather, changing sea states, floating debris,
+                        unexpected traffic, and sensor limitations can make
+                        autonomous decision-making more difficult.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">09 / Regulatory Framework</div>
+            <h2>International Maritime Regulation</h2>
+
+            <p>
+                The International Maritime Organization (IMO) has been
+                developing a regulatory framework for Maritime Autonomous
+                Surface Ships. This work considers how existing maritime
+                conventions and requirements apply to vessels with different
+                levels of autonomy.
+            </p>
+
+            <p>
+                In May 2026, the IMO adopted the non-mandatory
+                <span class="highlight">International Code of Safety for
+                Maritime Autonomous Surface Ships (MASS Code)</span>.
+                It entered into effect on 1 July 2026.
+            </p>
+
+            <p>
+                The Code provides a goal-based safety framework for the
+                design, construction, operation, and certification of
+                relevant autonomous surface ships. It emphasizes risk
+                assessment, defined operating conditions, safety measures,
+                and human oversight.
+            </p>
+
+            <p>
+                The Code also recognizes the importance of describing the
+                modes in which a vessel is designed to operate. These modes
+                may include onboard operation, remote operation, and
+                autonomous functions.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Regulatory caution:</strong> The MASS Code is
+                    non-mandatory in its current form. It should not be
+                    described as a universal replacement for existing
+                    conventions. Applicable requirements and implementation
+                    arrangements must be checked for the vessel, flag State,
+                    voyage, and operating area.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">10 / Future Outlook</div>
+            <h2>The Future of Autonomous Shipping</h2>
+
+            <p>
+                Autonomous shipping is expected to develop gradually as
+                technology, regulation, infrastructure, and operational
+                experience improve. The transition is unlikely to happen
+                in the same way for every vessel type or maritime activity.
+            </p>
+
+            <p>
+                Future developments may include more capable perception
+                systems, improved sensor fusion, artificial intelligence
+                for decision support, more resilient communication,
+                advanced digital twins, and stronger cybersecurity
+                architectures.
+            </p>
+
+            <p>
+                Human expertise will remain important. Even as selected
+                functions become more automated, maritime operations still
+                require effective supervision, accountability, emergency
+                planning, and qualified personnel.
+            </p>
+
+            <div class="note">
+                <p>
+                    The central challenge is not simply to build a ship
+                    that can operate without continuous human commands.
+                    It is to demonstrate that the vessel can perform its
+                    intended functions safely, reliably, securely, and
+                    responsibly within clearly defined operating limits.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section" id="assessment">
+        <div class="container">
+
+            <div class="section-label">Knowledge Assessment</div>
+            <h2>Test Your Understanding</h2>
+
+            <p class="quiz-intro">
+                Answer all 10 questions based on the information covered
+                in this topic. Submit your answers to receive your score
+                and explanations.
+            </p>
+
+            <form id="quiz-form">
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>1. What does the term Maritime Autonomous Surface Ship (MASS) describe?</h3>
+                    <label class="option"><input type="radio" name="q1" value="a"> A ship that must always operate without any human involvement.</label>
+                    <label class="option"><input type="radio" name="q1" value="b"> A ship that can operate independently of human interaction to varying degrees.</label>
+                    <label class="option"><input type="radio" name="q1" value="c"> Any ship equipped with a modern engine.</label>
+                    <label class="option"><input type="radio" name="q1" value="d"> A ship that uses only satellite communication.</label>
+                    <div class="explanation">MASS refers to a ship that can operate independently of human interaction to varying degrees. It does not necessarily mean a completely crewless vessel.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>2. What is the main difference between automation and autonomy?</h3>
+                    <label class="option"><input type="radio" name="q2" value="a"> Automation always requires satellite communication.</label>
+                    <label class="option"><input type="radio" name="q2" value="b"> Autonomy means that a ship has no navigation equipment.</label>
+                    <label class="option"><input type="radio" name="q2" value="c"> Automation follows programmed logic, while autonomy can assess information and select actions within its defined capabilities.</label>
+                    <label class="option"><input type="radio" name="q2" value="d"> There is no difference between the two concepts.</label>
+                    <div class="explanation">Automation commonly executes predefined rules or control logic. Autonomous functions can assess a situation and select actions within their approved scope.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>3. Which component collects information about nearby vessels and environmental conditions?</h3>
+                    <label class="option"><input type="radio" name="q3" value="a"> Perception sensors</label>
+                    <label class="option"><input type="radio" name="q3" value="b"> Crew accommodation systems</label>
+                    <label class="option"><input type="radio" name="q3" value="c"> Cargo documentation systems</label>
+                    <label class="option"><input type="radio" name="q3" value="d"> Interior lighting systems</label>
+                    <div class="explanation">Perception sensors such as radar, cameras, and other sensing equipment collect information about the vessel's surroundings.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>4. What is the main role of a Remote Operations Centre (ROC)?</h3>
+                    <label class="option"><input type="radio" name="q4" value="a"> To manufacture ship engines.</label>
+                    <label class="option"><input type="radio" name="q4" value="b"> To replace all international maritime regulations.</label>
+                    <label class="option"><input type="radio" name="q4" value="c"> To store cargo during a voyage.</label>
+                    <label class="option"><input type="radio" name="q4" value="d"> To allow trained personnel to monitor or control authorized vessel functions remotely.</label>
+                    <div class="explanation">A ROC can support remote monitoring, communication, supervision, and authorized control of vessel functions.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>5. Which sequence best represents a general autonomous operating cycle?</h3>
+                    <label class="option"><input type="radio" name="q5" value="a"> Execute action, ignore data, stop monitoring.</label>
+                    <label class="option"><input type="radio" name="q5" value="b"> Collect data, assess the situation, make a decision, execute, and monitor.</label>
+                    <label class="option"><input type="radio" name="q5" value="c"> Communicate, load cargo, switch off sensors.</label>
+                    <label class="option"><input type="radio" name="q5" value="d"> Stop the vessel, disconnect systems, and wait.</label>
+                    <div class="explanation">Autonomous functions generally use a cycle of data collection, assessment, decision-making, execution, and continuous monitoring.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>6. Which of the following is a potential benefit of autonomous shipping?</h3>
+                    <label class="option"><input type="radio" name="q6" value="a"> Eliminating every possible maritime accident.</label>
+                    <label class="option"><input type="radio" name="q6" value="b"> Making cybersecurity unnecessary.</label>
+                    <label class="option"><input type="radio" name="q6" value="c"> Reducing human exposure to certain hazardous tasks.</label>
+                    <label class="option"><input type="radio" name="q6" value="d"> Removing the need for maintenance.</label>
+                    <div class="explanation">Remote and autonomous technologies may reduce the need for people to be physically present in some hazardous environments. They do not eliminate all risks.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>7. Why is cybersecurity important for autonomous ships?</h3>
+                    <label class="option"><input type="radio" name="q7" value="a"> Because connected operational systems may be exposed to unauthorized access or disruption.</label>
+                    <label class="option"><input type="radio" name="q7" value="b"> Because it increases the ship's physical size.</label>
+                    <label class="option"><input type="radio" name="q7" value="c"> Because it replaces navigation sensors.</label>
+                    <label class="option"><input type="radio" name="q7" value="d"> Because it removes the need for communication.</label>
+                    <div class="explanation">Autonomous vessels rely on connected digital and operational systems, making protection against cyber threats essential.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>8. What should an autonomous vessel be prepared to do if communication with shore is lost?</h3>
+                    <label class="option"><input type="radio" name="q8" value="a"> Continue every operation without restrictions.</label>
+                    <label class="option"><input type="radio" name="q8" value="b"> Ignore all alarms.</label>
+                    <label class="option"><input type="radio" name="q8" value="c"> Disable all safety systems.</label>
+                    <label class="option"><input type="radio" name="q8" value="d"> Follow predefined safe-response procedures appropriate to its design and operating mode.</label>
+                    <div class="explanation">Communication loss must be addressed through planned failure-response procedures, which may include safe-state actions and onboard or remote contingency arrangements.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>9. What is the status of the IMO MASS Code adopted in May 2026?</h3>
+                    <label class="option"><input type="radio" name="q9" value="a"> It replaced all existing maritime conventions.</label>
+                    <label class="option"><input type="radio" name="q9" value="b"> It is a non-mandatory safety code that entered into effect on 1 July 2026.</label>
+                    <label class="option"><input type="radio" name="q9" value="c"> It applies only to underwater robots.</label>
+                    <label class="option"><input type="radio" name="q9" value="d"> It permanently prohibits remotely operated ships.</label>
+                    <div class="explanation">The IMO adopted the non-mandatory MASS Code in May 2026, and it entered into effect on 1 July 2026. It does not replace all existing conventions.</div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>10. Which statement best describes the future of autonomous shipping?</h3>
+                    <label class="option"><input type="radio" name="q10" value="a"> All ships will immediately become fully autonomous.</label>
+                    <label class="option"><input type="radio" name="q10" value="b"> Human expertise will no longer be relevant.</label>
+                    <label class="option"><input type="radio" name="q10" value="c"> Development is expected to be gradual and will depend on technology, regulation, safety, and operational experience.</label>
+                    <label class="option"><input type="radio" name="q10" value="d"> Autonomous systems will remove every operational risk.</label>
+                    <div class="explanation">Autonomous shipping is expected to develop gradually. Technology, regulation, infrastructure, safety, and human oversight all influence its adoption.</div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button type="button" class="primary-btn" onclick="submitQuiz()">Submit Answers</button>
+                    <button type="button" class="secondary-btn" onclick="resetQuiz()">Reset Quiz</button>
+                </div>
+
+            </form>
+
+            <div id="quiz-result" aria-live="polite">
+                <h3>Assessment Result</h3>
+                <div id="score"></div>
+                <p id="result-message"></p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container references">
+
+            <div class="section-label">Further Reading</div>
+            <h2>Technical References</h2>
+
+            <p>
+                The following sources provide authoritative information
+                and further technical reading about autonomous shipping.
+            </p>
+
+            <ul class="list">
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/hottopics/pages/autonomous-shipping.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization (IMO) — Autonomous Shipping
+                    </a>
+                    <p>
+                        Definitions, regulatory developments, and information
+                        about the MASS Code.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.dnv.com/maritime/autonomous-remotely-operated-ships/" target="_blank" rel="noopener">
+                        DNV — Autonomous and Remotely Operated Ships
+                    </a>
+                    <p>
+                        Industry perspectives on autonomous operations,
+                        remote control, and decision-support systems.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/massrse2021.aspx" target="_blank" rel="noopener">
+                        IMO — Autonomous Ships: Regulatory Scoping Exercise
+                    </a>
+                    <p>
+                        Background on the regulatory assessment of
+                        Maritime Autonomous Surface Ships.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.dnv.com/maritime/autonomous-remotely-operated-ships/autoremote-systems/" target="_blank" rel="noopener">
+                        DNV — Autoremote Systems
+                    </a>
+                    <p>
+                        An overview of systems supporting autonomous
+                        and remotely operated vessels.
+                    </p>
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p class="footer-brand">MARITERRA</p>
+        <p>Maritime Knowledge. Engineering Innovation. Future Navigation.</p>
+        <p>DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED</p>
+    </div>
+</footer>
+
+<script>
+    function submitQuiz() {
+        const questions = document.querySelectorAll(".quiz-question");
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector("input:checked");
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach((option) => {
+                option.classList.remove("correct", "incorrect");
+            });
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === correctAnswer) {
+                score++;
+            }
+
+            options.forEach((option) => {
+                const input = option.querySelector("input");
+
+                if (input.value === correctAnswer) {
+                    option.classList.add("correct");
+                } else if (selected && input.checked) {
+                    option.classList.add("incorrect");
+                }
+            });
+
+            explanation.style.display = "block";
+        });
+
+        const result = document.getElementById("quiz-result");
+        const scoreDisplay = document.getElementById("score");
+        const message = document.getElementById("result-message");
+
+        scoreDisplay.textContent = `${score} / ${questions.length}`;
+
+        if (unanswered > 0) {
+            message.textContent =
+                `You left ${unanswered} question(s) unanswered. Unanswered questions receive zero points. Review the highlighted answers and explanations.`;
+        } else if (score === 10) {
+            message.textContent =
+                "Excellent work! You have demonstrated a strong understanding of Autonomous Ship Fundamentals.";
+        } else if (score >= 7) {
+            message.textContent =
+                "Good performance! Review the explanations to strengthen your understanding.";
+        } else if (score >= 5) {
+            message.textContent =
+                "You have a basic understanding of the topic. Revisit the lesson and try again.";
+        } else {
+            message.textContent =
+                "More revision is recommended. Review the lesson carefully before retaking the assessment.";
+        }
+
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetQuiz() {
+        const form = document.getElementById("quiz-form");
+        form.reset();
+
+        document.querySelectorAll(".option").forEach((option) => {
+            option.classList.remove("correct", "incorrect");
+        });
+
+        document.querySelectorAll(".explanation").forEach((item) => {
+            item.style.display = "none";
+        });
+
+        document.getElementById("quiz-result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

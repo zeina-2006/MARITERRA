@@ -1,0 +1,1707 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Integrated Navigation Systems, their architecture, sensors, data exchange, bridge integration, operational benefits, safety, and limitations.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Integrated Navigation Systems</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --panel: #101126;
+            --panel-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a5a5c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 5% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.91);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.88rem;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            min-height: 410px;
+            padding: 100px 8% 85px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(110deg, rgba(7, 8, 22, 0.98), rgba(22, 13, 48, 0.83)),
+                radial-gradient(circle at 80% 45%, rgba(147, 51, 234, 0.3), transparent 38%);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: 7%;
+            top: 5%;
+            border: 1px solid rgba(196, 181, 253, 0.12);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 35px rgba(147, 51, 234, 0.035),
+                0 0 0 75px rgba(56, 189, 248, 0.025);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta-tag {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            color: var(--purple-light);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.76rem;
+        }
+
+        .page-layout {
+            width: min(1250px, 88%);
+            margin: 55px auto 90px;
+            display: grid;
+            grid-template-columns: 245px 1fr;
+            gap: 38px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 95px;
+            padding: 24px 19px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: rgba(16, 17, 38, 0.8);
+        }
+
+        .sidebar h3 {
+            font-size: 0.78rem;
+            color: var(--purple-light);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 10px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(147, 51, 234, 0.16);
+            transform: translateX(4px);
+        }
+
+        .content {
+            min-width: 0;
+        }
+
+        .content-section {
+            margin-bottom: 55px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .content-section h2 {
+            font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+            margin-bottom: 19px;
+            color: var(--purple-light);
+        }
+
+        .content-section h3 {
+            font-size: 0.95rem;
+            color: var(--blue);
+            margin: 22px 0 9px;
+        }
+
+        .content-section p {
+            color: var(--muted);
+            font-size: 0.94rem;
+            margin-bottom: 14px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 22px 0;
+        }
+
+        .info-card {
+            padding: 21px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.94), rgba(12, 13, 31, 0.92));
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            border-color: rgba(147, 51, 234, 0.65);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-card h3 {
+            margin: 0 0 9px;
+            font-size: 0.9rem;
+        }
+
+        .info-card p {
+            font-size: 0.84rem;
+            margin: 0;
+        }
+
+        .info-strip {
+            margin: 22px 0;
+            padding: 18px 20px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 10px 10px 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .info-strip strong {
+            color: var(--purple-light);
+        }
+
+        .warning-strip {
+            border-left-color: var(--warning);
+            background: rgba(251, 191, 36, 0.07);
+        }
+
+        .warning-strip strong {
+            color: var(--warning);
+        }
+
+        .danger-strip {
+            border-left-color: var(--danger);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .danger-strip strong {
+            color: var(--danger);
+        }
+
+        .data-list {
+            list-style: none;
+            margin: 15px 0 20px;
+        }
+
+        .data-list li {
+            position: relative;
+            padding: 8px 0 8px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(196, 181, 253, 0.07);
+        }
+
+        .data-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 3px;
+            top: 10px;
+            color: var(--purple);
+            font-size: 0.62rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 17px 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .flow-step span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--blue);
+            font-size: 0.7rem;
+            margin-bottom: 7px;
+        }
+
+        .flow-step strong {
+            display: block;
+            font-size: 0.77rem;
+        }
+
+        .flow-step small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 570px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        th {
+            background: rgba(147, 51, 234, 0.15);
+            color: var(--purple-light);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .quiz-container {
+            padding: 28px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.98), rgba(10, 11, 27, 0.98));
+            border: 1px solid rgba(147, 51, 234, 0.38);
+            border-radius: 17px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 22px;
+        }
+
+        .question {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question:last-of-type {
+            border-bottom: none;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0 0 13px;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 9px 12px;
+            margin: 7px 0;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: rgba(147, 51, 234, 0.08);
+            border-color: var(--border);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.55);
+            background: rgba(74, 222, 128, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: rgba(251, 113, 133, 0.5);
+            background: rgba(251, 113, 133, 0.07);
+            color: #fecdd3;
+        }
+
+        .explanation {
+            display: none;
+            margin: 10px 0 3px;
+            padding: 11px 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            background: rgba(196, 181, 253, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--blue);
+            margin: 0 0 8px;
+        }
+
+        .quiz-result p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .references {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: rgba(16, 17, 38, 0.7);
+        }
+
+        .references a {
+            color: var(--blue);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin: 9px 0;
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        footer {
+            padding: 30px 7%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px 12px;
+            }
+
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 14px 5%;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 75px 6%;
+            }
+
+            .hero::after {
+                right: -180px;
+            }
+
+            .page-layout {
+                width: 90%;
+                margin-top: 35px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar nav {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-container {
+                padding: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+    <a href="smart-navigation.html" class="back-link">← Back to Smart Navigation</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Smart Navigation / Topic 06</div>
+        <h1>Integrated <span class="gradient-text">Navigation Systems</span></h1>
+        <p>
+            Discover how modern ships combine navigation sensors, positioning technologies,
+            electronic charts, communication networks, and bridge equipment into a coordinated
+            system that supports safer and more informed navigation.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-tag">Bridge Integration</span>
+            <span class="meta-tag">Sensor Fusion</span>
+            <span class="meta-tag">Navigation Data</span>
+            <span class="meta-tag">Maritime Safety</span>
+        </div>
+    </div>
+</section>
+
+<div class="page-layout">
+
+    <aside class="sidebar">
+        <h3>TOPIC CONTENTS</h3>
+        <nav>
+            <a href="#introduction">01. Introduction</a>
+            <a href="#concept">02. Core Concept</a>
+            <a href="#architecture">03. System Architecture</a>
+            <a href="#components">04. Main Components</a>
+            <a href="#data">05. Data Integration</a>
+            <a href="#interfaces">06. Communication Interfaces</a>
+            <a href="#sensor-fusion">07. Sensor Fusion</a>
+            <a href="#operation">08. Bridge Operation</a>
+            <a href="#benefits">09. Benefits</a>
+            <a href="#limitations">10. Limitations</a>
+            <a href="#safety">11. Safety and Redundancy</a>
+            <a href="#future">12. Future Development</a>
+            <a href="#quiz">13. Knowledge Assessment</a>
+            <a href="#references">14. References</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section class="content-section" id="introduction">
+            <div class="section-number">SECTION 01</div>
+            <h2>Introduction to Integrated Navigation Systems</h2>
+
+            <p>
+                Modern ships depend on several technologies to determine their position,
+                monitor movement, identify nearby vessels, observe navigational hazards,
+                and plan safe voyages. These technologies include satellite navigation
+                receivers, radar, gyrocompasses, speed logs, echo sounders, Automatic
+                Identification Systems (AIS), and Electronic Chart Display and Information
+                Systems (ECDIS).
+            </p>
+
+            <p>
+                When these devices operate independently, bridge personnel may need to
+                compare information manually across different displays. This can increase
+                workload, create delays, and make it more difficult to develop a complete
+                understanding of the vessel's navigational situation.
+            </p>
+
+            <p>
+                An <strong>Integrated Navigation System (INS)</strong> addresses this
+                challenge by bringing information from different navigation sensors and
+                equipment together through coordinated interfaces and processing functions.
+                It presents relevant information in a more consistent operational
+                environment and supports navigation-related decision-making.
+            </p>
+
+            <div class="info-strip">
+                <strong>Core principle:</strong> Integration is not simply placing several
+                devices on the same bridge. It involves exchanging, processing, displaying,
+                and monitoring information so that the equipment can support coordinated
+                navigation tasks.
+            </div>
+        </section>
+
+        <section class="content-section" id="concept">
+            <div class="section-number">SECTION 02</div>
+            <h2>Understanding the Core Concept</h2>
+
+            <p>
+                An integrated navigation environment connects different equipment through
+                defined data interfaces and system arrangements. Each device contributes
+                information that describes a particular part of the vessel's situation.
+                The integrated system can combine relevant information and make it
+                available to bridge personnel.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Independent Equipment</h3>
+                    <p>
+                        Each device performs its own function and may display information
+                        separately. Operators may need to compare several screens and
+                        manually identify inconsistencies.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Integrated Environment</h3>
+                    <p>
+                        Connected equipment exchanges selected data, allowing information
+                        to be presented and used across coordinated navigation functions.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Integrated Navigation System vs. Integrated Bridge System</h3>
+
+            <p>
+                These terms are related but should not be treated as identical. An
+                Integrated Navigation System focuses on navigation functions and the
+                information needed to support them. An Integrated Bridge System (IBS)
+                is a broader bridge arrangement that can connect navigation with other
+                bridge functions, depending on its design and configuration.
+            </p>
+
+            <div class="comparison-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Integrated Navigation System</th>
+                            <th>Integrated Bridge System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Main focus</td>
+                            <td>Navigation-related functions</td>
+                            <td>Broader bridge operations</td>
+                        </tr>
+                        <tr>
+                            <td>Typical equipment</td>
+                            <td>Radar, ECDIS, GNSS, heading and speed sensors</td>
+                            <td>Navigation and other connected bridge equipment</td>
+                        </tr>
+                        <tr>
+                            <td>Purpose</td>
+                            <td>Coordinate navigation information</td>
+                            <td>Support coordinated bridge operations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Important distinction:</strong> The exact boundary between INS and
+                IBS depends on the vessel's design, equipment, and applicable performance
+                standards. A ship may have integrated functions without every bridge device
+                being connected to one common system.
+            </div>
+        </section>
+
+        <section class="content-section" id="architecture">
+            <div class="section-number">SECTION 03</div>
+            <h2>System Architecture</h2>
+
+            <p>
+                The architecture of an integrated navigation system describes how sensors,
+                processing units, networks, displays, and operator interfaces are connected.
+                The design determines which information is shared, where it is processed,
+                how it is distributed, and what happens when a component fails.
+            </p>
+
+            <div class="process-flow">
+                <div class="flow-step">
+                    <span>01</span>
+                    <strong>Data Sources</strong>
+                    <small>Sensors and receivers</small>
+                </div>
+                <div class="flow-step">
+                    <span>02</span>
+                    <strong>Data Processing</strong>
+                    <small>Validation and calculation</small>
+                </div>
+                <div class="flow-step">
+                    <span>03</span>
+                    <strong>Data Distribution</strong>
+                    <small>Interfaces and networks</small>
+                </div>
+                <div class="flow-step">
+                    <span>04</span>
+                    <strong>Presentation</strong>
+                    <small>Displays and alerts</small>
+                </div>
+            </div>
+
+            <h3>1. Sensor and Data Input Layer</h3>
+            <p>
+                This layer receives information from equipment such as GNSS receivers,
+                gyrocompasses, radar systems, speed logs, AIS transponders, and echo
+                sounders. The quality of the entire system depends partly on the accuracy,
+                availability, and condition of these sources.
+            </p>
+
+            <h3>2. Processing Layer</h3>
+            <p>
+                Processing units interpret incoming messages, apply calculations, compare
+                information, and make selected data available to other equipment. Depending
+                on the system, processing may include coordinate transformations, filtering,
+                time alignment, target tracking, and consistency checks.
+            </p>
+
+            <h3>3. Communication Layer</h3>
+            <p>
+                This layer transfers information between devices using suitable serial
+                or network-based interfaces. It must manage message formats, data rates,
+                addressing, timing, and communication reliability.
+            </p>
+
+            <h3>4. Display and Operator Interface Layer</h3>
+            <p>
+                The final layer presents information to bridge personnel through displays,
+                indicators, alarms, and controls. Information should be understandable,
+                appropriately prioritized, and available without creating unnecessary
+                distraction.
+            </p>
+        </section>
+
+        <section class="content-section" id="components">
+            <div class="section-number">SECTION 04</div>
+            <h2>Main Components of Integrated Navigation Systems</h2>
+
+            <p>
+                Different vessels use different equipment configurations. The following
+                components are common examples of equipment that may contribute to an
+                integrated navigation environment.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>GNSS Receivers</h3>
+                    <p>
+                        Global Navigation Satellite System receivers determine position
+                        and may provide time and velocity information using satellite
+                        signals. GPS is one example of a GNSS constellation.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Radar Systems</h3>
+                    <p>
+                        Radar detects objects by transmitting radio waves and receiving
+                        reflected signals. It supports target detection, range measurement,
+                        and situational awareness, especially when visual conditions are poor.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>ECDIS</h3>
+                    <p>
+                        The Electronic Chart Display and Information System presents
+                        electronic navigational chart information and supports route
+                        monitoring and other chart-related functions when properly configured.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Gyrocompass</h3>
+                    <p>
+                        A gyrocompass provides heading information referenced to true
+                        north. Its output can support radar stabilization, chart orientation,
+                        and other navigation functions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Speed Log</h3>
+                    <p>
+                        A speed log measures vessel speed according to its measurement
+                        method. Depending on the equipment, it may provide speed through
+                        water or speed over ground.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>AIS</h3>
+                    <p>
+                        The Automatic Identification System exchanges vessel information
+                        such as identity, position, course, and speed with other AIS
+                        stations and shore infrastructure within communication range.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Echo Sounder</h3>
+                    <p>
+                        An echo sounder uses acoustic signals to measure water depth
+                        beneath the vessel. It can support awareness of under-keel
+                        clearance when interpreted with appropriate reference information.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Autopilot</h3>
+                    <p>
+                        An autopilot can control the vessel's steering to maintain a
+                        selected heading or follow a configured control mode. Its
+                        operation depends on valid inputs and safe settings.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-strip">
+                <strong>Remember:</strong> Not every component is automatically part of
+                every INS installation. Equipment inclusion and connection depend on
+                the vessel's operational requirements and system design.
+            </div>
+        </section>
+
+        <section class="content-section" id="data">
+            <div class="section-number">SECTION 05</div>
+            <h2>Navigation Data Integration</h2>
+
+            <p>
+                Data integration is the process of bringing information from different
+                sources into a coordinated system. Navigation equipment does not all
+                measure the same thing. Some devices determine position, others measure
+                heading or speed, and others detect surrounding objects or environmental
+                conditions.
+            </p>
+
+            <h3>Types of Information</h3>
+            <ul class="data-list">
+                <li><strong>Position data:</strong> latitude, longitude, and position quality.</li>
+                <li><strong>Heading data:</strong> the direction in which the vessel's bow is pointing.</li>
+                <li><strong>Course data:</strong> the direction of the vessel's movement over the ground or through water.</li>
+                <li><strong>Speed data:</strong> speed through water or speed over ground.</li>
+                <li><strong>Target data:</strong> information about detected or reported vessels and objects.</li>
+                <li><strong>Depth data:</strong> measured water depth beneath the vessel.</li>
+                <li><strong>Time data:</strong> timestamps used to relate measurements to the same moment.</li>
+                <li><strong>Environmental data:</strong> selected wind, weather, and sea-condition information when available.</li>
+            </ul>
+
+            <h3>Why Data Consistency Matters</h3>
+            <p>
+                Information from different sensors may use different reference systems,
+                update rates, units, and timestamps. For example, a heading sensor may
+                provide heading relative to true north, while another source may report
+                a course referenced to movement over the ground.
+            </p>
+
+            <p>
+                These values describe different physical quantities. Treating them as
+                interchangeable can lead to incorrect interpretation. The integrated
+                system must preserve the meaning, source, units, and reference of each
+                data item.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Critical principle:</strong> Combining data does not automatically
+                make it accurate. If an input is incorrect, delayed, poorly referenced,
+                or unavailable, the integrated output may also be misleading.
+            </div>
+        </section>
+
+        <section class="content-section" id="interfaces">
+            <div class="section-number">SECTION 06</div>
+            <h2>Communication Interfaces and Data Standards</h2>
+
+            <p>
+                Navigation equipment needs compatible communication methods to exchange
+                information. Interfaces define how data is formatted, transmitted, and
+                interpreted by connected devices.
+            </p>
+
+            <h3>NMEA 0183</h3>
+            <p>
+                NMEA 0183 is a widely used serial communication standard for marine
+                electronic equipment. It commonly transfers data through formatted
+                sentences over serial connections. Devices must use compatible settings
+                and supported sentence types to exchange information correctly.
+            </p>
+
+            <h3>NMEA 2000</h3>
+            <p>
+                NMEA 2000 is a marine data network based on Controller Area Network (CAN)
+                technology. It allows compatible devices to share information over a
+                common network using standardized message structures known as Parameter
+                Group Numbers (PGNs).
+            </p>
+
+            <h3>IEC 61162 Series</h3>
+            <p>
+                The IEC 61162 series contains international standards for digital
+                interfaces used with maritime navigation and radio communication equipment.
+                Different parts address different interface arrangements and communication
+                technologies.
+            </p>
+
+            <h3>Ethernet-Based Networks</h3>
+            <p>
+                Some modern bridge systems use Ethernet-based networks to transfer larger
+                volumes of information between displays, processing units, and other
+                equipment. Network design must consider bandwidth, latency, reliability,
+                segmentation, and cybersecurity.
+            </p>
+
+            <div class="comparison-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Interface</th>
+                            <th>General Characteristics</th>
+                            <th>Typical Consideration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>NMEA 0183</td>
+                            <td>Serial data communication</td>
+                            <td>Sentence compatibility and transmission settings</td>
+                        </tr>
+                        <tr>
+                            <td>NMEA 2000</td>
+                            <td>CAN-based marine network</td>
+                            <td>Network loading and compatible PGNs</td>
+                        </tr>
+                        <tr>
+                            <td>IEC 61162</td>
+                            <td>Maritime digital interface standards</td>
+                            <td>Correct implementation of the relevant part</td>
+                        </tr>
+                        <tr>
+                            <td>Ethernet</td>
+                            <td>Network-based data exchange</td>
+                            <td>Network security and availability</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Technical note:</strong> These interfaces are not interchangeable
+                simply because they carry digital data. Equipment must support the relevant
+                protocol, message format, electrical or network requirements, and
+                configuration.
+            </div>
+        </section>
+
+        <section class="content-section" id="sensor-fusion">
+            <div class="section-number">SECTION 07</div>
+            <h2>Sensor Fusion and Information Quality</h2>
+
+            <p>
+                Sensor fusion is the process of combining information from multiple
+                sensors to develop a more complete or reliable estimate of a vessel's
+                state or surrounding environment. In navigation, this may involve
+                position, heading, speed, acceleration, and target information.
+            </p>
+
+            <p>
+                A system may compare measurements from different sources, account for
+                their expected accuracy, and estimate the most likely state of the vessel.
+                Some systems use filtering and estimation techniques to reduce measurement
+                noise and track changes over time.
+            </p>
+
+            <h3>Examples of Sensor Fusion</h3>
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Position and Motion</h3>
+                    <p>
+                        GNSS position and velocity information may be compared with
+                        inertial measurements to support a continuous estimate of
+                        vessel movement.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Target Awareness</h3>
+                    <p>
+                        Radar tracking and AIS reports can provide complementary
+                        information about surrounding traffic, although they do not
+                        represent identical measurements.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Heading and Course</h3>
+                    <p>
+                        Heading and course-over-ground information can be considered
+                        together to help interpret vessel movement, drift, and
+                        environmental effects.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Motion Estimation</h3>
+                    <p>
+                        Inertial sensors can measure acceleration and angular motion,
+                        supporting calculations that complement other navigation sources.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Filtering and Estimation</h3>
+            <p>
+                A Kalman filter is one mathematical method used in navigation and control
+                systems to estimate a system's state from noisy measurements and a model
+                of how that state changes. Other filtering and estimation methods may
+                also be used depending on the application.
+            </p>
+
+            <div class="info-strip">
+                <strong>Important:</strong> Sensor fusion is not the same as blindly
+                averaging sensor readings. Measurements must be evaluated according
+                to their accuracy, timing, reference frames, failure conditions, and
+                physical meaning.
+            </div>
+        </section>
+
+        <section class="content-section" id="operation">
+            <div class="section-number">SECTION 08</div>
+            <h2>Integrated Navigation in Bridge Operations</h2>
+
+            <p>
+                Integrated navigation supports several activities carried out by bridge
+                personnel during a voyage. The specific functions available depend on
+                the vessel's equipment and operational configuration.
+            </p>
+
+            <h3>Route Monitoring</h3>
+            <p>
+                Navigation information can be displayed alongside the planned route.
+                Bridge personnel can monitor the vessel's position, heading, speed,
+                cross-track error, and progress in relation to the intended passage.
+            </p>
+
+            <h3>Collision Avoidance Support</h3>
+            <p>
+                Radar and AIS information may be used together to improve awareness of
+                nearby traffic. Radar provides target detection based on reflected radio
+                energy, while AIS provides transmitted identification and voyage-related
+                information from participating stations.
+            </p>
+
+            <h3>Position Monitoring</h3>
+            <p>
+                Position information may be checked against alternative navigation
+                methods, radar observations, visual bearings, or other available
+                references. Independent cross-checking remains important even when
+                an integrated display is available.
+            </p>
+
+            <h3>Alerts and Alarms</h3>
+            <p>
+                Integrated systems may provide alerts for selected conditions, such as
+                deviations from a planned route, sensor failures, or certain navigation
+                hazards. Alarm management should help operators identify important
+                conditions without overwhelming them with unnecessary warnings.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Operational responsibility:</strong> An integrated display does
+                not make navigation decisions by itself. The officer of the watch and
+                the master must continue to assess the situation, verify information,
+                and comply with applicable navigation rules and procedures.
+            </div>
+        </section>
+
+        <section class="content-section" id="benefits">
+            <div class="section-number">SECTION 09</div>
+            <h2>Benefits of Integrated Navigation Systems</h2>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Improved Situational Awareness</h3>
+                    <p>
+                        Relevant information from several sources can be presented
+                        together, helping bridge personnel understand the vessel's
+                        position and surrounding conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Reduced Manual Workload</h3>
+                    <p>
+                        Automated data exchange can reduce repeated manual entry and
+                        the need to move between separate equipment displays.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Faster Information Access</h3>
+                    <p>
+                        Operators can access selected navigation information through
+                        coordinated displays and controls.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Better Data Comparison</h3>
+                    <p>
+                        Information from different sensors can be compared to identify
+                        inconsistencies or possible equipment problems.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Operational Efficiency</h3>
+                    <p>
+                        Coordinated information may support voyage monitoring and
+                        bridge workflows when the system is correctly designed and used.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Support for Safer Decisions</h3>
+                    <p>
+                        More accessible information can support human assessment,
+                        provided that operators understand system limitations.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                These benefits are not automatic guarantees. They depend on system
+                design, equipment quality, maintenance, training, correct configuration,
+                and the ability of bridge personnel to interpret the information.
+            </p>
+        </section>
+
+        <section class="content-section" id="limitations">
+            <div class="section-number">SECTION 10</div>
+            <h2>Limitations and Operational Challenges</h2>
+
+            <p>
+                Integration introduces technical and operational challenges. Connecting
+                more equipment can improve information availability, but it can also
+                create additional dependencies and failure paths.
+            </p>
+
+            <h3>1. Sensor Failure</h3>
+            <p>
+                A faulty GNSS receiver, gyrocompass, speed log, or other sensor may
+                provide incorrect information or stop transmitting. If other systems
+                depend on that source, the impact may extend beyond the original device.
+            </p>
+
+            <h3>2. Data Inconsistency</h3>
+            <p>
+                Sensors may report conflicting values because of calibration errors,
+                different reference systems, poor installation, incorrect configuration,
+                or environmental effects.
+            </p>
+
+            <h3>3. Network and Interface Problems</h3>
+            <p>
+                Damaged cables, network congestion, incompatible message formats,
+                incorrect settings, or software problems may interrupt data exchange.
+            </p>
+
+            <h3>4. Human-Machine Interface Complexity</h3>
+            <p>
+                Too much information, poorly prioritized alerts, confusing screen layouts,
+                or unfamiliar controls can increase cognitive workload and make it
+                harder to identify important conditions.
+            </p>
+
+            <h3>5. Cybersecurity Threats</h3>
+            <p>
+                Connected navigation equipment may be exposed to cybersecurity risks,
+                including unauthorized access, malicious software, compromised data,
+                and disruption of communication networks.
+            </p>
+
+            <h3>6. Over-Reliance on Automation</h3>
+            <p>
+                Operators may become too dependent on integrated displays and automated
+                functions. This can weaken independent monitoring and delay recognition
+                of incorrect information.
+            </p>
+
+            <div class="info-strip danger-strip">
+                <strong>Critical warning:</strong> A single integrated display can make
+                information easier to access, but it can also create a misleading sense
+                of confidence. A polished display does not prove that its underlying
+                sensor data is correct.
+            </div>
+        </section>
+
+        <section class="content-section" id="safety">
+            <div class="section-number">SECTION 11</div>
+            <h2>Safety, Redundancy, and Reliability</h2>
+
+            <p>
+                Reliability is essential because navigation equipment supports decisions
+                that may have serious consequences. System designers and operators must
+                consider how equipment behaves during normal operation, degraded
+                operation, and failure conditions.
+            </p>
+
+            <h3>Redundancy</h3>
+            <p>
+                Redundancy means providing alternative equipment, data sources, power
+                supplies, or communication paths so that a single failure does not
+                necessarily remove an essential capability.
+            </p>
+
+            <p>
+                For example, a vessel may have more than one position source or alternative
+                methods of determining position. However, two devices are not truly
+                independent if they rely on the same vulnerable power supply, antenna,
+                network, or external signal source.
+            </p>
+
+            <h3>Independent Cross-Checking</h3>
+            <p>
+                Bridge personnel should compare system information with other suitable
+                sources. These may include radar ranges and bearings, visual observations,
+                terrestrial navigation aids, depth information, and other available
+                positioning methods.
+            </p>
+
+            <h3>Failure Detection and Alarms</h3>
+            <p>
+                Systems should make relevant failures and degraded conditions visible
+                to operators. Alarms and status indications can help identify loss of
+                sensor input, invalid data, communication problems, or equipment faults.
+            </p>
+
+            <h3>Training and Procedures</h3>
+            <p>
+                Personnel should understand normal system operation, sensor limitations,
+                alarm meanings, backup arrangements, and the correct response to failures.
+                Familiarity with manual and alternative navigation methods remains
+                essential.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Remember:</strong> Redundancy does not automatically mean
+                independence. Backup equipment must be assessed for common failure
+                points, including shared power, networks, antennas, software, and
+                environmental dependencies.
+            </div>
+        </section>
+
+        <section class="content-section" id="future">
+            <div class="section-number">SECTION 12</div>
+            <h2>Future Development of Integrated Navigation</h2>
+
+            <p>
+                Maritime navigation continues to evolve through digital technologies,
+                improved sensors, data networks, and advanced decision-support tools.
+                Future integrated systems are expected to provide more connected and
+                information-rich operating environments.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        AI may assist with anomaly detection, information analysis,
+                        predictive maintenance, and decision support. Its outputs
+                        require validation and human oversight.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Advanced Sensor Fusion</h3>
+                    <p>
+                        Improved algorithms may combine information from more sensor
+                        types to estimate vessel movement and surrounding conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Autonomous Navigation</h3>
+                    <p>
+                        Integrated navigation technologies can contribute to autonomous
+                        vessel research, where sensing, planning, control, and monitoring
+                        functions must work together.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Digital Connectivity</h3>
+                    <p>
+                        Secure communication with shore systems and other maritime
+                        services may support improved voyage information and operational
+                        coordination.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Predictive Maintenance</h3>
+                    <p>
+                        Equipment data may help identify developing faults and support
+                        maintenance planning before a failure affects operations.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Cyber-Resilient Systems</h3>
+                    <p>
+                        Future systems will need stronger security controls, network
+                        monitoring, secure updates, access management, and recovery
+                        capabilities.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-strip">
+                <strong>Future perspective:</strong> More automation will increase the
+                importance of system transparency, cybersecurity, reliable fallback
+                arrangements, and skilled human supervision.
+            </div>
+        </section>
+
+        <section class="content-section" id="quiz">
+            <div class="section-number">SECTION 13</div>
+            <h2>Knowledge Assessment</h2>
+
+            <p>
+                Test your understanding of Integrated Navigation Systems.
+                Select one answer for each question. All ten questions are required.
+            </p>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    10 Questions · One correct answer per question · Explanations appear
+                    after submission.
+                </p>
+
+                <form id="quizForm">
+
+                    <div class="question" data-question="0">
+                        <h3>1. What is the main purpose of an Integrated Navigation System?</h3>
+                        <label class="option"><input type="radio" name="q0" value="0"> To replace every navigation instrument with one device.</label>
+                        <label class="option"><input type="radio" name="q0" value="1"> To coordinate navigation information from connected equipment.</label>
+                        <label class="option"><input type="radio" name="q0" value="2"> To control the engine without human supervision.</label>
+                        <div class="explanation">An INS coordinates selected navigation information and functions from connected equipment. It does not simply replace every instrument.</div>
+                    </div>
+
+                    <div class="question" data-question="1">
+                        <h3>2. Which statement best describes the relationship between INS and IBS?</h3>
+                        <label class="option"><input type="radio" name="q1" value="0"> They always mean exactly the same thing.</label>
+                        <label class="option"><input type="radio" name="q1" value="1"> IBS is always limited to satellite positioning.</label>
+                        <label class="option"><input type="radio" name="q1" value="2"> INS focuses on navigation functions, while IBS may cover broader bridge operations.</label>
+                        <div class="explanation">An Integrated Bridge System can cover a broader range of bridge functions, while an INS focuses on navigation-related functions.</div>
+                    </div>
+
+                    <div class="question" data-question="2">
+                        <h3>3. Which device is primarily used to detect objects using reflected radio waves?</h3>
+                        <label class="option"><input type="radio" name="q2" value="0"> Echo sounder</label>
+                        <label class="option"><input type="radio" name="q2" value="1"> Radar</label>
+                        <label class="option"><input type="radio" name="q2" value="2"> Gyrocompass</label>
+                        <div class="explanation">Radar transmits radio waves and receives reflected signals to detect objects and measure their range.</div>
+                    </div>
+
+                    <div class="question" data-question="3">
+                        <h3>4. What is the main purpose of NMEA 2000?</h3>
+                        <label class="option"><input type="radio" name="q3" value="0"> To provide a marine network for exchanging data between compatible devices.</label>
+                        <label class="option"><input type="radio" name="q3" value="1"> To measure water depth.</label>
+                        <label class="option"><input type="radio" name="q3" value="2"> To replace all electronic charts.</label>
+                        <div class="explanation">NMEA 2000 is a CAN-based marine network that allows compatible equipment to exchange standardized data.</div>
+                    </div>
+
+                    <div class="question" data-question="4">
+                        <h3>5. What does sensor fusion involve?</h3>
+                        <label class="option"><input type="radio" name="q4" value="0"> Disconnecting sensors to avoid conflicting readings.</label>
+                        <label class="option"><input type="radio" name="q4" value="1"> Combining information from multiple sensors to improve an estimate or understanding.</label>
+                        <label class="option"><input type="radio" name="q4" value="2"> Using only the oldest available sensor.</label>
+                        <div class="explanation">Sensor fusion combines measurements from different sources while considering their quality, timing, and characteristics.</div>
+                    </div>
+
+                    <div class="question" data-question="5">
+                        <h3>6. Why are timestamps important when integrating navigation data?</h3>
+                        <label class="option"><input type="radio" name="q5" value="0"> They change the vessel's heading.</label>
+                        <label class="option"><input type="radio" name="q5" value="1"> They eliminate the need for calibration.</label>
+                        <label class="option"><input type="radio" name="q5" value="2"> They help relate measurements to the correct time.</label>
+                        <div class="explanation">Measurements taken at different times may not describe the same vessel state. Timestamps help systems align information correctly.</div>
+                    </div>
+
+                    <div class="question" data-question="6">
+                        <h3>7. Which statement about AIS and radar is correct?</h3>
+                        <label class="option"><input type="radio" name="q6" value="0"> They provide complementary information using different methods.</label>
+                        <label class="option"><input type="radio" name="q6" value="1"> AIS always detects every object around a vessel.</label>
+                        <label class="option"><input type="radio" name="q6" value="2"> Radar depends on vessels transmitting AIS messages.</label>
+                        <div class="explanation">Radar detects reflected radio energy, while AIS exchanges transmitted vessel information. Their information can complement each other.</div>
+                    </div>
+
+                    <div class="question" data-question="7">
+                        <h3>8. What is the purpose of redundancy in navigation systems?</h3>
+                        <label class="option"><input type="radio" name="q7" value="0"> To increase the number of displays only.</label>
+                        <label class="option"><input type="radio" name="q7" value="1"> To provide alternative capabilities when equipment or a data source fails.</label>
+                        <label class="option"><input type="radio" name="q7" value="2"> To remove the need for maintenance.</label>
+                        <div class="explanation">Redundancy provides alternative equipment or paths to help maintain essential capabilities during failures.</div>
+                    </div>
+
+                    <div class="question" data-question="8">
+                        <h3>9. Which is a possible risk of over-reliance on integrated navigation displays?</h3>
+                        <label class="option"><input type="radio" name="q8" value="0"> Better understanding of every sensor limitation.</label>
+                        <label class="option"><input type="radio" name="q8" value="1"> Reduced need to verify information.</label>
+                        <label class="option"><input type="radio" name="q8" value="2"> Delayed recognition of incorrect information and reduced independent monitoring.</label>
+                        <div class="explanation">Over-reliance may reduce independent cross-checking and delay the recognition of faulty or misleading data.</div>
+                    </div>
+
+                    <div class="question" data-question="9">
+                        <h3>10. Who remains responsible for assessing navigation information and making operational decisions?</h3>
+                        <label class="option"><input type="radio" name="q9" value="0"> The navigation display alone</label>
+                        <label class="option"><input type="radio" name="q9" value="1"> The officer of the watch and the master, according to their responsibilities</label>
+                        <label class="option"><input type="radio" name="q9" value="2"> The satellite receiver manufacturer</label>
+                        <div class="explanation">Integrated equipment supports decision-making, but navigational responsibilities remain with qualified bridge personnel under applicable rules and procedures.</div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="quiz-btn submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                        <button type="button" class="quiz-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                    </div>
+
+                    <div class="quiz-result" id="quizResult" aria-live="polite">
+                        <h3 id="resultTitle">Your Result</h3>
+                        <p id="resultText"></p>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <section class="content-section" id="references">
+            <div class="section-number">SECTION 14</div>
+            <h2>Technical References and Further Reading</h2>
+
+            <div class="references">
+                <ul>
+                    <li>
+                        International Maritime Organization (IMO) —
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">Official IMO website</a>.
+                    </li>
+                    <li>
+                        International Electrotechnical Commission (IEC) —
+                        <a href="https://www.iec.ch/" target="_blank" rel="noopener noreferrer">Maritime electrical and electronic standards</a>.
+                    </li>
+                    <li>
+                        National Marine Electronics Association (NMEA) —
+                        <a href="https://www.nmea.org/" target="_blank" rel="noopener noreferrer">Marine electronics and communication standards</a>.
+                    </li>
+                    <li>
+                        International Hydrographic Organization (IHO) —
+                        <a href="https://iho.int/" target="_blank" rel="noopener noreferrer">Hydrographic standards and publications</a>.
+                    </li>
+                    <li>
+                        International Maritime Organization (IMO) —
+                        <a href="https://www.imo.org/en/OurWork/Safety/Pages/NavigationDefault.aspx" target="_blank" rel="noopener noreferrer">Navigation safety information</a>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Study note:</strong> This educational topic provides a general
+                introduction. Actual shipboard installations, mandatory equipment,
+                performance requirements, and operating procedures must be checked
+                against the applicable regulations, vessel documentation, and
+                equipment manuals.
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <p>MARITERRA — Maritime Knowledge & Technology</p>
+    <p>DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong></p>
+</footer>
+
+<script>
+    const correctAnswers = [1, 2, 1, 0, 1, 2, 0, 1, 2, 1];
+
+    function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        const resultBox = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        let score = 0;
+        let unanswered = [];
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+
+            if (!selected) {
+                unanswered.push(i + 1);
+            }
+        }
+
+        if (unanswered.length > 0) {
+            alert("Please answer all 10 questions before submitting. Missing questions: " + unanswered.join(", "));
+            return;
+        }
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const question = document.querySelector(`.question[data-question="${i}"]`);
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach(option => {
+                option.classList.remove("correct", "incorrect");
+                const input = option.querySelector("input");
+
+                if (Number(input.value) === correctAnswers[i]) {
+                    option.classList.add("correct");
+                }
+
+                if (input.checked && Number(input.value) !== correctAnswers[i]) {
+                    option.classList.add("incorrect");
+                }
+
+                input.disabled = true;
+            });
+
+            if (Number(selected.value) === correctAnswers[i]) {
+                score++;
+            }
+
+            explanation.classList.add("show");
+        }
+
+        const percentage = score * 10;
+
+        resultTitle.textContent = `Your Score: ${score} / 10`;
+        resultText.textContent =
+            percentage >= 90
+                ? "Excellent work! You have a strong understanding of integrated navigation systems."
+                : percentage >= 70
+                ? "Good work! Review the explanations to strengthen your technical understanding."
+                : percentage >= 50
+                ? "You have a basic understanding, but some important concepts need more revision."
+                : "More study is recommended. Review the topic carefully and try the quiz again.";
+
+        resultBox.classList.add("show");
+        resultBox.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        document.querySelector(".submit-btn").disabled = true;
+        document.querySelector(".submit-btn").style.opacity = "0.55";
+    }
+
+    function resetQuiz() {
+        const form = document.getElementById("quizForm");
+
+        form.reset();
+
+        document.querySelectorAll(".option").forEach(option => {
+            option.classList.remove("correct", "incorrect");
+            option.querySelector("input").disabled = false;
+        });
+
+        document.querySelectorAll(".explanation").forEach(explanation => {
+            explanation.classList.remove("show");
+        });
+
+        document.getElementById("quizResult").classList.remove("show");
+
+        const submitButton = document.querySelector(".submit-btn");
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+</script>
+
+</body>
+</html>

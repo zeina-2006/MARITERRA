@@ -1,0 +1,2163 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore maritime cybersecurity, shipboard IT and OT security, cyber risk management, network protection, incident response, and cyber resilience.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Maritime Cybersecurity & Reliability</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page-header {
+            min-height: 75px;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: rgba(7, 8, 22, 0.96);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--purple-light);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--white);
+        }
+
+        .hero {
+            min-height: 470px;
+            padding: 100px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 80% 25%, rgba(147, 51, 234, 0.20), transparent 35%),
+                radial-gradient(circle at 15% 85%, rgba(37, 99, 235, 0.13), transparent 35%),
+                var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            color: var(--purple-light);
+            font-size: 13px;
+            letter-spacing: 4px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            max-width: 950px;
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            max-width: 780px;
+            color: var(--text-muted);
+            font-size: 17px;
+        }
+
+        .hero-line {
+            width: 85px;
+            height: 4px;
+            margin-top: 30px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+        }
+
+        .content-container {
+            width: 84%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 65px 0;
+        }
+
+        .content-section {
+            margin-bottom: 75px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--purple-light);
+            font-size: 13px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            color: var(--white);
+            font-size: clamp(25px, 4vw, 35px);
+            margin-bottom: 22px;
+            line-height: 1.3;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 900px;
+            margin-bottom: 25px;
+        }
+
+        .content-section p {
+            margin-bottom: 17px;
+        }
+
+        .highlight {
+            color: var(--purple-light);
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: rgba(147, 51, 234, 0.08);
+            border-left: 3px solid var(--purple);
+            padding: 22px 25px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .info-box strong {
+            color: var(--purple-light);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 13px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.10);
+        }
+
+        .card-number {
+            color: var(--purple-light);
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .info-card h3 {
+            color: var(--white);
+            font-size: 19px;
+            margin: 12px 0;
+        }
+
+        .info-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .process-list {
+            margin-top: 30px;
+            display: grid;
+            gap: 17px;
+        }
+
+        .process-item {
+            display: grid;
+            grid-template-columns: 55px 1fr;
+            gap: 20px;
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+
+        .process-number {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(147, 51, 234, 0.16);
+            color: var(--purple-light);
+            font-weight: bold;
+        }
+
+        .process-item h3 {
+            color: var(--white);
+            margin-bottom: 7px;
+        }
+
+        .process-item p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            background: var(--bg-card);
+        }
+
+        th, td {
+            padding: 17px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.10);
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .example-panel {
+            background: linear-gradient(
+                135deg,
+                rgba(147, 51, 234, 0.12),
+                rgba(37, 99, 235, 0.08)
+            );
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 25px;
+        }
+
+        .example-panel h3 {
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .example-panel ul {
+            padding-left: 22px;
+            color: var(--text-muted);
+        }
+
+        .example-panel li {
+            margin-bottom: 10px;
+        }
+
+        .references-list {
+            padding-left: 22px;
+            color: var(--text-muted);
+        }
+
+        .references-list li {
+            margin-bottom: 15px;
+        }
+
+        .references-list a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            overflow-wrap: anywhere;
+        }
+
+        .assessment {
+            padding: 35px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .assessment-intro {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .question-card {
+            padding: 23px;
+            margin-bottom: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .question-card h3 {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 17px;
+        }
+
+        .question-card label {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 7px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .question-card label:hover {
+            background: rgba(147, 51, 234, 0.09);
+            color: var(--white);
+        }
+
+        .question-card input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+            flex-shrink: 0;
+        }
+
+        .question-result {
+            display: none;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+            font-size: 14px;
+        }
+
+        .question-result.correct {
+            display: block;
+            border-left: 3px solid #22c55e;
+        }
+
+        .question-result.incorrect {
+            display: block;
+            border-left: 3px solid #ef4444;
+        }
+
+        .question-result strong {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--white);
+        }
+
+        .question-result p {
+            margin: 5px 0;
+            color: var(--text-muted);
+        }
+
+        .assessment-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .action-button {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-button {
+            color: var(--white);
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple));
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(147, 51, 234, 0.25);
+        }
+
+        .reset-button {
+            color: var(--purple-light);
+            background: transparent;
+            border: 1px solid var(--purple);
+        }
+
+        .reset-button:hover {
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        .score-panel {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.10);
+            text-align: center;
+        }
+
+        .score-panel h3 {
+            color: var(--white);
+            font-size: 25px;
+        }
+
+        .score-panel p {
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .page-footer {
+            text-align: center;
+            padding: 30px 15px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .page-footer span {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .page-header {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .hero {
+                padding: 75px 7%;
+                min-height: 400px;
+            }
+
+            .content-container {
+                width: 90%;
+                padding: 45px 0;
+            }
+
+            .assessment {
+                padding: 18px;
+            }
+
+            .process-item {
+                grid-template-columns: 42px 1fr;
+                gap: 13px;
+                padding: 17px;
+            }
+
+            .process-number {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="page-header">
+        <a href="index.html" class="logo">
+            MARITERRA<span>.</span>
+        </a>
+
+        <a href="technology-integration.html" class="back-link">
+            ← Back to Technology Integration
+        </a>
+    </header>
+
+
+    <section class="hero">
+        <div class="hero-label">MARITIME TECHNOLOGY / CYBERSECURITY</div>
+
+        <h1>
+            Maritime Cybersecurity
+            <span>& Reliability</span>
+        </h1>
+
+        <p>
+            Protecting connected ships, navigation systems, operational
+            technology, and maritime information through cyber risk
+            management, security controls, incident response, and
+            operational resilience.
+        </p>
+
+        <div class="hero-line"></div>
+    </section>
+
+
+    <main class="content-container">
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="content-section">
+            <div class="section-number">01 / INTRODUCTION</div>
+
+            <h2 class="section-title">
+                Understanding Maritime Cybersecurity
+            </h2>
+
+            <p class="section-intro">
+                Modern vessels depend on interconnected digital systems
+                for navigation, communication, propulsion, machinery
+                monitoring, cargo operations, and administrative activities.
+            </p>
+
+            <p>
+                These technologies improve operational efficiency and
+                information exchange. However, connectivity and automation
+                can also introduce cybersecurity risks.
+            </p>
+
+            <p>
+                A cyber incident may affect the confidentiality, integrity,
+                or availability of information and systems. Depending on
+                the affected equipment and operational context, the
+                consequences may extend beyond information technology
+                and affect ship operations, safety, or the environment.
+            </p>
+
+            <p>
+                <span class="highlight">Maritime cybersecurity</span>
+                refers to the practices, technologies, and procedures
+                used to protect maritime digital assets from cyber threats.
+            </p>
+
+            <p>
+                <span class="highlight">Cyber resilience</span> is the
+                ability of an organization or system to continue operating
+                appropriately, limit the impact of cyber incidents,
+                and recover important functions after disruption.
+            </p>
+
+            <div class="info-box">
+                <strong>Important distinction:</strong>
+                Cybersecurity focuses on reducing the likelihood and
+                impact of cyber threats. Cyber resilience also considers
+                how the vessel and its systems will respond and recover
+                when preventive controls fail.
+            </div>
+        </section>
+
+
+        <!-- 02 IT AND OT -->
+
+        <section class="content-section">
+            <div class="section-number">02 / IT AND OT SYSTEMS</div>
+
+            <h2 class="section-title">
+                Information Technology and Operational Technology
+            </h2>
+
+            <p>
+                Maritime cybersecurity requires understanding the
+                difference between Information Technology (IT) and
+                Operational Technology (OT).
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <div class="card-number">IT SYSTEMS</div>
+                    <h3>Information Technology</h3>
+                    <p>
+                        IT systems manage information, business applications,
+                        administrative records, email, databases, file
+                        storage, and office networks.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <div class="card-number">OT SYSTEMS</div>
+                    <h3>Operational Technology</h3>
+                    <p>
+                        OT systems monitor or control physical equipment
+                        and industrial processes, including machinery,
+                        propulsion-related systems, and automation.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Comparison</th>
+                            <th>IT</th>
+                            <th>OT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Main purpose</td>
+                            <td>Manage information and business processes</td>
+                            <td>Monitor and control physical processes</td>
+                        </tr>
+
+                        <tr>
+                            <td>Typical assets</td>
+                            <td>Servers, office computers, email systems</td>
+                            <td>Controllers, sensors, industrial networks</td>
+                        </tr>
+
+                        <tr>
+                            <td>Important priorities</td>
+                            <td>Confidentiality, integrity, availability</td>
+                            <td>Safety, availability, integrity, operational continuity</td>
+                        </tr>
+
+                        <tr>
+                            <td>Potential consequences</td>
+                            <td>Information exposure or business disruption</td>
+                            <td>Equipment disruption or unsafe physical conditions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <strong>Technical note:</strong>
+                IT and OT are not always completely separate.
+                Ships may have connected environments and shared
+                information flows. Security architecture should
+                account for these connections and their operational risks.
+            </div>
+        </section>
+
+
+        <!-- 03 CRITICAL SYSTEMS -->
+
+        <section class="content-section">
+            <div class="section-number">03 / CRITICAL SYSTEMS</div>
+
+            <h2 class="section-title">
+                Cybersecurity-Critical Shipboard Systems
+            </h2>
+
+            <p class="section-intro">
+                A ship contains multiple digital systems that may
+                introduce cybersecurity risks if they are compromised,
+                misconfigured, or unavailable.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Bridge Systems</h3>
+                    <p>
+                        Navigation-related systems, electronic chart
+                        displays, position information, and connected
+                        bridge equipment.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Propulsion and Machinery</h3>
+                    <p>
+                        Engine monitoring, machinery control, power
+                        management, and automation-related systems.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Cargo Management</h3>
+                    <p>
+                        Digital systems supporting cargo handling,
+                        cargo monitoring, and associated operational
+                        information.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Communication Systems</h3>
+                    <p>
+                        Satellite communications, onboard networks,
+                        email, and ship-to-shore information exchange.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Access Control</h3>
+                    <p>
+                        Digital systems managing access to restricted
+                        areas, facilities, and selected shipboard services.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Administrative Networks</h3>
+                    <p>
+                        Office computers, servers, business applications,
+                        and information systems used by crew and
+                        shore-based personnel.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- 04 CYBER THREATS -->
+
+        <section class="content-section">
+            <div class="section-number">04 / CYBER THREATS</div>
+
+            <h2 class="section-title">
+                Common Maritime Cyber Threats
+            </h2>
+
+            <p>
+                A cyber threat is a potential source of harm to digital
+                systems or information. Threats may target administrative
+                networks, connected equipment, communication systems,
+                or operational technology.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Phishing</h3>
+                    <p>
+                        Fraudulent messages designed to trick users
+                        into revealing credentials, opening malicious
+                        files, or visiting deceptive websites.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Ransomware</h3>
+                    <p>
+                        Malicious software that may encrypt or otherwise
+                        prevent access to information and systems,
+                        sometimes accompanied by extortion.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Malware</h3>
+                    <p>
+                        Software designed to perform unauthorized
+                        actions, steal information, disrupt systems,
+                        or compromise devices.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Unauthorized Access</h3>
+                    <p>
+                        Access to systems or information without
+                        appropriate permission, potentially through
+                        compromised accounts or weak authentication.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Insider Threats</h3>
+                    <p>
+                        Risks arising from people with legitimate
+                        access who misuse privileges intentionally
+                        or make harmful mistakes.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Supply Chain Attacks</h3>
+                    <p>
+                        Attacks involving compromised suppliers,
+                        software updates, service providers, or
+                        equipment delivery processes.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Denial of Service</h3>
+                    <p>
+                        Attempts to make systems or services
+                        unavailable by overwhelming or disrupting
+                        their resources or communications.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Social Engineering</h3>
+                    <p>
+                        Manipulating individuals into disclosing
+                        sensitive information or performing
+                        unauthorized actions.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- 05 VULNERABILITIES -->
+
+        <section class="content-section">
+            <div class="section-number">05 / VULNERABILITIES</div>
+
+            <h2 class="section-title">
+                Cybersecurity Vulnerabilities
+            </h2>
+
+            <p>
+                A vulnerability is a weakness in a system, process,
+                configuration, or security control that could be
+                exploited by a threat.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Weak Authentication</h3>
+                    <p>
+                        Weak or reused passwords and inadequate
+                        authentication controls can make unauthorized
+                        access easier.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Unpatched Software</h3>
+                    <p>
+                        Systems running outdated software may contain
+                        known vulnerabilities that have not been addressed.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Misconfigured Networks</h3>
+                    <p>
+                        Unnecessary network services, excessive permissions,
+                        or poorly configured connections may increase
+                        exposure.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Legacy Equipment</h3>
+                    <p>
+                        Older systems may have limited security features
+                        or compatibility constraints that complicate
+                        updates and protection.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Insufficient Monitoring</h3>
+                    <p>
+                        Limited logging and monitoring can make
+                        suspicious activities harder to identify
+                        and investigate.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Human Error</h3>
+                    <p>
+                        Accidental disclosure, unsafe device use,
+                        or incorrect configuration can introduce
+                        avoidable security risks.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Remember:</strong>
+                A threat and a vulnerability are different concepts.
+                A threat is a potential source of harm; a vulnerability
+                is a weakness that may be exploited. Risk depends on
+                the likelihood and consequences of a harmful event.
+            </div>
+        </section>
+
+
+        <!-- 06 CYBER RISK MANAGEMENT -->
+
+        <section class="content-section">
+            <div class="section-number">06 / RISK MANAGEMENT</div>
+
+            <h2 class="section-title">
+                Maritime Cyber Risk Management
+            </h2>
+
+            <p>
+                Cyber risk management is a structured process for
+                identifying, analyzing, evaluating, and treating
+                cybersecurity risks.
+            </p>
+
+            <div class="process-list">
+
+                <div class="process-item">
+                    <div class="process-number">01</div>
+                    <div>
+                        <h3>Identify Assets</h3>
+                        <p>
+                            Determine which systems, devices, data,
+                            networks, and services are important
+                            to the vessel's operations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">02</div>
+                    <div>
+                        <h3>Identify Threats and Vulnerabilities</h3>
+                        <p>
+                            Examine potential threat sources and
+                            weaknesses that could affect identified
+                            assets.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">03</div>
+                    <div>
+                        <h3>Analyze Risk</h3>
+                        <p>
+                            Consider the likelihood of a cyber event
+                            and the possible consequences for safety,
+                            operations, security, and the environment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">04</div>
+                    <div>
+                        <h3>Evaluate and Prioritize</h3>
+                        <p>
+                            Compare identified risks against
+                            established criteria and prioritize
+                            the risks requiring treatment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">05</div>
+                    <div>
+                        <h3>Treat the Risk</h3>
+                        <p>
+                            Select appropriate controls to avoid,
+                            reduce, transfer, or accept a risk
+                            according to organizational policy
+                            and applicable requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">06</div>
+                    <div>
+                        <h3>Monitor and Review</h3>
+                        <p>
+                            Reassess risks when systems, operations,
+                            threats, suppliers, or technical
+                            configurations change.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Operational principle:</strong>
+                Risk management should be continuous. A one-time
+                assessment cannot account for every future change
+                in equipment, connectivity, threats, or operating conditions.
+            </div>
+        </section>
+
+
+        <!-- 07 SECURITY CONTROLS -->
+
+        <section class="content-section">
+            <div class="section-number">07 / SECURITY CONTROLS</div>
+
+            <h2 class="section-title">
+                Protecting Maritime Digital Systems
+            </h2>
+
+            <p class="section-intro">
+                Security controls are safeguards used to reduce the
+                likelihood or consequences of cyber incidents.
+                Effective protection combines technical controls,
+                procedures, and people.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Network Segmentation</h3>
+                    <p>
+                        Dividing networks into controlled zones and
+                        restricting unnecessary communication between
+                        administrative and operational environments.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Firewalls</h3>
+                    <p>
+                        Applying network traffic rules to control
+                        permitted and denied communications between
+                        systems and network zones.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Multi-Factor Authentication</h3>
+                    <p>
+                        Requiring additional authentication evidence
+                        beyond a password for supported accounts
+                        and access paths.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Endpoint Protection</h3>
+                    <p>
+                        Using suitable security tools and configuration
+                        controls to protect supported computers
+                        and devices.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Patch Management</h3>
+                    <p>
+                        Evaluating and applying software updates
+                        through controlled procedures that consider
+                        operational and safety requirements.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Access Management</h3>
+                    <p>
+                        Applying least privilege so users and
+                        services receive only the access needed
+                        for their responsibilities.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Secure Backups</h3>
+                    <p>
+                        Maintaining protected backups and verifying
+                        that critical information can be restored
+                        when required.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Security Awareness</h3>
+                    <p>
+                        Training crew and shore-based personnel
+                        to recognize phishing, suspicious devices,
+                        unsafe behavior, and reporting procedures.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Important OT consideration:</strong>
+                Network segmentation does not mean that every
+                connection should be disconnected. Operational
+                communication requirements must be understood
+                and controlled. Changes to safety-related systems
+                should follow approved engineering and operational
+                procedures.
+            </div>
+        </section>
+
+
+        <!-- 08 MONITORING AND DETECTION -->
+
+        <section class="content-section">
+            <div class="section-number">08 / MONITORING & DETECTION</div>
+
+            <h2 class="section-title">
+                Cybersecurity Monitoring and Threat Detection
+            </h2>
+
+            <p>
+                Monitoring helps organizations identify unusual
+                activities, suspicious connections, unexpected
+                changes, and potential security incidents.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Log Monitoring</h3>
+                    <p>
+                        Reviewing system and network records to
+                        identify unusual access, authentication
+                        failures, and unexpected events.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Network Monitoring</h3>
+                    <p>
+                        Observing network communications and
+                        identifying unexpected traffic patterns
+                        or unauthorized connections.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Intrusion Detection</h3>
+                    <p>
+                        Using security tools and detection rules
+                        to identify activities that may indicate
+                        malicious behavior.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Asset Monitoring</h3>
+                    <p>
+                        Tracking connected devices, software
+                        versions, configuration changes, and
+                        relevant system status information.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Security Alerts</h3>
+                    <p>
+                        Generating notifications when defined
+                        security conditions or suspicious patterns
+                        are detected.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Security Analysis</h3>
+                    <p>
+                        Correlating relevant events to help
+                        analysts understand whether multiple
+                        observations are related.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Detection limitation:</strong>
+                A monitoring system may generate false positives
+                or fail to identify an unfamiliar attack. Alerts
+                require context, investigation, and appropriate
+                response procedures.
+            </div>
+        </section>
+
+
+        <!-- 09 INCIDENT RESPONSE -->
+
+        <section class="content-section">
+            <div class="section-number">09 / INCIDENT RESPONSE</div>
+
+            <h2 class="section-title">
+                Responding to Maritime Cyber Incidents
+            </h2>
+
+            <p>
+                A cyber incident response plan defines how an
+                organization prepares for, handles, documents,
+                and recovers from cybersecurity events.
+            </p>
+
+            <div class="process-list">
+
+                <div class="process-item">
+                    <div class="process-number">01</div>
+                    <div>
+                        <h3>Preparation</h3>
+                        <p>
+                            Establish responsibilities, communication
+                            procedures, incident plans, backup arrangements,
+                            and personnel training before an incident occurs.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">02</div>
+                    <div>
+                        <h3>Identification</h3>
+                        <p>
+                            Recognize suspicious activity, determine
+                            affected systems, collect relevant information,
+                            and assess the potential operational impact.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">03</div>
+                    <div>
+                        <h3>Containment</h3>
+                        <p>
+                            Limit the spread or impact of the incident
+                            using controlled actions that consider
+                            vessel safety and operational requirements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">04</div>
+                    <div>
+                        <h3>Eradication</h3>
+                        <p>
+                            Remove confirmed malicious components and
+                            address the underlying causes according
+                            to approved technical procedures.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">05</div>
+                    <div>
+                        <h3>Recovery</h3>
+                        <p>
+                            Restore affected systems and services
+                            through verified recovery procedures,
+                            then monitor their operation carefully.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-item">
+                    <div class="process-number">06</div>
+                    <div>
+                        <h3>Lessons Learned</h3>
+                        <p>
+                            Review the incident, document findings,
+                            improve controls, and update training
+                            and risk assessments.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Safety comes first:</strong>
+                Containment actions on a ship must be coordinated
+                with responsible personnel. Abruptly disconnecting
+                or shutting down an operational system can itself
+                create safety risks.
+            </div>
+        </section>
+
+
+        <!-- 10 RELIABILITY AND RESILIENCE -->
+
+        <section class="content-section">
+            <div class="section-number">10 / RELIABILITY & RESILIENCE</div>
+
+            <h2 class="section-title">
+                System Reliability and Cyber Resilience
+            </h2>
+
+            <p>
+                Reliability and cyber resilience are related but
+                different concepts.
+            </p>
+
+            <p>
+                <span class="highlight">Reliability</span> concerns
+                the ability of a system to perform its required
+                function under specified conditions for a specified
+                period.
+            </p>
+
+            <p>
+                <span class="highlight">Cyber resilience</span>
+                concerns the ability to anticipate, withstand,
+                recover from, and adapt to cyber-related disruption.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Redundancy</h3>
+                    <p>
+                        Providing alternative components or paths
+                        so that a single failure does not necessarily
+                        stop an essential function.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Fault Detection</h3>
+                    <p>
+                        Identifying system failures and abnormal
+                        conditions through monitoring and diagnostics.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Backup and Restoration</h3>
+                    <p>
+                        Maintaining suitable backup copies and
+                        testing restoration procedures for
+                        critical information and configurations.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Recovery Planning</h3>
+                    <p>
+                        Defining how essential services can be
+                        restored after disruption, including
+                        responsibilities and recovery priorities.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Fail-Safe Design</h3>
+                    <p>
+                        Designing systems so that certain failures
+                        lead to a safer state, where appropriate
+                        to the equipment and engineering requirements.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Continuous Improvement</h3>
+                    <p>
+                        Updating risk assessments, security
+                        procedures, and recovery plans as
+                        technologies and threats evolve.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Do not confuse the concepts:</strong>
+                A highly reliable system is not automatically
+                cyber-resilient. A system may rarely fail under
+                normal conditions but still be vulnerable to
+                a deliberate cyberattack.
+            </div>
+        </section>
+
+
+        <!-- 11 SUPPLY CHAIN -->
+
+        <section class="content-section">
+            <div class="section-number">11 / SUPPLY CHAIN SECURITY</div>
+
+            <h2 class="section-title">
+                Third-Party and Supply Chain Security
+            </h2>
+
+            <p>
+                Ships depend on equipment manufacturers, software
+                developers, maintenance contractors, communication
+                providers, and other external suppliers.
+            </p>
+
+            <p>
+                These relationships can introduce risks when
+                suppliers have access to shipboard systems or
+                provide software, updates, equipment, and
+                technical services.
+            </p>
+
+            <div class="cards-grid">
+
+                <article class="info-card">
+                    <h3>Supplier Assessment</h3>
+                    <p>
+                        Evaluating suppliers' security practices,
+                        technical capabilities, and access requirements.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Remote Access Control</h3>
+                    <p>
+                        Restricting remote connections to approved
+                        users, systems, purposes, and time periods.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Software Verification</h3>
+                    <p>
+                        Applying controlled procedures to verify
+                        software sources, integrity, and suitability
+                        before installation.
+                    </p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Maintenance Security</h3>
+                    <p>
+                        Managing service activities, temporary
+                        accounts, portable devices, and configuration
+                        changes.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+
+        <!-- 12 PRACTICAL SCENARIO -->
+
+        <section class="content-section">
+            <div class="section-number">12 / PRACTICAL SCENARIO</div>
+
+            <h2 class="section-title">
+                Maritime Cyber Incident: A Practical Example
+            </h2>
+
+            <p class="section-intro">
+                Consider a hypothetical vessel where a crew member
+                receives an email containing a malicious attachment.
+                The attachment is opened on an administrative computer.
+            </p>
+
+            <div class="example-panel">
+                <h3>Incident Scenario</h3>
+
+                <ul>
+                    <li>
+                        An employee opens a suspicious attachment
+                        on an office computer.
+                    </li>
+
+                    <li>
+                        Security monitoring detects unusual
+                        activity on that computer.
+                    </li>
+
+                    <li>
+                        Investigation identifies suspicious
+                        communication attempts.
+                    </li>
+
+                    <li>
+                        The security team evaluates whether
+                        other systems or accounts are affected.
+                    </li>
+
+                    <li>
+                        Appropriate containment measures are
+                        coordinated with responsible ship personnel.
+                    </li>
+
+                    <li>
+                        Affected systems are investigated,
+                        cleaned, and restored through approved
+                        recovery procedures.
+                    </li>
+
+                    <li>
+                        The organization reviews the incident
+                        and improves its security controls.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>Key lesson:</strong>
+                An incident that begins on an administrative
+                computer should not be assumed to affect every
+                shipboard system. The actual impact depends on
+                network architecture, access controls, system
+                connections, and the evidence collected during
+                investigation.
+            </div>
+        </section>
+
+
+        <!-- 13 STANDARDS -->
+
+        <section class="content-section">
+            <div class="section-number">13 / STANDARDS & GUIDELINES</div>
+
+            <h2 class="section-title">
+                International Maritime Cybersecurity References
+            </h2>
+
+            <p class="section-intro">
+                Several international guidelines and technical
+                requirements address maritime cyber risk and
+                the resilience of shipboard systems.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Subject</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>IMO MSC-FAL.1/Circ.3</td>
+                            <td>Maritime Cyber Risk Management Guidelines</td>
+                            <td>
+                                Provides high-level guidance for
+                                managing cyber risks in shipping.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>IMO Resolution MSC.428(98)</td>
+                            <td>Cyber Risk Management in Safety Management Systems</td>
+                            <td>
+                                Addresses cyber risk management
+                                within established safety management
+                                systems.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>IACS UR E26 Rev.1</td>
+                            <td>Cyber Resilience of Ships</td>
+                            <td>
+                                Addresses cyber resilience at
+                                the ship level.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>IACS UR E27 Rev.1</td>
+                            <td>Cyber Resilience of On-board Systems and Equipment</td>
+                            <td>
+                                Addresses cybersecurity requirements
+                                for onboard systems and equipment.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>IEC 62443 Series</td>
+                            <td>Industrial Automation and Control Systems Security</td>
+                            <td>
+                                Provides a cybersecurity framework
+                                and requirements for industrial
+                                automation and control systems.
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <strong>Applicability matters:</strong>
+                IACS UR E26 and E27 Rev.1 have an implementation
+                date of 1 July 2024 for applicable new ships
+                contracted for construction on or after that date.
+                Their applicability depends on vessel scope and
+                the relevant classification and regulatory context.
+                They should not be presented as automatically
+                applying to every existing vessel.
+            </div>
+
+            <ul class="references-list">
+
+                <li>
+                    <a href="https://www.imo.org/en/ourwork/security/pages/cyber-security.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        IMO — Maritime Cyber Risk
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/"
+                       target="_blank" rel="noopener noreferrer">
+                        International Maritime Organization
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://iacs.org.uk/news/iacs-ur-e26-and-e27-press-release"
+                       target="_blank" rel="noopener noreferrer">
+                        IACS — UR E26 and E27
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://iacs.org.uk/resolutions/unified-requirements"
+                       target="_blank" rel="noopener noreferrer">
+                        IACS — Unified Requirements
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.isa.org/standards-and-publications/isa-standards/isa-iec-62443-series-of-standards"
+                       target="_blank" rel="noopener noreferrer">
+                        ISA — IEC 62443 Series of Standards
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://www.classnk.com/hp/en/activities/cybersecurity/ur-e26e27.html"
+                       target="_blank" rel="noopener noreferrer">
+                        ClassNK — IACS UR E26/E27 Guidance
+                    </a>
+                </li>
+
+            </ul>
+        </section>
+
+
+        <!-- 14 ASSESSMENT -->
+
+        <section class="content-section" id="assessment">
+
+            <div class="section-number">14 / KNOWLEDGE ASSESSMENT</div>
+
+            <h2 class="section-title">
+                Advanced Cybersecurity Assessment
+            </h2>
+
+            <p class="assessment-intro">
+                Test your understanding of maritime cybersecurity,
+                operational technology, risk management, network
+                protection, incident response, and cyber resilience.
+
+                Select one answer for each question. After submission,
+                you will receive your score, the correct answer,
+                and a detailed explanation.
+            </p>
+
+            <div class="assessment">
+
+                <div id="questionsContainer"></div>
+
+                <div class="assessment-actions">
+                    <button
+                        type="button"
+                        class="action-button submit-button"
+                        id="submitQuiz">
+                        Submit Assessment
+                    </button>
+
+                    <button
+                        type="button"
+                        class="action-button reset-button"
+                        id="resetQuiz">
+                        Reset Assessment
+                    </button>
+                </div>
+
+                <div
+                    class="score-panel"
+                    id="scorePanel"
+                    aria-live="polite">
+
+                    <h3 id="scoreText"></h3>
+                    <p id="scoreMessage"></p>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="page-footer">
+
+        <p>
+            MARITERRA | Maritime Technology & Knowledge
+        </p>
+
+        <p>
+            Founder & Developer:
+            <span>Engineer Zeinab Mohamed</span>
+        </p>
+
+        <p>© 2026 MARITERRA. All Rights Reserved.</p>
+
+    </footer>
+
+
+    <script>
+
+        const questions = [
+
+            {
+                question:
+                    "A ship's administrative network is compromised. Which statement is the most technically accurate when assessing the possible impact on operational technology?",
+
+                options: [
+                    "All OT systems are automatically compromised.",
+                    "The incident cannot affect OT because IT and OT are always physically separate.",
+                    "The impact depends on actual connectivity, access controls, architecture, and investigation evidence.",
+                    "The only possible consequence is loss of email access."
+                ],
+
+                answer: 2,
+
+                explanation:
+                    "IT and OT may be separated, connected, or partially integrated. The existence of an IT incident does not prove that OT has been compromised, but it also does not guarantee isolation. Investigators must examine network architecture, communication paths, permissions, logs, and evidence."
+            },
+
+            {
+                question:
+                    "Why is cyber resilience considered broader than preventive cybersecurity?",
+
+                options: [
+                    "It focuses only on installing antivirus software.",
+                    "It includes the ability to withstand disruption, respond appropriately, and recover important functions.",
+                    "It guarantees that cyberattacks will never occur.",
+                    "It eliminates the need for incident response planning."
+                ],
+
+                answer: 1,
+
+                explanation:
+                    "Preventive controls reduce the likelihood of incidents, but they cannot eliminate every threat. Cyber resilience also considers how systems and organizations anticipate, withstand, respond to, and recover from disruptive events."
+            },
+
+            {
+                question:
+                    "A vessel has an operational network connected to an administrative network through a controlled gateway. What is the main security purpose of network segmentation?",
+
+                options: [
+                    "To guarantee that all malware is removed automatically.",
+                    "To restrict unnecessary communication and reduce the potential spread or impact of incidents.",
+                    "To increase the number of users with administrator privileges.",
+                    "To eliminate the need for network monitoring."
+                ],
+
+                answer: 1,
+
+                explanation:
+                    "Segmentation divides networks into controlled zones and limits unnecessary traffic between them. This can reduce attack paths and limit incident impact. It does not guarantee complete protection, so monitoring, access control, and other safeguards remain necessary."
+            },
+
+            {
+                question:
+                    "An engineer wants to apply a software update to a safety-related operational system while the vessel is underway. What is the most appropriate approach?",
+
+                options: [
+                    "Install it immediately without checking system compatibility.",
+                    "Disable all safety controls before updating.",
+                    "Follow an approved change and maintenance process that evaluates safety, compatibility, operational impact, and recovery arrangements.",
+                    "Allow any remote supplier to install it without supervision."
+                ],
+
+                answer: 2,
+
+                explanation:
+                    "OT updates can affect equipment behavior, compatibility, and safety. They should be assessed, authorized, tested where appropriate, and installed through controlled procedures. Operational timing and recovery arrangements must also be considered."
+            },
+
+            {
+                question:
+                    "Which statement correctly distinguishes a threat from a vulnerability?",
+
+                options: [
+                    "A threat is a weakness, while a vulnerability is an attacker.",
+                    "A threat is a potential source of harm, while a vulnerability is a weakness that may be exploited.",
+                    "Both terms always mean exactly the same thing.",
+                    "A vulnerability can only exist in software."
+                ],
+
+                answer: 1,
+
+                explanation:
+                    "A threat is a potential cause of an unwanted event, such as a malicious actor or harmful event. A vulnerability is a weakness in a system, configuration, process, or control that may be exploited by a threat."
+            },
+
+            {
+                question:
+                    "A security monitoring tool detects unusual traffic from an onboard computer. What should the security team do before concluding that a successful attack has occurred?",
+
+                options: [
+                    "Assume the alert is always correct and publicly announce a breach.",
+                    "Delete all system logs to prevent further suspicious activity.",
+                    "Investigate the alert using contextual information, logs, system behavior, and other available evidence.",
+                    "Ignore the alert because monitoring tools can generate false positives."
+                ],
+
+                answer: 2,
+
+                explanation:
+                    "An alert is an indication that requires investigation, not automatic proof of compromise. Analysts should correlate evidence, understand the system's normal behavior, and determine whether the activity is malicious, authorized, or caused by an operational issue."
+            },
+
+            {
+                question:
+                    "Why can abruptly disconnecting an OT system during incident containment create additional risks on a vessel?",
+
+                options: [
+                    "Because every OT system must always have internet access.",
+                    "Because disconnecting a system may disrupt a physical process or an essential operational function.",
+                    "Because OT systems cannot operate without email.",
+                    "Because containment is never necessary in maritime incidents."
+                ],
+
+                answer: 1,
+
+                explanation:
+                    "Operational technology interacts with physical processes. Abrupt disconnection or shutdown may affect machinery, monitoring, or other essential functions. Containment must therefore be coordinated with responsible personnel and guided by safety and operational procedures."
+            },
+
+            {
+                question:
+                    "Which statement best describes the relationship between IACS UR E26 and UR E27?",
+
+                options: [
+                    "E26 addresses cyber resilience of ships, while E27 addresses cyber resilience of onboard systems and equipment.",
+                    "E26 addresses only passenger internet access, while E27 addresses satellite navigation.",
+                    "Both documents define the same antivirus software requirements.",
+                    "E27 replaces all international maritime safety regulations."
+                ],
+
+                answer: 0,
+
+                explanation:
+                    "IACS UR E26 addresses cyber resilience at the ship level. UR E27 addresses cyber resilience of onboard systems and equipment. They are complementary requirements and should be considered in their applicable vessel and classification context."
+            },
+
+            {
+                question:
+                    "A vessel has reliable backups, but nobody has tested whether the systems can actually be restored from them. What is the main weakness?",
+
+                options: [
+                    "The vessel has too much redundancy.",
+                    "The existence of backups alone does not demonstrate that recovery will work.",
+                    "Backups always prevent cyber incidents.",
+                    "Testing restoration would reduce the confidentiality of all information."
+                ],
+
+                answer: 1,
+
+                explanation:
+                    "A backup is useful only if it is available, trustworthy, sufficiently current, and restorable. Recovery tests help verify that procedures, data, configurations, and responsibilities are suitable for restoring required services."
+            },
+
+            {
+                question:
+                    "Which statement best reflects the role of IMO maritime cyber risk management guidance?",
+
+                options: [
+                    "It guarantees that every vessel is immune to cyberattacks.",
+                    "It replaces all ship safety management procedures with antivirus requirements.",
+                    "It provides high-level recommendations for identifying, assessing, and managing maritime cyber risks as part of safe and secure shipping.",
+                    "It applies only to personal devices used by passengers."
+                ],
+
+                answer: 2,
+
+                explanation:
+                    "IMO's maritime cyber risk management guidance supports the integration of cyber risk considerations into existing risk management and safety management practices. Its objective is to support safe, secure, and operationally resilient shipping, not to promise immunity from cyber threats."
+            }
+
+        ];
+
+
+        const questionsContainer =
+            document.getElementById("questionsContainer");
+
+        const scorePanel =
+            document.getElementById("scorePanel");
+
+        const scoreText =
+            document.getElementById("scoreText");
+
+        const scoreMessage =
+            document.getElementById("scoreMessage");
+
+
+        function renderQuestions() {
+
+            questionsContainer.innerHTML = "";
+
+            questions.forEach((question, index) => {
+
+                const card = document.createElement("div");
+
+                card.className = "question-card";
+
+                const heading = document.createElement("h3");
+
+                heading.textContent =
+                    `Question ${index + 1}: ${question.question}`;
+
+                card.appendChild(heading);
+
+                question.options.forEach((option, optionIndex) => {
+
+                    const label = document.createElement("label");
+
+                    const input = document.createElement("input");
+
+                    input.type = "radio";
+                    input.name = `question-${index}`;
+                    input.value = optionIndex;
+
+                    const text = document.createElement("span");
+
+                    text.textContent = option;
+
+                    label.appendChild(input);
+                    label.appendChild(text);
+
+                    card.appendChild(label);
+
+                });
+
+                const result = document.createElement("div");
+
+                result.className = "question-result";
+
+                result.id = `result-${index}`;
+
+                card.appendChild(result);
+
+                questionsContainer.appendChild(card);
+
+            });
+
+        }
+
+
+        function submitAssessment() {
+
+            let score = 0;
+
+            let unanswered = 0;
+
+            questions.forEach((question, index) => {
+
+                const selected = document.querySelector(
+                    `input[name="question-${index}"]:checked`
+                );
+
+                const result = document.getElementById(
+                    `result-${index}`
+                );
+
+                result.className = "question-result";
+
+                const correctAnswer =
+                    question.options[question.answer];
+
+                const isCorrect =
+                    selected &&
+                    Number(selected.value) === question.answer;
+
+                if (!selected) {
+                    unanswered++;
+                }
+
+                if (isCorrect) {
+                    score++;
+                    result.classList.add("correct");
+                } else {
+                    result.classList.add("incorrect");
+                }
+
+                const status = isCorrect
+                    ? "Correct Answer"
+                    : "Incorrect Answer";
+
+                const selectedText = selected
+                    ? question.options[Number(selected.value)]
+                    : "No answer selected";
+
+                result.replaceChildren();
+
+                const statusHeading =
+                    document.createElement("strong");
+
+                statusHeading.textContent = status;
+
+                const selectedParagraph =
+                    document.createElement("p");
+
+                selectedParagraph.textContent =
+                    `Your answer: ${selectedText}`;
+
+                const correctParagraph =
+                    document.createElement("p");
+
+                correctParagraph.textContent =
+                    `Correct answer: ${correctAnswer}`;
+
+                const explanationParagraph =
+                    document.createElement("p");
+
+                explanationParagraph.textContent =
+                    `Explanation: ${question.explanation}`;
+
+                result.appendChild(statusHeading);
+                result.appendChild(selectedParagraph);
+                result.appendChild(correctParagraph);
+                result.appendChild(explanationParagraph);
+
+            });
+
+            scorePanel.style.display = "block";
+
+            scoreText.textContent =
+                `Your Score: ${score} / ${questions.length}`;
+
+            if (score === 10) {
+
+                scoreMessage.textContent =
+                    "Excellent! You demonstrated a strong understanding of maritime cybersecurity and cyber resilience.";
+
+            } else if (score >= 7) {
+
+                scoreMessage.textContent =
+                    "Very good performance. Review the explanations to strengthen your technical understanding.";
+
+            } else if (score >= 5) {
+
+                scoreMessage.textContent =
+                    "Good start. Revisit the relevant sections and focus on the concepts behind the incorrect answers.";
+
+            } else {
+
+                scoreMessage.textContent =
+                    "You need more practice. Review the learning material and try the assessment again.";
+
+            }
+
+            if (unanswered > 0) {
+
+                scoreMessage.textContent +=
+                    ` You left ${unanswered} question(s) unanswered.`;
+
+            }
+
+            scorePanel.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        }
+
+
+        function resetAssessment() {
+
+            renderQuestions();
+
+            scorePanel.style.display = "none";
+
+            document.getElementById("assessment")
+                .scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+        }
+
+
+        document.getElementById("submitQuiz")
+            .addEventListener("click", submitAssessment);
+
+        document.getElementById("resetQuiz")
+            .addEventListener("click", resetAssessment);
+
+
+        renderQuestions();
+
+    </script>
+
+</body>
+</html>

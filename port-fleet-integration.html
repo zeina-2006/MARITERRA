@@ -1,0 +1,1892 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore how integrated digital systems support port operations, fleet management, vessel coordination, logistics, and maritime information exchange.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Port & Fleet Operations</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --card: rgba(13, 16, 38, 0.9);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --blue: #2563eb;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.2);
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 22, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--muted);
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 105px 0 90px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 25%, rgba(147, 51, 234, 0.2), transparent 35%),
+                radial-gradient(circle at 15% 80%, rgba(37, 99, 235, 0.13), transparent 30%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            max-width: 900px;
+            font-size: clamp(2.4rem, 6vw, 4.6rem);
+            line-height: 1.13;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero-description {
+            max-width: 780px;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(13, 16, 38, 0.7);
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 0.83rem;
+        }
+
+        /* MAIN CONTENT */
+
+        main {
+            padding: 65px 0 90px;
+        }
+
+        .content-section {
+            margin-bottom: 65px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(1.65rem, 4vw, 2.25rem);
+            color: var(--white);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 850px;
+            margin-bottom: 25px;
+        }
+
+        .content-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 27px;
+            margin-bottom: 20px;
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: var(--text);
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 23px;
+            margin-top: 12px;
+        }
+
+        .content-card li {
+            margin-bottom: 9px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .small-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 23px;
+            border-radius: 13px;
+            transition: var(--transition);
+        }
+
+        .small-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--purple);
+        }
+
+        .small-card h3 {
+            color: var(--purple-light);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .small-card p {
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .highlight {
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+            padding: 19px 22px;
+            border-radius: 0 10px 10px 0;
+            margin: 22px 0;
+        }
+
+        .highlight strong {
+            color: var(--purple-light);
+        }
+
+        /* PROCESS */
+
+        .process-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .process-step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+        }
+
+        .process-step .step-number {
+            color: var(--purple-light);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .process-step h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* FLOW */
+
+        .flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 25px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .flow-node {
+            padding: 13px 17px;
+            background: rgba(147, 51, 234, 0.12);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 9px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .flow-arrow {
+            color: var(--purple-light);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            background: var(--card);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        /* SCENARIO */
+
+        .scenario {
+            background: linear-gradient(
+                135deg,
+                rgba(147, 51, 234, 0.13),
+                rgba(37, 99, 235, 0.08)
+            );
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 28px;
+        }
+
+        .scenario h3 {
+            color: var(--purple-light);
+            margin-bottom: 14px;
+        }
+
+        .scenario p {
+            margin-bottom: 12px;
+        }
+
+        /* QUIZ */
+
+        .quiz-container {
+            background: rgba(13, 16, 38, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 30px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .question {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question h3 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            margin-right: 7px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid rgba(156, 163, 175, 0.17);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option span {
+            color: var(--text);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 23px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7e22ce;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            background: #20243a;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple);
+        }
+
+        .result {
+            display: none;
+            margin-top: 28px;
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .score-number {
+            font-size: 2.7rem;
+            color: var(--purple-light);
+            font-weight: 800;
+        }
+
+        .answer-review {
+            padding: 18px;
+            margin-bottom: 13px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .answer-review.correct {
+            border-left: 4px solid #22c55e;
+        }
+
+        .answer-review.incorrect {
+            border-left: 4px solid #ef4444;
+        }
+
+        .answer-review h4 {
+            margin-bottom: 9px;
+        }
+
+        .answer-review p {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .correct-text {
+            color: #4ade80 !important;
+        }
+
+        .incorrect-text {
+            color: #f87171 !important;
+        }
+
+        /* REFERENCES AND FOOTER */
+
+        .references li {
+            overflow-wrap: anywhere;
+            margin-bottom: 13px;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .grid,
+            .process-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 75px 0 65px;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .nav-content {
+                min-height: 66px;
+            }
+
+            .logo {
+                font-size: 1.05rem;
+            }
+
+            .back-link {
+                font-size: 0.85rem;
+            }
+
+            .flow {
+                flex-direction: column;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">MARITERRA<span>.</span></a>
+
+            <a href="technology-integration.html" class="back-link">
+                ← Back to Technology Integration
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="eyebrow">Topic 08 · Technology Integration</div>
+
+            <h1>
+                Integration in <span>Port & Fleet Operations</span>
+            </h1>
+
+            <p class="hero-description">
+                Explore how connected digital systems support port
+                coordination, vessel scheduling, fleet management,
+                logistics, and the exchange of operational information
+                between maritime stakeholders.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">Port Operations</span>
+                <span class="meta-item">Fleet Management</span>
+                <span class="meta-item">Digital Logistics</span>
+                <span class="meta-item">Operational Integration</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="content-section">
+            <div class="section-number">01 — INTRODUCTION</div>
+            <h2 class="section-title">Understanding Port and Fleet Integration</h2>
+
+            <p class="section-intro">
+                Maritime operations involve many organizations and
+                interconnected activities. Ships, ports, terminals,
+                shipping companies, logistics providers, and public
+                authorities all generate and use operational information.
+            </p>
+
+            <div class="content-card">
+                <h3>What is Port Operations Integration?</h3>
+                <p>
+                    Port operations integration is the coordination of
+                    information and activities across port authorities,
+                    terminals, shipping agents, service providers,
+                    customs, and other stakeholders. Digital platforms
+                    help these parties exchange information and coordinate
+                    port-related processes.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What is Fleet Management Integration?</h3>
+                <p>
+                    Fleet management integration connects information
+                    about multiple vessels with the systems used by
+                    shipping companies and fleet operators. It can
+                    support vessel scheduling, voyage monitoring,
+                    maintenance planning, fuel analysis, and operational
+                    reporting.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <strong>Core concept:</strong>
+                Integration does not mean that every organization uses
+                one identical system. It means that separate systems
+                can exchange relevant information through agreed
+                processes, interfaces, and data standards.
+            </div>
+        </section>
+
+        <!-- 02 PORT STAKEHOLDERS -->
+
+        <section class="content-section">
+            <div class="section-number">02 — PORT STAKEHOLDERS</div>
+            <h2 class="section-title">The Main Participants in Port Operations</h2>
+
+            <p class="section-intro">
+                A port call requires coordination between several parties.
+                Their responsibilities and information needs differ,
+                but their activities are connected.
+            </p>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Port Authorities</h3>
+                    <p>
+                        Manage port administration, access requirements,
+                        port infrastructure, and coordination with
+                        relevant maritime services.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Terminal Operators</h3>
+                    <p>
+                        Manage terminal activities such as berth
+                        operations, container handling, yard planning,
+                        and cargo movement.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Shipping Companies</h3>
+                    <p>
+                        Manage vessel schedules, voyages, cargo services,
+                        fleet resources, and communication with
+                        operational partners.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Shipping Agents</h3>
+                    <p>
+                        Coordinate vessel-related administrative and
+                        operational arrangements on behalf of shipowners
+                        or operators.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Nautical Service Providers</h3>
+                    <p>
+                        Provide services such as pilotage, towage,
+                        mooring, and other support required during
+                        port calls.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Customs and Public Authorities</h3>
+                    <p>
+                        Process regulatory information and declarations
+                        related to vessels, crew, passengers, cargo,
+                        and port entry requirements.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Freight and Logistics Operators</h3>
+                    <p>
+                        Coordinate cargo movements, transport planning,
+                        documentation, and connections between ports
+                        and inland transport networks.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Fleet Management Teams</h3>
+                    <p>
+                        Monitor vessel performance, schedules,
+                        maintenance information, resource planning,
+                        and fleet-wide operational indicators.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 PORT SYSTEMS -->
+
+        <section class="content-section">
+            <div class="section-number">03 — PORT DIGITAL SYSTEMS</div>
+            <h2 class="section-title">Digital Systems Used in Ports</h2>
+
+            <div class="content-card">
+                <h3>Port Community System (PCS)</h3>
+                <p>
+                    A Port Community System is a digital platform that
+                    facilitates the exchange of information between
+                    organizations involved in port and logistics
+                    activities. Depending on its implementation, it
+                    may connect shipping lines, port authorities,
+                    customs, terminal operators, freight forwarders,
+                    and transport providers.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Port Management Information System (PMIS)</h3>
+                <p>
+                    A Port Management Information System supports
+                    port management activities. Its functions may
+                    include vessel information, port resources,
+                    operational coordination, administrative records,
+                    and management reporting.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Terminal Operating System (TOS)</h3>
+                <p>
+                    A Terminal Operating System manages terminal
+                    processes. Depending on the terminal, this may
+                    include vessel planning, container moves,
+                    yard allocation, equipment assignments, and
+                    gate operations.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Vessel Traffic Services (VTS)</h3>
+                <p>
+                    Vessel Traffic Services are shore-based services
+                    established by competent authorities to improve
+                    vessel traffic safety and efficiency and to protect
+                    the environment. VTS may use radar, AIS,
+                    communications, and other information sources
+                    as appropriate.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Maritime Single Window (MSW)</h3>
+                <p>
+                    A Maritime Single Window is a digital entry point
+                    for submitting information required by public
+                    authorities in connection with a ship's arrival,
+                    stay, and departure from a port. It helps reduce
+                    repeated submissions of the same regulatory data.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <strong>Important distinction:</strong>
+                PCS, PMIS, TOS, VTS, and MSW are not interchangeable
+                names. Their functions and scope differ, even when
+                they exchange information or are connected in a
+                wider port digital environment.
+            </div>
+        </section>
+
+        <!-- 04 FLEET SYSTEMS -->
+
+        <section class="content-section">
+            <div class="section-number">04 — FLEET MANAGEMENT SYSTEMS</div>
+            <h2 class="section-title">Digital Systems Used in Fleet Management</h2>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Fleet Management Platforms</h3>
+                    <p>
+                        Bring together selected vessel information
+                        to support fleet-wide monitoring, planning,
+                        and operational reporting.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Voyage Management Systems</h3>
+                    <p>
+                        Support voyage planning, route information,
+                        estimated arrival times, voyage records,
+                        and operational updates.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Planned Maintenance Systems</h3>
+                    <p>
+                        Organize maintenance tasks, service intervals,
+                        work orders, equipment records, and maintenance
+                        history.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Performance Monitoring Systems</h3>
+                    <p>
+                        Analyze selected operational indicators such
+                        as fuel consumption, speed, engine performance,
+                        and voyage efficiency.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Electronic Reporting Systems</h3>
+                    <p>
+                        Support the preparation, storage, and exchange
+                        of operational reports and relevant vessel
+                        information.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Fleet Communication Platforms</h3>
+                    <p>
+                        Support communication between vessels,
+                        shore-based teams, technical departments,
+                        and operational management.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 OPERATIONAL DATA -->
+
+        <section class="content-section">
+            <div class="section-number">05 — OPERATIONAL DATA EXCHANGE</div>
+            <h2 class="section-title">Information Shared Across Port and Fleet Systems</h2>
+
+            <p class="section-intro">
+                Integrated operations depend on timely, meaningful,
+                and appropriately authorized information exchange.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Information Category</th>
+                            <th>Examples</th>
+                            <th>Operational Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vessel Schedule</td>
+                            <td>ETA, ETD, voyage number</td>
+                            <td>Arrival and departure planning</td>
+                        </tr>
+                        <tr>
+                            <td>Berth Information</td>
+                            <td>Berth allocation, berth window</td>
+                            <td>Resource and berth coordination</td>
+                        </tr>
+                        <tr>
+                            <td>Nautical Services</td>
+                            <td>Pilotage, towage, mooring times</td>
+                            <td>Coordinating port call services</td>
+                        </tr>
+                        <tr>
+                            <td>Cargo Information</td>
+                            <td>Loading, discharge, container moves</td>
+                            <td>Terminal and logistics planning</td>
+                        </tr>
+                        <tr>
+                            <td>Fleet Performance</td>
+                            <td>Fuel, speed, machinery indicators</td>
+                            <td>Performance and efficiency analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance Information</td>
+                            <td>Work orders, equipment status</td>
+                            <td>Maintenance planning</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory Information</td>
+                            <td>Declarations, crew and vessel details</td>
+                            <td>Administrative clearance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight">
+                <strong>Data ownership matters:</strong>
+                The organization that creates or maintains a data item
+                may be different from the organization that consumes it.
+                Systems need clear responsibilities for updates,
+                corrections, permissions, and authoritative records.
+            </div>
+        </section>
+
+        <!-- 06 PORT CALL -->
+
+        <section class="content-section">
+            <div class="section-number">06 — PORT CALL COORDINATION</div>
+            <h2 class="section-title">How Digital Integration Supports a Port Call</h2>
+
+            <p class="section-intro">
+                A port call is not a single action. It involves a
+                sequence of planned and actual events that require
+                coordination between vessel operators, ports,
+                terminals, and service providers.
+            </p>
+
+            <div class="process-list">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3>Arrival Planning</h3>
+                    <p>
+                        The vessel operator communicates voyage
+                        information and an estimated time of arrival.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3>Berth Coordination</h3>
+                    <p>
+                        The port and terminal coordinate berth
+                        availability and operational requirements.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3>Service Planning</h3>
+                    <p>
+                        Relevant providers coordinate pilotage,
+                        towage, mooring, and other services.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <h3>Port Entry</h3>
+                    <p>
+                        The vessel follows applicable traffic,
+                        navigation, and port-entry procedures.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">05</div>
+                    <h3>Cargo Operations</h3>
+                    <p>
+                        Terminal teams coordinate loading,
+                        discharge, equipment, and yard activities.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">06</div>
+                    <h3>Departure Planning</h3>
+                    <p>
+                        Operational parties coordinate readiness,
+                        required services, and departure information.
+                    </p>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>ETA, ETD, and actual timestamps:</strong>
+                Estimated times are predictions, planned times reflect
+                agreed schedules, and actual times record events that
+                have occurred. These values should not be treated as
+                interchangeable.
+            </div>
+        </section>
+
+        <!-- 07 INTEGRATION ARCHITECTURE -->
+
+        <section class="content-section">
+            <div class="section-number">07 — INTEGRATION ARCHITECTURE</div>
+            <h2 class="section-title">How Port and Fleet Systems Connect</h2>
+
+            <p class="section-intro">
+                Integration can take place through APIs, electronic
+                data interchange, shared platforms, and other
+                controlled communication methods.
+            </p>
+
+            <div class="flow">
+                <div class="flow-node">Vessel Systems</div>
+                <div class="flow-arrow">↔</div>
+                <div class="flow-node">Shipping Company</div>
+                <div class="flow-arrow">↔</div>
+                <div class="flow-node">Integration Layer</div>
+                <div class="flow-arrow">↔</div>
+                <div class="flow-node">Port Systems</div>
+                <div class="flow-arrow">↔</div>
+                <div class="flow-node">Terminal & Service Providers</div>
+            </div>
+
+            <div class="content-card" style="margin-top:22px;">
+                <h3>Application Programming Interfaces (APIs)</h3>
+                <p>
+                    APIs define how software applications request,
+                    exchange, and provide information. They can support
+                    structured communication between port, carrier,
+                    terminal, and logistics systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Electronic Data Interchange (EDI)</h3>
+                <p>
+                    EDI enables organizations to exchange structured
+                    business documents electronically using agreed
+                    formats and message standards.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Data Standards and Common Definitions</h3>
+                <p>
+                    Systems need consistent definitions for vessel
+                    identifiers, locations, events, timestamps,
+                    service types, and operational status. Without
+                    common meanings, technically successful data
+                    exchange can still produce misunderstandings.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Integration Middleware</h3>
+                <p>
+                    Middleware can help connect applications by
+                    managing message routing, data transformation,
+                    interface coordination, and communication between
+                    systems that were not originally designed to work
+                    together.
+                </p>
+            </div>
+        </section>
+
+        <!-- 08 JUST IN TIME -->
+
+        <section class="content-section">
+            <div class="section-number">08 — JUST-IN-TIME OPERATIONS</div>
+            <h2 class="section-title">Just-in-Time Arrival and Port Call Optimization</h2>
+
+            <div class="content-card">
+                <h3>What is Just-in-Time Arrival?</h3>
+                <p>
+                    Just-in-Time arrival is an approach in which a
+                    vessel adjusts its voyage planning and speed,
+                    where safe and operationally appropriate, to
+                    arrive when the required port services or berth
+                    are expected to be available.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>How Does Digital Integration Help?</h3>
+                <ul>
+                    <li>Shares updated estimated arrival information.</li>
+                    <li>Improves coordination between vessels, ports, and terminals.</li>
+                    <li>Supports berth and service planning.</li>
+                    <li>Helps reduce avoidable waiting and unnecessary schedule uncertainty.</li>
+                    <li>Can support more efficient voyage planning and fuel use.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>Safety limitation:</strong>
+                Just-in-Time arrival is not permission to compromise
+                safe navigation or required speed and traffic procedures.
+                Weather, sea conditions, navigational safety, and
+                operational constraints remain essential.
+            </div>
+        </section>
+
+        <!-- 09 FLEET-WIDE MANAGEMENT -->
+
+        <section class="content-section">
+            <div class="section-number">09 — FLEET-WIDE MANAGEMENT</div>
+            <h2 class="section-title">Managing Multiple Vessels as a Connected Fleet</h2>
+
+            <p class="section-intro">
+                Fleet integration allows shore-based teams to examine
+                selected information from multiple vessels and use it
+                for planning, analysis, and coordination.
+            </p>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Voyage Planning</h3>
+                    <p>
+                        Compare planned and updated voyage information
+                        to support fleet scheduling and operational
+                        coordination.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Performance Comparison</h3>
+                    <p>
+                        Analyze selected indicators across vessels
+                        while accounting for differences in vessel
+                        type, route, load, and operating conditions.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Maintenance Coordination</h3>
+                    <p>
+                        Review maintenance schedules, equipment
+                        condition reports, and planned service
+                        requirements across the fleet.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Fuel and Energy Management</h3>
+                    <p>
+                        Examine consumption trends and operational
+                        factors that influence vessel energy use.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Resource Planning</h3>
+                    <p>
+                        Coordinate crew, technical support, supplies,
+                        and operational resources where appropriate.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Operational Reporting</h3>
+                    <p>
+                        Combine selected fleet information into
+                        reports that support management and analysis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10 PERFORMANCE INDICATORS -->
+
+        <section class="content-section">
+            <div class="section-number">10 — PERFORMANCE INDICATORS</div>
+            <h2 class="section-title">Measuring Port and Fleet Performance</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>What It Measures</th>
+                            <th>Where It Can Be Used</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Port Turnaround Time</td>
+                            <td>Time spent by a vessel during a defined port call period</td>
+                            <td>Port and vessel operations</td>
+                        </tr>
+                        <tr>
+                            <td>Berth Occupancy</td>
+                            <td>Use of berth capacity over a defined period</td>
+                            <td>Port planning</td>
+                        </tr>
+                        <tr>
+                            <td>Waiting Time</td>
+                            <td>Time spent waiting before a defined operation</td>
+                            <td>Port call analysis</td>
+                        </tr>
+                        <tr>
+                            <td>Schedule Reliability</td>
+                            <td>How closely actual events match planned schedules</td>
+                            <td>Fleet and logistics</td>
+                        </tr>
+                        <tr>
+                            <td>Fuel Consumption</td>
+                            <td>Fuel used over a defined voyage or operating period</td>
+                            <td>Fleet performance</td>
+                        </tr>
+                        <tr>
+                            <td>Equipment Availability</td>
+                            <td>Whether equipment is available for intended use</td>
+                            <td>Terminal and vessel maintenance</td>
+                        </tr>
+                        <tr>
+                            <td>Maintenance Downtime</td>
+                            <td>Time equipment is unavailable due to maintenance</td>
+                            <td>Fleet management</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight">
+                <strong>Measurement warning:</strong>
+                A performance indicator needs a clear definition,
+                time period, data source, and calculation method.
+                Comparing two ports or vessels without accounting
+                for their different conditions can produce misleading
+                conclusions.
+            </div>
+        </section>
+
+        <!-- 11 CYBERSECURITY -->
+
+        <section class="content-section">
+            <div class="section-number">11 — CYBERSECURITY AND RESILIENCE</div>
+            <h2 class="section-title">Securing Connected Port and Fleet Systems</h2>
+
+            <div class="content-card">
+                <h3>Access Management</h3>
+                <p>
+                    Access should be limited according to organizational
+                    roles and operational responsibilities. Not every
+                    participant needs access to every system or data item.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Network Segmentation</h3>
+                <p>
+                    Separating networks and system zones can help limit
+                    unnecessary connectivity between business IT,
+                    operational technology, and external networks.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Secure Data Exchange</h3>
+                <p>
+                    Authentication, authorization, encryption, and
+                    appropriate interface security help protect
+                    information exchanged between organizations.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Monitoring and Incident Response</h3>
+                <p>
+                    Organizations should monitor relevant systems,
+                    investigate suspicious activity, maintain incident
+                    response procedures, and coordinate recovery when
+                    a disruption occurs.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Business Continuity</h3>
+                <p>
+                    Critical port and fleet processes need suitable
+                    backup arrangements, recovery procedures, and
+                    alternative communication methods for periods
+                    when digital services are unavailable.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <strong>Integration increases dependencies:</strong>
+                Connecting systems can improve coordination, but it
+                can also create additional pathways through which
+                failures or cyber incidents may affect connected
+                organizations. Integration must be designed with
+                security and resilience in mind.
+            </div>
+        </section>
+
+        <!-- 12 PRACTICAL SCENARIO -->
+
+        <section class="content-section">
+            <div class="section-number">12 — PRACTICAL APPLICATION</div>
+            <h2 class="section-title">Practical Case: Coordinating a Container Vessel Port Call</h2>
+
+            <div class="scenario">
+                <h3>Operational Scenario</h3>
+
+                <p>
+                    A container vessel is approaching a commercial port.
+                    Its shipping company updates the estimated time
+                    of arrival through its operational system.
+                </p>
+
+                <p>
+                    The relevant port and terminal systems receive
+                    the updated information through an agreed
+                    electronic interface. The terminal reviews berth
+                    availability and updates its operational plan.
+                </p>
+
+                <p>
+                    Nautical service providers receive the information
+                    needed to coordinate pilotage, towage, and mooring.
+                    The shipping agent coordinates the required
+                    administrative arrangements with the relevant
+                    authorities.
+                </p>
+
+                <p>
+                    During the port call, actual event timestamps and
+                    relevant operational updates are shared with
+                    authorized participants. The terminal coordinates
+                    cargo handling and records completed operations.
+                </p>
+
+                <p>
+                    After departure, the fleet management team can
+                    review the actual port call duration, schedule
+                    performance, and relevant voyage information.
+                </p>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>What Does This Example Demonstrate?</h3>
+                <ul>
+                    <li>Multiple organizations contribute to one port call.</li>
+                    <li>Each digital system has a defined operational role.</li>
+                    <li>Updated information supports coordination and planning.</li>
+                    <li>Standardized exchange can reduce inconsistent communication.</li>
+                    <li>Historical records support performance analysis.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 13 CHALLENGES -->
+
+        <section class="content-section">
+            <div class="section-number">13 — CHALLENGES AND LIMITATIONS</div>
+            <h2 class="section-title">Challenges of Port and Fleet Integration</h2>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Legacy Systems</h3>
+                    <p>
+                        Older applications may use technologies
+                        or data structures that are difficult
+                        to connect with modern platforms.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Inconsistent Data</h3>
+                    <p>
+                        Different identifiers, timestamps,
+                        formats, and definitions can create
+                        conflicting information.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Organizational Barriers</h3>
+                    <p>
+                        Different stakeholders may have separate
+                        procedures, responsibilities, and
+                        information-sharing policies.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Connectivity Limitations</h3>
+                    <p>
+                        Vessels may experience limited or
+                        interrupted connectivity during voyages.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Cybersecurity Exposure</h3>
+                    <p>
+                        More connections can increase the
+                        number of interfaces that need protection.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Implementation Costs</h3>
+                    <p>
+                        Integration may require investment in
+                        software, infrastructure, training,
+                        maintenance, and governance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 14 FUTURE -->
+
+        <section class="content-section">
+            <div class="section-number">14 — FUTURE DEVELOPMENTS</div>
+            <h2 class="section-title">The Future of Connected Port and Fleet Operations</h2>
+
+            <div class="content-card">
+                <h3>Digital Twins</h3>
+                <p>
+                    Digital twins can represent selected physical
+                    assets or processes using connected data and
+                    analytical models. In maritime applications,
+                    they may support simulation, performance analysis,
+                    and operational planning.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Artificial Intelligence</h3>
+                <p>
+                    AI can support forecasting, pattern recognition,
+                    resource planning, and selected decision-support
+                    applications. Its outputs still require validation
+                    and appropriate human oversight.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Advanced Port Call Optimization</h3>
+                <p>
+                    More standardized and timely information exchange
+                    may improve the coordination of vessels, berths,
+                    nautical services, and terminal activities.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Connected Logistics Ecosystems</h3>
+                <p>
+                    Improved data exchange between maritime,
+                    port, customs, and inland transport systems
+                    can support better visibility across supply
+                    chain operations.
+                </p>
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section class="content-section">
+            <div class="section-number">15 — SCIENTIFIC REFERENCES</div>
+            <h2 class="section-title">References and Further Reading</h2>
+
+            <div class="content-card references">
+                <ol>
+                    <li>
+                        International Maritime Organization (IMO).
+                        <strong>Maritime Single Window.</strong>
+                        <br>
+                        <a href="https://www.imo.org/en/ourwork/facilitation/pages/maritimesinglewindow-default.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IMO Maritime Single Window
+                        </a>
+                    </li>
+
+                    <li>
+                        International Maritime Organization (IMO).
+                        <strong>FAL-related Guidance.</strong>
+                        <br>
+                        <a href="https://www.imo.org/en/ourwork/facilitation/pages/falguidance-default.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO Facilitation Guidelines
+                        </a>
+                    </li>
+
+                    <li>
+                        Digital Container Shipping Association (DCSA).
+                        <strong>Port Call Standard.</strong>
+                        <br>
+                        <a href="https://dcsa.org/standards/port-call"
+                           target="_blank" rel="noopener noreferrer">
+                            Official DCSA Port Call Standard
+                        </a>
+                    </li>
+
+                    <li>
+                        Digital Container Shipping Association (DCSA).
+                        <strong>Operational Vessel Schedules.</strong>
+                        <br>
+                        <a href="https://dcsa.org/standards/operational-vessel-schedules"
+                           target="_blank" rel="noopener noreferrer">
+                            Official DCSA Operational Vessel Schedules
+                        </a>
+                    </li>
+
+                    <li>
+                        International Association of Ports and Harbors (IAPH).
+                        <strong>World Ports Tracker.</strong>
+                        <br>
+                        <a href="https://www.iaphworldports.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IAPH Website
+                        </a>
+                    </li>
+
+                    <li>
+                        International Maritime Organization (IMO).
+                        <strong>Vessel Traffic Services.</strong>
+                        <br>
+                        <a href="https://www.imo.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IMO Website
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ASSESSMENT -->
+
+        <section class="content-section" id="assessment">
+            <div class="section-number">FINAL ASSESSMENT</div>
+            <h2 class="section-title">Knowledge Assessment</h2>
+
+            <p class="section-intro">
+                Test your understanding of integrated port and fleet
+                operations. This assessment contains 10 questions
+                covering systems, stakeholders, data exchange,
+                coordination, and cybersecurity.
+            </p>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    Select one answer for each question, then submit
+                    your assessment to review your score and explanations.
+                </p>
+
+                <form id="quizForm">
+                    <div id="questionsContainer"></div>
+
+                    <div class="quiz-actions">
+                        <button type="submit" class="btn btn-primary">
+                            Submit Assessment
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" id="resetQuiz">
+                            Reset Assessment
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="result" aria-live="polite">
+                    <div class="score-box">
+                        <div class="score-number" id="scoreNumber">0/10</div>
+                        <h3 id="scoreMessage"></h3>
+                        <p id="scoreDetails"></p>
+                    </div>
+
+                    <h3 style="margin-bottom:18px;color:var(--purple-light);">
+                        Answer Review & Explanations
+                    </h3>
+
+                    <div id="reviewContainer"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                MARITERRA — Maritime Technology & Knowledge Platform
+            </p>
+
+            <p>
+                Designed and Developed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What is the main purpose of integrating port and fleet operations?",
+                options: [
+                    "To make every organization use the same software",
+                    "To coordinate information and activities between connected stakeholders",
+                    "To remove all human involvement",
+                    "To replace vessels with automated systems"
+                ],
+                answer: 1,
+                explanation: "Integration connects separate systems and organizations so relevant operational information can be exchanged and activities coordinated."
+            },
+            {
+                question: "Which system primarily facilitates information exchange between organizations in a port community?",
+                options: [
+                    "Port Community System (PCS)",
+                    "Gyrocompass",
+                    "Engine control unit",
+                    "Electronic chart display"
+                ],
+                answer: 0,
+                explanation: "A Port Community System facilitates digital information exchange among organizations involved in port and logistics activities."
+            },
+            {
+                question: "What is the primary role of a Terminal Operating System (TOS)?",
+                options: [
+                    "Managing terminal processes such as cargo and yard operations",
+                    "Controlling the weather",
+                    "Replacing maritime authorities",
+                    "Managing crew medical records only"
+                ],
+                answer: 0,
+                explanation: "A TOS supports terminal activities, which may include vessel planning, cargo moves, yard allocation, and equipment coordination."
+            },
+            {
+                question: "What does a Maritime Single Window provide?",
+                options: [
+                    "A single digital entry point for required information submitted to public authorities",
+                    "A system for controlling ship engines",
+                    "A replacement for all port navigation services",
+                    "A platform exclusively for cargo tracking"
+                ],
+                answer: 0,
+                explanation: "The MSW supports electronic submission and exchange of regulatory information related to ship arrival, stay, and departure."
+            },
+            {
+                question: "Which information is particularly important for coordinating a port call?",
+                options: [
+                    "Vessel arrival estimates and berth information",
+                    "The personal preferences of every passenger",
+                    "The color of terminal buildings",
+                    "Unrelated historical weather records only"
+                ],
+                answer: 0,
+                explanation: "Arrival estimates, berth availability, and service schedules help relevant parties coordinate port call activities."
+            },
+            {
+                question: "What is the main purpose of Just-in-Time arrival?",
+                options: [
+                    "To make vessels travel at maximum speed",
+                    "To coordinate vessel arrival with the expected availability of port services or berth",
+                    "To eliminate all port procedures",
+                    "To guarantee that weather conditions will remain unchanged"
+                ],
+                answer: 1,
+                explanation: "Just-in-Time arrival supports better timing and coordination, where safe and operationally appropriate, to reduce avoidable waiting."
+            },
+            {
+                question: "Why are common data definitions and standards important?",
+                options: [
+                    "They make every database identical",
+                    "They help different systems interpret exchanged information consistently",
+                    "They remove the need for cybersecurity",
+                    "They prevent all operational delays"
+                ],
+                answer: 1,
+                explanation: "Common definitions reduce ambiguity and help connected systems interpret identifiers, events, timestamps, and other information consistently."
+            },
+            {
+                question: "Which activity is an example of fleet management integration?",
+                options: [
+                    "Comparing selected fuel and maintenance indicators across vessels",
+                    "Managing only one port's building maintenance",
+                    "Replacing every vessel's navigation equipment",
+                    "Publishing unrelated public announcements"
+                ],
+                answer: 0,
+                explanation: "Fleet management integration can bring together selected information from multiple vessels for performance analysis, maintenance planning, and operational coordination."
+            },
+            {
+                question: "What is one cybersecurity risk created by connecting multiple operational systems?",
+                options: [
+                    "There are no additional risks",
+                    "Additional interfaces may create more pathways that need protection",
+                    "All data becomes automatically encrypted",
+                    "Every connected organization receives identical permissions"
+                ],
+                answer: 1,
+                explanation: "More system connections can increase the attack surface and create dependencies, so interfaces and access must be properly secured."
+            },
+            {
+                question: "A vessel's arrival time changes. What is the best integrated operational response?",
+                options: [
+                    "Ignore the update until the vessel reaches the port",
+                    "Update relevant authorized stakeholders and review affected berth and service plans",
+                    "Delete the original schedule without keeping a record",
+                    "Assume that all port services will automatically adjust"
+                ],
+                answer: 1,
+                explanation: "Timely updates allow authorized parties to review berth, pilotage, towage, terminal, and other arrangements. The affected plans may need coordinated revision."
+            }
+        ];
+
+        const questionsContainer =
+            document.getElementById("questionsContainer");
+
+        const quizForm =
+            document.getElementById("quizForm");
+
+        const result =
+            document.getElementById("result");
+
+        const reviewContainer =
+            document.getElementById("reviewContainer");
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = quizQuestions.map((q, index) => `
+                <div class="question">
+                    <h3>
+                        <span class="question-number">Q${index + 1}.</span>
+                        ${q.question}
+                    </h3>
+
+                    ${q.options.map((option, optionIndex) => `
+                        <label class="option">
+                            <input
+                                type="radio"
+                                name="question${index}"
+                                value="${optionIndex}"
+                            >
+                            <span>${option}</span>
+                        </label>
+                    `).join("")}
+                </div>
+            `).join("");
+        }
+
+        quizForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const answers = quizQuestions.map((q, index) => {
+                const selected = document.querySelector(
+                    `input[name="question${index}"]:checked`
+                );
+
+                return selected ? Number(selected.value) : null;
+            });
+
+            const unanswered =
+                answers.filter(answer => answer === null).length;
+
+            if (unanswered > 0) {
+                alert(
+                    `Please answer all questions. Remaining: ${unanswered}`
+                );
+
+                const firstMissing =
+                    answers.findIndex(answer => answer === null);
+
+                document.querySelectorAll(".question")[firstMissing]
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                return;
+            }
+
+            let score = 0;
+
+            quizQuestions.forEach((q, index) => {
+                if (answers[index] === q.answer) {
+                    score++;
+                }
+            });
+
+            document.getElementById("scoreNumber").textContent =
+                `${score}/${quizQuestions.length}`;
+
+            let message = "";
+
+            if (score === 10) {
+                message = "Excellent — Outstanding Performance!";
+            } else if (score >= 8) {
+                message = "Very Good — Strong Understanding!";
+            } else if (score >= 6) {
+                message = "Good — Keep Improving!";
+            } else if (score >= 4) {
+                message = "Fair — Review the Topic Again.";
+            } else {
+                message = "More Study Needed — Try Again.";
+            }
+
+            document.getElementById("scoreMessage").textContent =
+                message;
+
+            document.getElementById("scoreDetails").textContent =
+                `You answered ${score} questions correctly and ${quizQuestions.length - score} incorrectly.`;
+
+            reviewContainer.innerHTML = quizQuestions.map((q, index) => {
+                const isCorrect = answers[index] === q.answer;
+
+                const selectedAnswer = q.options[answers[index]];
+                const correctAnswer = q.options[q.answer];
+
+                return `
+                    <div class="answer-review ${isCorrect ? "correct" : "incorrect"}">
+                        <h4>
+                            Question ${index + 1} —
+                            <span class="${isCorrect ? "correct-text" : "incorrect-text"}">
+                                ${isCorrect ? "Correct" : "Incorrect"}
+                            </span>
+                        </h4>
+
+                        <p>
+                            <strong>Question:</strong>
+                            ${q.question}
+                        </p>
+
+                        <p>
+                            <strong>Your answer:</strong>
+                            ${selectedAnswer}
+                        </p>
+
+                        <p>
+                            <strong>Correct answer:</strong>
+                            <span class="correct-text">${correctAnswer}</span>
+                        </p>
+
+                        <p>
+                            <strong>Explanation:</strong>
+                            ${q.explanation}
+                        </p>
+                    </div>
+                `;
+            }).join("");
+
+            result.style.display = "block";
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+
+        document.getElementById("resetQuiz")
+            .addEventListener("click", function() {
+                quizForm.reset();
+
+                result.style.display = "none";
+                reviewContainer.innerHTML = "";
+
+                document.getElementById("assessment")
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+            });
+
+        renderQuestions();
+    </script>
+
+</body>
+</html>

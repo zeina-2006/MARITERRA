@@ -1,0 +1,2159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explore AI-powered maritime collision avoidance, vessel encounter analysis, collision risk prediction and intelligent maritime safety systems.">
+<title>Collision Avoidance & Risk Prediction | MARITERRA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#070816;
+    --bg2:#0c0d20;
+    --panel:#111329;
+    --panel2:#171a36;
+    --purple:#9333ea;
+    --purple-light:#c4b5fd;
+    --blue:#38bdf8;
+    --text:#f4f2ff;
+    --muted:#a7a7c2;
+    --border:rgba(196,181,253,.16);
+    --green:#4ade80;
+    --orange:#fb923c;
+    --red:#fb7185;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+
+body{
+    background:
+    radial-gradient(circle at 80% 5%,rgba(147,51,234,.13),transparent 30%),
+    radial-gradient(circle at 5% 45%,rgba(56,189,248,.07),transparent 28%),
+    var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.75;
+    overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+::selection{background:var(--purple);color:white}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 6%;
+    background:rgba(7,8,22,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:3px;
+    color:var(--purple-light);
+}
+
+.back-btn{
+    border:1px solid rgba(196,181,253,.3);
+    padding:9px 17px;
+    border-radius:30px;
+    color:var(--purple-light);
+    transition:.3s;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.back-btn:hover{
+    background:var(--purple);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.hero{
+    min-height:540px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:90px 8%;
+    overflow:hidden;
+    border-bottom:1px solid var(--border);
+}
+
+.hero-content{max-width:850px;position:relative;z-index:2}
+
+.eyebrow{
+    color:var(--blue);
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(32px,5vw,65px);
+    line-height:1.2;
+    letter-spacing:-2px;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    background:linear-gradient(100deg,var(--purple-light),var(--purple),var(--blue));
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:720px;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.9;
+}
+
+.hero-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+.hero-tags span{
+    border:1px solid var(--border);
+    color:var(--purple-light);
+    padding:8px 13px;
+    border-radius:30px;
+    font-size:11px;
+    background:rgba(147,51,234,.08);
+}
+
+.radar{
+    position:absolute;
+    width:360px;
+    height:360px;
+    right:7%;
+    top:50%;
+    transform:translateY(-50%);
+    border:1px solid rgba(147,51,234,.3);
+    border-radius:50%;
+    background:
+    repeating-radial-gradient(circle,transparent 0 45px,rgba(147,51,234,.14) 46px 47px);
+}
+
+.radar:before{
+    content:"";
+    position:absolute;
+    width:50%;
+    height:50%;
+    top:0;
+    left:50%;
+    transform-origin:bottom left;
+    background:linear-gradient(135deg,rgba(56,189,248,.24),transparent 65%);
+    animation:radarSweep 5s linear infinite;
+    border-left:1px solid rgba(56,189,248,.4);
+}
+
+.radar:after{
+    content:"";
+    position:absolute;
+    inset:50%;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--purple-light);
+    box-shadow:0 0 20px var(--purple);
+}
+
+.radar-dot{
+    position:absolute;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 14px var(--blue);
+    animation:pulse 2s infinite;
+}
+
+.radar-dot.one{top:24%;left:65%}
+.radar-dot.two{top:68%;left:27%;animation-delay:.7s}
+.radar-dot.three{top:38%;left:20%;animation-delay:1.2s}
+
+@keyframes radarSweep{to{transform:rotate(360deg)}}
+@keyframes pulse{
+    0%,100%{opacity:.4;transform:scale(.8)}
+    50%{opacity:1;transform:scale(1.6)}
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:245px minmax(0,1fr);
+    gap:35px;
+    max-width:1450px;
+    margin:auto;
+    padding:55px 5%;
+}
+
+.sidebar{
+    position:sticky;
+    top:90px;
+    align-self:start;
+    max-height:calc(100vh - 110px);
+    overflow-y:auto;
+    padding:22px 17px;
+    background:rgba(17,19,41,.75);
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.sidebar h3{
+    font-family:'Orbitron',sans-serif;
+    font-size:12px;
+    color:var(--purple-light);
+    margin-bottom:17px;
+    letter-spacing:2px;
+}
+
+.sidebar a{
+    display:block;
+    padding:9px 10px;
+    margin:3px 0;
+    color:var(--muted);
+    font-size:12px;
+    border-radius:8px;
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    color:white;
+    background:rgba(147,51,234,.17);
+    padding-left:16px;
+}
+
+.content{min-width:0}
+
+.section{
+    margin-bottom:65px;
+    scroll-margin-top:100px;
+    opacity:0;
+    transform:translateY(22px);
+    animation:reveal .7s forwards;
+}
+
+.section:nth-child(2){animation-delay:.08s}
+.section:nth-child(3){animation-delay:.15s}
+
+@keyframes reveal{to{opacity:1;transform:translateY(0)}}
+
+.section-heading{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(21px,3vw,29px);
+    margin-bottom:20px;
+    line-height:1.4;
+}
+
+.section-heading span{color:var(--purple-light)}
+
+.section-intro{
+    color:var(--muted);
+    margin-bottom:25px;
+    max-width:900px;
+    font-size:14px;
+}
+
+.subheading{
+    color:var(--blue);
+    font-size:17px;
+    margin:28px 0 12px;
+    font-weight:700;
+}
+
+.text-block{
+    color:#c2c1d6;
+    font-size:14px;
+    margin-bottom:16px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:17px;
+    margin:25px 0;
+}
+
+.info-card{
+    padding:22px;
+    background:linear-gradient(145deg,rgba(23,26,54,.95),rgba(13,15,34,.95));
+    border:1px solid var(--border);
+    border-radius:15px;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card:before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:rgba(147,51,234,.13);
+    right:-45px;
+    top:-45px;
+    transition:.4s;
+}
+
+.info-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(147,51,234,.65);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.info-card:hover:before{transform:scale(2)}
+
+.card-icon{font-size:25px;margin-bottom:13px;position:relative}
+
+.info-card h3{
+    color:var(--purple-light);
+    font-size:15px;
+    margin-bottom:9px;
+}
+
+.info-card p{
+    font-size:12px;
+    color:var(--muted);
+    position:relative;
+}
+
+.formula{
+    background:rgba(147,51,234,.09);
+    border:1px solid rgba(147,51,234,.28);
+    border-left:3px solid var(--purple);
+    border-radius:10px;
+    padding:18px 20px;
+    margin:20px 0;
+    color:#e4ddff;
+    overflow-wrap:anywhere;
+}
+
+.formula strong{
+    display:block;
+    color:var(--purple-light);
+    margin-bottom:8px;
+}
+
+.formula code{color:var(--blue);font-size:13px;white-space:normal}
+
+.list{padding-left:22px;color:#c2c1d6;font-size:13px}
+.list li{margin:9px 0}
+
+.callout{
+    padding:20px;
+    background:linear-gradient(100deg,rgba(56,189,248,.07),rgba(147,51,234,.09));
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin:22px 0;
+    color:#d5d3e9;
+    font-size:13px;
+}
+
+.callout strong{color:var(--blue)}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+    gap:12px;
+    margin:25px 0;
+}
+
+.workflow-step{
+    text-align:center;
+    padding:18px 10px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:12px;
+}
+
+.workflow-step b{
+    display:block;
+    color:var(--purple-light);
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.workflow-step span{font-size:11px;color:var(--muted)}
+
+.comparison{
+    width:100%;
+    border-collapse:collapse;
+    margin:22px 0;
+    font-size:12px;
+}
+
+.comparison th,.comparison td{
+    padding:13px;
+    border:1px solid var(--border);
+    text-align:left;
+}
+
+.comparison th{color:var(--purple-light);background:rgba(147,51,234,.12)}
+.comparison td{color:#c7c5dc}
+
+.lab{
+    background:
+    radial-gradient(circle at 100% 0,rgba(147,51,234,.12),transparent 35%),
+    var(--panel);
+    border:1px solid rgba(147,51,234,.35);
+    padding:27px;
+    border-radius:20px;
+    margin-top:25px;
+}
+
+.lab h3{
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;
+    color:var(--purple-light);
+    margin-bottom:10px;
+}
+
+.lab-description{color:var(--muted);font-size:12px;margin-bottom:25px}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:18px;
+}
+
+.control{
+    padding:15px;
+    background:rgba(7,8,22,.65);
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.control label{display:block;color:#ded8ff;font-size:12px;margin-bottom:10px}
+.control input{width:100%;accent-color:var(--purple)}
+.control output{display:block;color:var(--blue);font-size:12px;margin-top:8px}
+
+.control select{
+    width:100%;
+    padding:9px;
+    color:white;
+    background:#171a36;
+    border:1px solid var(--border);
+    border-radius:7px;
+}
+
+.primary-btn{
+    border:none;
+    background:linear-gradient(100deg,var(--purple),#6d28d9,var(--blue));
+    color:white;
+    padding:13px 24px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:12px;
+    margin-top:20px;
+    transition:.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px rgba(147,51,234,.3);
+}
+
+.risk-display{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:13px;
+    margin-top:25px;
+}
+
+.risk-card{
+    background:rgba(7,8,22,.7);
+    border:1px solid var(--border);
+    padding:17px;
+    border-radius:12px;
+}
+
+.risk-card h4{font-size:13px;color:var(--purple-light);margin-bottom:12px}
+.risk-card p{font-size:12px;color:var(--muted);margin:6px 0}
+.risk-card strong{color:white}
+.risk-level{font-size:14px!important;font-weight:800;margin-top:12px!important}
+.risk-low{color:var(--green)!important}
+.risk-medium{color:var(--orange)!important}
+.risk-high{color:var(--red)!important}
+
+.risk-meter{
+    width:100%;
+    height:8px;
+    background:#292945;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.risk-fill{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--green),var(--orange),var(--red));
+    transition:width .5s;
+}
+
+.lab-note{font-size:11px;color:#9e9bb8;margin-top:18px;line-height:1.7}
+
+.quiz-container{
+    background:linear-gradient(145deg,#12142b,#0c0d20);
+    border:1px solid var(--border);
+    padding:25px;
+    border-radius:18px;
+}
+
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+}
+
+.quiz-top span{color:var(--blue);font-size:12px}
+
+.progress{
+    height:6px;
+    background:#292945;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--purple),var(--blue));
+    transition:.3s;
+}
+
+.question{font-size:16px;color:white;font-weight:600;margin-bottom:20px}
+.answers{display:grid;gap:10px}
+
+.answer{
+    padding:13px 15px;
+    text-align:left;
+    color:#c7c5dc;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--border);
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+    transition:.2s;
+}
+
+.answer:hover:not(:disabled){
+    border-color:var(--purple);
+    background:rgba(147,51,234,.1);
+}
+
+.answer.correct{border-color:var(--green);background:rgba(74,222,128,.1);color:#bbf7d0}
+.answer.wrong{border-color:var(--red);background:rgba(251,113,133,.1);color:#fecdd3}
+
+.feedback{
+    display:none;
+    padding:14px;
+    border-radius:9px;
+    margin-top:17px;
+    background:rgba(56,189,248,.07);
+    border:1px solid rgba(56,189,248,.2);
+    font-size:12px;
+    color:#d5d3e9;
+}
+
+.quiz-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:20px;
+}
+
+.quiz-controls button:disabled{opacity:.35;cursor:not-allowed}
+
+.result-screen{display:none;text-align:center;padding:35px 10px}
+.result-score{
+    font-family:'Orbitron',sans-serif;
+    font-size:50px;
+    color:var(--purple-light);
+    margin:15px 0;
+}
+
+.reference-list{display:grid;gap:12px}
+
+.reference-list a{
+    padding:14px 17px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--purple-light);
+    font-size:12px;
+    transition:.25s;
+}
+
+.reference-list a:hover{border-color:var(--blue);transform:translateX(5px)}
+
+footer{
+    text-align:center;
+    padding:35px 15px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+footer strong{color:var(--purple-light)}
+
+@media(max-width:900px){
+    .layout{grid-template-columns:1fr}
+    .sidebar{
+        position:relative;
+        top:0;
+        max-height:none;
+        display:flex;
+        flex-wrap:wrap;
+        gap:5px;
+    }
+    .sidebar h3{width:100%}
+    .sidebar a{display:inline-block}
+    .radar{opacity:.22;right:-150px}
+}
+
+@media(max-width:600px){
+    .hero{padding:70px 6%;min-height:490px}
+    .hero h1{font-size:35px}
+    .layout{padding:35px 5%}
+    .lab{padding:18px}
+    .quiz-container{padding:17px}
+    .brand{font-size:14px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="artificial-intelligence.html" class="brand">MARITERRA</a>
+    <a href="artificial-intelligence.html" class="back-btn">← BACK TO AI HUB</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">ARTIFICIAL INTELLIGENCE · TOPIC 09</div>
+        <h1>COLLISION AVOIDANCE <span>& RISK PREDICTION</span></h1>
+        <p>
+            Explore how artificial intelligence analyzes vessel movements,
+            predicts potential collision situations, estimates navigational
+            risk and supports safer maritime decisions through intelligent
+            monitoring and collision-risk assessment.
+        </p>
+        <div class="hero-tags">
+            <span>COLLISION AVOIDANCE</span>
+            <span>CPA & TCPA</span>
+            <span>RISK PREDICTION</span>
+            <span>MARITIME SAFETY</span>
+        </div>
+    </div>
+
+    <div class="radar">
+        <div class="radar-dot one"></div>
+        <div class="radar-dot two"></div>
+        <div class="radar-dot three"></div>
+    </div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h3>TOPIC CONTENTS</h3>
+    <a href="#overview">01. Overview</a>
+    <a href="#fundamentals">02. Collision Fundamentals</a>
+    <a href="#encounters">03. Vessel Encounters</a>
+    <a href="#cpa">04. CPA & TCPA</a>
+    <a href="#sensors">05. Sensors & Data</a>
+    <a href="#risk">06. Risk Prediction</a>
+    <a href="#ai">07. AI Techniques</a>
+    <a href="#avoidance">08. Collision Avoidance</a>
+    <a href="#colregs">09. COLREGs</a>
+    <a href="#human">10. Human-AI Cooperation</a>
+    <a href="#autonomy">11. Autonomous Systems</a>
+    <a href="#workflow">12. Engineering Workflow</a>
+    <a href="#challenges">13. Challenges</a>
+    <a href="#future">14. Future Directions</a>
+    <a href="#lab">15. Interactive Lab</a>
+    <a href="#quiz">16. Knowledge Assessment</a>
+    <a href="#references">17. References</a>
+</aside>
+
+<main class="content">
+
+<section class="section" id="overview">
+    <h2 class="section-heading">01. <span>Overview of Collision Avoidance & Risk Prediction</span></h2>
+
+    <p class="text-block">
+        Maritime collision avoidance is the process of identifying dangerous
+        vessel encounters and taking appropriate action to prevent collisions.
+        It is a fundamental part of safe navigation, especially in busy shipping
+        lanes, port approaches, narrow channels and areas with complex traffic.
+    </p>
+
+    <p class="text-block">
+        Traditional collision assessment relies on navigational observations,
+        radar information, Automatic Identification System (AIS) data,
+        electronic charts and the professional judgment of the bridge team.
+        Artificial intelligence can strengthen this process by analyzing
+        multiple data sources, recognizing traffic patterns and estimating
+        how encounter situations may develop.
+    </p>
+
+    <p class="text-block">
+        AI-based risk prediction does not simply ask whether two vessels are
+        currently close. It evaluates their relative movement, projected
+        trajectories, environmental conditions and other contextual factors
+        to help identify situations that may require attention.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">🚢</div>
+            <h3>Vessel Tracking</h3>
+            <p>Monitor vessel positions, headings, speeds and movement patterns using available maritime data.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">📡</div>
+            <h3>Situation Awareness</h3>
+            <p>Combine observations to help bridge teams understand nearby traffic and possible encounter situations.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">⚠️</div>
+            <h3>Risk Prediction</h3>
+            <p>Estimate potential collision risk using relative motion and contextual information.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🧠</div>
+            <h3>Intelligent Support</h3>
+            <p>Present risk indicators and possible responses to support professional navigational judgment.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Core principle:</strong>
+        Collision avoidance is not just a mathematical distance problem.
+        It involves relative motion, vessel maneuverability, navigational rules,
+        environmental conditions and human judgment.
+    </div>
+</section>
+
+<section class="section" id="fundamentals">
+    <h2 class="section-heading">02. <span>Fundamentals of Maritime Collision Situations</span></h2>
+
+    <p class="text-block">
+        A collision risk situation can develop when two or more vessels move
+        along paths that may result in an unsafe proximity. The assessment
+        requires understanding both the current positions and the relative
+        movement of the vessels.
+    </p>
+
+    <h3 class="subheading">Relative Motion</h3>
+
+    <p class="text-block">
+        Relative motion describes how one vessel appears to move when observed
+        from another vessel. It is useful for estimating whether another vessel
+        is approaching, moving away or maintaining a potentially dangerous
+        encounter geometry.
+    </p>
+
+    <div class="formula">
+        <strong>Relative Velocity</strong>
+        <code>V(relative) = V(target) − V(own ship)</code>
+    </div>
+
+    <p class="text-block">
+        Here, the velocities must be expressed in the same coordinate reference
+        system. The resulting vector describes the target vessel's movement
+        relative to the own ship.
+    </p>
+
+    <h3 class="subheading">Important Encounter Variables</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Relative Bearing</h3>
+            <p>The direction of the target vessel measured relative to the observing vessel's heading.</p>
+        </div>
+        <div class="info-card">
+            <h3>Range</h3>
+            <p>The distance separating two vessels at a particular observation time.</p>
+        </div>
+        <div class="info-card">
+            <h3>Relative Speed</h3>
+            <p>The rate at which the separation between vessels changes according to their relative movement.</p>
+        </div>
+        <div class="info-card">
+            <h3>Heading</h3>
+            <p>The direction in which a vessel's bow is pointing, which may differ from its course over ground.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Why Distance Alone Is Not Enough</h3>
+
+    <p class="text-block">
+        Two vessels may be physically close but moving apart. Another pair may
+        be farther away while approaching on intersecting courses. Therefore,
+        collision assessment requires time-dependent analysis rather than
+        relying only on current range.
+    </p>
+</section>
+
+<section class="section" id="encounters">
+    <h2 class="section-heading">03. <span>Types of Vessel Encounter Situations</span></h2>
+
+    <p class="text-block">
+        Vessel encounters are commonly analyzed according to the relative
+        positions and directions of the vessels. Understanding these situations
+        helps navigators interpret developing traffic interactions and apply
+        the relevant collision-prevention rules.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">↗️</div>
+            <h3>Crossing Situation</h3>
+            <p>Two power-driven vessels approach on courses that cross. Their relative movement and applicable rules must be assessed carefully.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">↔️</div>
+            <h3>Head-On Situation</h3>
+            <p>Two power-driven vessels approach on reciprocal or nearly reciprocal courses, potentially creating a risk of collision.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">↘️</div>
+            <h3>Overtaking Situation</h3>
+            <p>One vessel approaches another from a direction that meets the applicable overtaking definition under COLREGs.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🔄</div>
+            <h3>Multiple-Vessel Encounter</h3>
+            <p>Several vessels interact simultaneously, making traffic assessment and maneuver planning more complex.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Complex Traffic Environments</h3>
+
+    <p class="text-block">
+        Busy waterways introduce additional challenges. A vessel may encounter
+        crossing traffic, fishing vessels, ferries, restricted maneuvering
+        areas and vessels entering or leaving ports.
+    </p>
+
+    <p class="text-block">
+        An AI system should consider the wider traffic situation instead of
+        evaluating every target independently. A maneuver that reduces risk
+        with one vessel could create a new problem with another.
+    </p>
+
+    <div class="callout">
+        <strong>Important:</strong>
+        Encounter classification supports understanding, but the actual
+        navigational situation and applicable COLREG requirements must be
+        determined by qualified personnel.
+    </div>
+</section>
+
+<section class="section" id="cpa">
+    <h2 class="section-heading">04. <span>Closest Point of Approach (CPA) & Time to CPA (TCPA)</span></h2>
+
+    <p class="text-block">
+        CPA and TCPA are important concepts used in radar plotting and collision
+        risk assessment. They help estimate the closest predicted separation
+        between two vessels and when that separation is expected to occur,
+        assuming the current relative motion continues.
+    </p>
+
+    <h3 class="subheading">Closest Point of Approach</h3>
+
+    <p class="text-block">
+        The Closest Point of Approach (CPA) is the predicted minimum distance
+        between two moving objects under a constant relative-velocity model.
+        It helps identify whether their projected paths may bring them too close.
+    </p>
+
+    <div class="formula">
+        <strong>Conceptual CPA Calculation</strong>
+        <code>TCPA = − (r · v) / |v|²</code>
+        <br><br>
+        <code>CPA = |r + v × TCPA|</code>
+        <p class="text-block" style="margin:10px 0 0">
+            Where r is the relative position vector and v is the relative
+            velocity vector. The equations assume constant relative velocity
+            and a consistent coordinate system.
+        </p>
+    </div>
+
+    <h3 class="subheading">Time to Closest Point of Approach</h3>
+
+    <p class="text-block">
+        TCPA estimates the time remaining until the predicted closest approach.
+        A positive TCPA indicates that the closest approach lies in the future
+        under the model. A negative value indicates that the predicted closest
+        point has already passed.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Small CPA</h3>
+            <p>A small predicted separation may indicate a close encounter requiring careful assessment.</p>
+        </div>
+        <div class="info-card">
+            <h3>Positive TCPA</h3>
+            <p>The predicted closest approach is still ahead if the relative motion remains unchanged.</p>
+        </div>
+        <div class="info-card">
+            <h3>Negative TCPA</h3>
+            <p>The calculated closest approach has already occurred under the assumed motion model.</p>
+        </div>
+        <div class="info-card">
+            <h3>Changing Motion</h3>
+            <p>Alterations in heading or speed can change CPA and TCPA estimates significantly.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">CPA and TCPA Limitations</h3>
+
+    <p class="text-block">
+        CPA and TCPA are predictions, not guarantees. Their accuracy depends
+        on the quality and freshness of position and velocity information.
+        They can become less reliable when vessels maneuver, data is delayed
+        or the motion assumptions are no longer valid.
+    </p>
+
+    <div class="callout">
+        <strong>Critical distinction:</strong>
+        CPA is not a universal legal safety threshold. An acceptable passing
+        distance depends on the circumstances, vessel characteristics,
+        environment, traffic and professional assessment.
+    </div>
+</section>
+
+<section class="section" id="sensors">
+    <h2 class="section-heading">05. <span>Sensor Systems & Maritime Data Integration</span></h2>
+
+    <p class="text-block">
+        AI-based collision avoidance depends on accurate information about
+        own-ship movement and surrounding vessels. Different sensors and
+        information systems provide complementary observations.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">📡</div>
+            <h3>Marine Radar</h3>
+            <p>Detects surrounding objects and supports the measurement of target range and bearing.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🛰️</div>
+            <h3>AIS</h3>
+            <p>Provides transmitted vessel information such as identity, position, course and speed when available and valid.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🧭</div>
+            <h3>GNSS</h3>
+            <p>Supports positioning and navigation through satellite-based location information.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">⚓</div>
+            <h3>Gyrocompass & Heading Sensors</h3>
+            <p>Provide heading information used to understand vessel orientation and movement.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">📷</div>
+            <h3>Optical Cameras</h3>
+            <p>Can support visual recognition of vessels, lights, navigation marks and surrounding objects.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌊</div>
+            <h3>Environmental Sensors</h3>
+            <p>Provide contextual observations such as wind and other environmental conditions.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Sensor Fusion</h3>
+
+    <p class="text-block">
+        Sensor fusion combines information from multiple sources to build
+        a more complete representation of the surrounding environment.
+        For example, radar may detect a target while AIS provides transmitted
+        identity and movement information.
+    </p>
+
+    <p class="text-block">
+        The system must associate observations that refer to the same physical
+        target. This is known as data association or target association.
+        Incorrect association can produce misleading tracking results.
+    </p>
+
+    <h3 class="subheading">Data Quality Problems</h3>
+
+    <ul class="list">
+        <li><strong>Latency:</strong> Information may arrive later than the actual observation time.</li>
+        <li><strong>Noise:</strong> Sensor measurements may contain errors or fluctuations.</li>
+        <li><strong>Missing observations:</strong> Targets may temporarily disappear from sensor coverage.</li>
+        <li><strong>AIS limitations:</strong> Transmitted information may be unavailable, delayed or incorrect.</li>
+        <li><strong>Coordinate alignment:</strong> Different sources may use different reference systems.</li>
+        <li><strong>Target association:</strong> Multiple detections may be incorrectly matched to one vessel.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>Engineering lesson:</strong>
+        Combining more data does not automatically produce better decisions.
+        Sensor fusion must account for uncertainty, reliability, synchronization
+        and the possibility of misleading observations.
+    </div>
+</section>
+
+<section class="section" id="risk">
+    <h2 class="section-heading">06. <span>AI-Based Collision Risk Prediction</span></h2>
+
+    <p class="text-block">
+        Collision risk prediction estimates the possibility of an unsafe
+        encounter developing over time. AI systems may combine vessel motion,
+        CPA/TCPA, traffic density, environmental conditions and historical
+        encounter patterns to produce risk indicators.
+    </p>
+
+    <h3 class="subheading">Risk Factors</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Relative Motion</h3>
+            <p>Relative speed, direction and projected trajectories between vessels.</p>
+        </div>
+        <div class="info-card">
+            <h3>CPA and TCPA</h3>
+            <p>Predicted passing distance and time to the closest point of approach.</p>
+        </div>
+        <div class="info-card">
+            <h3>Traffic Density</h3>
+            <p>The number and movement complexity of nearby vessels.</p>
+        </div>
+        <div class="info-card">
+            <h3>Environmental Conditions</h3>
+            <p>Visibility, weather, sea state and other conditions affecting navigation.</p>
+        </div>
+        <div class="info-card">
+            <h3>Vessel Maneuverability</h3>
+            <p>Turning behavior, stopping characteristics and vessel-specific limitations.</p>
+        </div>
+        <div class="info-card">
+            <h3>Data Confidence</h3>
+            <p>The reliability and freshness of the information used to predict an encounter.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Risk Assessment Pipeline</h3>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>Observe</b><span>Collect vessel and sensor data</span></div>
+        <div class="workflow-step"><b>Track</b><span>Estimate target movement</span></div>
+        <div class="workflow-step"><b>Predict</b><span>Project future encounter paths</span></div>
+        <div class="workflow-step"><b>Assess</b><span>Estimate encounter risk</span></div>
+        <div class="workflow-step"><b>Alert</b><span>Present relevant warnings</span></div>
+        <div class="workflow-step"><b>Review</b><span>Human navigational assessment</span></div>
+    </div>
+
+    <h3 class="subheading">Risk Scores and Their Interpretation</h3>
+
+    <p class="text-block">
+        A predictive model may generate a numerical risk score to help
+        prioritize attention. Such scores are model outputs and should not
+        be confused with a universal probability of collision unless the
+        model has been specifically calibrated and validated for that purpose.
+    </p>
+
+    <div class="formula">
+        <strong>Illustrative Risk Model</strong>
+        <code>Risk Score = f(CPA, TCPA, relative motion, traffic, environment, data confidence)</code>
+    </div>
+
+    <p class="text-block">
+        A useful system should explain the main factors contributing to a
+        high-risk assessment. It should also communicate uncertainty and
+        avoid presenting false precision.
+    </p>
+</section>
+
+<section class="section" id="ai">
+    <h2 class="section-heading">07. <span>AI Techniques for Collision Prediction</span></h2>
+
+    <p class="text-block">
+        Different machine learning techniques can support different parts
+        of a collision avoidance system. Some methods identify patterns
+        in historical encounters, while others predict future vessel
+        movement or classify risk levels.
+    </p>
+
+    <h3 class="subheading">1. Classification Models</h3>
+
+    <p class="text-block">
+        Classification models assign observations to predefined categories.
+        A system may classify an encounter as low, moderate or high priority
+        based on validated operational criteria.
+    </p>
+
+    <h3 class="subheading">2. Regression Models</h3>
+
+    <p class="text-block">
+        Regression models estimate continuous values such as predicted
+        separation, vessel speed or trajectory-related quantities.
+        Their performance depends on the quality and representativeness
+        of the training data.
+    </p>
+
+    <h3 class="subheading">3. Recurrent Neural Networks</h3>
+
+    <p class="text-block">
+        Recurrent Neural Networks (RNNs) and Long Short-Term Memory networks
+        (LSTMs) can process sequential observations. They may be useful when
+        the evolution of vessel positions and movement over time is important.
+    </p>
+
+    <h3 class="subheading">4. Transformer-Based Models</h3>
+
+    <p class="text-block">
+        Transformer architectures use attention mechanisms to learn
+        relationships within sequences and structured data. They may support
+        trajectory prediction and the analysis of interactions between
+        multiple moving vessels.
+    </p>
+
+    <h3 class="subheading">5. Anomaly Detection</h3>
+
+    <p class="text-block">
+        Anomaly detection identifies unusual patterns that differ from
+        expected behavior. For example, an unexpected change in speed
+        or heading may deserve additional attention.
+    </p>
+
+    <table class="comparison">
+        <thead>
+            <tr><th>AI Method</th><th>Possible Application</th><th>Key Consideration</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Classification</td><td>Encounter risk categorization</td><td>Class imbalance and calibration</td></tr>
+            <tr><td>Regression</td><td>Continuous motion prediction</td><td>Prediction error and uncertainty</td></tr>
+            <tr><td>RNN / LSTM</td><td>Sequential trajectory analysis</td><td>Sequence quality and long-term behavior</td></tr>
+            <tr><td>Transformers</td><td>Complex interaction modeling</td><td>Data requirements and computational cost</td></tr>
+            <tr><td>Anomaly Detection</td><td>Unusual movement identification</td><td>False alarms and changing behavior</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>Model selection:</strong>
+        A more complex neural network is not automatically safer or more accurate.
+        Model choice must be supported by representative data, appropriate
+        evaluation and operational testing.
+    </div>
+</section>
+
+<section class="section" id="avoidance">
+    <h2 class="section-heading">08. <span>Intelligent Collision Avoidance Strategies</span></h2>
+
+    <p class="text-block">
+        Collision avoidance systems may evaluate possible actions and
+        estimate how they affect future separation and traffic interactions.
+        Their purpose is to support early assessment and help identify
+        potential conflicts before they become urgent.
+    </p>
+
+    <h3 class="subheading">Possible Maneuver Variables</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Course Alteration</h3>
+            <p>Evaluate how changing heading may affect the predicted encounter geometry.</p>
+        </div>
+        <div class="info-card">
+            <h3>Speed Adjustment</h3>
+            <p>Assess how changes in speed influence relative motion and available decision time.</p>
+        </div>
+        <div class="info-card">
+            <h3>Alternative Trajectories</h3>
+            <p>Compare candidate movement paths against traffic and navigational constraints.</p>
+        </div>
+        <div class="info-card">
+            <h3>Early Warning</h3>
+            <p>Provide alerts when observations suggest that an encounter requires attention.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Predictive Maneuver Evaluation</h3>
+
+    <p class="text-block">
+        An intelligent system can simulate several possible actions and
+        compare their predicted consequences. It may evaluate whether an
+        action reduces the likelihood of a close encounter, creates a new
+        conflict or conflicts with navigational constraints.
+    </p>
+
+    <p class="text-block">
+        This evaluation must include other vessels, not just the primary
+        target. In dense traffic, a maneuver that appears effective against
+        one vessel may create an unsafe situation with another.
+    </p>
+
+    <div class="callout">
+        <strong>Safety requirement:</strong>
+        AI-generated maneuver suggestions must not override COLREGs,
+        the vessel's safety procedures or the master's professional judgment.
+    </div>
+</section>
+
+<section class="section" id="colregs">
+    <h2 class="section-heading">09. <span>COLREGs & Regulatory Safety Framework</span></h2>
+
+    <p class="text-block">
+        The International Regulations for Preventing Collisions at Sea,
+        commonly known as COLREGs, establish rules for preventing collisions
+        between vessels. These rules address lookout, safe speed, risk of
+        collision, actions to avoid collision and responsibilities in
+        different encounter situations.
+    </p>
+
+    <h3 class="subheading">Important COLREG Concepts</h3>
+
+    <ul class="list">
+        <li><strong>Rule 5 — Look-out:</strong> Every vessel must maintain a proper lookout using all available appropriate means.</li>
+        <li><strong>Rule 6 — Safe Speed:</strong> Vessels must proceed at a safe speed appropriate to the prevailing circumstances and conditions.</li>
+        <li><strong>Rule 7 — Risk of Collision:</strong> Appropriate means must be used to determine whether risk of collision exists.</li>
+        <li><strong>Rule 8 — Action to Avoid Collision:</strong> Action taken to avoid collision must follow the applicable requirements.</li>
+        <li><strong>Rules 13–15:</strong> Address overtaking, head-on and crossing situations.</li>
+        <li><strong>Rule 17:</strong> Addresses action by the stand-on vessel.</li>
+    </ul>
+
+    <h3 class="subheading">How AI Supports Regulatory Compliance</h3>
+
+    <p class="text-block">
+        AI may help organize observations, identify possible encounter types,
+        calculate motion estimates and provide decision-support information.
+        However, an AI model does not replace the interpretation or application
+        of COLREGs by qualified navigators.
+    </p>
+
+    <p class="text-block">
+        A system should be designed so that its recommendations remain
+        consistent with applicable regulations and vessel procedures.
+        Its outputs must not encourage a maneuver that creates a new danger
+        or conflicts with a required navigational action.
+    </p>
+
+    <div class="callout">
+        <strong>Essential distinction:</strong>
+        AI can assist in recognizing and analyzing a collision risk.
+        It cannot independently assume the legal and operational responsibilities
+        assigned to the vessel and its master.
+    </div>
+</section>
+
+<section class="section" id="human">
+    <h2 class="section-heading">10. <span>Human-AI Cooperation on the Bridge</span></h2>
+
+    <p class="text-block">
+        A collision avoidance system should be designed around the bridge
+        team's operational needs. It must present relevant information clearly,
+        avoid unnecessary alarms and support rather than replace human judgment.
+    </p>
+
+    <h3 class="subheading">Effective Human-Machine Interaction</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Clear Alerts</h3>
+            <p>Warnings should communicate the nature and urgency of the potential encounter.</p>
+        </div>
+        <div class="info-card">
+            <h3>Explainable Results</h3>
+            <p>Operators should understand why the system has assigned a particular risk level.</p>
+        </div>
+        <div class="info-card">
+            <h3>Uncertainty Display</h3>
+            <p>Information quality and prediction confidence should be visible to the user.</p>
+        </div>
+        <div class="info-card">
+            <h3>Human Control</h3>
+            <p>Authorized personnel should retain control over operational navigational decisions.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">The Problem of Alert Fatigue</h3>
+
+    <p class="text-block">
+        If a system generates too many warnings, bridge personnel may become
+        less responsive to important alerts. This is known as alert fatigue.
+        Excessive false positives can reduce trust in the system and make
+        genuine hazards harder to identify.
+    </p>
+
+    <p class="text-block">
+        Effective alert design should consider relevance, timing, severity,
+        clarity and the operational context. Risk thresholds should be
+        evaluated using real-world requirements rather than selected
+        solely for convenience.
+    </p>
+</section>
+
+<section class="section" id="autonomy">
+    <h2 class="section-heading">11. <span>Collision Avoidance in Autonomous Ships</span></h2>
+
+    <p class="text-block">
+        Autonomous and remotely operated vessels create additional requirements
+        for collision avoidance. Their systems may need to perceive nearby
+        traffic, predict future movement, evaluate actions and communicate
+        their decisions through integrated control architectures.
+    </p>
+
+    <h3 class="subheading">Autonomous Collision Avoidance Pipeline</h3>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>Perception</b><span>Detect nearby objects</span></div>
+        <div class="workflow-step"><b>Tracking</b><span>Estimate target motion</span></div>
+        <div class="workflow-step"><b>Prediction</b><span>Estimate future trajectories</span></div>
+        <div class="workflow-step"><b>Planning</b><span>Evaluate candidate actions</span></div>
+        <div class="workflow-step"><b>Control</b><span>Execute approved control commands</span></div>
+        <div class="workflow-step"><b>Monitoring</b><span>Verify actual vessel behavior</span></div>
+    </div>
+
+    <h3 class="subheading">Major Technical Requirements</h3>
+
+    <ul class="list">
+        <li>Reliable object detection and target tracking.</li>
+        <li>Robust behavior when sensors disagree or become unavailable.</li>
+        <li>Trajectory prediction under uncertain vessel behavior.</li>
+        <li>Safe planning within operational and regulatory constraints.</li>
+        <li>Clear communication with remote operators when applicable.</li>
+        <li>Fail-safe behavior when critical system components malfunction.</li>
+    </ul>
+
+    <p class="text-block">
+        Autonomous collision avoidance is especially challenging in situations
+        involving unusual vessel behavior, poor visibility, dense traffic
+        and incomplete information. These conditions require extensive
+        simulation, testing and safety validation.
+    </p>
+</section>
+
+<section class="section" id="workflow">
+    <h2 class="section-heading">12. <span>Engineering Workflow: Building a Collision Risk System</span></h2>
+
+    <p class="text-block">
+        Developing a dependable collision risk prediction system requires
+        a complete engineering process. It is not enough to train a model
+        on historical AIS records and display a risk score.
+    </p>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>01. Define</b><span>Specify risk and safety requirements</span></div>
+        <div class="workflow-step"><b>02. Collect</b><span>Gather synchronized maritime observations</span></div>
+        <div class="workflow-step"><b>03. Process</b><span>Clean data and associate targets</span></div>
+        <div class="workflow-step"><b>04. Predict</b><span>Estimate motion and encounter outcomes</span></div>
+        <div class="workflow-step"><b>05. Evaluate</b><span>Test performance and failure modes</span></div>
+        <div class="workflow-step"><b>06. Deploy</b><span>Integrate with human decision support</span></div>
+    </div>
+
+    <h3 class="subheading">Important Evaluation Metrics</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Precision</h3>
+            <p>Measures the proportion of predicted positive alerts that are actually positive according to the chosen reference labels.</p>
+        </div>
+        <div class="info-card">
+            <h3>Recall</h3>
+            <p>Measures how many relevant positive cases the model successfully identifies.</p>
+        </div>
+        <div class="info-card">
+            <h3>False Positive Rate</h3>
+            <p>Measures how frequently the system incorrectly raises an alert for a negative case.</p>
+        </div>
+        <div class="info-card">
+            <h3>Prediction Error</h3>
+            <p>Measures the difference between predicted and observed target positions or trajectories.</p>
+        </div>
+        <div class="info-card">
+            <h3>Calibration</h3>
+            <p>Checks whether predicted probabilities correspond to observed event frequencies.</p>
+        </div>
+        <div class="info-card">
+            <h3>Response Time</h3>
+            <p>Measures how quickly the system processes new observations and produces useful outputs.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Important evaluation warning:</strong>
+        Collision events are relatively rare compared with ordinary vessel encounters.
+        A model can achieve high overall accuracy simply by predicting that
+        almost every situation is safe. Precision, recall, calibration and
+        scenario-based testing are therefore essential.
+    </div>
+</section>
+
+<section class="section" id="challenges">
+    <h2 class="section-heading">13. <span>Challenges & Limitations</span></h2>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Incomplete AIS Data</h3>
+            <p>Some vessels may not transmit usable AIS information, and transmitted data may be inaccurate or delayed.</p>
+        </div>
+        <div class="info-card">
+            <h3>Sensor Errors</h3>
+            <p>Radar clutter, positioning errors and environmental interference may affect target detection.</p>
+        </div>
+        <div class="info-card">
+            <h3>Unpredictable Behavior</h3>
+            <p>Another vessel may change course or speed unexpectedly, invalidating previous predictions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Rare Collision Events</h3>
+            <p>Limited examples of serious incidents make model training and validation difficult.</p>
+        </div>
+        <div class="info-card">
+            <h3>False Alarms</h3>
+            <p>Excessive alerts can reduce operator trust and contribute to alert fatigue.</p>
+        </div>
+        <div class="info-card">
+            <h3>Model Generalization</h3>
+            <p>A model trained in one traffic environment may not perform equally well in different regions or vessel populations.</p>
+        </div>
+    </div>
+
+    <p class="text-block">
+        Another major challenge is explainability. Maritime professionals
+        need to understand the reasons behind an alert and whether the
+        recommendation is based on reliable observations.
+    </p>
+
+    <p class="text-block">
+        AI systems should also be tested against rare and difficult scenarios,
+        including sensor failures, unusual maneuvers, poor visibility and
+        complex multi-vessel encounters.
+    </p>
+</section>
+
+<section class="section" id="future">
+    <h2 class="section-heading">14. <span>The Future of AI Collision Avoidance</span></h2>
+
+    <p class="text-block">
+        Future collision avoidance systems may combine advanced perception,
+        improved vessel trajectory prediction, digital twins, sensor fusion
+        and more capable decision-support architectures.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">🧠</div>
+            <h3>Advanced Trajectory Prediction</h3>
+            <p>Models that better represent complex interactions and uncertain vessel behavior.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌐</div>
+            <h3>Cooperative Awareness</h3>
+            <p>Improved information exchange between vessels and maritime traffic management systems.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🛳️</div>
+            <h3>Autonomous Navigation</h3>
+            <p>More integrated perception and planning capabilities for autonomous and remotely operated ships.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🔍</div>
+            <h3>Explainable AI</h3>
+            <p>More transparent risk assessments that communicate uncertainty and supporting evidence.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Future vision:</strong>
+        The strongest maritime safety systems will combine intelligent
+        prediction with reliable sensors, validated engineering models,
+        regulatory compliance and effective human oversight.
+    </div>
+</section>
+
+<section class="section" id="lab">
+    <h2 class="section-heading">15. <span>Interactive Collision Risk Lab</span></h2>
+
+    <p class="section-intro">
+        Explore how relative distance, closing speed and data reliability
+        influence a simplified collision-risk indicator. Change the
+        parameters to observe how the educational model responds.
+    </p>
+
+    <div class="lab">
+        <h3>VESSEL ENCOUNTER SIMULATOR</h3>
+        <p class="lab-description">
+            Configure a hypothetical encounter between two vessels.
+            The simulation estimates an illustrative risk indicator.
+        </p>
+
+        <div class="controls">
+            <div class="control">
+                <label for="distance">Current Distance</label>
+                <input type="range" id="distance" min="0.5" max="10" step="0.5" value="4">
+                <output id="distanceValue">4.0 nautical miles</output>
+            </div>
+
+            <div class="control">
+                <label for="closingSpeed">Closing Speed</label>
+                <input type="range" id="closingSpeed" min="0" max="40" value="20">
+                <output id="closingValue">20 knots</output>
+            </div>
+
+            <div class="control">
+                <label for="dataQuality">Sensor Data Reliability</label>
+                <input type="range" id="dataQuality" min="10" max="100" value="85">
+                <output id="qualityValue">85%</output>
+            </div>
+
+            <div class="control">
+                <label for="traffic">Traffic Complexity</label>
+                <select id="traffic">
+                    <option value="1">Low</option>
+                    <option value="1.15" selected>Moderate</option>
+                    <option value="1.3">High</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="primary-btn" id="analyzeBtn">ANALYZE ENCOUNTER</button>
+
+        <div class="risk-display" id="riskResults" aria-live="polite">
+            <div class="risk-card">
+                <h4>Estimated TCPA</h4>
+                <p>Awaiting analysis</p>
+            </div>
+            <div class="risk-card">
+                <h4>Risk Indicator</h4>
+                <p>Awaiting analysis</p>
+            </div>
+            <div class="risk-card">
+                <h4>Data Reliability</h4>
+                <p>85%</p>
+            </div>
+        </div>
+
+        <p class="lab-note">
+            Educational model only. The simulation assumes a simplified
+            closing-speed relationship and does not calculate vector CPA,
+            vessel maneuverability, encounter geometry, COLREG compliance
+            or actual collision probability. Its risk indicator is an
+            illustrative score, not a certified navigational warning.
+            Real collision assessment requires appropriate sensor data,
+            vector calculations, context and professional judgment.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="quiz">
+    <h2 class="section-heading">16. <span>Knowledge Assessment</span></h2>
+
+    <p class="section-intro">
+        Test your understanding of collision avoidance and risk prediction.
+        This assessment contains 20 questions with immediate feedback
+        and technical explanations.
+    </p>
+
+    <div class="quiz-container" id="quizContainer">
+        <div class="quiz-top">
+            <span id="questionCounter">QUESTION 1 / 20</span>
+            <span id="scoreCounter">SCORE: 0</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="questionArea">
+            <div class="question" id="questionText"></div>
+            <div class="answers" id="answersArea"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="quiz-controls">
+            <button class="primary-btn" id="nextBtn" disabled>NEXT QUESTION →</button>
+        </div>
+
+        <div class="result-screen" id="resultScreen">
+            <div class="eyebrow">ASSESSMENT COMPLETED</div>
+            <h3>Your Final Score</h3>
+            <div class="result-score" id="finalScore">0/20</div>
+            <p id="resultMessage" class="text-block"></p>
+            <button class="primary-btn" id="retryBtn">RETAKE ASSESSMENT</button>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="references">
+    <h2 class="section-heading">17. <span>References & Further Reading</span></h2>
+
+    <p class="section-intro">
+        Explore official maritime regulations, navigational standards
+        and technical resources related to collision avoidance and
+        intelligent maritime safety.
+    </p>
+
+    <div class="reference-list">
+        <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener noreferrer">
+            International Maritime Organization — Convention on the International Regulations for Preventing Collisions at Sea
+        </a>
+
+        <a href="https://www.imo.org/en/OurWork/Safety/Pages/ShipsRouteing.aspx" target="_blank" rel="noopener noreferrer">
+            IMO — Ships' Routeing
+        </a>
+
+        <a href="https://www.iala.int/" target="_blank" rel="noopener noreferrer">
+            International Organization for Marine Aids to Navigation (IALA)
+        </a>
+
+        <a href="https://www.iho.int/" target="_blank" rel="noopener noreferrer">
+            International Hydrographic Organization (IHO)
+        </a>
+
+        <a href="https://www.imo.org/en/OurWork/Safety/Pages/e-navigation.aspx" target="_blank" rel="noopener noreferrer">
+            IMO — E-Navigation
+        </a>
+
+        <a href="https://www.navcen.uscg.gov/automatic-identification-system-overview" target="_blank" rel="noopener noreferrer">
+            United States Coast Guard Navigation Center — AIS Overview
+        </a>
+
+        <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">
+            NIST — Artificial Intelligence Risk Management Framework
+        </a>
+
+        <a href="https://www.sciencedirect.com/topics/engineering/ship-collision-avoidance" target="_blank" rel="noopener noreferrer">
+            ScienceDirect — Ship Collision Avoidance Research
+        </a>
+
+        <a href="https://pytorch.org/docs/stable/index.html" target="_blank" rel="noopener noreferrer">
+            PyTorch — Deep Learning Documentation
+        </a>
+
+        <a href="https://www.tensorflow.org/" target="_blank" rel="noopener noreferrer">
+            TensorFlow — Machine Learning Platform
+        </a>
+    </div>
+
+    <div class="callout">
+        <strong>Study recommendation:</strong>
+        Start with relative motion, CPA and TCPA. Then study COLREGs,
+        sensor fusion and risk assessment before moving to machine learning
+        and autonomous collision avoidance.
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    MARITERRA · INTELLIGENT MARITIME KNOWLEDGE
+    <br><br>
+    DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+</footer>
+
+<script>
+/* ============================
+   COLLISION RISK SIMULATOR
+============================ */
+
+const distanceInput = document.getElementById("distance");
+const closingInput = document.getElementById("closingSpeed");
+const qualityInput = document.getElementById("dataQuality");
+const trafficInput = document.getElementById("traffic");
+
+distanceInput.addEventListener("input",()=>{
+    document.getElementById("distanceValue").textContent =
+        Number(distanceInput.value).toFixed(1) + " nautical miles";
+});
+
+closingInput.addEventListener("input",()=>{
+    document.getElementById("closingValue").textContent =
+        closingInput.value + " knots";
+});
+
+qualityInput.addEventListener("input",()=>{
+    document.getElementById("qualityValue").textContent =
+        qualityInput.value + "%";
+});
+
+function analyzeEncounter(){
+    const distance = Number(distanceInput.value);
+    const closing = Number(closingInput.value);
+    const quality = Number(qualityInput.value);
+    const traffic = Number(trafficInput.value);
+
+    let tcpa;
+
+    if(closing > 0){
+        tcpa = distance / closing * 60;
+    }else{
+        tcpa = null;
+    }
+
+    const proximity = Math.max(
+        0,
+        Math.min(100,(1 - distance / 10) * 100)
+    );
+
+    const closingFactor = Math.min(100,closing / 40 * 100);
+    const uncertainty = 100 - quality;
+
+    let risk = (
+        proximity * 0.45 +
+        closingFactor * 0.35 +
+        uncertainty * 0.20
+    ) * traffic;
+
+    risk = Math.round(Math.min(100,Math.max(0,risk)));
+
+    let level;
+    let className;
+
+    if(risk >= 65){
+        level = "HIGH";
+        className = "risk-high";
+    }else if(risk >= 35){
+        level = "MODERATE";
+        className = "risk-medium";
+    }else{
+        level = "LOW";
+        className = "risk-low";
+    }
+
+    const tcpaText = tcpa === null
+        ? "No positive closing speed"
+        : tcpa.toFixed(1) + " minutes";
+
+    const results = document.getElementById("riskResults");
+
+    results.innerHTML = `
+        <div class="risk-card">
+            <h4>Estimated TCPA</h4>
+            <p><strong>${tcpaText}</strong></p>
+            <p>Based on simplified closing speed</p>
+        </div>
+
+        <div class="risk-card">
+            <h4>Illustrative Risk Indicator</h4>
+            <p class="risk-level ${className}">${level}</p>
+            <p>Score: <strong>${risk}/100</strong></p>
+            <div class="risk-meter">
+                <div class="risk-fill" style="width:${risk}%"></div>
+            </div>
+        </div>
+
+        <div class="risk-card">
+            <h4>Data Reliability</h4>
+            <p><strong>${quality}%</strong></p>
+            <p>Uncertainty factor: ${uncertainty}%</p>
+        </div>
+    `;
+}
+
+document.getElementById("analyzeBtn")
+    .addEventListener("click",analyzeEncounter);
+
+
+/* ============================
+   KNOWLEDGE QUIZ - 20 QUESTIONS
+============================ */
+
+const questions = [
+{
+    q:"1. What is the main purpose of maritime collision avoidance?",
+    a:[
+        "To increase vessel speed",
+        "To prevent dangerous encounters from developing into collisions",
+        "To reduce the number of navigational charts",
+        "To replace all bridge personnel"
+    ],
+    correct:1,
+    explanation:"Collision avoidance identifies and manages dangerous encounters to support safe navigation."
+},
+{
+    q:"2. What does relative motion describe?",
+    a:[
+        "How one vessel moves relative to another",
+        "The vessel's cargo weight",
+        "The ship's engine temperature",
+        "The distance between two ports only"
+    ],
+    correct:0,
+    explanation:"Relative motion describes the movement of one object as observed from another reference object."
+},
+{
+    q:"3. What does CPA stand for?",
+    a:[
+        "Course Planning Algorithm",
+        "Closest Point of Approach",
+        "Collision Prevention Authority",
+        "Current Position Analysis"
+    ],
+    correct:1,
+    explanation:"CPA is the predicted minimum separation between two moving objects under an assumed motion model."
+},
+{
+    q:"4. What does TCPA estimate?",
+    a:[
+        "Time to Closest Point of Approach",
+        "Total Course Prediction Accuracy",
+        "Traffic Control Planning Area",
+        "Time to Complete Port Arrival"
+    ],
+    correct:0,
+    explanation:"TCPA estimates the time until the predicted closest approach."
+},
+{
+    q:"5. What does a positive TCPA generally indicate?",
+    a:[
+        "The closest approach is predicted to occur in the future",
+        "The target has disappeared",
+        "The collision has already happened",
+        "The vessels are stationary"
+    ],
+    correct:0,
+    explanation:"Under the assumed relative motion, positive TCPA indicates a future closest approach."
+},
+{
+    q:"6. Why is distance alone insufficient for collision assessment?",
+    a:[
+        "Because distance cannot be measured",
+        "Because relative movement and future trajectories also matter",
+        "Because all vessels move at identical speeds",
+        "Because radar cannot detect targets"
+    ],
+    correct:1,
+    explanation:"Two vessels may be close but moving apart, or far apart while approaching on intersecting paths."
+},
+{
+    q:"7. Which system transmits vessel identification and movement information?",
+    a:[
+        "AIS",
+        "ECDIS alone",
+        "Engine telegraph",
+        "Echo sounder only"
+    ],
+    correct:0,
+    explanation:"AIS transmits vessel information including identity and movement data when available."
+},
+{
+    q:"8. What is sensor fusion?",
+    a:[
+        "Combining information from multiple data sources",
+        "Removing all sensor information",
+        "Increasing vessel displacement",
+        "Changing the ship's propulsion system"
+    ],
+    correct:0,
+    explanation:"Sensor fusion combines complementary observations to improve environmental understanding."
+},
+{
+    q:"9. What is a major limitation of AIS data?",
+    a:[
+        "It always provides perfect information",
+        "Data may be unavailable, delayed or incorrect",
+        "It cannot identify any vessel",
+        "It measures underwater pressure only"
+    ],
+    correct:1,
+    explanation:"AIS information may be missing, delayed or inaccurate and should not be treated as infallible."
+},
+{
+    q:"10. What is target association?",
+    a:[
+        "Matching observations from different sensors to the same physical target",
+        "Assigning a vessel a new name",
+        "Calculating engine fuel capacity",
+        "Changing the ship's route automatically"
+    ],
+    correct:0,
+    explanation:"Target association determines which observations from different sources correspond to the same object."
+},
+{
+    q:"11. Which AI technique can classify encounters into risk categories?",
+    a:[
+        "Classification",
+        "Image compression only",
+        "File encryption",
+        "Text formatting"
+    ],
+    correct:0,
+    explanation:"Classification models assign observations to predefined categories such as low, moderate or high risk."
+},
+{
+    q:"12. Why can LSTM networks be useful in trajectory prediction?",
+    a:[
+        "They process sequential information",
+        "They replace all maritime regulations",
+        "They directly control every vessel",
+        "They only process static photographs"
+    ],
+    correct:0,
+    explanation:"LSTMs can learn temporal patterns from sequential observations."
+},
+{
+    q:"13. What is anomaly detection used for?",
+    a:[
+        "Identifying unusual patterns",
+        "Increasing cargo capacity",
+        "Measuring hull thickness only",
+        "Removing all sensor errors"
+    ],
+    correct:0,
+    explanation:"Anomaly detection identifies observations that differ from expected patterns."
+},
+{
+    q:"14. What is alert fatigue?",
+    a:[
+        "Reduced responsiveness caused by excessive or repetitive alerts",
+        "A type of engine malfunction",
+        "A method for predicting waves",
+        "A navigation chart format"
+    ],
+    correct:0,
+    explanation:"Too many alerts can reduce operator attention and trust in warning systems."
+},
+{
+    q:"15. What does COLREGs refer to?",
+    a:[
+        "International collision-prevention regulations for vessels",
+        "A fuel optimization algorithm",
+        "A ship construction material",
+        "A satellite positioning system"
+    ],
+    correct:0,
+    explanation:"COLREGs establishes international rules for preventing collisions at sea."
+},
+{
+    q:"16. Which COLREG rule addresses maintaining a proper lookout?",
+    a:[
+        "Rule 5",
+        "Rule 20",
+        "Rule 30",
+        "Rule 40"
+    ],
+    correct:0,
+    explanation:"Rule 5 requires every vessel to maintain a proper lookout by all appropriate available means."
+},
+{
+    q:"17. Why is human oversight important in AI collision avoidance?",
+    a:[
+        "AI predictions are always perfect",
+        "Navigational decisions require professional judgment and regulatory compliance",
+        "AI cannot process any movement data",
+        "Human operators should ignore sensor information"
+    ],
+    correct:1,
+    explanation:"AI supports assessment, but professional navigational responsibility and judgment remain essential."
+},
+{
+    q:"18. Why can a collision prediction model show high accuracy but still be unsafe?",
+    a:[
+        "Collision events are rare, so accuracy alone can hide missed dangerous cases",
+        "Accuracy always means the model is unreliable",
+        "Models cannot use numerical data",
+        "All encounters are identical"
+    ],
+    correct:0,
+    explanation:"Class imbalance can make overall accuracy misleading. Recall, precision, calibration and scenario testing are also important."
+},
+{
+    q:"19. What is a key challenge in multi-vessel encounters?",
+    a:[
+        "A maneuver that reduces one risk may create another conflict",
+        "Only one vessel can move at a time",
+        "All vessels have identical maneuverability",
+        "Traffic density never changes"
+    ],
+    correct:0,
+    explanation:"Multiple interactions must be considered together because actions can affect several targets."
+},
+{
+    q:"20. What should a reliable AI collision avoidance system provide?",
+    a:[
+        "Unexplained automatic maneuvers",
+        "Risk information, uncertainty awareness and support for human decisions",
+        "Guaranteed collision prevention in every situation",
+        "A replacement for COLREGs"
+    ],
+    correct:1,
+    explanation:"Reliable systems communicate useful predictions and limitations while supporting safe, informed human decisions."
+}
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const questionText = document.getElementById("questionText");
+const answersArea = document.getElementById("answersArea");
+const feedback = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+const questionCounter = document.getElementById("questionCounter");
+const scoreCounter = document.getElementById("scoreCounter");
+const progressBar = document.getElementById("progressBar");
+
+function loadQuestion(){
+    answered = false;
+
+    const item = questions[currentQuestion];
+
+    questionCounter.textContent =
+        `QUESTION ${currentQuestion + 1} / ${questions.length}`;
+
+    scoreCounter.textContent = `SCORE: ${score}`;
+
+    progressBar.style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    questionText.textContent = item.q;
+    feedback.style.display = "none";
+    feedback.textContent = "";
+    answersArea.innerHTML = "";
+
+    item.a.forEach((answer,index)=>{
+        const button = document.createElement("button");
+
+        button.className = "answer";
+        button.textContent =
+            `${String.fromCharCode(65 + index)}. ${answer}`;
+
+        button.addEventListener("click",()=>selectAnswer(index));
+
+        answersArea.appendChild(button);
+    });
+
+    nextBtn.disabled = true;
+    nextBtn.textContent =
+        currentQuestion === questions.length - 1
+            ? "VIEW FINAL RESULT"
+            : "NEXT QUESTION →";
+}
+
+function selectAnswer(selected){
+    if(answered) return;
+
+    answered = true;
+
+    const item = questions[currentQuestion];
+    const buttons = answersArea.querySelectorAll(".answer");
+
+    buttons.forEach((button,index)=>{
+        button.disabled = true;
+
+        if(index === item.correct){
+            button.classList.add("correct");
+        }
+
+        if(index === selected && selected !== item.correct){
+            button.classList.add("wrong");
+        }
+    });
+
+    if(selected === item.correct){
+        score++;
+
+        feedback.innerHTML =
+            `<strong style="color:#4ade80">Correct Answer!</strong><br>${item.explanation}`;
+    }else{
+        feedback.innerHTML =
+            `<strong style="color:#fb7185">Incorrect Answer.</strong><br>
+            Correct answer: ${item.a[item.correct]}<br>${item.explanation}`;
+    }
+
+    feedback.style.display = "block";
+    scoreCounter.textContent = `SCORE: ${score}`;
+    nextBtn.disabled = false;
+}
+
+function showResult(){
+    document.getElementById("questionArea").style.display = "none";
+    document.querySelector(".quiz-top").style.display = "none";
+    document.querySelector(".quiz-container .progress").style.display = "none";
+    nextBtn.style.display = "none";
+
+    const resultScreen = document.getElementById("resultScreen");
+    resultScreen.style.display = "block";
+
+    document.getElementById("finalScore").textContent =
+        `${score}/${questions.length}`;
+
+    const percentage = score / questions.length * 100;
+
+    let message;
+
+    if(percentage >= 90){
+        message = "Excellent performance! You demonstrate a strong understanding of maritime collision avoidance and AI-based risk prediction.";
+    }else if(percentage >= 75){
+        message = "Very good work! Review the explanations to strengthen your understanding of maritime safety systems.";
+    }else if(percentage >= 60){
+        message = "Good effort. Revisit CPA, TCPA, COLREGs and sensor fusion before trying again.";
+    }else{
+        message = "Keep learning. Review the topic carefully and retake the assessment to improve your understanding.";
+    }
+
+    document.getElementById("resultMessage").textContent = message;
+    progressBar.style.width = "100%";
+}
+
+nextBtn.addEventListener("click",()=>{
+    if(!answered) return;
+
+    if(currentQuestion < questions.length - 1){
+        currentQuestion++;
+        loadQuestion();
+    }else{
+        showResult();
+    }
+});
+
+document.getElementById("retryBtn").addEventListener("click",()=>{
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+
+    document.getElementById("questionArea").style.display = "block";
+    document.querySelector(".quiz-top").style.display = "flex";
+    document.querySelector(".quiz-container .progress").style.display = "block";
+    nextBtn.style.display = "inline-block";
+    document.getElementById("resultScreen").style.display = "none";
+
+    loadQuestion();
+});
+
+loadQuestion();
+analyzeEncounter();
+</script>
+
+</body>
+</html>

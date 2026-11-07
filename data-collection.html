@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore maritime data collection systems, shipboard sensors, navigation data, acquisition methods, data quality, and maritime applications.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Data Collection</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --dc-bg: #070816;
+            --dc-card: rgba(13, 16, 38, 0.88);
+            --dc-purple: #9333ea;
+            --dc-purple-light: #c084fc;
+            --dc-blue: #2563eb;
+            --dc-white: #ffffff;
+            --dc-text: #e5e7eb;
+            --dc-muted: #9ca3af;
+            --dc-border: rgba(192, 132, 252, 0.2);
+        }
+
+        body.data-page {
+            background: var(--dc-bg);
+            color: var(--dc-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .dc-container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .dc-hero {
+            min-height: 390px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0;
+            background:
+                radial-gradient(circle at 80% 40%, rgba(147,51,234,.2), transparent 35%),
+                linear-gradient(120deg, #070816, #10102b 65%, #101a37);
+            border-bottom: 1px solid var(--dc-border);
+        }
+
+        .dc-hero-content {
+            max-width: 760px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dc-label {
+            color: var(--dc-purple-light);
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .dc-hero h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.08;
+            margin: 20px 0;
+            color: var(--dc-white);
+        }
+
+        .dc-hero h1 span {
+            color: var(--dc-purple-light);
+        }
+
+        .dc-hero p {
+            color: var(--dc-muted);
+            line-height: 1.9;
+            font-size: 16px;
+            max-width: 680px;
+        }
+
+        .dc-breadcrumb {
+            padding: 22px 0;
+            color: var(--dc-muted);
+            font-size: 13px;
+        }
+
+        .dc-breadcrumb a {
+            color: var(--dc-purple-light);
+            text-decoration: none;
+        }
+
+        .dc-section {
+            padding: 65px 0;
+            border-bottom: 1px solid var(--dc-border);
+        }
+
+        .dc-section-heading {
+            margin-bottom: 30px;
+        }
+
+        .dc-section-heading small {
+            color: var(--dc-purple-light);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .dc-section-heading h2 {
+            color: var(--dc-white);
+            font-size: clamp(25px, 4vw, 36px);
+            margin: 12px 0;
+        }
+
+        .dc-section p {
+            color: var(--dc-muted);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .dc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        .dc-card {
+            background: var(--dc-card);
+            border: 1px solid var(--dc-border);
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .dc-card h3 {
+            color: var(--dc-purple-light);
+            margin-bottom: 12px;
+            font-size: 19px;
+        }
+
+        .dc-card p {
+            margin: 0;
+        }
+
+        .dc-highlight {
+            background: rgba(147, 51, 234, .08);
+            border-left: 3px solid var(--dc-purple);
+            padding: 22px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .dc-highlight strong {
+            color: var(--dc-white);
+        }
+
+        .dc-list {
+            padding-left: 22px;
+            color: var(--dc-muted);
+            line-height: 2;
+        }
+
+        .dc-list li {
+            margin-bottom: 9px;
+        }
+
+        .dc-table-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        .dc-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .dc-table th,
+        .dc-table td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--dc-border);
+            color: var(--dc-muted);
+            line-height: 1.7;
+        }
+
+        .dc-table th {
+            color: var(--dc-purple-light);
+            background: rgba(147, 51, 234, .1);
+        }
+
+        .dc-steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .dc-step {
+            padding: 22px 15px;
+            background: var(--dc-card);
+            border: 1px solid var(--dc-border);
+            border-radius: 12px;
+        }
+
+        .dc-step span {
+            display: block;
+            color: var(--dc-purple-light);
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .dc-step h3 {
+            color: var(--dc-white);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .dc-step p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .dc-quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .dc-question {
+            background: var(--dc-card);
+            border: 1px solid var(--dc-border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .dc-question h3 {
+            color: var(--dc-white);
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .dc-question-number {
+            display: block;
+            color: var(--dc-purple-light);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .dc-option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px;
+            border: 1px solid var(--dc-border);
+            border-radius: 9px;
+            margin: 10px 0;
+            cursor: pointer;
+            color: var(--dc-muted);
+            line-height: 1.6;
+            transition: .2s;
+        }
+
+        .dc-option:hover {
+            border-color: var(--dc-purple);
+            background: rgba(147, 51, 234, .07);
+        }
+
+        .dc-option input {
+            margin-top: 5px;
+            accent-color: var(--dc-purple);
+        }
+
+        .dc-option:has(input:checked) {
+            border-color: var(--dc-purple-light);
+            color: var(--dc-white);
+        }
+
+        .dc-explanation {
+            display: none;
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 9px;
+            line-height: 1.8;
+            background: rgba(147, 51, 234, .09);
+            border: 1px solid var(--dc-border);
+            color: var(--dc-muted);
+        }
+
+        .dc-explanation.show {
+            display: block;
+        }
+
+        .dc-explanation strong {
+            color: var(--dc-purple-light);
+        }
+
+        .dc-correct {
+            border-left: 3px solid #22c55e;
+        }
+
+        .dc-incorrect {
+            border-left: 3px solid #ef4444;
+        }
+
+        .dc-button {
+            background: linear-gradient(110deg, var(--dc-purple), #6b21a8);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s;
+            margin-top: 15px;
+        }
+
+        .dc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, .25);
+        }
+
+        .dc-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .dc-result {
+            display: none;
+            padding: 28px;
+            border: 1px solid var(--dc-border);
+            background: var(--dc-card);
+            border-radius: 14px;
+            margin-top: 25px;
+        }
+
+        .dc-result.show {
+            display: block;
+        }
+
+        .dc-result h3 {
+            color: var(--dc-purple-light);
+            margin-bottom: 12px;
+        }
+
+        .dc-result-score {
+            font-size: 38px;
+            color: var(--dc-white);
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .dc-references a {
+            color: var(--dc-purple-light);
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .dc-references li {
+            margin-bottom: 16px;
+        }
+
+        .dc-footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--dc-muted);
+            font-size: 13px;
+        }
+
+        .dc-footer strong {
+            color: var(--dc-purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .dc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dc-steps {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dc-section {
+                padding: 45px 0;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .dc-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .dc-hero {
+                min-height: 340px;
+                padding: 55px 0;
+            }
+
+            .dc-question {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body class="data-page">
+
+    <header class="dc-hero">
+        <div class="dc-container">
+            <div class="dc-hero-content">
+                <span class="dc-label">MARITERRA / TECHNOLOGY INTEGRATION</span>
+
+                <h1>
+                    Maritime Data
+                    <span>Collection</span>
+                </h1>
+
+                <p>
+                    Understanding how ships acquire, measure, validate,
+                    and organize operational data from onboard sensors,
+                    navigation equipment, communication systems, and
+                    external information sources.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="dc-container">
+
+        <nav class="dc-breadcrumb">
+            <a href="index.html">Home</a>
+            /
+            <a href="technology.html">Maritime Technology</a>
+            /
+            <a href="technology-integration.html">Technology Integration</a>
+            /
+            Data Collection
+        </nav>
+
+        <!-- INTRODUCTION -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>01 / INTRODUCTION</small>
+                <h2>What Is Maritime Data Collection?</h2>
+            </div>
+
+            <p>
+                Maritime data collection is the process of acquiring
+                information from sensors, navigation equipment,
+                machinery systems, communication devices, crew inputs,
+                and external services used in maritime operations.
+            </p>
+
+            <p>
+                Modern vessels generate information continuously.
+                This information can describe the ship's position,
+                speed, heading, depth, engine condition, fuel consumption,
+                weather conditions, cargo status, and surrounding traffic.
+            </p>
+
+            <p>
+                Collected data supports navigation, machinery monitoring,
+                operational planning, safety procedures, maintenance,
+                and communication between vessels and shore-based systems.
+            </p>
+
+            <div class="dc-highlight">
+                <strong>Important distinction:</strong>
+                Data collection does not automatically mean that
+                information is accurate or useful. Measurements must
+                be checked for quality, timing, source reliability,
+                and correct interpretation before they are used
+                in operational decisions.
+            </div>
+        </section>
+
+        <!-- DATA SOURCES -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>02 / DATA SOURCES</small>
+                <h2>Where Does Maritime Data Come From?</h2>
+            </div>
+
+            <p>
+                Maritime data can originate from several independent
+                sources. Each source measures or provides a different
+                aspect of vessel operations.
+            </p>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Navigation Sensors</h3>
+                    <p>
+                        GNSS receivers, gyrocompasses, speed logs,
+                        echo sounders, and other navigation instruments
+                        provide position, heading, speed, and depth
+                        information.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Machinery Sensors</h3>
+                    <p>
+                        Temperature, pressure, vibration, flow,
+                        and rotational-speed sensors monitor
+                        engines, pumps, generators, and auxiliary
+                        machinery.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Environmental Sensors</h3>
+                    <p>
+                        Weather instruments and environmental
+                        measurement systems provide information
+                        about wind, atmospheric pressure, temperature,
+                        and other surrounding conditions.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Communication Systems</h3>
+                    <p>
+                        AIS, satellite communication, radio systems,
+                        and shore-based services can provide or
+                        exchange vessel and operational information.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Human-Entered Information</h3>
+                    <p>
+                        Crew members and operators may enter
+                        observations, maintenance records, voyage
+                        information, and operational reports.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>External Data Services</h3>
+                    <p>
+                        Weather forecasts, navigational warnings,
+                        port information, and other authorized
+                        external services can supplement onboard
+                        measurements.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SENSORS -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>03 / SENSORS AND MEASUREMENTS</small>
+                <h2>How Sensors Acquire Information</h2>
+            </div>
+
+            <p>
+                A sensor detects a physical condition and converts
+                it into a measurable signal. Depending on its design,
+                this signal may be electrical, digital, or another
+                form that can be processed by an instrument or
+                control system.
+            </p>
+
+            <div class="dc-table-wrap">
+                <table class="dc-table">
+                    <thead>
+                        <tr>
+                            <th>Instrument / Sensor</th>
+                            <th>Measured Information</th>
+                            <th>Operational Use</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>GNSS Receiver</td>
+                            <td>Position and time information</td>
+                            <td>Positioning and navigation support</td>
+                        </tr>
+
+                        <tr>
+                            <td>Gyrocompass</td>
+                            <td>Heading information</td>
+                            <td>Heading reference for navigation systems</td>
+                        </tr>
+
+                        <tr>
+                            <td>Speed Log</td>
+                            <td>Speed information</td>
+                            <td>Speed monitoring and navigation</td>
+                        </tr>
+
+                        <tr>
+                            <td>Echo Sounder</td>
+                            <td>Water depth beneath the vessel</td>
+                            <td>Under-keel and depth awareness</td>
+                        </tr>
+
+                        <tr>
+                            <td>Temperature Sensor</td>
+                            <td>Temperature of a measured component or fluid</td>
+                            <td>Machinery condition monitoring</td>
+                        </tr>
+
+                        <tr>
+                            <td>Pressure Sensor</td>
+                            <td>Pressure in a system or pipeline</td>
+                            <td>Equipment and system monitoring</td>
+                        </tr>
+
+                        <tr>
+                            <td>Vibration Sensor</td>
+                            <td>Mechanical vibration</td>
+                            <td>Condition assessment and fault investigation</td>
+                        </tr>
+
+                        <tr>
+                            <td>Anemometer</td>
+                            <td>Wind speed</td>
+                            <td>Environmental awareness and operations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="dc-highlight">
+                <strong>Engineering consideration:</strong>
+                A sensor measures a particular physical quantity.
+                It does not necessarily determine the complete
+                operational meaning of that measurement. Interpretation
+                depends on calibration, context, processing, and
+                the system receiving the data.
+            </div>
+        </section>
+
+        <!-- DATA COLLECTION PROCESS -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>04 / COLLECTION WORKFLOW</small>
+                <h2>How Does the Collection Process Work?</h2>
+            </div>
+
+            <p>
+                A simplified data acquisition workflow can be divided
+                into four stages. Actual vessel architectures may
+                include additional processing, redundancy, and
+                safety mechanisms.
+            </p>
+
+            <div class="dc-steps">
+
+                <article class="dc-step">
+                    <span>STAGE 01</span>
+                    <h3>Measurement</h3>
+                    <p>
+                        A sensor or information source measures
+                        or provides an operational parameter.
+                    </p>
+                </article>
+
+                <article class="dc-step">
+                    <span>STAGE 02</span>
+                    <h3>Acquisition</h3>
+                    <p>
+                        An instrument or acquisition unit receives
+                        the signal or digital information.
+                    </p>
+                </article>
+
+                <article class="dc-step">
+                    <span>STAGE 03</span>
+                    <h3>Validation</h3>
+                    <p>
+                        The system checks whether the information
+                        is plausible, complete, and correctly timed.
+                    </p>
+                </article>
+
+                <article class="dc-step">
+                    <span>STAGE 04</span>
+                    <h3>Distribution</h3>
+                    <p>
+                        Validated information is made available
+                        to authorized systems or applications.
+                    </p>
+                </article>
+
+            </div>
+
+            <p style="margin-top:25px;">
+                In practice, validation may involve checking measurement
+                ranges, timestamps, communication status, sensor
+                diagnostics, and consistency with independent sources.
+            </p>
+        </section>
+
+        <!-- DATA TYPES -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>05 / DATA CHARACTERISTICS</small>
+                <h2>Types of Maritime Data</h2>
+            </div>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Real-Time Data</h3>
+                    <p>
+                        Information delivered with sufficiently low
+                        delay for a particular operational purpose.
+                        What counts as real-time depends on the
+                        application and its timing requirements.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Historical Data</h3>
+                    <p>
+                        Previously recorded measurements and
+                        operational records used for trend analysis,
+                        reporting, maintenance, and investigation.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Continuous Data</h3>
+                    <p>
+                        Measurements acquired repeatedly over time,
+                        such as engine temperature or vibration.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Event-Based Data</h3>
+                    <p>
+                        Information recorded when a defined event
+                        occurs, such as an alarm, equipment fault,
+                        or system state change.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- DATA QUALITY -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>06 / DATA QUALITY</small>
+                <h2>Why Is Data Quality Critical?</h2>
+            </div>
+
+            <p>
+                Data quality determines whether collected information
+                can be trusted for its intended purpose. A technically
+                connected system may still produce misleading results
+                if its input data is inaccurate, delayed, incomplete,
+                duplicated, or incorrectly identified.
+            </p>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Accuracy</h3>
+                    <p>
+                        How closely a measurement represents the
+                        actual value of the quantity being measured.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Completeness</h3>
+                    <p>
+                        Whether the required data fields and
+                        observations are available.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Timeliness</h3>
+                    <p>
+                        Whether information arrives early enough
+                        for the intended operational decision.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Consistency</h3>
+                    <p>
+                        Whether values and formats remain
+                        understandable and compatible across systems.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Validity</h3>
+                    <p>
+                        Whether data follows defined rules,
+                        acceptable ranges, and expected formats.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Traceability</h3>
+                    <p>
+                        Whether the origin, timestamp, and processing
+                        history of information can be identified.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="dc-highlight">
+                <strong>Example:</strong>
+                If a navigation system receives an old position
+                measurement but treats it as current, the value
+                may look technically valid while being operationally
+                misleading. A timestamp and freshness check are
+                therefore essential.
+            </div>
+        </section>
+
+        <!-- COMMUNICATION AND INTEGRATION -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>07 / DATA INTERFACES</small>
+                <h2>How Is Collected Data Transferred?</h2>
+            </div>
+
+            <p>
+                After acquisition, information may be transferred
+                between onboard instruments, processing units,
+                monitoring systems, and authorized external services.
+                The interface must be suitable for the data type,
+                required speed, network architecture, and safety
+                requirements.
+            </p>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Serial Interfaces</h3>
+                    <p>
+                        Serial communication is used by maritime
+                        electronic instruments to exchange structured
+                        information. IEC 61162-1:2024 describes
+                        a single-talker, multiple-listener interface
+                        for one-way data transmission.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Ethernet-Based Interfaces</h3>
+                    <p>
+                        Shipboard Ethernet networks support
+                        communication between multiple connected
+                        equipment systems. IEC 61162-450:2024
+                        addresses high-speed communication between
+                        maritime navigation and radiocommunication
+                        equipment and other ship systems.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Wireless and Satellite Links</h3>
+                    <p>
+                        Wireless and satellite communication can
+                        transfer selected information between vessels,
+                        shore facilities, and external services.
+                        Availability and latency depend on the
+                        communication service and environment.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Data Exchange Platforms</h3>
+                    <p>
+                        Digital platforms can collect and exchange
+                        information between ships and port authorities.
+                        The IMO Maritime Single Window is an example
+                        of a centralized digital information exchange
+                        approach for port calls.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="dc-highlight">
+                <strong>Standards matter:</strong>
+                IEC 61162-1 is not a universal high-bandwidth network
+                standard. It is designed for a specific serial
+                communication arrangement. Radar imagery, video,
+                and intensive file transfers require other suitable
+                technologies and interfaces.
+            </div>
+        </section>
+
+        <!-- APPLICATIONS -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>08 / MARITIME APPLICATIONS</small>
+                <h2>Where Is Data Collection Used?</h2>
+            </div>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Navigation Support</h3>
+                    <p>
+                        Position, heading, speed, and depth information
+                        help navigation systems present operational
+                        information to bridge teams.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Engine Monitoring</h3>
+                    <p>
+                        Machinery measurements help operators monitor
+                        operating conditions and identify abnormal
+                        changes that may require investigation.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Condition-Based Maintenance</h3>
+                    <p>
+                        Recorded temperature, vibration, pressure,
+                        and other measurements can support maintenance
+                        decisions when interpreted using appropriate
+                        engineering methods.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Voyage Analysis</h3>
+                    <p>
+                        Historical operational data can help evaluate
+                        speed, fuel consumption, voyage performance,
+                        and operational patterns.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Port Operations</h3>
+                    <p>
+                        Electronic ship and port information exchange
+                        can support arrival, stay, and departure
+                        clearance processes.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Safety Investigation</h3>
+                    <p>
+                        Recorded data may support incident analysis,
+                        event reconstruction, and the investigation
+                        of operational conditions.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- CHALLENGES -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>09 / TECHNICAL CHALLENGES</small>
+                <h2>Challenges in Maritime Data Collection</h2>
+            </div>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Sensor Failure</h3>
+                    <p>
+                        A faulty sensor may generate missing,
+                        unstable, or misleading measurements.
+                        Diagnostics and independent checks can
+                        help identify the problem.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Calibration Drift</h3>
+                    <p>
+                        Sensor readings may gradually deviate
+                        from expected values. Calibration and
+                        verification procedures help manage this risk.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Communication Loss</h3>
+                    <p>
+                        Network interruptions, damaged cables,
+                        interference, or equipment faults can
+                        interrupt data transfer.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Incompatible Formats</h3>
+                    <p>
+                        Different devices may use different
+                        interfaces, message structures, units,
+                        or data conventions.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Time Synchronization</h3>
+                    <p>
+                        Inconsistent timestamps can make it
+                        difficult to correlate measurements
+                        from different equipment.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Cybersecurity Risks</h3>
+                    <p>
+                        Unauthorized access, manipulated data,
+                        compromised devices, and disrupted
+                        communication can affect the trustworthiness
+                        and availability of collected information.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SECURITY -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>10 / CYBERSECURITY</small>
+                <h2>Protecting Maritime Data Collection</h2>
+            </div>
+
+            <p>
+                Connected sensors and acquisition systems can
+                introduce cybersecurity risks. Protecting the
+                collection process requires more than securing
+                the central computer: the devices, interfaces,
+                networks, access privileges, and data pathways
+                must also be considered.
+            </p>
+
+            <ul class="dc-list">
+                <li>Restrict access to authorized users and devices.</li>
+                <li>Separate networks according to operational and security requirements.</li>
+                <li>Monitor unusual communication and unexpected data changes.</li>
+                <li>Maintain secure configurations and update equipment where supported.</li>
+                <li>Validate critical measurements against independent sources when appropriate.</li>
+                <li>Maintain backups and documented recovery procedures.</li>
+                <li>Preserve logs and timestamps to support investigation and traceability.</li>
+            </ul>
+
+            <div class="dc-highlight">
+                <strong>Critical principle:</strong>
+                A connected sensor is not automatically a trustworthy
+                sensor. Data integrity, device security, and operational
+                validation must be considered together.
+            </div>
+        </section>
+
+        <!-- FUTURE -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>11 / FUTURE DEVELOPMENTS</small>
+                <h2>The Future of Maritime Data Collection</h2>
+            </div>
+
+            <p>
+                Maritime data collection is evolving alongside
+                digitalization, connected ship systems, and
+                advanced analytical technologies.
+            </p>
+
+            <div class="dc-grid">
+
+                <article class="dc-card">
+                    <h3>Intelligent Data Analytics</h3>
+                    <p>
+                        Analytical systems may identify patterns
+                        and anomalies in large operational datasets.
+                        Their results still depend on data quality,
+                        suitable models, and human review.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Digital Twins</h3>
+                    <p>
+                        Digital representations of vessels or
+                        equipment can use collected data to support
+                        simulation, monitoring, and engineering analysis.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Improved Interoperability</h3>
+                    <p>
+                        Standardized interfaces and data exchange
+                        approaches can improve communication between
+                        shipboard systems and shore-based platforms.
+                    </p>
+                </article>
+
+                <article class="dc-card">
+                    <h3>Stronger Data Security</h3>
+                    <p>
+                        Security-by-design, better monitoring,
+                        and improved system resilience will remain
+                        important as more maritime equipment becomes
+                        digitally connected.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+
+        <section class="dc-section" id="knowledge-check">
+
+            <div class="dc-section-heading">
+                <small>12 / KNOWLEDGE ASSESSMENT</small>
+                <h2>Advanced Knowledge Check</h2>
+            </div>
+
+            <div class="dc-quiz-intro">
+                <p>
+                    Test your understanding of maritime data
+                    collection through ten technical questions.
+                    The questions focus on engineering reasoning,
+                    system behavior, data quality, and practical
+                    maritime scenarios.
+                </p>
+
+                <div class="dc-highlight">
+                    <strong>Instructions:</strong>
+                    Select one answer for each question, then
+                    submit the test. Review the explanation for
+                    every answer to understand the engineering
+                    reasoning behind it.
+                </div>
+            </div>
+
+            <form id="dcQuiz">
+
+                <div id="dcQuestions"></div>
+
+                <button type="submit" class="dc-button" id="dcSubmit">
+                    Submit Assessment
+                </button>
+
+                <button type="button" class="dc-button" id="dcReset">
+                    Reset Assessment
+                </button>
+
+            </form>
+
+            <div class="dc-result" id="dcResult" aria-live="polite">
+                <h3>Assessment Results</h3>
+                <div class="dc-result-score" id="dcScore"></div>
+                <p id="dcFeedback"></p>
+            </div>
+
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section class="dc-section">
+            <div class="dc-section-heading">
+                <small>13 / SCIENTIFIC REFERENCES</small>
+                <h2>References & Further Learning</h2>
+            </div>
+
+            <ul class="dc-list dc-references">
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    Maritime Single Window.<br>
+                    <a href="https://www.imo.org/en/ourwork/facilitation/pages/maritimesinglewindow-default.aspx" target="_blank" rel="noopener noreferrer">
+                        Official IMO Reference
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Electrotechnical Commission (IEC)</strong><br>
+                    IEC 61162-1:2024 — Digital interfaces, single talker and multiple listeners.<br>
+                    <a href="https://webstore.iec.ch/en/publication/72729" target="_blank" rel="noopener noreferrer">
+                        Official IEC Publication
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Electrotechnical Commission (IEC)</strong><br>
+                    IEC 61162-450:2024 — Multiple talkers and multiple listeners, Ethernet interconnection.<br>
+                    <a href="https://webstore.iec.ch/en/publication/72731" target="_blank" rel="noopener noreferrer">
+                        Official IEC Publication
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    Facilitation — Electronic data exchange and maritime digitalization.<br>
+                    <a href="https://www.imo.org/en/ourwork/facilitation/pages/default.aspx" target="_blank" rel="noopener noreferrer">
+                        IMO Facilitation
+                    </a>
+                </li>
+
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="dc-footer">
+        <p>
+            MARITERRA — Maritime Knowledge & Technology
+        </p>
+        <p>
+            Developed by <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "A GNSS receiver reports a position that is within the expected geographic range, but its timestamp is several minutes old. Which assessment is most technically appropriate?",
+                options: [
+                    "The position is valid because its coordinates are within range.",
+                    "The position must be rejected only if the receiver reports a hardware failure.",
+                    "The position may be syntactically valid but operationally stale, so freshness must be evaluated.",
+                    "The timestamp is irrelevant when the coordinates are available."
+                ],
+                answer: 2,
+                explanation: "A measurement can have plausible coordinates while being too old for the intended operation. Range checks alone cannot establish freshness. Timestamps and application-specific age limits are necessary. A is wrong because geographic plausibility does not prove timeliness. B is wrong because stale data can occur without a hardware alarm. D is wrong because time is essential when interpreting changing vessel positions."
+            },
+            {
+                question: "Two independent sensors measure the same physical quantity but produce significantly different values. What is the strongest first engineering response?",
+                options: [
+                    "Automatically average both values and use the result.",
+                    "Check timestamps, calibration status, measurement context, and sensor diagnostics before deciding which value to trust.",
+                    "Always trust the sensor with the highest numerical resolution.",
+                    "Disable the sensor reporting the lower value."
+                ],
+                answer: 1,
+                explanation: "Disagreement should trigger investigation, not automatic averaging or arbitrary selection. The sensors may differ in calibration, location, measurement method, timing, or operating conditions. A is unsafe because averaging faulty or non-comparable measurements can hide an error. C confuses resolution with accuracy. D has no technical justification."
+            },
+            {
+                question: "A shipboard system receives engine temperature values correctly, but the values are associated with the wrong equipment identifiers. Which data-quality property is most directly compromised?",
+                options: [
+                    "Data provenance and contextual integrity.",
+                    "Network bandwidth.",
+                    "Sensor sampling frequency.",
+                    "Signal voltage."
+                ],
+                answer: 0,
+                explanation: "A measurement must be linked to the correct source and equipment context. Incorrect identifiers undermine traceability and can lead to incorrect maintenance decisions. Bandwidth, sampling frequency, and voltage may be relevant in other faults, but they do not directly explain the identity mismatch."
+            },
+            {
+                question: "A system must transmit simple navigation measurements from one talker to several listeners using an interface covered by IEC 61162-1:2024. Which statement best describes the standard's communication arrangement?",
+                options: [
+                    "Multiple talkers send high-bandwidth radar video to one listener.",
+                    "One talker sends one-way serial data to one or more listeners.",
+                    "Every listener must transmit an acknowledgement for each message.",
+                    "It is a universal standard for all shipboard Ethernet and file transfers."
+                ],
+                answer: 1,
+                explanation: "IEC 61162-1:2024 describes one-way serial communication from a single talker to multiple listeners. It is not a universal high-bandwidth video or file-transfer standard, and the standard does not provide guaranteed message delivery. A, C, and D incorrectly describe its scope or behavior."
+            },
+            {
+                question: "A vessel's monitoring platform combines measurements from several devices. Their clocks are not synchronized. What is the most serious analytical consequence?",
+                options: [
+                    "All measurements become inaccurate by the same percentage.",
+                    "The platform cannot store historical data.",
+                    "Events may be correlated in the wrong sequence, creating misleading cause-and-effect interpretations.",
+                    "The sensors automatically stop measuring."
+                ],
+                answer: 2,
+                explanation: "Unsynchronized timestamps can make events appear earlier or later than they actually occurred. This undermines event correlation and time-series analysis. It does not necessarily change the measured physical values or stop sensors from operating."
+            },
+            {
+                question: "An echo sounder reports a depth value that suddenly changes while other navigation information remains stable. Which approach best avoids an unsupported conclusion?",
+                options: [
+                    "Assume the vessel has entered shallow water.",
+                    "Immediately discard all measurements from the navigation system.",
+                    "Investigate sensor status, measurement conditions, installation factors, and independent depth information where available.",
+                    "Replace the echo sounder with a GNSS receiver."
+                ],
+                answer: 2,
+                explanation: "A sudden change can have several explanations, including actual depth variation, sensor or transducer issues, measurement conditions, or data-processing problems. Corroboration and diagnostics are needed. A assumes the cause without evidence. B is excessive. D is incorrect because GNSS does not measure water depth beneath the vessel."
+            },
+            {
+                question: "A data acquisition unit receives a value outside the expected operating range. Which design choice is generally most appropriate?",
+                options: [
+                    "Silently replace it with the last known value.",
+                    "Apply defined validation rules, flag the anomaly, preserve diagnostic context, and follow the system's safe handling procedure.",
+                    "Treat every out-of-range value as a confirmed cyberattack.",
+                    "Delete the entire historical dataset."
+                ],
+                answer: 1,
+                explanation: "Validation should identify and flag anomalous values while preserving enough context for investigation. A last-known value may be used only under an explicitly designed fallback policy, not silently. An out-of-range value alone does not prove a cyberattack. Deleting historical data destroys useful evidence."
+            },
+            {
+                question: "A port authority wants ships to submit required port-call information through a centralized digital entry point. Which maritime concept most directly supports this process?",
+                options: [
+                    "A Maritime Single Window.",
+                    "A shipboard vibration sensor.",
+                    "An echo sounder.",
+                    "A gyrocompass."
+                ],
+                answer: 0,
+                explanation: "The IMO Maritime Single Window supports electronic exchange of required information between ships and public authorities through a single digital platform. The other options are onboard instruments that measure physical or navigational parameters, not centralized port information exchange platforms."
+            },
+            {
+                question: "A vessel stores accurate sensor measurements, but the acquisition system does not record where each measurement originated. What is the key limitation?",
+                options: [
+                    "The values cannot be represented digitally.",
+                    "The system loses traceability, making verification and investigation more difficult.",
+                    "The measurements automatically become continuous data.",
+                    "The storage capacity becomes unlimited."
+                ],
+                answer: 1,
+                explanation: "Without source identification, it becomes difficult to determine which device generated a value, assess its reliability, or reconstruct an event. Accuracy of the raw measurement does not remove the need for provenance. The other options do not follow from missing source metadata."
+            },
+            {
+                question: "A vessel is designing a data collection architecture for navigation and machinery monitoring. Which principle provides the strongest foundation for dependable integration?",
+                options: [
+                    "Connect every available device to one network without classification.",
+                    "Prioritize data volume over validation and security.",
+                    "Use suitable interfaces, verified data sources, timestamps, quality checks, access controls, and application-specific requirements.",
+                    "Assume that standardized communication guarantees the accuracy of every sensor."
+                ],
+                answer: 2,
+                explanation: "Reliable collection is a system-level engineering problem. It requires appropriate interfaces, source verification, timing, data-quality controls, security, and an understanding of the operational purpose. A ignores network segmentation and risk. B sacrifices reliability. D confuses communication compatibility with measurement accuracy."
+            }
+        ];
+
+        const questionsContainer = document.getElementById("dcQuestions");
+        const quizForm = document.getElementById("dcQuiz");
+        const resultBox = document.getElementById("dcResult");
+        const scoreElement = document.getElementById("dcScore");
+        const feedbackElement = document.getElementById("dcFeedback");
+        const submitButton = document.getElementById("dcSubmit");
+        const resetButton = document.getElementById("dcReset");
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = "";
+
+            questions.forEach((item, index) => {
+                const questionElement = document.createElement("article");
+                questionElement.className = "dc-question";
+
+                const number = document.createElement("span");
+                number.className = "dc-question-number";
+                number.textContent = `QUESTION ${String(index + 1).padStart(2, "0")}`;
+
+                const title = document.createElement("h3");
+                title.textContent = item.question;
+
+                questionElement.appendChild(number);
+                questionElement.appendChild(title);
+
+                item.options.forEach((option, optionIndex) => {
+                    const label = document.createElement("label");
+                    label.className = "dc-option";
+
+                    const input = document.createElement("input");
+                    input.type = "radio";
+                    input.name = `question-${index}`;
+                    input.value = optionIndex;
+
+                    const text = document.createElement("span");
+                    text.textContent = option;
+
+                    label.appendChild(input);
+                    label.appendChild(text);
+
+                    questionElement.appendChild(label);
+                });
+
+                const explanation = document.createElement("div");
+                explanation.className = "dc-explanation";
+                explanation.id = `explanation-${index}`;
+
+                questionElement.appendChild(explanation);
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        function submitAssessment(event) {
+            event.preventDefault();
+
+            const answers = [];
+
+            for (let i = 0; i < questions.length; i++) {
+                const selected = document.querySelector(
+                    `input[name="question-${i}"]:checked`
+                );
+
+                if (!selected) {
+                    alert(`Please answer Question ${i + 1} before submitting.`);
+                    document.querySelectorAll(".dc-question")[i].scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                    return;
+                }
+
+                answers.push(Number(selected.value));
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                const isCorrect = answers[index] === item.answer;
+
+                if (isCorrect) score++;
+
+                const explanation = document.getElementById(
+                    `explanation-${index}`
+                );
+
+                explanation.classList.add("show");
+                explanation.classList.add(
+                    isCorrect ? "dc-correct" : "dc-incorrect"
+                );
+
+                const correctOption = item.options[item.answer];
+
+                explanation.innerHTML = `
+                    <strong>${isCorrect ? "Correct Answer" : "Incorrect Answer"}</strong>
+                    <p><strong>Correct choice:</strong> ${correctOption}</p>
+                    <p><strong>Engineering explanation:</strong> ${item.explanation}</p>
+                `;
+
+                document.querySelectorAll(
+                    `input[name="question-${index}"]`
+                ).forEach(input => {
+                    input.disabled = true;
+                });
+            });
+
+            scoreElement.textContent = `${score} / 10`;
+
+            let feedback = "";
+
+            if (score >= 9) {
+                feedback = "Excellent performance. You demonstrated strong understanding of maritime data collection and its engineering considerations.";
+            } else if (score >= 7) {
+                feedback = "Very good performance. Review the explanations to strengthen your understanding of the more complex concepts.";
+            } else if (score >= 5) {
+                feedback = "A developing understanding. Revisit data quality, interfaces, and system validation before attempting the assessment again.";
+            } else {
+                feedback = "Further study is recommended. Review the full topic carefully, especially the relationship between measurement, validation, and operational use.";
+            }
+
+            feedbackElement.textContent = feedback;
+            resultBox.classList.add("show");
+
+            submitButton.disabled = true;
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function resetAssessment() {
+            quizForm.reset();
+
+            document.querySelectorAll(".dc-explanation").forEach(element => {
+                element.className = "dc-explanation";
+                element.innerHTML = "";
+            });
+
+            document.querySelectorAll(".dc-option input").forEach(input => {
+                input.disabled = false;
+            });
+
+            resultBox.classList.remove("show");
+            scoreElement.textContent = "";
+            feedbackElement.textContent = "";
+            submitButton.disabled = false;
+
+            document.getElementById("knowledge-check").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        quizForm.addEventListener("submit", submitAssessment);
+        resetButton.addEventListener("click", resetAssessment);
+
+        renderQuestions();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3068 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070816">
+
+    <title>Predictive Analytics & Forecasting | MARITERRA</title>
+
+    <meta name="description" content="Explore predictive analytics and forecasting in the maritime industry, including time-series analysis, vessel performance prediction, fuel forecasting, weather prediction and maritime decision support.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-soft: #0d1023;
+            --panel: rgba(18, 20, 43, 0.88);
+            --panel-light: rgba(28, 30, 61, 0.72);
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f5f3ff;
+            --muted: #a5a4c2;
+            --border: rgba(196, 181, 253, 0.15);
+            --success: #4ade80;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(147, 51, 234, 0.12), transparent 30%),
+                radial-gradient(circle at 90% 35%, rgba(56, 189, 248, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .ambient::before,
+        .ambient::after {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.13;
+            animation: ambientMove 13s ease-in-out infinite alternate;
+        }
+
+        .ambient::before {
+            background: var(--purple);
+            top: 10%;
+            left: -180px;
+        }
+
+        .ambient::after {
+            background: var(--blue);
+            right: -180px;
+            bottom: 5%;
+            animation-delay: 3s;
+        }
+
+        @keyframes ambientMove {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(70px, 50px) scale(1.2); }
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            min-height: 76px;
+            padding: 14px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: rgba(7, 8, 22, 0.86);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+        }
+
+        .brand {
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: white;
+        }
+
+        .brand span {
+            color: var(--purple-light);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border: 1px solid rgba(196, 181, 253, 0.28);
+            border-radius: 30px;
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.08);
+            font-size: 0.82rem;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(147, 51, 234, 0.2);
+            border-color: var(--purple);
+            transform: translateX(-4px);
+        }
+
+        .hero {
+            min-height: 590px;
+            padding: 100px 8% 90px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            width: min(750px, 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 2px;
+            background: var(--blue);
+        }
+
+        h1, h2, h3 {
+            font-family: "Orbitron", sans-serif;
+            line-height: 1.3;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4.7rem);
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(100deg, #c4b5fd, #9333ea, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 690px;
+            color: var(--muted);
+            font-size: 1.03rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hero-tags span {
+            padding: 8px 13px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--purple-light);
+            font-size: 0.75rem;
+        }
+
+        .forecast-orbit {
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(147, 51, 234, 0.35);
+            border-radius: 50%;
+            animation: rotateOrbit 28s linear infinite;
+        }
+
+        .forecast-orbit::before,
+        .forecast-orbit::after {
+            content: "";
+            position: absolute;
+            inset: 35px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 50%;
+        }
+
+        .forecast-orbit::after {
+            inset: 85px;
+            border-color: rgba(196, 181, 253, 0.22);
+        }
+
+        @keyframes rotateOrbit {
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .orbit-core {
+            position: absolute;
+            width: 125px;
+            height: 125px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.45), rgba(56, 189, 248, 0.08));
+            box-shadow: 0 0 60px rgba(147, 51, 234, 0.35);
+            font-size: 2.6rem;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 20px var(--blue);
+        }
+
+        .orbit-dot.one { top: 40px; left: 80px; }
+        .orbit-dot.two { right: 25px; top: 190px; background: var(--purple-light); }
+        .orbit-dot.three { bottom: 45px; left: 110px; }
+
+        .layout {
+            width: min(1450px, 94%);
+            margin: 65px auto;
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 35px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            padding: 25px 18px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar h3 {
+            font-size: 0.75rem;
+            color: var(--purple-light);
+            letter-spacing: 2px;
+            margin: 0 0 20px 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 11px 12px;
+            margin-bottom: 5px;
+            border-radius: 9px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background: rgba(147, 51, 234, 0.15);
+            border-left: 3px solid var(--purple);
+            padding-left: 16px;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        .section {
+            margin-bottom: 70px;
+            scroll-margin-top: 110px;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.55rem, 3vw, 2.3rem);
+            margin-bottom: 22px;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 900px;
+            margin-bottom: 25px;
+        }
+
+        .content-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 20px;
+            transition: 0.35s;
+        }
+
+        .content-card:hover {
+            border-color: rgba(147, 51, 234, 0.55);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+        }
+
+        .content-card h3 {
+            font-size: 1rem;
+            color: var(--purple-light);
+            margin-bottom: 13px;
+        }
+
+        .content-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card strong {
+            color: #e9ddff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .mini-card {
+            padding: 22px;
+            background: var(--panel-light);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--blue);
+        }
+
+        .mini-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+
+        .mini-card h3 {
+            font-size: 0.88rem;
+            color: var(--purple-light);
+            margin-bottom: 9px;
+        }
+
+        .mini-card p {
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .process-step {
+            position: relative;
+            padding: 22px 15px;
+            text-align: center;
+            background: linear-gradient(145deg, rgba(147, 51, 234, 0.12), rgba(56, 189, 248, 0.06));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .process-step .number {
+            width: 33px;
+            height: 33px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 13px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .process-step h3 {
+            font-size: 0.78rem;
+            margin-bottom: 8px;
+            color: var(--purple-light);
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .formula {
+            padding: 22px;
+            margin: 18px 0;
+            text-align: center;
+            background: rgba(147, 51, 234, 0.1);
+            border: 1px dashed rgba(196, 181, 253, 0.4);
+            border-radius: 14px;
+            color: #e9ddff;
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            overflow-wrap: anywhere;
+        }
+
+        .note {
+            border-left: 3px solid var(--blue);
+            background: rgba(56, 189, 248, 0.07);
+            padding: 18px 20px;
+            border-radius: 0 12px 12px 0;
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin: 20px 0;
+        }
+
+        .warning {
+            border-left-color: var(--warning);
+            background: rgba(251, 191, 36, 0.06);
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin: 22px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+            background: var(--panel);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .lab {
+            padding: 30px;
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(147, 51, 234, 0.12), rgba(10, 15, 38, 0.85));
+        }
+
+        .lab h3 {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--purple-light);
+        }
+
+        .lab-description {
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin-bottom: 25px;
+        }
+
+        .lab-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #e9ddff;
+            font-size: 0.83rem;
+        }
+
+        .control-group output {
+            color: var(--blue);
+            font-weight: 800;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--purple);
+            cursor: pointer;
+        }
+
+        .chart-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: rgba(5, 7, 20, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .chart-title {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 260px;
+            display: block;
+        }
+
+        .lab-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .result-box {
+            padding: 17px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .result-box span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.72rem;
+            margin-bottom: 7px;
+        }
+
+        .result-box strong {
+            color: var(--blue);
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.15rem;
+        }
+
+        .lab-disclaimer {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 0.76rem;
+        }
+
+        .quiz-header {
+            padding: 25px;
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.17), rgba(56, 189, 248, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            margin-bottom: 25px;
+        }
+
+        .quiz-header h3 {
+            color: var(--purple-light);
+            font-size: 1.15rem;
+            margin-bottom: 9px;
+        }
+
+        .quiz-header p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .quiz-progress {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 18px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient);
+            transition: width 0.4s;
+        }
+
+        .question-card {
+            padding: 24px;
+            margin-bottom: 17px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 16px;
+        }
+
+        .question-number {
+            color: var(--blue);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .question-card h3 {
+            font-family: "Inter", sans-serif;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 13px 15px;
+            margin: 9px 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-top: 5px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(74, 222, 128, 0.09);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(251, 113, 133, 0.08);
+            color: #fecdd3;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.07);
+            border-left: 3px solid var(--blue);
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--purple-light);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            padding: 13px 24px;
+            border: none;
+            border-radius: 30px;
+            background: var(--gradient);
+            color: white;
+            font-weight: 800;
+            font-size: 0.83rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 28px;
+            margin-top: 25px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 5px solid var(--purple);
+            box-shadow: 0 0 35px rgba(147, 51, 234, 0.22);
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.6rem;
+            color: var(--purple-light);
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+        }
+
+        .quiz-result p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .references {
+            counter-reset: reference;
+        }
+
+        .reference-item {
+            counter-increment: reference;
+            display: flex;
+            gap: 14px;
+            padding: 17px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--panel);
+        }
+
+        .reference-item::before {
+            content: "[" counter(reference) "]";
+            color: var(--blue);
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .reference-item a {
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .reference-item a:hover {
+            color: var(--blue);
+            text-decoration: underline;
+        }
+
+        .reference-item p {
+            color: var(--muted);
+            font-size: 0.76rem;
+            margin-top: 4px;
+        }
+
+        footer {
+            padding: 35px 6%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: rgba(5, 6, 18, 0.7);
+        }
+
+        footer p {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+            letter-spacing: 1px;
+        }
+
+        .back-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.8);
+            color: white;
+            cursor: pointer;
+            display: none;
+            z-index: 900;
+            font-size: 1.1rem;
+        }
+
+        .back-top.visible {
+            display: block;
+        }
+
+        @media (max-width: 1050px) {
+            .forecast-orbit {
+                right: -100px;
+                opacity: 0.35;
+            }
+
+            .layout {
+                grid-template-columns: 210px minmax(0, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                padding: 13px 4%;
+            }
+
+            .brand {
+                font-size: 0.9rem;
+            }
+
+            .back-btn {
+                padding: 9px 12px;
+                font-size: 0.7rem;
+            }
+
+            .hero {
+                min-height: 500px;
+                padding: 80px 7%;
+            }
+
+            .forecast-orbit {
+                width: 260px;
+                height: 260px;
+                right: -130px;
+                opacity: 0.2;
+            }
+
+            .layout {
+                display: block;
+                width: 92%;
+                margin-top: 35px;
+            }
+
+            .sidebar {
+                position: relative;
+                top: auto;
+                margin-bottom: 35px;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lab-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .lab-results {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card,
+            .lab {
+                padding: 21px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .process-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar nav {
+                grid-template-columns: 1fr;
+            }
+
+            .question-card {
+                padding: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ambient"></div>
+
+<header class="topbar">
+    <a href="artificial-intelligence.html" class="brand">MARI<span>TERRA</span></a>
+
+    <a href="artificial-intelligence.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Artificial Intelligence</span>
+    </a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Artificial Intelligence / Topic 04</div>
+
+        <h1>
+            Predictive Analytics
+            <span>& Forecasting</span>
+        </h1>
+
+        <p class="hero-description">
+            Discover how historical data, statistical models, and machine learning
+            help maritime professionals anticipate future conditions, predict vessel
+            performance, optimize operations, and make more informed decisions.
+        </p>
+
+        <div class="hero-tags">
+            <span>Time-Series Analysis</span>
+            <span>Machine Learning</span>
+            <span>Maritime Forecasting</span>
+            <span>Data-Driven Decisions</span>
+        </div>
+    </div>
+
+    <div class="forecast-orbit" aria-hidden="true">
+        <div class="orbit-core">📈</div>
+        <span class="orbit-dot one"></span>
+        <span class="orbit-dot two"></span>
+        <span class="orbit-dot three"></span>
+    </div>
+</section>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h3>TOPIC NAVIGATION</h3>
+
+        <nav>
+            <a href="#overview">01. Overview</a>
+            <a href="#fundamentals">02. Core Concepts</a>
+            <a href="#data">03. Data & Preparation</a>
+            <a href="#methods">04. Forecasting Methods</a>
+            <a href="#workflow">05. Model Workflow</a>
+            <a href="#maritime">06. Maritime Applications</a>
+            <a href="#performance">07. Model Evaluation</a>
+            <a href="#challenges">08. Challenges</a>
+            <a href="#future">09. Future Directions</a>
+            <a href="#lab">10. Interactive Lab</a>
+            <a href="#quiz">11. Knowledge Assessment</a>
+            <a href="#references">12. References</a>
+        </nav>
+    </aside>
+
+    <main>
+
+        <!-- OVERVIEW -->
+        <section class="section" id="overview">
+            <div class="section-label">01 / Understanding the Topic</div>
+            <h2 class="section-title">What Is Predictive Analytics?</h2>
+
+            <p class="section-intro">
+                Predictive analytics is the process of analyzing historical and current
+                data to estimate what is likely to happen in the future. It combines
+                statistical techniques, data mining, and machine learning to discover
+                patterns and generate predictions that can support operational decisions.
+            </p>
+
+            <div class="content-card">
+                <h3>From Historical Data to Future Insights</h3>
+
+                <p>
+                    Maritime operations generate large amounts of information every day.
+                    Ships continuously produce data about engine temperature, fuel
+                    consumption, speed, position, weather conditions, vibration,
+                    equipment status, and voyage progress.
+                </p>
+
+                <p>
+                    Predictive analytics uses this information to identify patterns that
+                    may indicate future changes. For example, a gradual increase in
+                    engine temperature under comparable operating conditions may indicate
+                    a developing mechanical problem.
+                </p>
+
+                <p>
+                    Instead of waiting until equipment fails, an analytical system can
+                    estimate the probability of a future failure and help engineers plan
+                    an inspection or maintenance activity.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Predictive Analytics vs. Other Types of Analytics</h3>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Analytics Type</th>
+                                <th>Main Question</th>
+                                <th>Maritime Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Descriptive</td>
+                                <td>What happened?</td>
+                                <td>Reporting last month's fuel consumption.</td>
+                            </tr>
+                            <tr>
+                                <td>Diagnostic</td>
+                                <td>Why did it happen?</td>
+                                <td>Investigating why fuel consumption increased.</td>
+                            </tr>
+                            <tr>
+                                <td>Predictive</td>
+                                <td>What may happen?</td>
+                                <td>Estimating tomorrow's fuel consumption.</td>
+                            </tr>
+                            <tr>
+                                <td>Prescriptive</td>
+                                <td>What should we do?</td>
+                                <td>Recommending a more efficient operating speed.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>
+                    These analytics types can work together. A predictive model may
+                    estimate increased fuel consumption, while a prescriptive system
+                    evaluates possible actions to reduce it.
+                </p>
+            </div>
+
+            <div class="note">
+                <strong>Important distinction:</strong> A forecast is not a guaranteed
+                description of the future. It is an estimate based on available data,
+                assumptions, and a particular model. Its reliability depends on data
+                quality, changing conditions, and the uncertainty of the environment.
+            </div>
+        </section>
+
+        <!-- FUNDAMENTALS -->
+        <section class="section" id="fundamentals">
+            <div class="section-label">02 / Core Concepts</div>
+            <h2 class="section-title">The Foundations of Forecasting</h2>
+
+            <p class="section-intro">
+                Understanding predictive analytics requires more than knowing how to
+                run an algorithm. Engineers must understand the structure of data,
+                the behavior of time-dependent variables, and the difference between
+                a prediction and an actual observation.
+            </p>
+
+            <div class="info-grid">
+                <div class="mini-card">
+                    <div class="icon">📊</div>
+                    <h3>Historical Data</h3>
+                    <p>
+                        Previously recorded observations used to identify patterns,
+                        relationships, and changes over time.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">⏱️</div>
+                    <h3>Time-Series Data</h3>
+                    <p>
+                        Measurements collected in chronological order, such as hourly
+                        engine temperature or daily fuel consumption.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔍</div>
+                    <h3>Patterns</h3>
+                    <p>
+                        Repeated or meaningful structures within data, including
+                        trends, seasonality, cycles, and irregular variations.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🎯</div>
+                    <h3>Forecast Horizon</h3>
+                    <p>
+                        The future period a model attempts to predict, such as the next
+                        hour, day, week, or voyage.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">⚖️</div>
+                    <h3>Uncertainty</h3>
+                    <p>
+                        The range of possible outcomes resulting from incomplete data,
+                        unpredictable events, and model limitations.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🧠</div>
+                    <h3>Model</h3>
+                    <p>
+                        A mathematical or computational method that learns or represents
+                        relationships between input variables and outcomes.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>Understanding Time-Series Components</h3>
+
+                <p>
+                    A time series is a sequence of observations recorded over time.
+                    Maritime engineers can use time-series analysis to study variables
+                    such as engine load, fuel consumption, vessel speed, sea conditions,
+                    and equipment vibration.
+                </p>
+
+                <p><strong>Trend:</strong> The long-term direction of a variable. An engine's
+                    average operating temperature may gradually increase over several months.</p>
+
+                <p><strong>Seasonality:</strong> A repeated pattern occurring at regular
+                    intervals. Port activity or shipping demand may vary by season.</p>
+
+                <p><strong>Cyclical behavior:</strong> Longer-term fluctuations that do not
+                    necessarily repeat at fixed intervals.</p>
+
+                <p><strong>Irregular variation:</strong> Unexpected changes caused by
+                    random events, measurement errors, or unusual operating conditions.</p>
+            </div>
+
+            <div class="formula">
+                Observed Data = Trend + Seasonality + Residual Variation
+            </div>
+
+            <p class="section-intro">
+                This additive representation is a simplified model. Real-world time
+                series may require multiplicative, nonlinear, or more advanced
+                representations.
+            </p>
+        </section>
+
+        <!-- DATA -->
+        <section class="section" id="data">
+            <div class="section-label">03 / Data Engineering</div>
+            <h2 class="section-title">Data Collection & Preparation</h2>
+
+            <p class="section-intro">
+                Predictive systems are only as useful as the data they receive.
+                Maritime forecasting often combines information from multiple sources
+                that operate at different frequencies and may contain missing or
+                inconsistent measurements.
+            </p>
+
+            <div class="content-card">
+                <h3>Major Sources of Maritime Data</h3>
+
+                <div class="info-grid">
+                    <div class="mini-card">
+                        <div class="icon">🛰️</div>
+                        <h3>AIS Data</h3>
+                        <p>
+                            Automatic Identification System information can support
+                            analysis of vessel positions, speed, course, and movement
+                            patterns.
+                        </p>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="icon">🌊</div>
+                        <h3>Weather & Ocean Data</h3>
+                        <p>
+                            Wind, waves, currents, visibility, pressure, and sea
+                            temperature can influence vessel operations.
+                        </p>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="icon">⚙️</div>
+                        <h3>Engine Sensors</h3>
+                        <p>
+                            Temperature, pressure, vibration, rotational speed, and
+                            load measurements provide insight into machinery behavior.
+                        </p>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="icon">⛽</div>
+                        <h3>Fuel Monitoring</h3>
+                        <p>
+                            Fuel flow, consumption rates, engine load, and voyage
+                            conditions help estimate energy requirements.
+                        </p>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="icon">⚓</div>
+                        <h3>Port & Voyage Records</h3>
+                        <p>
+                            Arrival times, departure times, waiting periods, cargo
+                            operations, and historical voyage records.
+                        </p>
+                    </div>
+
+                    <div class="mini-card">
+                        <div class="icon">🛠️</div>
+                        <h3>Maintenance Records</h3>
+                        <p>
+                            Inspection reports, component replacements, failures, and
+                            maintenance schedules.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Essential Data Preparation Steps</h3>
+
+                <p>
+                    <strong>1. Data cleaning:</strong> Identify incorrect, duplicated,
+                    incomplete, or inconsistent records.
+                </p>
+
+                <p>
+                    <strong>2. Missing-value handling:</strong> Determine whether missing
+                    values should be interpolated, estimated, excluded, or investigated.
+                    The correct choice depends on why the data is missing.
+                </p>
+
+                <p>
+                    <strong>3. Timestamp alignment:</strong> Synchronize data sources so
+                    measurements can be compared at meaningful time intervals.
+                </p>
+
+                <p>
+                    <strong>4. Outlier investigation:</strong> Identify unusual readings.
+                    An extreme value may be a sensor error, but it may also represent a
+                    genuine abnormal operating event.
+                </p>
+
+                <p>
+                    <strong>5. Feature engineering:</strong> Create useful input variables,
+                    such as moving averages, engine load changes, voyage duration, or
+                    weather-related features.
+                </p>
+
+                <p>
+                    <strong>6. Data splitting:</strong> Separate training, validation,
+                    and testing periods chronologically to avoid using future information
+                    when predicting the past.
+                </p>
+            </div>
+
+            <div class="note warning">
+                <strong>Data leakage warning:</strong> Randomly splitting time-series
+                observations can create misleadingly high evaluation results. A model
+                must not receive information that would only become available after the
+                prediction time.
+            </div>
+        </section>
+
+        <!-- METHODS -->
+        <section class="section" id="methods">
+            <div class="section-label">04 / Analytical Techniques</div>
+            <h2 class="section-title">Forecasting Methods & Algorithms</h2>
+
+            <p class="section-intro">
+                Different forecasting methods solve different problems. A simple
+                statistical model may outperform a complex machine learning model when
+                the dataset is small, stable, or poorly suited to advanced algorithms.
+            </p>
+
+            <div class="content-card">
+                <h3>1. Moving Average</h3>
+
+                <p>
+                    A moving average calculates the average of a fixed number of recent
+                    observations. It smooths short-term fluctuations and helps identify
+                    the general direction of a variable.
+                </p>
+
+                <div class="formula">
+                    Moving Average = Sum of Recent Values / Number of Values
+                </div>
+
+                <p>
+                    <strong>Maritime example:</strong> An engineer may calculate the
+                    average engine temperature over the last six measurements to
+                    reduce the effect of small temporary fluctuations.
+                </p>
+
+                <p>
+                    <strong>Limitation:</strong> A moving average reacts slowly to sudden
+                    changes and does not automatically understand complex seasonal
+                    behavior.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>2. Exponential Smoothing</h3>
+
+                <p>
+                    Exponential smoothing gives more importance to recent observations
+                    while retaining information from earlier measurements.
+                </p>
+
+                <div class="formula">
+                    Forecast = α × Actual + (1 − α) × Previous Forecast
+                </div>
+
+                <p>
+                    The smoothing factor α is between 0 and 1. A higher value makes
+                    the forecast respond more strongly to recent observations.
+                </p>
+
+                <p>
+                    <strong>Maritime example:</strong> Estimating short-term fuel
+                    consumption when recent operating conditions are more relevant
+                    than older measurements.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>3. ARIMA Models</h3>
+
+                <p>
+                    ARIMA stands for AutoRegressive Integrated Moving Average. It is a
+                    statistical method used for analyzing and forecasting certain
+                    time-series patterns.
+                </p>
+
+                <p>
+                    The model combines three main elements:
+                </p>
+
+                <p>
+                    <strong>AR (AutoRegressive):</strong> Uses relationships between
+                    current observations and previous observations.
+                </p>
+
+                <p>
+                    <strong>I (Integrated):</strong> Uses differencing to help transform
+                    a non-stationary series into a more stable one.
+                </p>
+
+                <p>
+                    <strong>MA (Moving Average):</strong> Models relationships involving
+                    previous forecast errors.
+                </p>
+
+                <p>
+                    <strong>Maritime example:</strong> Forecasting a vessel's daily
+                    operating metric when its historical behavior can be represented
+                    adequately by a time-series model.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>4. Regression Models</h3>
+
+                <p>
+                    Regression estimates the relationship between a target variable and
+                    one or more explanatory variables.
+                </p>
+
+                <div class="formula">
+                    Y = β₀ + β₁X₁ + β₂X₂ + ... + βₙXₙ
+                </div>
+
+                <p>
+                    For example, a fuel-consumption model may use vessel speed, engine
+                    load, displacement, and environmental conditions as input variables.
+                </p>
+
+                <p>
+                    Regression can be useful when the relationship between the inputs
+                    and target is reasonably represented by the chosen model form.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>5. Random Forest & Gradient Boosting</h3>
+
+                <p>
+                    Tree-based machine learning methods can model nonlinear
+                    relationships between operational variables.
+                </p>
+
+                <p>
+                    <strong>Random Forest:</strong> Combines predictions from multiple
+                    decision trees to improve robustness and reduce the instability
+                    of an individual tree.
+                </p>
+
+                <p>
+                    <strong>Gradient Boosting:</strong> Builds a sequence of models,
+                    with later models focusing on errors made by earlier ones.
+                </p>
+
+                <p>
+                    <strong>Maritime example:</strong> Estimating fuel consumption using
+                    a combination of speed, weather, engine load, and vessel
+                    characteristics.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>6. Recurrent Neural Networks & LSTM</h3>
+
+                <p>
+                    Recurrent Neural Networks process sequential information by
+                    maintaining internal states that connect observations across time.
+                </p>
+
+                <p>
+                    Long Short-Term Memory networks, known as LSTMs, are a type of
+                    recurrent neural network designed to learn longer-term dependencies
+                    through specialized gates.
+                </p>
+
+                <p>
+                    <strong>Maritime example:</strong> An LSTM model may analyze
+                    historical engine sensor sequences to estimate a future operating
+                    measurement.
+                </p>
+
+                <p>
+                    Deep learning methods generally require careful data preparation,
+                    sufficient representative observations, and more computational
+                    resources than many basic statistical models.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>7. Hybrid Forecasting Models</h3>
+
+                <p>
+                    A hybrid system combines two or more methods to benefit from
+                    different modeling strengths. For example, a statistical model may
+                    represent a trend while a machine learning model captures
+                    nonlinear effects.
+                </p>
+
+                <p>
+                    Hybrid approaches can be useful when maritime data contains several
+                    interacting patterns, but they also increase complexity and make
+                    validation more important.
+                </p>
+            </div>
+        </section>
+
+        <!-- WORKFLOW -->
+        <section class="section" id="workflow">
+            <div class="section-label">05 / Engineering Workflow</div>
+            <h2 class="section-title">How a Predictive System Works</h2>
+
+            <p class="section-intro">
+                A practical forecasting project follows a structured engineering
+                workflow. Building a model is only one stage; defining the problem,
+                validating the results, and monitoring performance are equally important.
+            </p>
+
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="number">01</div>
+                    <h3>Define the Problem</h3>
+                    <p>Choose the variable, prediction horizon, and operational objective.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">02</div>
+                    <h3>Collect Data</h3>
+                    <p>Gather sensor, voyage, weather, and historical records.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">03</div>
+                    <h3>Prepare Data</h3>
+                    <p>Clean, synchronize, inspect, and transform observations.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">04</div>
+                    <h3>Select a Model</h3>
+                    <p>Choose a statistical, machine learning, or hybrid approach.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">05</div>
+                    <h3>Train the Model</h3>
+                    <p>Estimate model parameters using historical training data.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">06</div>
+                    <h3>Evaluate Results</h3>
+                    <p>Test predictions against observations not used for training.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">07</div>
+                    <h3>Deploy & Integrate</h3>
+                    <p>Connect outputs to monitoring and decision-support workflows.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">08</div>
+                    <h3>Monitor & Improve</h3>
+                    <p>Track model performance and retrain when necessary.</p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:25px;">
+                <h3>Example: Forecasting a Vessel's Arrival Time</h3>
+
+                <p>
+                    A shipping operator wants to estimate when a vessel will arrive at
+                    its destination. The system may consider current position, speed,
+                    planned route, weather forecasts, sea currents, traffic conditions,
+                    and historical voyage information.
+                </p>
+
+                <p>
+                    The model estimates the remaining voyage duration and produces an
+                    estimated time of arrival (ETA). The estimate can be updated as
+                    new information becomes available.
+                </p>
+
+                <p>
+                    However, the prediction may become inaccurate if a vessel changes
+                    its route, experiences an unexpected technical issue, encounters
+                    congestion, or faces severe weather conditions.
+                </p>
+            </div>
+        </section>
+
+        <!-- MARITIME -->
+        <section class="section" id="maritime">
+            <div class="section-label">06 / Real-World Applications</div>
+            <h2 class="section-title">Predictive Analytics in the Maritime Industry</h2>
+
+            <p class="section-intro">
+                Predictive analytics can support decisions across ship operations,
+                marine engineering, navigation, ports, logistics, safety, and
+                environmental management.
+            </p>
+
+            <div class="content-card">
+                <h3>1. Weather and Ocean Condition Forecasting</h3>
+
+                <p>
+                    Maritime operators use weather and ocean forecasts to assess
+                    expected wind, wave height, currents, visibility, and atmospheric
+                    conditions.
+                </p>
+
+                <p>
+                    These forecasts can support voyage planning, route assessment,
+                    operational scheduling, and safety preparation.
+                </p>
+
+                <p>
+                    Numerical weather prediction systems are based on physical models
+                    of the atmosphere and ocean. Machine learning can complement some
+                    forecasting workflows, but should not be treated as a replacement
+                    for all physical forecasting systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>2. Fuel Consumption Forecasting</h3>
+
+                <p>
+                    Fuel consumption depends on several factors, including vessel speed,
+                    engine load, hull condition, displacement, wind, waves, currents,
+                    and operating practices.
+                </p>
+
+                <p>
+                    Predictive models can estimate expected fuel requirements under
+                    different operating conditions and help operators compare possible
+                    voyage plans.
+                </p>
+
+                <p>
+                    A useful model must distinguish between fuel consumption changes
+                    caused by operational decisions and those caused by environmental
+                    conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>3. Predictive Maintenance</h3>
+
+                <p>
+                    Machinery measurements can be analyzed to identify unusual
+                    behavior and estimate the likelihood of equipment deterioration.
+                </p>
+
+                <p>
+                    Forecasting may help estimate when maintenance attention will be
+                    required, allowing engineers to plan inspections and reduce
+                    unexpected interruptions.
+                </p>
+
+                <p>
+                    Predictive maintenance is closely related to predictive analytics,
+                    but it is a specialized application focused on equipment health,
+                    degradation, and maintenance decisions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>4. Voyage Duration and ETA Prediction</h3>
+
+                <p>
+                    ETA forecasting estimates the expected arrival time of a vessel
+                    based on its route, speed, operating conditions, and external
+                    factors.
+                </p>
+
+                <p>
+                    More reliable ETA estimates can improve port coordination,
+                    berth planning, cargo scheduling, and communication with
+                    stakeholders.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>5. Port Congestion Forecasting</h3>
+
+                <p>
+                    Historical vessel arrivals, berth availability, cargo activity,
+                    weather conditions, and port service records can help estimate
+                    future congestion.
+                </p>
+
+                <p>
+                    Port operators may use these estimates to plan resources, organize
+                    vessel arrivals, and reduce avoidable waiting periods.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>6. Maritime Environmental Monitoring</h3>
+
+                <p>
+                    Predictive systems can help estimate fuel-related emissions,
+                    energy demand, and certain environmental indicators under
+                    different operating scenarios.
+                </p>
+
+                <p>
+                    Such estimates can support environmental planning and the
+                    assessment of potential operational improvements.
+                </p>
+
+                <p>
+                    Predictions must be based on appropriate measurements and
+                    recognized calculation methods. A model's estimate is not
+                    automatically an official emissions measurement or compliance
+                    certificate.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>7. Suez Canal and Global Shipping Operations</h3>
+
+                <p>
+                    The Suez Canal is an important international maritime passage
+                    connecting the Mediterranean Sea and the Red Sea.
+                </p>
+
+                <p>
+                    Predictive analytics can support planning by estimating vessel
+                    arrival patterns, transit durations, traffic demand, and potential
+                    scheduling pressure.
+                </p>
+
+                <p>
+                    Such systems may help stakeholders explore operational scenarios,
+                    but actual canal transit decisions remain subject to official
+                    procedures, traffic management, and operational requirements.
+                </p>
+            </div>
+        </section>
+
+        <!-- PERFORMANCE -->
+        <section class="section" id="performance">
+            <div class="section-label">07 / Model Evaluation</div>
+            <h2 class="section-title">How Do We Measure Forecast Accuracy?</h2>
+
+            <p class="section-intro">
+                A forecasting model should not be judged by how advanced it looks.
+                It must be evaluated using appropriate metrics and data that reflect
+                the conditions in which it will operate.
+            </p>
+
+            <div class="content-card">
+                <h3>Mean Absolute Error (MAE)</h3>
+
+                <p>
+                    MAE calculates the average absolute difference between actual
+                    values and predicted values.
+                </p>
+
+                <div class="formula">
+                    MAE = Average of |Actual Value − Predicted Value|
+                </div>
+
+                <p>
+                    It is expressed in the same unit as the predicted variable.
+                    For example, an MAE of 2 hours in an ETA model represents an
+                    average absolute error of two hours over the evaluated observations.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Mean Squared Error (MSE) and Root Mean Squared Error (RMSE)</h3>
+
+                <p>
+                    MSE calculates the average squared prediction error. RMSE is the
+                    square root of MSE.
+                </p>
+
+                <div class="formula">
+                    RMSE = √ Average (Actual Value − Predicted Value)²
+                </div>
+
+                <p>
+                    Squaring errors gives larger mistakes greater influence.
+                    RMSE is expressed in the original unit of the target variable.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Mean Absolute Percentage Error (MAPE)</h3>
+
+                <p>
+                    MAPE expresses absolute prediction errors as percentages of
+                    actual values.
+                </p>
+
+                <div class="formula">
+                    MAPE = Average (|Actual − Predicted| / |Actual|) × 100
+                </div>
+
+                <p>
+                    MAPE can be difficult to interpret when actual values are zero
+                    or close to zero. It should not be used blindly for every
+                    forecasting problem.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Prediction Intervals</h3>
+
+                <p>
+                    A point forecast provides one estimated value. A prediction
+                    interval provides a range that represents uncertainty under
+                    the assumptions of the forecasting method.
+                </p>
+
+                <p>
+                    For example, an ETA system may estimate arrival at 14:00 with
+                    a prediction interval from 13:30 to 15:00.
+                </p>
+
+                <p>
+                    A wider interval generally indicates greater uncertainty.
+                    The interval's actual coverage should be evaluated using
+                    historical testing.
+                </p>
+            </div>
+
+            <div class="note">
+                A model can have a low average error while still failing during
+                unusual weather or abnormal operating conditions. Evaluation should
+                include different operating scenarios, not only average performance.
+            </div>
+        </section>
+
+        <!-- CHALLENGES -->
+        <section class="section" id="challenges">
+            <div class="section-label">08 / Critical Engineering Issues</div>
+            <h2 class="section-title">Challenges & Limitations</h2>
+
+            <div class="info-grid">
+                <div class="mini-card">
+                    <div class="icon">📉</div>
+                    <h3>Incomplete Data</h3>
+                    <p>
+                        Missing sensor records and inconsistent reporting can reduce
+                        prediction reliability.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🌪️</div>
+                    <h3>Unexpected Events</h3>
+                    <p>
+                        Severe weather, equipment failure, and operational disruptions
+                        can invalidate previous assumptions.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔄</div>
+                    <h3>Changing Data Patterns</h3>
+                    <p>
+                        Equipment aging, new routes, and changing operating practices
+                        can cause model performance to deteriorate.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🧩</div>
+                    <h3>Model Complexity</h3>
+                    <p>
+                        Advanced models may be difficult to interpret, validate,
+                        maintain, and explain to operators.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔐</div>
+                    <h3>Data Security</h3>
+                    <p>
+                        Operational records and connected vessel systems require
+                        appropriate cybersecurity protection.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">👨‍✈️</div>
+                    <h3>Human Oversight</h3>
+                    <p>
+                        Forecasts should support professional judgment rather than
+                        automatically replace responsible human decisions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>The Problem of Model Drift</h3>
+
+                <p>
+                    Model drift occurs when the statistical properties of incoming
+                    data or the relationship between input variables and outcomes
+                    changes over time.
+                </p>
+
+                <p>
+                    For example, a fuel forecasting model trained on older vessel
+                    operating data may become less accurate after a major engine
+                    modification or a change in operating practices.
+                </p>
+
+                <p>
+                    Continuous monitoring, periodic validation, and carefully
+                    controlled retraining are important for maintaining reliable
+                    performance.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Why Human Judgment Still Matters</h3>
+
+                <p>
+                    A forecast is an input to a decision, not the decision itself.
+                    Maritime operations involve safety requirements, technical
+                    constraints, environmental conditions, and regulations.
+                </p>
+
+                <p>
+                    Qualified professionals must consider the model's uncertainty,
+                    the quality of the underlying data, and the consequences of
+                    acting on an incorrect prediction.
+                </p>
+            </div>
+        </section>
+
+        <!-- FUTURE -->
+        <section class="section" id="future">
+            <div class="section-label">09 / The Next Generation</div>
+            <h2 class="section-title">The Future of Maritime Forecasting</h2>
+
+            <div class="content-card">
+                <h3>AI-Powered Digital Twins</h3>
+
+                <p>
+                    A digital twin is a digital representation of a physical asset,
+                    system, or process that can be updated using data from its real
+                    counterpart.
+                </p>
+
+                <p>
+                    In maritime engineering, digital twins may represent vessels,
+                    engines, propulsion systems, or port operations. Predictive
+                    models can help estimate future behavior and evaluate possible
+                    operational scenarios.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Real-Time Predictive Systems</h3>
+
+                <p>
+                    As connected sensors and onboard computing improve, predictive
+                    systems can process information more frequently and provide
+                    updated estimates during operations.
+                </p>
+
+                <p>
+                    Real-time forecasting may support equipment monitoring, voyage
+                    planning, fuel management, and operational awareness.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Explainable AI</h3>
+
+                <p>
+                    Explainable AI focuses on making model outputs more understandable
+                    to users. Instead of presenting a prediction without context,
+                    systems may provide information about the factors that contributed
+                    to the estimate.
+                </p>
+
+                <p>
+                    This is particularly important when forecasts influence technical
+                    decisions or safety-related planning.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Integrated Maritime Intelligence</h3>
+
+                <p>
+                    Future platforms may combine vessel sensor data, satellite
+                    information, weather services, port systems, and predictive
+                    models into unified decision-support environments.
+                </p>
+
+                <p>
+                    The objective is not simply to generate more predictions.
+                    It is to provide useful, timely, understandable information
+                    that improves operational planning.
+                </p>
+            </div>
+
+            <div class="note">
+                The future of maritime forecasting depends on more than algorithms.
+                Data standards, interoperability, cybersecurity, qualified personnel,
+                and reliable validation will remain essential.
+            </div>
+        </section>
+
+        <!-- INTERACTIVE LAB -->
+        <section class="section" id="lab">
+            <div class="section-label">10 / Interactive Learning Experience</div>
+            <h2 class="section-title">Forecasting Simulation Lab</h2>
+
+            <p class="section-intro">
+                Explore how historical fuel consumption and changing operating
+                conditions can influence a simple forecast. Adjust the parameters
+                and observe how the illustrative prediction changes.
+            </p>
+
+            <div class="lab">
+                <h3>Maritime Fuel Consumption Forecast</h3>
+
+                <p class="lab-description">
+                    In this educational simulation, you can modify the recent
+                    consumption level and the expected operational change. The
+                    system generates a simplified illustrative forecast for the
+                    next five periods.
+                </p>
+
+                <div class="lab-controls">
+                    <div class="control-group">
+                        <label for="baseFuel">
+                            Recent Fuel Consumption
+                            <output id="baseFuelValue">100</output>
+                        </label>
+                        <input type="range" id="baseFuel" min="60" max="160" value="100">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="changeRate">
+                            Expected Change per Period
+                            <output id="changeRateValue">2%</output>
+                        </label>
+                        <input type="range" id="changeRate" min="-5" max="8" value="2">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="volatility">
+                            Variation Level
+                            <output id="volatilityValue">Low</output>
+                        </label>
+                        <input type="range" id="volatility" min="1" max="5" value="2">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="horizon">
+                            Forecast Horizon
+                            <output id="horizonValue">5 periods</output>
+                        </label>
+                        <input type="range" id="horizon" min="2" max="8" value="5">
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <div class="chart-title">
+                        Historical Reference & Illustrative Forecast
+                    </div>
+                    <canvas id="forecastChart" aria-label="Illustrative fuel consumption forecast chart"></canvas>
+                </div>
+
+                <div class="lab-results">
+                    <div class="result-box">
+                        <span>Starting Consumption</span>
+                        <strong id="startingResult">100</strong>
+                    </div>
+
+                    <div class="result-box">
+                        <span>Final Forecast</span>
+                        <strong id="finalResult">110.4</strong>
+                    </div>
+
+                    <div class="result-box">
+                        <span>Forecast Change</span>
+                        <strong id="changeResult">+10.4%</strong>
+                    </div>
+                </div>
+
+                <p class="lab-disclaimer">
+                    Educational simulation only. This tool uses a simplified
+                    mathematical growth assumption and illustrative variation.
+                    It is not trained on real vessel data, does not represent an
+                    operational forecasting model, and must not be used for
+                    navigation, fuel procurement, or engineering decisions.
+                </p>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="section" id="quiz">
+            <div class="section-label">11 / Test Your Understanding</div>
+            <h2 class="section-title">Knowledge Assessment</h2>
+
+            <div class="quiz-header">
+                <h3>Predictive Analytics & Forecasting Quiz</h3>
+                <p>
+                    Answer all 20 questions to evaluate your understanding.
+                    After submission, you will receive your score, the correct
+                    answers, and explanations for every question.
+                </p>
+
+                <div class="quiz-progress">
+                    <div class="quiz-progress-fill" id="quizProgress"></div>
+                </div>
+            </div>
+
+            <div id="quizContainer"></div>
+
+            <div class="quiz-actions">
+                <button class="action-btn" id="submitQuiz">Submit Assessment</button>
+                <button class="action-btn secondary" id="resetQuiz">Restart Quiz</button>
+            </div>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite">
+                <div class="score-circle" id="scoreCircle">0/20</div>
+                <h3 id="resultTitle">Assessment Complete</h3>
+                <p id="resultMessage"></p>
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+        <section class="section" id="references">
+            <div class="section-label">12 / Further Reading</div>
+            <h2 class="section-title">References & Learning Resources</h2>
+
+            <p class="section-intro">
+                The following resources provide foundational knowledge and
+                additional technical reading about forecasting, machine learning,
+                maritime operations, and data-driven engineering.
+            </p>
+
+            <div class="references">
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://otexts.com/fpp3/" target="_blank" rel="noopener noreferrer">
+                            Forecasting: Principles and Practice – Rob J. Hyndman & George Athanasopoulos
+                        </a>
+                        <p>
+                            Comprehensive open textbook covering time-series analysis,
+                            forecasting methods, model evaluation, and prediction intervals.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.itl.nist.gov/div898/handbook/" target="_blank" rel="noopener noreferrer">
+                            NIST/SEMATECH Engineering Statistics Handbook
+                        </a>
+                        <p>
+                            Statistical methods, data analysis, measurement, and
+                            engineering quality concepts.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener noreferrer">
+                            Scikit-learn Documentation
+                        </a>
+                        <p>
+                            Machine learning algorithms, regression, model selection,
+                            preprocessing, and evaluation techniques.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.statsmodels.org/stable/tsa.html" target="_blank" rel="noopener noreferrer">
+                            Statsmodels – Time Series Analysis
+                        </a>
+                        <p>
+                            Technical documentation for statistical time-series
+                            models and forecasting tools.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.tensorflow.org/tutorials/structured_data/time_series" target="_blank" rel="noopener noreferrer">
+                            TensorFlow – Time Series Forecasting
+                        </a>
+                        <p>
+                            Practical learning resource covering time-series datasets,
+                            forecasting models, and deep learning workflows.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization (IMO)
+                        </a>
+                        <p>
+                            International maritime safety, environmental protection,
+                            regulatory information, and maritime policy.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.emsa.europa.eu/" target="_blank" rel="noopener noreferrer">
+                            European Maritime Safety Agency (EMSA)
+                        </a>
+                        <p>
+                            Maritime safety, surveillance, environmental monitoring,
+                            and maritime information services.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.dnv.com/" target="_blank" rel="noopener noreferrer">
+                            DNV – Maritime Industry
+                        </a>
+                        <p>
+                            Maritime technology, digitalization, classification,
+                            vessel performance, and industry insights.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.noaa.gov/" target="_blank" rel="noopener noreferrer">
+                            National Oceanic and Atmospheric Administration (NOAA)
+                        </a>
+                        <p>
+                            Weather, ocean observations, climate information,
+                            and environmental data.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.ecmwf.int/" target="_blank" rel="noopener noreferrer">
+                            European Centre for Medium-Range Weather Forecasts (ECMWF)
+                        </a>
+                        <p>
+                            Numerical weather prediction, forecasting research,
+                            and atmospheric data.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.wmo.int/" target="_blank" rel="noopener noreferrer">
+                            World Meteorological Organization (WMO)
+                        </a>
+                        <p>
+                            International meteorological standards, weather services,
+                            and forecasting cooperation.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="note warning">
+                Reference note: These are starting points for further study.
+                Individual technical claims and model choices should be checked
+                against the relevant publication, dataset documentation, and
+                current maritime requirements before professional use.
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <p>MARITERRA | Maritime Knowledge & Technology</p>
+    <p style="margin-top:9px;">
+        DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+    </p>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+<script>
+    /* ==========================================
+       FORECASTING SIMULATION
+    ========================================== */
+
+    const baseFuel = document.getElementById("baseFuel");
+    const changeRate = document.getElementById("changeRate");
+    const volatility = document.getElementById("volatility");
+    const horizon = document.getElementById("horizon");
+
+    const canvas = document.getElementById("forecastChart");
+    const ctx = canvas.getContext("2d");
+
+    function getVolatilityLabel(value) {
+        const labels = {
+            1: "Very Low",
+            2: "Low",
+            3: "Moderate",
+            4: "High",
+            5: "Very High"
+        };
+
+        return labels[value];
+    }
+
+    function generateForecast() {
+        const start = Number(baseFuel.value);
+        const rate = Number(changeRate.value) / 100;
+        const variation = Number(volatility.value);
+        const periods = Number(horizon.value);
+
+        document.getElementById("baseFuelValue").textContent = start;
+        document.getElementById("changeRateValue").textContent =
+            `${changeRate.value}%`;
+        document.getElementById("volatilityValue").textContent =
+            getVolatilityLabel(variation);
+        document.getElementById("horizonValue").textContent =
+            `${periods} periods`;
+
+        const historical = [
+            start * 0.91,
+            start * 0.95,
+            start * 0.93,
+            start * 0.98,
+            start * 0.96,
+            start
+        ];
+
+        const forecast = [];
+        let current = start;
+
+        for (let i = 1; i <= periods; i++) {
+            current = current * (1 + rate);
+            forecast.push(current);
+        }
+
+        const finalValue = forecast[forecast.length - 1];
+        const percentageChange = ((finalValue - start) / start) * 100;
+
+        document.getElementById("startingResult").textContent =
+            start.toFixed(1);
+
+        document.getElementById("finalResult").textContent =
+            finalValue.toFixed(1);
+
+        document.getElementById("changeResult").textContent =
+            `${percentageChange >= 0 ? "+" : ""}${percentageChange.toFixed(1)}%`;
+
+        drawChart(historical, forecast, variation);
+    }
+
+    function drawChart(historical, forecast, variation) {
+        const rect = canvas.getBoundingClientRect();
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        canvas.width = rect.width * pixelRatio;
+        canvas.height = 260 * pixelRatio;
+
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+        const width = rect.width;
+        const height = 260;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const values = [...historical, ...forecast];
+        const minValue = Math.min(...values) * 0.88;
+        const maxValue = Math.max(...values) * 1.12;
+        const range = maxValue - minValue || 1;
+
+        const padding = {
+            top: 20,
+            right: 20,
+            bottom: 32,
+            left: 42
+        };
+
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        function x(index) {
+            return padding.left +
+                (index / (values.length - 1)) * chartWidth;
+        }
+
+        function y(value) {
+            return padding.top +
+                chartHeight -
+                ((value - minValue) / range) * chartHeight;
+        }
+
+        ctx.font = "10px Inter";
+        ctx.fillStyle = "#a5a4c2";
+        ctx.strokeStyle = "rgba(196,181,253,0.12)";
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i++) {
+            const lineY = padding.top + (chartHeight / 4) * i;
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, lineY);
+            ctx.lineTo(width - padding.right, lineY);
+            ctx.stroke();
+
+            const labelValue =
+                maxValue - (range / 4) * i;
+
+            ctx.fillText(
+                labelValue.toFixed(0),
+                5,
+                lineY + 4
+            );
+        }
+
+        const historicalPoints = historical.map((value, index) => ({
+            x: x(index),
+            y: y(value)
+        }));
+
+        const forecastPoints = forecast.map((value, index) => ({
+            x: x(historical.length + index),
+            y: y(value)
+        }));
+
+        // Historical line
+        ctx.beginPath();
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = 3;
+        ctx.lineJoin = "round";
+
+        historicalPoints.forEach((point, index) => {
+            if (index === 0) {
+                ctx.moveTo(point.x, point.y);
+            } else {
+                ctx.lineTo(point.x, point.y);
+            }
+        });
+
+        ctx.stroke();
+
+        // Forecast uncertainty illustration
+        const uncertainty = variation * 3;
+
+        ctx.beginPath();
+        ctx.fillStyle = "rgba(147, 51, 234, 0.13)";
+
+        forecastPoints.forEach((point, index) => {
+            if (index === 0) {
+                ctx.moveTo(point.x, point.y - uncertainty);
+            } else {
+                ctx.lineTo(point.x, point.y - uncertainty * (index + 1) / 2);
+            }
+        });
+
+        for (let i = forecastPoints.length - 1; i >= 0; i--) {
+            const point = forecastPoints[i];
+            ctx.lineTo(
+                point.x,
+                point.y + uncertainty * (i + 1) / 2
+            );
+        }
+
+        ctx.closePath();
+        ctx.fill();
+
+        // Forecast line
+        ctx.beginPath();
+        ctx.strokeStyle = "#c4b5fd";
+        ctx.lineWidth = 3;
+        ctx.setLineDash([7, 5]);
+
+        const lastHistorical = historicalPoints[historicalPoints.length - 1];
+
+        ctx.moveTo(lastHistorical.x, lastHistorical.y);
+
+        forecastPoints.forEach(point => {
+            ctx.lineTo(point.x, point.y);
+        });
+
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Forecast points
+        forecastPoints.forEach(point => {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
+            ctx.fillStyle = "#9333ea";
+            ctx.fill();
+            ctx.strokeStyle = "#c4b5fd";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        });
+
+        // Divider
+        ctx.beginPath();
+        ctx.setLineDash([4, 5]);
+        ctx.strokeStyle = "rgba(196,181,253,0.6)";
+        ctx.moveTo(lastHistorical.x, padding.top);
+        ctx.lineTo(lastHistorical.x, height - padding.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#a5a4c2";
+        ctx.fillText("Historical", padding.left, height - 8);
+
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#c4b5fd";
+        ctx.fillText("Forecast", width - padding.right, height - 8);
+        ctx.textAlign = "left";
+    }
+
+    [baseFuel, changeRate, volatility, horizon].forEach(input => {
+        input.addEventListener("input", generateForecast);
+    });
+
+    window.addEventListener("resize", generateForecast);
+
+    generateForecast();
+
+
+    /* ==========================================
+       QUIZ DATA - 20 QUESTIONS
+    ========================================== */
+
+    const questions = [
+        {
+            q: "What is the primary purpose of predictive analytics?",
+            options: [
+                "To store historical records without analyzing them",
+                "To estimate future outcomes using available data",
+                "To replace every human decision",
+                "To display information without interpretation"
+            ],
+            answer: 1,
+            explanation: "Predictive analytics uses historical and current data to estimate likely future outcomes."
+        },
+        {
+            q: "Which analytics type mainly answers the question: What may happen next?",
+            options: [
+                "Descriptive analytics",
+                "Diagnostic analytics",
+                "Predictive analytics",
+                "Prescriptive analytics"
+            ],
+            answer: 2,
+            explanation: "Predictive analytics focuses on estimating future events or values."
+        },
+        {
+            q: "What is a time series?",
+            options: [
+                "A list of unrelated images",
+                "A sequence of observations recorded over time",
+                "A database without timestamps",
+                "A type of navigation map"
+            ],
+            answer: 1,
+            explanation: "Time-series data consists of observations arranged chronologically, such as hourly engine measurements."
+        },
+        {
+            q: "What does seasonality describe in time-series data?",
+            options: [
+                "Random sensor failures",
+                "A repeated pattern at regular intervals",
+                "A permanent increase in every measurement",
+                "The removal of missing data"
+            ],
+            answer: 1,
+            explanation: "Seasonality refers to patterns that repeat at recognizable and regular intervals."
+        },
+        {
+            q: "Which of the following is an example of maritime sensor data?",
+            options: [
+                "Engine temperature",
+                "A marketing slogan",
+                "A website color scheme",
+                "A company logo"
+            ],
+            answer: 0,
+            explanation: "Engine temperature is a measurable operating variable that can be collected by sensors."
+        },
+        {
+            q: "Why is data cleaning important before training a forecasting model?",
+            options: [
+                "It guarantees perfect predictions",
+                "It removes the need for model evaluation",
+                "It helps identify errors and inconsistencies in the data",
+                "It automatically increases the dataset size"
+            ],
+            answer: 2,
+            explanation: "Incorrect, duplicated, or inconsistent records can distort model learning and reduce reliability."
+        },
+        {
+            q: "What is data leakage in time-series forecasting?",
+            options: [
+                "Losing a physical data storage device",
+                "Using information that would not have been available at prediction time",
+                "Collecting data from several sensors",
+                "Reducing the number of model parameters"
+            ],
+            answer: 1,
+            explanation: "Data leakage occurs when future information enters the training or evaluation process improperly."
+        },
+        {
+            q: "What does a moving average help accomplish?",
+            options: [
+                "Smooth short-term fluctuations",
+                "Guarantee detection of every failure",
+                "Generate weather observations",
+                "Replace all historical measurements"
+            ],
+            answer: 0,
+            explanation: "A moving average smooths fluctuations by averaging a selected number of recent observations."
+        },
+        {
+            q: "In exponential smoothing, what does a higher alpha generally mean?",
+            options: [
+                "Recent observations receive more weight",
+                "All observations receive zero weight",
+                "The model ignores recent data",
+                "The forecast horizon becomes infinite"
+            ],
+            answer: 0,
+            explanation: "A higher alpha makes the forecast more responsive to recent observations."
+        },
+        {
+            q: "What does ARIMA stand for?",
+            options: [
+                "Automatic Risk Inspection Maritime Analysis",
+                "AutoRegressive Integrated Moving Average",
+                "Artificial Route Intelligence Management Algorithm",
+                "Advanced Regression in Marine Applications"
+            ],
+            answer: 1,
+            explanation: "ARIMA is a statistical time-series model combining autoregressive, differencing, and moving-average components."
+        },
+        {
+            q: "Which method can estimate fuel consumption using speed, weather, and engine load?",
+            options: [
+                "A regression model",
+                "A file compression algorithm",
+                "An image filter",
+                "A text editor"
+            ],
+            answer: 0,
+            explanation: "Regression can model the relationship between fuel consumption and explanatory variables such as speed and engine load."
+        },
+        {
+            q: "What is a Random Forest?",
+            options: [
+                "A weather monitoring station",
+                "An ensemble of decision trees",
+                "A type of ship engine",
+                "A method for cleaning vessel hulls"
+            ],
+            answer: 1,
+            explanation: "Random Forest combines predictions from multiple decision trees to create an ensemble prediction."
+        },
+        {
+            q: "What is an LSTM designed to help model?",
+            options: [
+                "Sequential data and longer-term dependencies",
+                "Only static images",
+                "Ship construction materials",
+                "Port ownership records"
+            ],
+            answer: 0,
+            explanation: "LSTM is a recurrent neural network architecture designed to learn dependencies across sequences."
+        },
+        {
+            q: "Which information may help estimate a vessel's ETA?",
+            options: [
+                "Current position and speed",
+                "Only the vessel's paint color",
+                "The website's font",
+                "An unrelated social media post"
+            ],
+            answer: 0,
+            explanation: "Position and speed are important inputs, while weather, currents, route, and traffic may also influence ETA."
+        },
+        {
+            q: "What does MAE measure?",
+            options: [
+                "The average absolute prediction error",
+                "The number of sensors installed",
+                "The total number of voyages",
+                "The model's training duration"
+            ],
+            answer: 0,
+            explanation: "Mean Absolute Error calculates the average absolute difference between actual and predicted values."
+        },
+        {
+            q: "Why can RMSE be sensitive to large prediction errors?",
+            options: [
+                "It ignores all errors",
+                "It squares errors before averaging",
+                "It only evaluates the first observation",
+                "It converts every prediction into a percentage"
+            ],
+            answer: 1,
+            explanation: "Squaring errors gives larger mistakes greater influence on the final RMSE value."
+        },
+        {
+            q: "What is a prediction interval?",
+            options: [
+                "A guaranteed future value",
+                "A range representing uncertainty around a forecast",
+                "A list of training records",
+                "A maintenance certificate"
+            ],
+            answer: 1,
+            explanation: "A prediction interval provides a range of possible values under the model's assumptions."
+        },
+        {
+            q: "What does model drift mean?",
+            options: [
+                "The ship changes its physical route",
+                "The data patterns or relationships change over time",
+                "The model becomes a database",
+                "The forecast is always correct"
+            ],
+            answer: 1,
+            explanation: "Model drift occurs when incoming data or the relationships learned by the model change."
+        },
+        {
+            q: "How can predictive analytics support port operations?",
+            options: [
+                "By estimating congestion and arrival patterns",
+                "By eliminating all maritime regulations",
+                "By replacing every port employee",
+                "By guaranteeing zero waiting time"
+            ],
+            answer: 0,
+            explanation: "Forecasting arrivals and congestion can help port operators plan resources and schedules."
+        },
+        {
+            q: "Why should human oversight remain important in maritime forecasting?",
+            options: [
+                "Because forecasts are always useless",
+                "Because predictions contain uncertainty and decisions may affect safety",
+                "Because data cannot be collected from vessels",
+                "Because statistical models never produce useful results"
+            ],
+            answer: 1,
+            explanation: "Predictions support decisions, but qualified professionals must consider uncertainty, safety, regulations, and real operating conditions."
+        }
+    ];
+
+
+    /* ==========================================
+       QUIZ RENDERING & GRADING
+    ========================================== */
+
+    const quizContainer = document.getElementById("quizContainer");
+    const quizProgress = document.getElementById("quizProgress");
+    const quizResult = document.getElementById("quizResult");
+
+    function renderQuiz() {
+        quizContainer.innerHTML = "";
+
+        questions.forEach((question, index) => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.id = `question-${index}`;
+
+            const number = document.createElement("div");
+            number.className = "question-number";
+            number.textContent =
+                `QUESTION ${String(index + 1).padStart(2, "0")} / 20`;
+
+            const title = document.createElement("h3");
+            title.textContent = question.q;
+
+            card.appendChild(number);
+            card.appendChild(title);
+
+            question.options.forEach((option, optionIndex) => {
+                const label = document.createElement("label");
+                label.className = "option";
+
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = `question-${index}`;
+                radio.value = optionIndex;
+
+                radio.addEventListener("change", updateProgress);
+
+                const text = document.createElement("span");
+                text.textContent = option;
+
+                label.appendChild(radio);
+                label.appendChild(text);
+                card.appendChild(label);
+            });
+
+            const explanation = document.createElement("div");
+            explanation.className = "explanation";
+            explanation.id = `explanation-${index}`;
+
+            card.appendChild(explanation);
+            quizContainer.appendChild(card);
+        });
+
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const answered = questions.filter((question, index) => {
+            return document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+        }).length;
+
+        quizProgress.style.width =
+            `${(answered / questions.length) * 100}%`;
+    }
+
+    function submitQuiz() {
+        let score = 0;
+
+        questions.forEach((question, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            const options = document.querySelectorAll(
+                `#question-${index} .option`
+            );
+
+            const explanation =
+                document.getElementById(`explanation-${index}`);
+
+            options.forEach((option, optionIndex) => {
+                option.classList.remove("correct", "incorrect");
+
+                if (optionIndex === question.answer) {
+                    option.classList.add("correct");
+                }
+
+                if (
+                    selected &&
+                    Number(selected.value) === optionIndex &&
+                    Number(selected.value) !== question.answer
+                ) {
+                    option.classList.add("incorrect");
+                }
+            });
+
+            if (selected && Number(selected.value) === question.answer) {
+                score++;
+            }
+
+            const correctText = question.options[question.answer];
+
+            explanation.innerHTML =
+                `<strong>Correct Answer:</strong> ${escapeHTML(correctText)}<br><br>` +
+                `<strong>Explanation:</strong> ${escapeHTML(question.explanation)}`;
+
+            explanation.classList.add("show");
+        });
+
+        document.querySelectorAll(
+            '#quizContainer input[type="radio"]'
+        ).forEach(input => {
+            input.disabled = true;
+        });
+
+        const percentage = Math.round(
+            (score / questions.length) * 100
+        );
+
+        document.getElementById("scoreCircle").textContent =
+            `${score}/20`;
+
+        document.getElementById("resultTitle").textContent =
+            percentage >= 85
+                ? "Excellent Performance"
+                : percentage >= 65
+                    ? "Good Understanding"
+                    : percentage >= 50
+                        ? "Keep Improving"
+                        : "Further Study Recommended";
+
+        document.getElementById("resultMessage").textContent =
+            `You answered ${score} out of ${questions.length} questions correctly. ` +
+            `Your final score is ${percentage}%. Review the explanations to strengthen your understanding.`;
+
+        quizResult.classList.add("show");
+        quizResult.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        document.getElementById("submitQuiz").disabled = true;
+        document.getElementById("submitQuiz").style.opacity = "0.5";
+        document.getElementById("submitQuiz").style.cursor = "not-allowed";
+    }
+
+    function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, character => {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            };
+
+            return entities[character];
+        });
+    }
+
+    function resetQuiz() {
+        renderQuiz();
+
+        quizResult.classList.remove("show");
+
+        document.getElementById("submitQuiz").disabled = false;
+        document.getElementById("submitQuiz").style.opacity = "1";
+        document.getElementById("submitQuiz").style.cursor = "pointer";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    document.getElementById("submitQuiz").addEventListener(
+        "click",
+        submitQuiz
+    );
+
+    document.getElementById("resetQuiz").addEventListener(
+        "click",
+        resetQuiz
+    );
+
+    renderQuiz();
+
+
+    /* ==========================================
+       SIDEBAR ACTIVE SECTION
+    ========================================== */
+
+    const sections = document.querySelectorAll("main .section");
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                sidebarLinks.forEach(link => {
+                    link.classList.toggle(
+                        "active",
+                        link.getAttribute("href") === `#${entry.target.id}`
+                    );
+                });
+            }
+        });
+    }, {
+        rootMargin: "-25% 0px -65% 0px"
+    });
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+
+    /* ==========================================
+       BACK TO TOP
+    ========================================== */
+
+    const backTop = document.getElementById("backTop");
+
+    window.addEventListener("scroll", () => {
+        backTop.classList.toggle(
+            "visible",
+            window.scrollY > 500
+        );
+    });
+
+    backTop.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+</script>
+
+</body>
+</html>

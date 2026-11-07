@@ -1,0 +1,2015 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Study safety engineering, risk assessment, cybersecurity, emergency response, human oversight, and international maritime regulations for autonomous ships.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Autonomous Ships Safety and Regulations</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101226;
+            --surface-light: #171a34;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a6a8c4;
+            --border: rgba(196, 181, 253, 0.17);
+            --success: #34d399;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--purple-light);
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            padding: 75px 0 55px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(
+                135deg,
+                rgba(147, 51, 234, 0.12),
+                rgba(56, 189, 248, 0.04)
+            );
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: var(--purple-light);
+        }
+
+        .topic-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            max-width: 950px;
+            margin-bottom: 22px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 850px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta span {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            color: var(--purple-light);
+        }
+
+        main {
+            padding: 55px 0 80px;
+        }
+
+        .content-section {
+            margin-bottom: 48px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgba(16, 18, 38, 0.78);
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            color: var(--purple-light);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--blue);
+            font-size: 1rem;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            color: var(--muted);
+            padding-left: 24px;
+            margin: 12px 0 18px;
+        }
+
+        li {
+            margin-bottom: 9px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .concept-card {
+            padding: 22px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+        }
+
+        .concept-card h3 {
+            margin-top: 0;
+        }
+
+        .concept-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .formula {
+            background: #090b1b;
+            border-left: 3px solid var(--purple);
+            padding: 20px;
+            margin: 18px 0;
+            border-radius: 8px;
+            color: var(--purple-light);
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .note {
+            padding: 18px 20px;
+            margin: 22px 0;
+            border-radius: 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .warning {
+            border-color: rgba(251, 113, 133, 0.35);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .process div {
+            text-align: center;
+            padding: 16px 10px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--purple-light);
+            font-size: 0.83rem;
+        }
+
+        .process div span {
+            display: block;
+            color: var(--blue);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        th {
+            background: var(--surface-light);
+            color: var(--purple-light);
+        }
+
+        .question {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin: 0 0 15px;
+        }
+
+        .option {
+            display: block;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-right: 9px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(52, 211, 153, 0.09);
+            color: var(--success);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(251, 113, 133, 0.08);
+            color: var(--danger);
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 15px;
+            margin-top: 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 13px 23px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            background: transparent;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+
+        #result {
+            display: none;
+            margin-top: 22px;
+            padding: 22px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid var(--blue);
+        }
+
+        #result h3 {
+            margin-top: 0;
+        }
+
+        .references li {
+            margin-bottom: 13px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 800px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-section {
+                padding: 22px 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 50px 0 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> /
+            <a href="autonomous-ships.html">Autonomous Ships</a> /
+            Topic 08
+        </div>
+
+        <div class="topic-number">AUTONOMOUS SHIPS — TOPIC 08</div>
+
+        <h1>Safety, Cybersecurity and <span class="gradient">Maritime Regulations</span></h1>
+
+        <p class="hero-description">
+            Explore the engineering principles, risk management methods,
+            cybersecurity controls, emergency procedures, human responsibilities,
+            and international regulatory frameworks required for safe
+            autonomous ship operations.
+        </p>
+
+        <div class="meta">
+            <span>Maritime Safety</span>
+            <span>Cybersecurity</span>
+            <span>Risk Engineering</span>
+            <span>International Regulations</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="content-section">
+        <h2>1. Introduction to Autonomous Ship Safety</h2>
+
+        <p>
+            Safety is one of the most important requirements in autonomous
+            maritime operations. An autonomous ship may use sensors,
+            artificial intelligence, navigation software, communication
+            networks, and automated control systems to perform functions
+            traditionally carried out by onboard personnel.
+        </p>
+
+        <p>
+            These technologies create new operational capabilities, but
+            they also introduce risks involving software failures, incorrect
+            sensor data, communication interruptions, cyberattacks, equipment
+            faults, and unexpected environmental conditions.
+        </p>
+
+        <p>
+            Safety engineering aims to identify these risks, reduce their
+            likelihood where possible, limit their consequences, and ensure
+            that the vessel can respond appropriately when something goes wrong.
+        </p>
+
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>Operational Safety</h3>
+                <p>
+                    Protects the vessel, people, cargo, and environment
+                    during normal and abnormal operations.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>System Safety</h3>
+                <p>
+                    Examines hardware, software, sensors, control systems,
+                    and their interactions to identify dangerous failures.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>Cybersecurity</h3>
+                <p>
+                    Protects digital systems, communication networks,
+                    and operational technology against cyber threats.
+                </p>
+            </div>
+        </div>
+
+        <div class="note">
+            <p>
+                <strong>Key principle:</strong> Automation does not automatically
+                make a vessel safer. Safety depends on system design, operational
+                procedures, testing, human oversight, maintenance, and the
+                ability to manage failures.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>2. Understanding Maritime Hazards and Risks</h2>
+
+        <p>
+            A hazard is a condition or situation that has the potential
+            to cause harm. Risk considers both the possibility of a
+            harmful event and the severity of its consequences.
+        </p>
+
+        <h3>2.1 Common Hazards in Autonomous Ships</h3>
+
+        <ul>
+            <li><strong>Navigation Hazards:</strong> Incorrect position estimates, unsafe routes, or failure to detect nearby vessels.</li>
+            <li><strong>Sensor Hazards:</strong> Sensor failure, incorrect readings, obstruction, or inconsistent measurements.</li>
+            <li><strong>Control Hazards:</strong> Unintended steering commands, propulsion failures, or unstable control behaviour.</li>
+            <li><strong>Communication Hazards:</strong> Loss of connection, excessive latency, or unauthorised commands.</li>
+            <li><strong>Software Hazards:</strong> Programming errors, incorrect decisions, or unexpected interactions between software components.</li>
+            <li><strong>Machinery Hazards:</strong> Engine failure, electrical faults, overheating, or propulsion-system damage.</li>
+            <li><strong>Environmental Hazards:</strong> Severe weather, waves, currents, restricted visibility, and ice where relevant.</li>
+            <li><strong>Human-Related Hazards:</strong> Incorrect configuration, operator error, inadequate training, or delayed intervention.</li>
+        </ul>
+
+        <h3>2.2 Risk Assessment</h3>
+
+        <p>
+            Risk assessment is a structured process used to understand
+            what can go wrong, how likely it may be, and what consequences
+            could result.
+        </p>
+
+        <p>A typical process includes:</p>
+
+        <div class="process">
+            <div><span>01</span>Identify Hazards</div>
+            <div><span>02</span>Analyse Risk</div>
+            <div><span>03</span>Evaluate Risk</div>
+            <div><span>04</span>Apply Controls</div>
+            <div><span>05</span>Review and Monitor</div>
+        </div>
+
+        <h3>2.3 Basic Risk Matrix</h3>
+
+        <p>
+            A risk matrix can help organise risks according to their
+            likelihood and severity. It is a screening and prioritisation
+            tool, not a complete substitute for engineering analysis.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Likelihood</th>
+                        <th>Severity</th>
+                        <th>Illustrative Risk Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rare</td>
+                        <td>Minor</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Possible</td>
+                        <td>Moderate</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>Likely</td>
+                        <td>Major</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>Frequent</td>
+                        <td>Catastrophic</td>
+                        <td>Critical</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>2.4 Risk Estimation</h3>
+
+        <p>
+            A simplified risk-scoring approach can multiply a likelihood
+            rating by a severity rating.
+        </p>
+
+        <div class="formula">
+            Risk Score = Likelihood × Severity
+        </div>
+
+        <p>
+            For example, if a project uses a five-level likelihood scale
+            and a five-level severity scale, a hazard rated 4 for likelihood
+            and 5 for severity receives a score of 20.
+        </p>
+
+        <div class="note warning">
+            <p>
+                Risk scores are not universal physical measurements.
+                Different organisations use different scales and acceptance
+                criteria. A low numerical score does not automatically
+                prove that a safety-critical risk is acceptable.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>3. Safety Engineering and Risk Reduction</h2>
+
+        <p>
+            Safety engineering focuses on preventing dangerous conditions
+            and ensuring that systems behave safely when faults occur.
+            It considers the complete vessel lifecycle, including design,
+            construction, commissioning, operation, maintenance, and
+            decommissioning.
+        </p>
+
+        <h3>3.1 Hazard Identification (HAZID)</h3>
+
+        <p>
+            HAZID is a structured method for identifying hazards early
+            in a project. Engineers examine the vessel, its systems,
+            operating environment, and possible abnormal situations.
+        </p>
+
+        <p>
+            For an autonomous ship, a HAZID workshop may examine sensor
+            failures, navigation errors, loss of communication, unexpected
+            human intervention, and machinery problems.
+        </p>
+
+        <h3>3.2 Failure Mode and Effects Analysis (FMEA)</h3>
+
+        <p>
+            FMEA examines how individual components or functions may fail
+            and how those failures could affect the larger system.
+        </p>
+
+        <p>For example:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Possible Failure</th>
+                        <th>Potential Effect</th>
+                        <th>Possible Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GNSS Receiver</td>
+                        <td>Position signal unavailable</td>
+                        <td>Reduced positioning accuracy</td>
+                        <td>Alternative navigation sources</td>
+                    </tr>
+                    <tr>
+                        <td>Radar</td>
+                        <td>Target detection failure</td>
+                        <td>Reduced awareness of nearby traffic</td>
+                        <td>Sensor redundancy and fault monitoring</td>
+                    </tr>
+                    <tr>
+                        <td>Rudder System</td>
+                        <td>Actuator malfunction</td>
+                        <td>Loss of normal steering response</td>
+                        <td>Fault detection and contingency control</td>
+                    </tr>
+                    <tr>
+                        <td>Communication Link</td>
+                        <td>Connection interruption</td>
+                        <td>Loss of shore supervision</td>
+                        <td>Alternative links and onboard procedures</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>3.3 Fault Tree Analysis (FTA)</h3>
+
+        <p>
+            Fault Tree Analysis works backwards from an unwanted event
+            to identify combinations of failures that could cause it.
+        </p>
+
+        <p>
+            For example, engineers may investigate the possible causes
+            of a loss of steering capability, including power failure,
+            control-system failure, communication faults, or mechanical
+            damage.
+        </p>
+
+        <h3>3.4 Safety Barriers</h3>
+
+        <p>
+            Safety barriers are measures designed to prevent a hazard
+            from developing into an accident or to reduce the consequences
+            if an accident occurs.
+        </p>
+
+        <ul>
+            <li>Preventive barriers reduce the probability of dangerous events.</li>
+            <li>Detective barriers identify abnormal conditions early.</li>
+            <li>Mitigative barriers reduce the consequences of an incident.</li>
+            <li>Recovery measures support restoration to a safe operating condition.</li>
+        </ul>
+
+        <h3>3.5 Defence in Depth</h3>
+
+        <p>
+            Defence in depth uses multiple independent or complementary
+            safety measures. If one protection fails, other protections
+            may still reduce the likelihood or consequences of an accident.
+        </p>
+
+        <div class="note">
+            <p>
+                A safety-critical function should not depend on one
+                unverified sensor, one communication link, or one
+                software component when the consequences of failure
+                could be severe.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>4. Redundancy, Fault Tolerance and Fail-Safe Design</h2>
+
+        <p>
+            Autonomous vessels depend on many interconnected systems.
+            A failure in one important component can affect navigation,
+            propulsion, communication, or safety monitoring.
+        </p>
+
+        <h3>4.1 Redundancy</h3>
+
+        <p>
+            Redundancy means providing additional components or resources
+            so that a system can continue performing a required function
+            when a primary component becomes unavailable.
+        </p>
+
+        <p>Examples include:</p>
+
+        <ul>
+            <li>Multiple navigation sensors.</li>
+            <li>Backup electrical power sources.</li>
+            <li>Alternative communication links.</li>
+            <li>Redundant control computers.</li>
+            <li>Independent monitoring and alarm functions.</li>
+        </ul>
+
+        <h3>4.2 Fault Tolerance</h3>
+
+        <p>
+            Fault tolerance is the ability of a system to continue
+            providing an acceptable level of service despite certain
+            faults.
+        </p>
+
+        <p>
+            For example, if one navigation sensor fails, a system may
+            use other validated sources to maintain a position estimate.
+            This is only appropriate if the remaining information is
+            sufficiently reliable for the current operation.
+        </p>
+
+        <h3>4.3 Fail-Safe Design</h3>
+
+        <p>
+            Fail-safe design aims to bring a system into, or maintain
+            it in, a defined safe condition when a dangerous failure
+            occurs.
+        </p>
+
+        <p>
+            The safe condition depends on the function and operating
+            environment. A propulsion shutdown, for example, might
+            reduce one machinery hazard but create a navigation hazard
+            in a busy channel.
+        </p>
+
+        <h3>4.4 Fail-Operational Design</h3>
+
+        <p>
+            Fail-operational systems are designed to continue performing
+            essential functions after specified failures. They may use
+            redundancy, reconfiguration, or alternative control paths.
+        </p>
+
+        <div class="note warning">
+            <p>
+                "Fail-safe" does not mean that a vessel should always
+                stop, shut down, or disconnect. The safe response must
+                be determined through vessel-specific risk assessment
+                and operational analysis.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>5. Emergency Response and Contingency Planning</h2>
+
+        <p>
+            Emergency planning prepares a vessel and its operators
+            to respond to unexpected events that may threaten people,
+            the ship, cargo, or the marine environment.
+        </p>
+
+        <h3>5.1 Possible Emergency Situations</h3>
+
+        <ul>
+            <li>Collision or grounding risk.</li>
+            <li>Fire or smoke detection.</li>
+            <li>Flooding or loss of watertight integrity.</li>
+            <li>Loss of propulsion or steering.</li>
+            <li>Electrical power failure.</li>
+            <li>Critical sensor malfunction.</li>
+            <li>Loss of communication with a shore centre.</li>
+            <li>Cyberattack affecting operational systems.</li>
+            <li>Severe weather beyond approved operating limits.</li>
+        </ul>
+
+        <h3>5.2 Emergency Response Process</h3>
+
+        <div class="process">
+            <div><span>01</span>Detect Event</div>
+            <div><span>02</span>Assess Situation</div>
+            <div><span>03</span>Activate Response</div>
+            <div><span>04</span>Protect and Recover</div>
+            <div><span>05</span>Report and Review</div>
+        </div>
+
+        <h3>5.3 Emergency Procedures</h3>
+
+        <p>
+            A contingency plan should identify the event, the required
+            response, the responsible person or system, the communication
+            procedure, and the conditions for returning to normal operation.
+        </p>
+
+        <p>
+            Procedures should be specific enough to guide action but
+            flexible enough to account for different operating environments.
+        </p>
+
+        <h3>5.4 Search and Rescue</h3>
+
+        <p>
+            Autonomous and remotely operated vessels must be considered
+            within the wider maritime search-and-rescue framework.
+            Emergency arrangements may involve coastal authorities,
+            rescue coordination centres, nearby vessels, and other
+            relevant organisations.
+        </p>
+
+        <h3>5.5 Incident Reporting and Investigation</h3>
+
+        <p>
+            After an incident, operational data, system logs, sensor
+            records, and communication history may help investigators
+            understand what happened and identify contributing factors.
+        </p>
+
+        <p>
+            The objective is not only to identify an immediate technical
+            fault but also to understand design, operational, organisational,
+            and human factors that contributed to the event.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>6. Cybersecurity in Autonomous Ships</h2>
+
+        <p>
+            Autonomous ships depend on digital technologies, software,
+            communication networks, sensors, and connected operational
+            systems. These technologies create potential entry points
+            for cyber threats.
+        </p>
+
+        <p>
+            Maritime cybersecurity protects the confidentiality,
+            integrity, and availability of information and systems
+            that support safe vessel operations.
+        </p>
+
+        <h3>6.1 Information Technology (IT) and Operational Technology (OT)</h3>
+
+        <p>
+            Information Technology systems generally process, store,
+            and communicate information. Operational Technology systems
+            monitor or control physical equipment and industrial processes.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>IT Systems</th>
+                        <th>OT Systems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Email and office networks</td>
+                        <td>Propulsion control</td>
+                    </tr>
+                    <tr>
+                        <td>Business databases</td>
+                        <td>Steering control systems</td>
+                    </tr>
+                    <tr>
+                        <td>Administrative applications</td>
+                        <td>Machinery automation</td>
+                    </tr>
+                    <tr>
+                        <td>Document management</td>
+                        <td>Industrial sensors and controllers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>
+            The distinction is important because a cyber incident affecting
+            an operational control system may have direct physical
+            consequences for the vessel.
+        </p>
+
+        <h3>6.2 Common Maritime Cyber Threats</h3>
+
+        <ul>
+            <li><strong>Malware:</strong> Malicious software that can damage, disrupt, or compromise systems.</li>
+            <li><strong>Ransomware:</strong> Malware that blocks access to systems or data until a demand is made.</li>
+            <li><strong>Phishing:</strong> Deceptive messages designed to steal credentials or deliver malicious content.</li>
+            <li><strong>Unauthorised Access:</strong> Access to systems by individuals without valid permission.</li>
+            <li><strong>Denial of Service:</strong> Attacks that make communication or digital services unavailable.</li>
+            <li><strong>Data Manipulation:</strong> Unauthorised alteration of information used by navigation or control systems.</li>
+            <li><strong>GNSS Spoofing:</strong> Transmission of deceptive satellite-navigation signals that may cause incorrect position or timing information.</li>
+            <li><strong>GNSS Jamming:</strong> Interference that prevents or degrades reception of satellite-navigation signals.</li>
+            <li><strong>Supply Chain Attacks:</strong> Compromise through software, hardware, or service providers.</li>
+        </ul>
+
+        <h3>6.3 Cybersecurity Protection Measures</h3>
+
+        <ul>
+            <li>Multi-factor authentication for sensitive access.</li>
+            <li>Role-based access control and least privilege.</li>
+            <li>Network segmentation between IT and OT environments.</li>
+            <li>Encryption for sensitive data and communication.</li>
+            <li>Secure configuration and software-update procedures.</li>
+            <li>Continuous monitoring and security logging.</li>
+            <li>Vulnerability management and controlled patching.</li>
+            <li>Backup systems and tested recovery procedures.</li>
+            <li>Security awareness training for personnel.</li>
+            <li>Incident response plans and regular exercises.</li>
+        </ul>
+
+        <h3>6.4 Network Segmentation</h3>
+
+        <p>
+            Network segmentation divides a network into separate zones
+            according to function and security requirements. It can help
+            limit the spread of an attack from an office network to
+            safety-critical operational systems.
+        </p>
+
+        <h3>6.5 Access Control</h3>
+
+        <p>
+            Access control determines who can use a system and what
+            actions they are permitted to perform. Remote access to
+            ship systems should be restricted, authenticated, authorised,
+            monitored, and reviewed.
+        </p>
+
+        <div class="note warning">
+            <p>
+                Cybersecurity is not achieved by installing antivirus
+                software alone. It requires technical controls, secure
+                system design, operational procedures, personnel training,
+                monitoring, and incident recovery.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>7. Artificial Intelligence Safety and Software Assurance</h2>
+
+        <p>
+            Autonomous ships may use AI and machine-learning systems
+            for object detection, route planning, decision support,
+            anomaly detection, and other functions.
+        </p>
+
+        <p>
+            However, AI systems can make incorrect predictions or
+            behave unexpectedly when they encounter situations that
+            differ from their training or testing conditions.
+        </p>
+
+        <h3>7.1 AI-Related Safety Risks</h3>
+
+        <ul>
+            <li>Incorrect object detection or classification.</li>
+            <li>Unreliable predictions in unfamiliar environments.</li>
+            <li>Biased or incomplete training data.</li>
+            <li>Unexpected behaviour after software updates.</li>
+            <li>Difficulty explaining certain model decisions.</li>
+            <li>Adversarial inputs or manipulated sensor data.</li>
+            <li>Overdependence on automated recommendations.</li>
+        </ul>
+
+        <h3>7.2 Verification and Validation</h3>
+
+        <p>
+            Verification checks whether a system has been developed
+            according to its specified requirements. Validation checks
+            whether the system performs its intended function in the
+            intended operational context.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Verification</th>
+                        <th>Validation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Checks implementation against specifications</td>
+                        <td>Checks suitability for intended operation</td>
+                    </tr>
+                    <tr>
+                        <td>May include code reviews and software tests</td>
+                        <td>May include realistic operational trials</td>
+                    </tr>
+                    <tr>
+                        <td>Examines whether the system was built correctly</td>
+                        <td>Examines whether the correct system was built</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>7.3 Testing Methods</h3>
+
+        <ul>
+            <li><strong>Simulation:</strong> Tests system behaviour in virtual environments.</li>
+            <li><strong>Software Testing:</strong> Checks software functions and expected outputs.</li>
+            <li><strong>Hardware-in-the-Loop:</strong> Connects real hardware to a simulated environment.</li>
+            <li><strong>Integration Testing:</strong> Evaluates communication and interaction between subsystems.</li>
+            <li><strong>Sea Trials:</strong> Evaluate vessel behaviour under controlled real-world conditions.</li>
+            <li><strong>Operational Monitoring:</strong> Reviews system performance after deployment.</li>
+        </ul>
+
+        <h3>7.4 Software Updates and Change Management</h3>
+
+        <p>
+            Software updates may change how an autonomous vessel detects
+            objects, plans routes, or controls equipment. Updates should
+            therefore be reviewed, tested, authorised, documented, and
+            installed according to controlled procedures.
+        </p>
+
+        <div class="note">
+            <p>
+                Passing a software test does not prove that an AI system
+                will behave correctly in every possible maritime situation.
+                Testing must be supported by operational limits, monitoring,
+                safety barriers, and appropriate human oversight.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>8. Human Oversight and Responsibility</h2>
+
+        <p>
+            Autonomous technology changes the way maritime work is performed,
+            but it does not remove the importance of human responsibility.
+            People may remain involved in planning, monitoring, supervision,
+            remote operation, maintenance, and emergency response.
+        </p>
+
+        <h3>8.1 Human Oversight</h3>
+
+        <p>
+            Human oversight means that qualified personnel can monitor
+            system performance, understand important decisions, and
+            intervene when required by the operational arrangement.
+        </p>
+
+        <h3>8.2 Remote Operators</h3>
+
+        <p>
+            Remote operators may supervise vessel functions or control
+            selected operations from a shore facility. Their responsibilities,
+            competence requirements, and authority should be clearly defined.
+        </p>
+
+        <h3>8.3 The Role of the Master</h3>
+
+        <p>
+            The role and responsibilities of the master must be addressed
+            within the applicable legal and operational framework. Remote
+            operation does not automatically eliminate the master's
+            responsibilities or transfer them to an automated system.
+        </p>
+
+        <h3>8.4 Human Factors</h3>
+
+        <ul>
+            <li>Situational awareness.</li>
+            <li>Operator workload and fatigue.</li>
+            <li>Alarm prioritisation and alarm fatigue.</li>
+            <li>Training and professional competence.</li>
+            <li>Clear communication and control handover.</li>
+            <li>Understanding automation limitations.</li>
+        </ul>
+
+        <h3>8.5 Control Handover</h3>
+
+        <p>
+            When control transfers between an onboard system, an onboard
+            operator, or a shore-based operator, the transition must
+            be clearly managed. The system should confirm who has
+            authority and prevent conflicting commands.
+        </p>
+
+        <div class="note">
+            <p>
+                Human oversight is effective only when operators have
+                sufficient information, appropriate training, enough
+                time to respond, and clear authority to take action.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>9. International Maritime Regulatory Framework</h2>
+
+        <p>
+            Autonomous ships operate within a regulatory environment
+            that includes international conventions, codes, national
+            laws, flag-state requirements, coastal-state rules, and
+            applicable technical standards.
+        </p>
+
+        <h3>9.1 International Maritime Organization (IMO)</h3>
+
+        <p>
+            The International Maritime Organization is a specialised
+            United Nations agency responsible for developing international
+            standards and conventions related to maritime safety,
+            security, environmental protection, and shipping operations.
+        </p>
+
+        <h3>9.2 International Convention for the Safety of Life at Sea (SOLAS)</h3>
+
+        <p>
+            SOLAS is one of the most important international maritime
+            safety conventions. It establishes minimum requirements
+            for the construction, equipment, and operation of ships
+            covered by its provisions.
+        </p>
+
+        <p>
+            Autonomous ship frameworks must be considered alongside
+            SOLAS and other applicable instruments. The introduction
+            of automation does not automatically remove a vessel's
+            existing legal obligations.
+        </p>
+
+        <h3>9.3 International Regulations for Preventing Collisions at Sea (COLREGs)</h3>
+
+        <p>
+            COLREGs establish internationally recognised rules designed
+            to prevent collisions between vessels. They address matters
+            such as lookout, safe speed, risk of collision, conduct
+            in different encounter situations, lights, shapes, and
+            sound signals.
+        </p>
+
+        <p>
+            Autonomous navigation systems must be designed to support
+            compliance with applicable collision-prevention requirements.
+            Automated decision-making does not create permission to
+            ignore these rules.
+        </p>
+
+        <h3>9.4 International Convention on Standards of Training, Certification and Watchkeeping (STCW)</h3>
+
+        <p>
+            STCW establishes international minimum standards for
+            training, certification, and watchkeeping for seafarers
+            covered by its provisions.
+        </p>
+
+        <p>
+            Autonomous and remote operations raise additional questions
+            about the competence, training, and responsibilities of
+            personnel performing functions from shore.
+        </p>
+
+        <h3>9.5 International Safety Management (ISM) Code</h3>
+
+        <p>
+            The ISM Code provides an international standard for the
+            safe management and operation of ships and for pollution
+            prevention. It requires companies to establish and maintain
+            a Safety Management System.
+        </p>
+
+        <p>
+            Risk management, emergency preparedness, maintenance,
+            reporting, and continuous improvement are important
+            elements of effective safety management.
+        </p>
+
+        <h3>9.6 International Ship and Port Facility Security (ISPS) Code</h3>
+
+        <p>
+            The ISPS Code establishes a framework for ship and port
+            facility security within its scope. It supports the
+            identification and management of security threats and
+            the implementation of appropriate security measures.
+        </p>
+
+        <h3>9.7 United Nations Convention on the Law of the Sea (UNCLOS)</h3>
+
+        <p>
+            UNCLOS establishes a broad international legal framework
+            governing the use of the oceans and seas. It addresses
+            maritime zones, navigation rights, duties of states,
+            and other important aspects of the law of the sea.
+        </p>
+
+        <div class="note">
+            <p>
+                These instruments have different legal scopes and
+                applicability. A vessel's regulatory obligations
+                depend on its type, size, voyage, flag, operating
+                area, and the relevant national implementation.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>10. The IMO MASS Code</h2>
+
+        <p>
+            The International Maritime Organization developed a
+            specific framework to address the challenges created
+            by Maritime Autonomous Surface Ships (MASS).
+        </p>
+
+        <h3>10.1 What Is MASS?</h3>
+
+        <p>
+            MASS stands for Maritime Autonomous Surface Ship. It
+            refers to a ship that can operate independently of human
+            interaction to varying degrees, according to its
+            operational design and level of autonomy.
+        </p>
+
+        <p>
+            A vessel is not automatically classified as a MASS
+            simply because it uses advanced automation. The IMO
+            distinguishes between ordinary enhanced automation
+            and systems that replace or support functions normally
+            carried out by onboard crew.
+        </p>
+
+        <h3>10.2 Adoption of the MASS Code</h3>
+
+        <p>
+            The IMO adopted the non-mandatory International Code
+            of Safety for Maritime Autonomous Surface Ships
+            (MASS Code) through resolution MSC.595(111) in May 2026.
+        </p>
+
+        <p>
+            The Code came into effect on 1 July 2026 as a
+            non-mandatory international framework. It supports
+            the safe integration of remotely controlled and
+            autonomous commercial ships into international shipping.
+        </p>
+
+        <h3>10.3 Scope of the Code</h3>
+
+        <p>
+            The Code applies to cargo ships covered by SOLAS
+            Chapter I, generally ships of 500 gross tonnage
+            and above on international voyages. Governments
+            are encouraged to apply it, as far as practicable,
+            to smaller MASS vessels as well.
+        </p>
+
+        <p>
+            The Code is designed to supplement SOLAS and other
+            applicable mandatory IMO instruments rather than
+            replace them.
+        </p>
+
+        <h3>10.4 Main Areas Addressed</h3>
+
+        <ul>
+            <li>Risk assessment and approval arrangements.</li>
+            <li>System design and software principles.</li>
+            <li>Safe management of autonomous operations.</li>
+            <li>Alert management and human oversight.</li>
+            <li>Manning, training, and watchkeeping considerations.</li>
+            <li>Safety of navigation.</li>
+            <li>Connectivity and remote operations.</li>
+            <li>Fire safety and machinery-related requirements.</li>
+            <li>Search and rescue considerations.</li>
+            <li>Security and other ship safety functions.</li>
+        </ul>
+
+        <h3>10.5 Experience-Building Phase and Future Development</h3>
+
+        <p>
+            The non-mandatory Code provides an opportunity for
+            governments and industry to gain experience and
+            identify areas that may require further development.
+        </p>
+
+        <p>
+            The IMO roadmap anticipates development of a mandatory
+            MASS Code in 2028, with expected adoption by
+            1 July 2030 and entry into force on 1 January 2032.
+            These are planned milestones and may be affected
+            by future regulatory decisions.
+        </p>
+
+        <div class="note warning">
+            <p>
+                <strong>Important regulatory distinction:</strong>
+                As of November 2026, the MASS Code is non-mandatory.
+                Its entry into effect does not mean that it has
+                already become a universally binding mandatory
+                SOLAS code. Applicable mandatory conventions
+                and national requirements continue to matter.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>11. Certification, Approval and Operational Documentation</h2>
+
+        <p>
+            Before an autonomous ship can operate under an applicable
+            regulatory framework, its design and operational
+            arrangements may need to undergo assessment, approval,
+            inspection, and certification.
+        </p>
+
+        <h3>11.1 Design Review</h3>
+
+        <p>
+            Design review examines whether the vessel's architecture,
+            equipment, software, safety systems, and operational
+            concept meet applicable requirements.
+        </p>
+
+        <h3>11.2 Risk Assessment Documentation</h3>
+
+        <p>
+            Risk assessment records should identify hazards,
+            evaluate consequences, document protective measures,
+            and explain how remaining risks are managed.
+        </p>
+
+        <h3>11.3 Operational Concept</h3>
+
+        <p>
+            An operational concept describes how the vessel is
+            intended to work. It may identify autonomy functions,
+            remote control arrangements, operating areas, restrictions,
+            human responsibilities, and contingency procedures.
+        </p>
+
+        <h3>11.4 Testing and Trials</h3>
+
+        <p>
+            Testing may include simulation, equipment testing,
+            software verification, integration testing, and
+            controlled sea trials. The test programme should
+            provide evidence that the system performs as intended
+            under its defined operating conditions.
+        </p>
+
+        <h3>11.5 Certificates and Approvals</h3>
+
+        <p>
+            Required certificates and approvals depend on the
+            applicable regulatory framework, ship type, flag,
+            voyage, and operational design. The IMO MASS framework
+            includes an approval process and a MASS Safety
+            Certificate for vessels within its applicable scope.
+        </p>
+
+        <div class="note">
+            <p>
+                Certification is not a permanent guarantee that
+                a vessel will remain safe under every condition.
+                Systems must be maintained, monitored, reassessed,
+                and operated within their approved limits.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>12. Environmental Protection and Maritime Security</h2>
+
+        <p>
+            Autonomous ship safety also includes protecting the
+            marine environment and preventing security incidents.
+        </p>
+
+        <h3>12.1 Pollution Prevention</h3>
+
+        <p>
+            Autonomous systems must support safe operation of
+            machinery, fuel systems, cargo systems, and other
+            equipment in ways that comply with applicable
+            environmental requirements.
+        </p>
+
+        <h3>12.2 MARPOL</h3>
+
+        <p>
+            The International Convention for the Prevention
+            of Pollution from Ships (MARPOL) is the principal
+            international convention addressing pollution
+            from ships caused by operational or accidental
+            activities within its scope.
+        </p>
+
+        <h3>12.3 Environmental Monitoring</h3>
+
+        <p>
+            Sensors and automated monitoring systems may help
+            detect abnormal equipment conditions, monitor
+            selected emissions or discharges, and support
+            environmental reporting.
+        </p>
+
+        <h3>12.4 Maritime Security</h3>
+
+        <p>
+            Maritime security involves protecting vessels,
+            people, cargo, ports, and maritime infrastructure
+            from unlawful acts and other security threats.
+        </p>
+
+        <p>
+            Autonomous ships must consider physical security,
+            cyber threats, unauthorised access, and the
+            protection of sensitive operational systems.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>13. Practical Engineering Scenario</h2>
+
+        <p>
+            Consider an autonomous cargo vessel operating on an
+            international voyage. During navigation, its primary
+            positioning system begins providing inconsistent data.
+            At the same time, the vessel experiences a temporary
+            communication interruption with its shore control centre.
+        </p>
+
+        <h3>Step 1 — Fault Detection</h3>
+
+        <p>
+            The navigation monitoring system identifies a
+            disagreement between the primary positioning source
+            and other available navigation measurements.
+        </p>
+
+        <h3>Step 2 — Risk Assessment</h3>
+
+        <p>
+            The onboard safety system evaluates the reliability
+            of the available information and determines whether
+            the vessel remains within its approved operating limits.
+        </p>
+
+        <h3>Step 3 — Protective Response</h3>
+
+        <p>
+            The vessel applies its predefined contingency
+            procedure. It does not rely on an unverified
+            position estimate for safety-critical decisions.
+        </p>
+
+        <h3>Step 4 — Communication Recovery</h3>
+
+        <p>
+            The communication system attempts to restore the
+            primary connection or use an authorised alternative
+            link. Essential status information is prioritised.
+        </p>
+
+        <h3>Step 5 — Human Oversight</h3>
+
+        <p>
+            Once communication becomes available, the shore
+            operator receives updated information and reviews
+            the vessel's status. Control authority is confirmed
+            before any remote command is issued.
+        </p>
+
+        <h3>Step 6 — Incident Documentation</h3>
+
+        <p>
+            The system records the sensor disagreement,
+            communication interruption, decisions, alarms,
+            and recovery actions. Engineers can review these
+            records to improve reliability and risk controls.
+        </p>
+
+        <p>
+            This scenario shows that safe autonomous operation
+            requires more than a navigation algorithm. It depends
+            on fault detection, independent information sources,
+            contingency planning, cybersecurity, human oversight,
+            and validated system behaviour.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>14. Engineering Challenges and Future Developments</h2>
+
+        <h3>Current Challenges</h3>
+
+        <ul>
+            <li>Managing software and hardware failures in complex systems.</li>
+            <li>Maintaining reliable navigation in degraded environments.</li>
+            <li>Protecting connected operational systems from cyberattacks.</li>
+            <li>Establishing clear responsibility and control authority.</li>
+            <li>Validating AI behaviour in rare and unexpected situations.</li>
+            <li>Designing effective emergency and communication-loss procedures.</li>
+            <li>Developing consistent international regulatory approaches.</li>
+            <li>Maintaining safety across different vessel types and operating areas.</li>
+        </ul>
+
+        <h3>Future Developments</h3>
+
+        <ul>
+            <li>
+                <strong>Advanced Safety Monitoring:</strong>
+                More capable systems for detecting abnormal behaviour
+                and predicting potential failures.
+            </li>
+            <li>
+                <strong>Resilient Navigation:</strong>
+                Improved methods for maintaining positioning when
+                satellite signals are degraded or unavailable.
+            </li>
+            <li>
+                <strong>AI Assurance:</strong>
+                Better methods for evaluating the reliability,
+                limitations, and safety of AI-based functions.
+            </li>
+            <li>
+                <strong>Cyber Resilience:</strong>
+                Stronger protection, monitoring, and recovery
+                capabilities for maritime operational technology.
+            </li>
+            <li>
+                <strong>Digital Twins:</strong>
+                More advanced virtual models to support testing,
+                risk assessment, and maintenance.
+            </li>
+            <li>
+                <strong>Regulatory Development:</strong>
+                Continued international work to adapt maritime
+                rules to autonomous and remote operations.
+            </li>
+        </ul>
+
+        <div class="note">
+            <p>
+                The future of autonomous shipping will depend not
+                only on making ships more intelligent, but also
+                on proving that their systems are dependable,
+                secure, understandable, and safe throughout
+                their operational lifecycle.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>15. Key Takeaways</h2>
+
+        <ul>
+            <li>Safety engineering identifies hazards and reduces operational risks.</li>
+            <li>Risk assessment considers likelihood, consequences, and protective measures.</li>
+            <li>HAZID, FMEA, and Fault Tree Analysis support systematic hazard analysis.</li>
+            <li>Redundancy and fault tolerance help manage selected system failures.</li>
+            <li>Fail-safe behaviour must be defined according to the vessel's operating context.</li>
+            <li>Emergency procedures must be tested and appropriate for the vessel.</li>
+            <li>Cybersecurity protects both information and physical operational systems.</li>
+            <li>AI-based functions require verification, validation, monitoring, and safety controls.</li>
+            <li>Human oversight and clearly defined responsibilities remain important.</li>
+            <li>SOLAS, COLREGs, STCW, ISM, ISPS, MARPOL, and UNCLOS have different but relevant regulatory roles.</li>
+            <li>The IMO MASS Code was adopted in May 2026 as a non-mandatory framework effective from 1 July 2026.</li>
+            <li>Certification and operational approval depend on the applicable regulatory requirements.</li>
+        </ul>
+    </section>
+
+    <section class="content-section" id="quiz">
+        <h2>16. Knowledge Assessment</h2>
+
+        <p>
+            Answer all 10 questions to evaluate your understanding
+            of autonomous ship safety, cybersecurity, risk management,
+            and maritime regulations. Submit your answers to see
+            your score, correct answers, and explanations.
+        </p>
+
+        <div id="questions"></div>
+
+        <div class="quiz-actions">
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+            <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+        </div>
+
+        <div id="result" aria-live="polite"></div>
+    </section>
+
+    <section class="content-section">
+        <h2>17. Technical References and Further Reading</h2>
+
+        <ul class="references">
+            <li>
+                <strong>International Maritime Organization (IMO) — Autonomous Shipping:</strong>
+                <a href="https://www.imo.org/en/ourwork/safety/pages/autonomous-shipping-%28mass%29.aspx" target="_blank" rel="noopener noreferrer">
+                    Official MASS framework, regulatory developments, and guidance.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — MASS Code Adoption, May 2026:</strong>
+                <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/imo-adopts-mass-code.aspx" target="_blank" rel="noopener noreferrer">
+                    Official announcement of the adopted MASS Code.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — Autonomous Shipping FAQ:</strong>
+                <a href="https://www.imo.org/en/mediacentre/hottopics/pages/autonomous-shipping.aspx" target="_blank" rel="noopener noreferrer">
+                    Definitions, applicability, approval, and regulatory roadmap.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — Maritime Cyber Risk:</strong>
+                <a href="https://www.imo.org/en/ourwork/security/pages/cyber-security.aspx" target="_blank" rel="noopener noreferrer">
+                    Maritime cyber risk management guidance.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — SOLAS Convention:</strong>
+                <a href="https://www.imo.org/en/KnowledgeCentre/ConferencesMeetings/Pages/SOLAS.aspx" target="_blank" rel="noopener noreferrer">
+                    International maritime safety requirements.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — COLREG Convention:</strong>
+                <a href="https://www.imo.org/en/about/conventions/pages/colreg.aspx" target="_blank" rel="noopener noreferrer">
+                    International collision-prevention regulations.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — STCW Convention:</strong>
+                <a href="https://www.imo.org/en/ourwork/humanelement/pages/stcw-conv-link.aspx" target="_blank" rel="noopener noreferrer">
+                    Seafarer training, certification, and watchkeeping.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — International Safety Management (ISM) Code:</strong>
+                <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                    Safety management and operational risk control resources.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — MARPOL Convention:</strong>
+                <a href="https://www.imo.org/en/ourwork/environment/pages/marpol.aspx" target="_blank" rel="noopener noreferrer">
+                    International ship pollution prevention requirements.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Association of Classification Societies (IACS):</strong>
+                <a href="https://iacs.org.uk/" target="_blank" rel="noopener noreferrer">
+                    Classification requirements and technical recommendations.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Organization for Standardization (ISO):</strong>
+                <a href="https://www.iso.org/" target="_blank" rel="noopener noreferrer">
+                    International standards for risk management and information security.
+                </a>
+            </li>
+
+            <li>
+                <strong>National Institute of Standards and Technology (NIST):</strong>
+                <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener noreferrer">
+                    Cybersecurity Framework and risk-management resources.
+                </a>
+            </li>
+        </ul>
+
+        <p>
+            These references are starting points for further study.
+            Regulatory applicability must always be checked against
+            the latest official instruments, flag-state requirements,
+            and the vessel's approved operating arrangements.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED
+    <br>
+    MARITERRA — EXPLORING THE FUTURE OF MARITIME TECHNOLOGY
+</footer>
+
+<script>
+    const quizData = [
+        {
+            question: "1. What is the main purpose of maritime risk assessment?",
+            options: [
+                "To remove every possible operational cost",
+                "To identify hazards, evaluate risks, and determine protective measures",
+                "To replace all safety regulations",
+                "To increase vessel speed"
+            ],
+            answer: 1,
+            explanation: "Risk assessment identifies hazards, analyses their likelihood and consequences, and helps determine suitable risk-control measures."
+        },
+        {
+            question: "2. What does FMEA examine?",
+            options: [
+                "Only the vessel's fuel consumption",
+                "Possible component or function failures and their effects",
+                "Only the crew's working hours",
+                "The ship's commercial route"
+            ],
+            answer: 1,
+            explanation: "Failure Mode and Effects Analysis identifies possible failure modes and examines their effects on the system."
+        },
+        {
+            question: "3. What is the purpose of redundancy in an autonomous ship?",
+            options: [
+                "To provide additional resources when a primary component fails",
+                "To eliminate the need for maintenance",
+                "To make every component identical",
+                "To prevent all environmental disturbances"
+            ],
+            answer: 0,
+            explanation: "Redundancy provides alternative components or resources that may allow essential functions to continue after certain failures."
+        },
+        {
+            question: "4. Which statement best describes fail-safe design?",
+            options: [
+                "The vessel must always stop immediately",
+                "The system is designed to reach or maintain a defined safe condition after a dangerous failure",
+                "The system must continue at maximum speed",
+                "All alarms should be disabled during failures"
+            ],
+            answer: 1,
+            explanation: "Fail-safe design aims to bring the system into a defined safe condition. The correct response depends on the vessel and its operating environment."
+        },
+        {
+            question: "5. What is the main difference between IT and OT?",
+            options: [
+                "IT manages information, while OT monitors or controls physical processes",
+                "IT is always safer than OT",
+                "OT is only used for email",
+                "There is no difference between them"
+            ],
+            answer: 0,
+            explanation: "Information Technology handles information processing and communication, while Operational Technology monitors or controls physical equipment and processes."
+        },
+        {
+            question: "6. What is GNSS spoofing?",
+            options: [
+                "A method for repairing a ship's engine",
+                "A deceptive satellite-navigation signal that may produce incorrect positioning information",
+                "A type of emergency anchor",
+                "A standard method of fuel measurement"
+            ],
+            answer: 1,
+            explanation: "GNSS spoofing involves deceptive signals that can mislead a receiver into calculating incorrect position or timing information."
+        },
+        {
+            question: "7. What is the difference between verification and validation?",
+            options: [
+                "They are exactly the same process",
+                "Verification checks against specifications, while validation checks suitability for intended use",
+                "Validation only checks the ship's paint",
+                "Verification is only performed after an accident"
+            ],
+            answer: 1,
+            explanation: "Verification checks whether the system meets its specified requirements. Validation checks whether it performs its intended function in its intended context."
+        },
+        {
+            question: "8. When was the IMO non-mandatory MASS Code adopted?",
+            options: [
+                "May 2020",
+                "January 2024",
+                "May 2026",
+                "December 2032"
+            ],
+            answer: 2,
+            explanation: "The IMO adopted the non-mandatory MASS Code through resolution MSC.595(111) in May 2026. It came into effect on 1 July 2026."
+        },
+        {
+            question: "9. Which statement about the MASS Code is correct as of November 2026?",
+            options: [
+                "It has replaced every SOLAS requirement",
+                "It is a non-mandatory framework that supplements applicable IMO instruments",
+                "It applies automatically to every small recreational boat",
+                "It removes the need for risk assessment"
+            ],
+            answer: 1,
+            explanation: "The MASS Code is non-mandatory and supplements SOLAS and other applicable instruments. Its stated scope and applicability must be checked carefully."
+        },
+        {
+            question: "10. Why is human oversight important in autonomous ship operations?",
+            options: [
+                "Because automated systems never need monitoring",
+                "Because qualified people may need to supervise, evaluate, and intervene in abnormal situations",
+                "Because human operators must manually control every sensor",
+                "Because it eliminates the need for cybersecurity"
+            ],
+            answer: 1,
+            explanation: "Human oversight supports supervision, decision-making, accountability, and intervention when required by the vessel's operational arrangements."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById("questions");
+
+        container.innerHTML = quizData.map((item, index) => `
+            <div class="question" id="question-${index}">
+                <h3>${item.question}</h3>
+
+                ${item.options.map((option, optionIndex) => `
+                    <label class="option" id="option-${index}-${optionIndex}">
+                        <input
+                            type="radio"
+                            name="question-${index}"
+                            value="${optionIndex}"
+                        >
+                        ${option}
+                    </label>
+                `).join("")}
+
+                <div class="explanation" id="explanation-${index}"></div>
+            </div>
+        `).join("");
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let unanswered = 0;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            if (!selected) {
+                unanswered++;
+            }
+        });
+
+        if (unanswered > 0) {
+            alert(`Please answer all questions. Unanswered: ${unanswered}`);
+            return;
+        }
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            const selectedValue = Number(selected.value);
+
+            const correctOption = document.getElementById(
+                `option-${index}-${item.answer}`
+            );
+
+            const selectedOption = document.getElementById(
+                `option-${index}-${selectedValue}`
+            );
+
+            const explanation = document.getElementById(
+                `explanation-${index}`
+            );
+
+            if (selectedValue === item.answer) {
+                score++;
+                selectedOption.classList.add("correct");
+            } else {
+                selectedOption.classList.add("incorrect");
+                correctOption.classList.add("correct");
+            }
+
+            explanation.innerHTML = `
+                <strong>Correct answer:</strong>
+                ${item.options[item.answer]}
+                <br><br>
+                <strong>Explanation:</strong>
+                ${item.explanation}
+            `;
+
+            explanation.classList.add("show");
+
+            document.querySelectorAll(
+                `input[name="question-${index}"]`
+            ).forEach(input => input.disabled = true);
+        });
+
+        const percentage = (score / quizData.length) * 100;
+        let message = "";
+
+        if (percentage >= 90) {
+            message = "Excellent! You have a strong understanding of autonomous ship safety and regulations.";
+        } else if (percentage >= 70) {
+            message = "Good work! Review the explanations to strengthen your knowledge.";
+        } else if (percentage >= 50) {
+            message = "A fair attempt. Review the topic and try again.";
+        } else {
+            message = "You need more practice. Revisit the learning material before retrying.";
+        }
+
+        const result = document.getElementById("result");
+
+        result.innerHTML = `
+            <h3>Assessment Results</h3>
+            <p><strong>Score:</strong> ${score} / ${quizData.length}</p>
+            <p><strong>Percentage:</strong> ${percentage}%</p>
+            <p>${message}</p>
+            <p>Correct answers are highlighted in green.
+            Incorrect selections are highlighted in red.</p>
+        `;
+
+        result.style.display = "block";
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+    function resetQuiz() {
+        renderQuiz();
+
+        const result = document.getElementById("result");
+        result.style.display = "none";
+        result.innerHTML = "";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>

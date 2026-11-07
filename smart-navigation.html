@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore Smart Navigation technologies, satellite positioning, electronic charts, navigation sensors, intelligent route planning, and autonomous maritime navigation.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Smart Navigation</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --sn-bg: #070816;
+            --sn-card: rgba(13, 16, 38, 0.92);
+            --sn-purple: #9333ea;
+            --sn-purple-light: #c084fc;
+            --sn-text: #e5e7eb;
+            --sn-muted: #a1a1aa;
+            --sn-border: rgba(192, 132, 252, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--sn-bg);
+            color: var(--sn-text);
+        }
+
+        .smart-navigation-page {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* HERO */
+
+        .sn-hero {
+            position: relative;
+            min-height: 470px;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(
+                    ellipse at 80% 35%,
+                    rgba(147, 51, 234, 0.19),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    120deg,
+                    #070816,
+                    #10102a 65%,
+                    #17102c
+                );
+            border-bottom: 1px solid var(--sn-border);
+        }
+
+        .sn-hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(192, 132, 252, 0.12);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 35px rgba(147, 51, 234, 0.025),
+                0 0 0 75px rgba(147, 51, 234, 0.02);
+            pointer-events: none;
+        }
+
+        .sn-hero-content {
+            width: min(1320px, 94%);
+            margin: auto;
+            padding: 90px 0 105px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .sn-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            color: var(--sn-muted);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .sn-breadcrumb a {
+            color: var(--sn-purple-light);
+            text-decoration: none;
+        }
+
+        .sn-breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .sn-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 15px;
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            border-radius: 30px;
+            background: rgba(147, 51, 234, 0.1);
+            color: var(--sn-purple-light);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 22px;
+        }
+
+        .sn-label::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--sn-purple-light);
+            box-shadow: 0 0 12px var(--sn-purple);
+        }
+
+        .sn-hero h1 {
+            max-width: 800px;
+            font-size: clamp(42px, 6vw, 76px);
+            line-height: 1.08;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin: 0 0 24px;
+            color: #ffffff;
+        }
+
+        .sn-hero h1 span {
+            display: block;
+            color: var(--sn-purple-light);
+        }
+
+        .sn-hero-description {
+            max-width: 690px;
+            color: #c7c5d3;
+            font-size: 17px;
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .sn-hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 23px;
+            border-radius: 7px;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(147, 51, 234, 0.25);
+            transition: 0.3s ease;
+        }
+
+        .sn-hero-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.4);
+        }
+
+        .sn-hero-button span {
+            font-size: 19px;
+            transition: transform 0.3s ease;
+        }
+
+        .sn-hero-button:hover span {
+            transform: translateX(5px);
+        }
+
+        /* INTRODUCTION */
+
+        .sn-introduction {
+            width: min(1320px, 94%);
+            margin: auto;
+            padding: 80px 0 45px;
+            text-align: center;
+        }
+
+        .sn-section-label {
+            color: var(--sn-purple-light);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .sn-introduction h2,
+        .sn-topics-heading h2 {
+            color: #ffffff;
+            font-size: clamp(27px, 4vw, 39px);
+            margin: 0 0 18px;
+            line-height: 1.3;
+        }
+
+        .sn-introduction p {
+            max-width: 850px;
+            margin: auto;
+            color: var(--sn-muted);
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        /* STATISTICS */
+
+        .sn-statistics {
+            width: min(900px, 94%);
+            margin: 15px auto 75px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .sn-stat {
+            padding: 23px 15px;
+            text-align: center;
+            border: 1px solid var(--sn-border);
+            border-radius: 10px;
+            background: rgba(13, 16, 38, 0.65);
+        }
+
+        .sn-stat strong {
+            display: block;
+            color: var(--sn-purple-light);
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .sn-stat span {
+            color: var(--sn-muted);
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* TOPICS */
+
+        .sn-topics {
+            width: min(1320px, 94%);
+            margin: auto;
+            padding-bottom: 90px;
+        }
+
+        .sn-topics-heading {
+            text-align: center;
+            margin-bottom: 42px;
+        }
+
+        .sn-topics-heading p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--sn-muted);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sn-topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        /* TEXT-ONLY TOPIC CARDS */
+
+        .sn-topic-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 260px;
+            overflow: hidden;
+            padding: 27px 24px 22px;
+            background: var(--sn-card);
+            border: 1px solid var(--sn-border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .sn-topic-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                var(--sn-purple),
+                var(--sn-purple-light)
+            );
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.35s ease;
+        }
+
+        .sn-topic-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(192, 132, 252, 0.65);
+            box-shadow: 0 15px 40px rgba(147, 51, 234, 0.13);
+        }
+
+        .sn-topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .sn-topic-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .sn-topic-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 47px;
+            height: 35px;
+            padding: 0 10px;
+            border-radius: 5px;
+            background: rgba(147, 51, 234, 0.14);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            color: var(--sn-purple-light);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .sn-topic-category {
+            color: var(--sn-purple-light);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        .sn-topic-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .sn-topic-content h3 {
+            color: #ffffff;
+            font-size: 19px;
+            line-height: 1.45;
+            margin: 0 0 13px;
+        }
+
+        .sn-topic-content p {
+            color: var(--sn-muted);
+            font-size: 13px;
+            line-height: 1.85;
+            margin: 0 0 24px;
+        }
+
+        .sn-topic-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid rgba(192, 132, 252, 0.13);
+            color: var(--sn-purple-light);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .sn-topic-link span:last-child {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .sn-topic-card:hover .sn-topic-link span:last-child {
+            transform: translateX(5px);
+        }
+
+        /* ENGINEERING NOTE */
+
+        .sn-note {
+            width: min(1100px, 94%);
+            margin: 0 auto 85px;
+            padding: 28px 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: linear-gradient(
+                110deg,
+                rgba(147, 51, 234, 0.12),
+                rgba(37, 99, 235, 0.06)
+            );
+            border: 1px solid var(--sn-border);
+            border-radius: 10px;
+        }
+
+        .sn-note-icon {
+            flex-shrink: 0;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.2);
+            color: var(--sn-purple-light);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .sn-note h3 {
+            color: #ffffff;
+            font-size: 16px;
+            margin: 0 0 8px;
+        }
+
+        .sn-note p {
+            color: var(--sn-muted);
+            font-size: 13px;
+            line-height: 1.85;
+            margin: 0;
+        }
+
+        /* FOOTER */
+
+        .sn-footer {
+            padding: 35px 5%;
+            text-align: center;
+            border-top: 1px solid var(--sn-border);
+            background: rgba(7, 8, 22, 0.95);
+        }
+
+        .sn-footer-brand {
+            color: var(--sn-purple-light);
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .sn-footer p {
+            color: var(--sn-muted);
+            font-size: 12px;
+            line-height: 1.8;
+            margin: 5px 0;
+        }
+
+        .sn-footer strong {
+            color: #e9d5ff;
+        }
+
+        .sn-back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: var(--sn-purple-light);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .sn-back-link:hover {
+            color: #ffffff;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .sn-topics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .sn-hero {
+                min-height: 430px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .sn-hero {
+                min-height: 420px;
+            }
+
+            .sn-hero::after {
+                width: 230px;
+                height: 230px;
+                right: -100px;
+            }
+
+            .sn-hero-content {
+                padding: 75px 0 85px;
+            }
+
+            .sn-hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .sn-hero-description {
+                font-size: 14px;
+            }
+
+            .sn-introduction {
+                padding-top: 60px;
+            }
+
+            .sn-statistics {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 60px;
+            }
+
+            .sn-stat {
+                padding: 17px;
+            }
+
+            .sn-stat strong {
+                font-size: 25px;
+            }
+
+            .sn-topics-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .sn-topic-card {
+                min-height: 240px;
+            }
+
+            .sn-note {
+                padding: 22px 18px;
+                gap: 13px;
+            }
+
+            .sn-breadcrumb {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="smart-navigation-page">
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                MARITERRA
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="technology.html">Maritime Technology</a>
+                <a href="marine-robotics.html">Marine Robotics</a>
+                <a href="smart-navigation.html" class="active">
+                    Smart Navigation
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+
+    <section class="sn-hero">
+
+        <div class="sn-hero-content">
+
+            <div class="sn-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="technology.html">Maritime Technology</a>
+                <span>/</span>
+                <span>Smart Navigation</span>
+            </div>
+
+            <div class="sn-label">
+                MARITIME TECHNOLOGY — 03
+            </div>
+
+            <h1>
+                SMART
+                <span>NAVIGATION</span>
+            </h1>
+
+            <p class="sn-hero-description">
+                Learn how satellite positioning, electronic charts,
+                navigation sensors, and intelligent systems support
+                safer and more accurate maritime navigation.
+            </p>
+
+            <a href="#sn-topics" class="sn-hero-button">
+                EXPLORE CORE TOPICS
+                <span>→</span>
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- INTRODUCTION -->
+
+    <section class="sn-introduction">
+
+        <div class="sn-section-label">
+            EXPLORE THE FIELD
+        </div>
+
+        <h2>
+            The Technologies Behind Modern Maritime Navigation
+        </h2>
+
+        <p>
+            Smart Navigation combines positioning technologies,
+            digital charting, onboard sensors, integrated navigation
+            equipment, and intelligent software. Together, these
+            technologies help maritime professionals understand
+            vessel position, monitor surrounding conditions,
+            plan routes, and make informed navigation decisions.
+        </p>
+
+    </section>
+
+    <!-- STATISTICS -->
+
+    <section class="sn-statistics">
+
+        <div class="sn-stat">
+            <strong>08</strong>
+            <span>Core Topics</span>
+        </div>
+
+        <div class="sn-stat">
+            <strong>GNSS</strong>
+            <span>Positioning Technologies</span>
+        </div>
+
+        <div class="sn-stat">
+            <strong>AI</strong>
+            <span>Intelligent Navigation</span>
+        </div>
+
+    </section>
+
+    <!-- CORE TOPICS -->
+
+    <main class="sn-topics" id="sn-topics">
+
+        <div class="sn-topics-heading">
+
+            <div class="sn-section-label">
+                LEARNING PATH
+            </div>
+
+            <h2>
+                Smart Navigation Topics
+            </h2>
+
+            <p>
+                Explore eight interconnected technical subjects.
+                Each topic has a dedicated learning page with
+                engineering explanations, practical applications,
+                technical challenges, future developments, and
+                a knowledge assessment.
+            </p>
+
+        </div>
+
+        <div class="sn-topics-grid">
+
+            <!-- TOPIC 01 -->
+
+            <a href="satellite-navigation-gnss.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">01</span>
+                    <span class="sn-topic-category">POSITIONING TECHNOLOGY</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Satellite Navigation & GNSS</h3>
+
+                    <p>
+                        Understand GPS, Galileo, and other Global
+                        Navigation Satellite Systems, including
+                        positioning principles, accuracy, signal
+                        errors, and maritime applications.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 02 -->
+
+            <a href="electronic-charts-ecdis.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">02</span>
+                    <span class="sn-topic-category">DIGITAL CHARTING</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Electronic Charts & ECDIS</h3>
+
+                    <p>
+                        Explore electronic navigational charts,
+                        ECDIS architecture, chart data, updates,
+                        display settings, route monitoring, and
+                        digital navigational safety.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 03 -->
+
+            <a href="navigation-sensors-ibs.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">03</span>
+                    <span class="sn-topic-category">NAVIGATION INSTRUMENTS</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Navigation Sensors & Integrated Bridge Systems</h3>
+
+                    <p>
+                        Discover GNSS receivers, gyrocompasses,
+                        magnetic compasses, speed logs, rate-of-turn
+                        sensors, motion sensors, and the role of
+                        integrated bridge systems in combining
+                        navigation information.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 04 -->
+
+            <a href="inertial-navigation-positioning.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">04</span>
+                    <span class="sn-topic-category">POSITION ESTIMATION</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Inertial Navigation & Positioning</h3>
+
+                    <p>
+                        Learn how INS and IMU technologies measure
+                        movement, estimate vessel position, combine
+                        sensor data, and help maintain navigation
+                        when satellite signals are unavailable.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 05 -->
+
+            <a href="intelligent-route-planning.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">05</span>
+                    <span class="sn-topic-category">ROUTE OPTIMIZATION</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Intelligent Route Planning</h3>
+
+                    <p>
+                        Explore route optimization, voyage planning,
+                        weather routing, current analysis, navigational
+                        restrictions, and collision-risk considerations.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 06 -->
+
+            <a href="integrated-navigation-systems.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">06</span>
+                    <span class="sn-topic-category">SYSTEM INTEGRATION</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Integrated Navigation Systems</h3>
+
+                    <p>
+                        Understand how GNSS, ECDIS, radar, AIS,
+                        heading sensors, and other navigation
+                        equipment exchange information within
+                        integrated bridge environments.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 07 -->
+
+            <a href="ai-autonomous-navigation.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">07</span>
+                    <span class="sn-topic-category">INTELLIGENT SYSTEMS</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>AI & Autonomous Navigation</h3>
+
+                    <p>
+                        Discover artificial intelligence, intelligent
+                        decision support, navigation data analysis,
+                        autonomous vessel operations, and human
+                        supervision.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+            <!-- TOPIC 08 -->
+
+            <a href="navigation-safety-reliability.html"
+               class="sn-topic-card">
+
+                <div class="sn-topic-top">
+                    <span class="sn-topic-number">08</span>
+                    <span class="sn-topic-category">SAFETY & RELIABILITY</span>
+                </div>
+
+                <div class="sn-topic-content">
+                    <h3>Navigation Safety & Reliability</h3>
+
+                    <p>
+                        Examine navigation system failures, GNSS
+                        interference, data validation, redundancy,
+                        cybersecurity, and reliable navigation
+                        practices.
+                    </p>
+
+                    <div class="sn-topic-link">
+                        <span>EXPLORE TOPIC</span>
+                        <span>→</span>
+                    </div>
+                </div>
+
+            </a>
+
+        </div>
+
+    </main>
+
+    <!-- ENGINEERING NOTE -->
+
+    <section class="sn-note">
+
+        <div class="sn-note-icon">i</div>
+
+        <div>
+            <h3>An Important Engineering Distinction</h3>
+
+            <p>
+                Satellite navigation systems such as GPS and Galileo
+                provide positioning signals to receivers within
+                their coverage conditions. However, satellite signals
+                do not normally penetrate seawater sufficiently for
+                direct underwater positioning. Submerged vehicles
+                therefore rely on other technologies such as inertial
+                navigation, Doppler Velocity Logs, and acoustic
+                positioning systems.
+            </p>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="sn-footer">
+
+        <div class="sn-footer-brand">
+            MARITERRA
+        </div>
+
+        <p>
+            Exploring the Technologies Shaping the Maritime World
+        </p>
+
+        <p>
+            Designed & Developed by
+            <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+
+        <a href="technology.html" class="sn-back-link">
+            ← Back to Maritime Technology
+        </a>
+
+    </footer>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

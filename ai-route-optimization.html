@@ -1,0 +1,2113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Explore AI-powered intelligent maritime route optimization, weather routing, fuel efficiency, emissions reduction and autonomous route planning.">
+<title>Intelligent Route Optimization | MARITERRA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#070816;
+    --bg2:#0c0d20;
+    --panel:#111329;
+    --panel2:#171a36;
+    --purple:#9333ea;
+    --purple-light:#c4b5fd;
+    --blue:#38bdf8;
+    --text:#f4f2ff;
+    --muted:#a7a7c2;
+    --border:rgba(196,181,253,.16);
+    --green:#4ade80;
+    --orange:#fb923c;
+    --red:#fb7185;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+
+body{
+    background:
+    radial-gradient(circle at 80% 5%,rgba(147,51,234,.13),transparent 30%),
+    radial-gradient(circle at 5% 45%,rgba(56,189,248,.07),transparent 28%),
+    var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.75;
+    overflow-x:hidden;
+}
+
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+
+::selection{background:var(--purple);color:white}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 6%;
+    background:rgba(7,8,22,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:3px;
+    color:var(--purple-light);
+}
+
+.back-btn{
+    border:1px solid rgba(196,181,253,.3);
+    padding:9px 17px;
+    border-radius:30px;
+    color:var(--purple-light);
+    transition:.3s;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.back-btn:hover{
+    background:var(--purple);
+    color:white;
+    transform:translateY(-2px);
+}
+
+.hero{
+    min-height:540px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:90px 8%;
+    overflow:hidden;
+    border-bottom:1px solid var(--border);
+}
+
+.hero-content{max-width:850px;position:relative;z-index:2}
+
+.eyebrow{
+    color:var(--blue);
+    font-size:12px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(32px,5vw,65px);
+    line-height:1.2;
+    letter-spacing:-2px;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    background:linear-gradient(100deg,var(--purple-light),var(--purple),var(--blue));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:720px;
+    color:var(--muted);
+    font-size:16px;
+    line-height:1.9;
+}
+
+.hero-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+.hero-tags span{
+    border:1px solid var(--border);
+    color:var(--purple-light);
+    padding:8px 13px;
+    border-radius:30px;
+    font-size:11px;
+    background:rgba(147,51,234,.08);
+}
+
+.route-orbit{
+    position:absolute;
+    width:400px;
+    height:400px;
+    right:5%;
+    top:50%;
+    transform:translateY(-50%);
+    border:1px solid rgba(147,51,234,.25);
+    border-radius:50%;
+    animation:orbit 22s linear infinite;
+}
+
+.route-orbit:before,.route-orbit:after{
+    content:"";
+    position:absolute;
+    border:1px solid rgba(56,189,248,.18);
+    border-radius:50%;
+}
+
+.route-orbit:before{inset:45px}
+.route-orbit:after{inset:95px}
+
+.orbit-dot{
+    position:absolute;
+    width:13px;
+    height:13px;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 20px var(--blue);
+    top:45px;
+    left:50%;
+}
+
+.orbit-center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:75px;
+    color:var(--purple-light);
+    text-shadow:0 0 30px var(--purple);
+}
+
+@keyframes orbit{to{transform:translateY(-50%) rotate(360deg)}}
+
+.layout{
+    display:grid;
+    grid-template-columns:245px minmax(0,1fr);
+    gap:35px;
+    max-width:1450px;
+    margin:auto;
+    padding:55px 5%;
+}
+
+.sidebar{
+    position:sticky;
+    top:90px;
+    align-self:start;
+    max-height:calc(100vh - 110px);
+    overflow-y:auto;
+    padding:22px 17px;
+    background:rgba(17,19,41,.75);
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.sidebar h3{
+    font-family:'Orbitron',sans-serif;
+    font-size:12px;
+    color:var(--purple-light);
+    margin-bottom:17px;
+    letter-spacing:2px;
+}
+
+.sidebar a{
+    display:block;
+    padding:9px 10px;
+    margin:3px 0;
+    color:var(--muted);
+    font-size:12px;
+    border-radius:8px;
+    transition:.25s;
+}
+
+.sidebar a:hover{
+    color:white;
+    background:rgba(147,51,234,.17);
+    padding-left:16px;
+}
+
+.content{min-width:0}
+
+.section{
+    margin-bottom:65px;
+    scroll-margin-top:100px;
+    opacity:0;
+    transform:translateY(22px);
+    animation:reveal .7s forwards;
+}
+
+.section:nth-child(2){animation-delay:.08s}
+.section:nth-child(3){animation-delay:.15s}
+
+@keyframes reveal{to{opacity:1;transform:translateY(0)}}
+
+.section-heading{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(21px,3vw,29px);
+    margin-bottom:20px;
+    line-height:1.4;
+}
+
+.section-heading span{color:var(--purple-light)}
+
+.section-intro{
+    color:var(--muted);
+    margin-bottom:25px;
+    max-width:900px;
+    font-size:14px;
+}
+
+.subheading{
+    color:var(--blue);
+    font-size:17px;
+    margin:28px 0 12px;
+    font-weight:700;
+}
+
+.text-block{
+    color:#c2c1d6;
+    font-size:14px;
+    margin-bottom:16px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:17px;
+    margin:25px 0;
+}
+
+.info-card{
+    padding:22px;
+    background:linear-gradient(145deg,rgba(23,26,54,.95),rgba(13,15,34,.95));
+    border:1px solid var(--border);
+    border-radius:15px;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.info-card:before{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:rgba(147,51,234,.13);
+    right:-45px;
+    top:-45px;
+    transition:.4s;
+}
+
+.info-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(147,51,234,.65);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.info-card:hover:before{transform:scale(2)}
+
+.card-icon{
+    font-size:25px;
+    margin-bottom:13px;
+    position:relative;
+}
+
+.info-card h3{
+    color:var(--purple-light);
+    font-size:15px;
+    margin-bottom:9px;
+}
+
+.info-card p{
+    font-size:12px;
+    color:var(--muted);
+    position:relative;
+}
+
+.formula{
+    background:rgba(147,51,234,.09);
+    border:1px solid rgba(147,51,234,.28);
+    border-left:3px solid var(--purple);
+    border-radius:10px;
+    padding:18px 20px;
+    margin:20px 0;
+    color:#e4ddff;
+    overflow-wrap:anywhere;
+}
+
+.formula strong{
+    display:block;
+    color:var(--purple-light);
+    margin-bottom:8px;
+}
+
+.formula code{
+    color:var(--blue);
+    font-size:13px;
+    white-space:normal;
+}
+
+.list{
+    padding-left:22px;
+    color:#c2c1d6;
+    font-size:13px;
+}
+
+.list li{margin:9px 0}
+
+.callout{
+    padding:20px;
+    background:linear-gradient(100deg,rgba(56,189,248,.07),rgba(147,51,234,.09));
+    border:1px solid var(--border);
+    border-radius:12px;
+    margin:22px 0;
+    color:#d5d3e9;
+    font-size:13px;
+}
+
+.callout strong{color:var(--blue)}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+    gap:12px;
+    margin:25px 0;
+}
+
+.workflow-step{
+    text-align:center;
+    padding:18px 10px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:12px;
+    position:relative;
+}
+
+.workflow-step b{
+    display:block;
+    color:var(--purple-light);
+    font-size:13px;
+    margin-bottom:7px;
+}
+
+.workflow-step span{font-size:11px;color:var(--muted)}
+
+.comparison{
+    width:100%;
+    border-collapse:collapse;
+    margin:22px 0;
+    font-size:12px;
+}
+
+.comparison th,.comparison td{
+    padding:13px;
+    border:1px solid var(--border);
+    text-align:left;
+}
+
+.comparison th{
+    color:var(--purple-light);
+    background:rgba(147,51,234,.12);
+}
+
+.comparison td{color:#c7c5dc}
+
+.lab{
+    background:
+    radial-gradient(circle at 100% 0,rgba(147,51,234,.12),transparent 35%),
+    var(--panel);
+    border:1px solid rgba(147,51,234,.35);
+    padding:27px;
+    border-radius:20px;
+    margin-top:25px;
+}
+
+.lab h3{
+    font-family:'Orbitron',sans-serif;
+    font-size:18px;
+    color:var(--purple-light);
+    margin-bottom:10px;
+}
+
+.lab-description{
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:25px;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:18px;
+}
+
+.control{
+    padding:15px;
+    background:rgba(7,8,22,.65);
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+.control label{
+    display:block;
+    color:#ded8ff;
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.control input,.control select{
+    width:100%;
+    accent-color:var(--purple);
+}
+
+.control select{
+    padding:9px;
+    color:white;
+    background:#171a36;
+    border:1px solid var(--border);
+    border-radius:7px;
+}
+
+.control output{
+    display:block;
+    color:var(--blue);
+    font-size:12px;
+    margin-top:8px;
+}
+
+.primary-btn{
+    border:none;
+    background:linear-gradient(100deg,var(--purple),#6d28d9,var(--blue));
+    color:white;
+    padding:13px 24px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:12px;
+    margin-top:20px;
+    transition:.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px rgba(147,51,234,.3);
+}
+
+.route-results{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:13px;
+    margin-top:25px;
+}
+
+.route-result{
+    padding:17px;
+    border:1px solid var(--border);
+    background:rgba(7,8,22,.7);
+    border-radius:12px;
+}
+
+.route-result.best{border-color:var(--green);box-shadow:0 0 20px rgba(74,222,128,.08)}
+
+.route-result h4{font-size:13px;color:var(--purple-light);margin-bottom:12px}
+.route-result p{font-size:11px;color:var(--muted);margin:6px 0}
+.route-result strong{color:white}
+
+.route-result .status{
+    color:var(--green);
+    font-weight:700;
+    margin-top:12px;
+}
+
+.lab-note{
+    font-size:11px;
+    color:#9e9bb8;
+    margin-top:18px;
+    line-height:1.7;
+}
+
+.quiz-container{
+    background:linear-gradient(145deg,#12142b,#0c0d20);
+    border:1px solid var(--border);
+    padding:25px;
+    border-radius:18px;
+}
+
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+}
+
+.quiz-top span{
+    color:var(--blue);
+    font-size:12px;
+}
+
+.progress{
+    height:6px;
+    background:#292945;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--purple),var(--blue));
+    transition:.3s;
+}
+
+.question{
+    font-size:16px;
+    color:white;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+.answers{display:grid;gap:10px}
+
+.answer{
+    padding:13px 15px;
+    text-align:left;
+    color:#c7c5dc;
+    background:rgba(255,255,255,.025);
+    border:1px solid var(--border);
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+    transition:.2s;
+}
+
+.answer:hover:not(:disabled){
+    border-color:var(--purple);
+    background:rgba(147,51,234,.1);
+}
+
+.answer.correct{
+    border-color:var(--green);
+    background:rgba(74,222,128,.1);
+    color:#bbf7d0;
+}
+
+.answer.wrong{
+    border-color:var(--red);
+    background:rgba(251,113,133,.1);
+    color:#fecdd3;
+}
+
+.feedback{
+    display:none;
+    padding:14px;
+    border-radius:9px;
+    margin-top:17px;
+    background:rgba(56,189,248,.07);
+    border:1px solid rgba(56,189,248,.2);
+    font-size:12px;
+    color:#d5d3e9;
+}
+
+.quiz-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-top:20px;
+}
+
+.quiz-controls button:disabled{opacity:.35;cursor:not-allowed}
+
+.result-screen{
+    display:none;
+    text-align:center;
+    padding:35px 10px;
+}
+
+.result-score{
+    font-family:'Orbitron',sans-serif;
+    font-size:50px;
+    color:var(--purple-light);
+    margin:15px 0;
+}
+
+.reference-list{
+    display:grid;
+    gap:12px;
+}
+
+.reference-list a{
+    padding:14px 17px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--purple-light);
+    font-size:12px;
+    transition:.25s;
+}
+
+.reference-list a:hover{
+    border-color:var(--blue);
+    transform:translateX(5px);
+}
+
+footer{
+    text-align:center;
+    padding:35px 15px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+footer strong{color:var(--purple-light)}
+
+@media(max-width:900px){
+    .layout{grid-template-columns:1fr}
+    .sidebar{
+        position:relative;
+        top:0;
+        max-height:none;
+        display:flex;
+        flex-wrap:wrap;
+        gap:5px;
+    }
+    .sidebar h3{width:100%}
+    .sidebar a{display:inline-block}
+    .route-orbit{opacity:.22;right:-150px}
+}
+
+@media(max-width:600px){
+    .hero{padding:70px 6%;min-height:490px}
+    .hero h1{font-size:35px}
+    .layout{padding:35px 5%}
+    .lab{padding:18px}
+    .quiz-container{padding:17px}
+    .brand{font-size:14px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="artificial-intelligence.html" class="brand">MARITERRA</a>
+    <a href="artificial-intelligence.html" class="back-btn">← BACK TO AI HUB</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">ARTIFICIAL INTELLIGENCE · TOPIC 08</div>
+        <h1>INTELLIGENT <span>ROUTE OPTIMIZATION</span></h1>
+        <p>
+            Discover how artificial intelligence transforms maritime voyage planning
+            by analyzing weather conditions, ocean currents, vessel performance,
+            fuel consumption and environmental objectives to support smarter
+            and more efficient shipping routes.
+        </p>
+        <div class="hero-tags">
+            <span>AI ROUTE PLANNING</span>
+            <span>WEATHER ROUTING</span>
+            <span>FUEL EFFICIENCY</span>
+            <span>SMART SHIPPING</span>
+        </div>
+    </div>
+
+    <div class="route-orbit">
+        <div class="orbit-dot"></div>
+        <div class="orbit-center">⌖</div>
+    </div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h3>TOPIC CONTENTS</h3>
+    <a href="#overview">01. Overview</a>
+    <a href="#fundamentals">02. Fundamentals</a>
+    <a href="#planning">03. AI Route Planning</a>
+    <a href="#weather">04. Weather Routing</a>
+    <a href="#fuel">05. Fuel Optimization</a>
+    <a href="#objectives">06. Multi-Objective AI</a>
+    <a href="#algorithms">07. Optimization Algorithms</a>
+    <a href="#dynamic">08. Dynamic Routing</a>
+    <a href="#constraints">09. Constraints</a>
+    <a href="#emissions">10. Emissions</a>
+    <a href="#workflow">11. Engineering Workflow</a>
+    <a href="#challenges">12. Challenges</a>
+    <a href="#future">13. Future Directions</a>
+    <a href="#lab">14. Interactive Lab</a>
+    <a href="#quiz">15. Knowledge Assessment</a>
+    <a href="#references">16. References</a>
+</aside>
+
+<main class="content">
+
+<section class="section" id="overview">
+    <h2 class="section-heading">01. <span>Overview of Intelligent Route Optimization</span></h2>
+
+    <p class="text-block">
+        Maritime route optimization is the process of selecting and continuously
+        improving a vessel's voyage route according to operational, environmental,
+        economic and safety requirements. Traditional route planning often relies
+        on navigational charts, weather forecasts, vessel characteristics and
+        the experience of navigators.
+    </p>
+
+    <p class="text-block">
+        Artificial intelligence expands this process by analyzing large volumes
+        of data, identifying complex relationships and evaluating alternative
+        routes. Instead of considering only the shortest geographical distance,
+        an intelligent system can estimate the overall consequences of different
+        voyage decisions.
+    </p>
+
+    <p class="text-block">
+        A route that appears shorter on a map may expose a ship to stronger
+        headwinds, rougher waves, higher fuel consumption or operational delays.
+        Therefore, the most effective route is not necessarily the shortest one.
+        It is the route that best satisfies the defined objectives while
+        respecting navigational and safety constraints.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">🧭</div>
+            <h3>Route Efficiency</h3>
+            <p>Evaluate alternative voyage paths based on distance, expected conditions and operational requirements.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">⛽</div>
+            <h3>Fuel Reduction</h3>
+            <p>Estimate fuel demand under different speeds, weather conditions and vessel operating profiles.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌊</div>
+            <h3>Environmental Awareness</h3>
+            <p>Consider waves, wind, ocean currents and forecast uncertainty during voyage planning.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">📊</div>
+            <h3>Decision Support</h3>
+            <p>Compare possible outcomes and provide structured recommendations to maritime professionals.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Key Engineering Principle:</strong>
+        Route optimization is a decision-making problem under constraints and uncertainty.
+        AI can improve the quality and speed of analysis, but it does not eliminate
+        the need for professional navigation and safety judgment.
+    </div>
+</section>
+
+<section class="section" id="fundamentals">
+    <h2 class="section-heading">02. <span>Fundamentals of Maritime Route Optimization</span></h2>
+
+    <p class="text-block">
+        A maritime voyage can be represented as a path through a geographical
+        environment. The vessel begins at an origin and must reach a destination
+        while passing through permitted navigational areas.
+    </p>
+
+    <p class="text-block">
+        A route planner evaluates candidate paths using information such as
+        geographical distance, vessel speed, estimated fuel consumption,
+        forecast weather and navigational restrictions.
+    </p>
+
+    <h3 class="subheading">The Optimization Problem</h3>
+
+    <div class="formula">
+        <strong>General Optimization Objective</strong>
+        <code>Minimize: J(route) = weighted operational cost + risk penalties</code>
+    </div>
+
+    <p class="text-block">
+        The objective function represents what the system is trying to improve.
+        Its components depend on the shipping company's priorities and the
+        specific voyage.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Voyage Duration</h3>
+            <p>Estimated time required to reach the destination under expected conditions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Fuel Consumption</h3>
+            <p>Estimated fuel needed to maintain the planned voyage and operating speed.</p>
+        </div>
+        <div class="info-card">
+            <h3>Operational Cost</h3>
+            <p>Fuel, schedule, port-related and other voyage expenses.</p>
+        </div>
+        <div class="info-card">
+            <h3>Safety Risk</h3>
+            <p>Exposure to hazardous weather, restricted waters and other navigational threats.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Why the Shortest Route May Be Inefficient</h3>
+
+    <p class="text-block">
+        Consider two possible routes between the same ports. Route A is shorter
+        geographically but crosses an area with unfavorable sea conditions.
+        Route B is longer but may allow the vessel to maintain a more efficient
+        speed with lower fuel demand.
+    </p>
+
+    <p class="text-block">
+        The comparison must consider the complete voyage rather than distance
+        alone. A longer route can sometimes produce lower total fuel consumption
+        or more reliable arrival times, depending on the vessel and environmental
+        conditions.
+    </p>
+</section>
+
+<section class="section" id="planning">
+    <h2 class="section-heading">03. <span>AI-Based Maritime Route Planning</span></h2>
+
+    <p class="text-block">
+        AI-based route planning combines geographical information, vessel
+        performance models, forecast data and optimization algorithms.
+        The system generates possible routes and estimates their expected
+        operational performance.
+    </p>
+
+    <h3 class="subheading">Data Used by Intelligent Planners</h3>
+
+    <ul class="list">
+        <li><strong>Geographical data:</strong> Coastlines, ports, sea boundaries and navigational charts.</li>
+        <li><strong>Vessel data:</strong> Ship dimensions, draft, propulsion characteristics and operating limits.</li>
+        <li><strong>Environmental data:</strong> Wind, waves, currents, visibility and forecast conditions.</li>
+        <li><strong>Traffic information:</strong> Shipping density, traffic separation schemes and navigational activity.</li>
+        <li><strong>Operational data:</strong> Departure time, arrival targets, cargo requirements and fuel availability.</li>
+    </ul>
+
+    <h3 class="subheading">Static vs. Dynamic Route Planning</h3>
+
+    <table class="comparison">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Static Planning</th>
+                <th>Dynamic Planning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Planning approach</td>
+                <td>Prepared before departure</td>
+                <td>Updated during the voyage</td>
+            </tr>
+            <tr>
+                <td>Data updates</td>
+                <td>Primarily initial planning data</td>
+                <td>New forecasts and operational observations</td>
+            </tr>
+            <tr>
+                <td>Adaptability</td>
+                <td>Limited without replanning</td>
+                <td>Can evaluate changing conditions</td>
+            </tr>
+            <tr>
+                <td>Typical use</td>
+                <td>Initial voyage plan</td>
+                <td>Weather and operational adjustments</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="callout">
+        <strong>Important distinction:</strong>
+        Dynamic route planning does not mean changing the vessel's route automatically.
+        It means evaluating updated information and presenting revised options
+        for authorized decision-makers.
+    </div>
+</section>
+
+<section class="section" id="weather">
+    <h2 class="section-heading">04. <span>Weather Routing & Ocean Currents</span></h2>
+
+    <p class="text-block">
+        Weather routing is one of the most important applications of maritime
+        route optimization. Environmental conditions influence vessel resistance,
+        speed, stability, comfort, fuel consumption and voyage safety.
+    </p>
+
+    <h3 class="subheading">Environmental Variables</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">💨</div>
+            <h3>Wind</h3>
+            <p>Wind direction and speed can increase or decrease aerodynamic resistance and influence vessel performance.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌊</div>
+            <h3>Wave Conditions</h3>
+            <p>Wave height, period and direction influence added resistance, motion and operational limits.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌀</div>
+            <h3>Ocean Currents</h3>
+            <p>Favorable or opposing currents affect speed over ground and the time needed to complete a voyage.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌫️</div>
+            <h3>Visibility</h3>
+            <p>Visibility conditions can influence operational decisions and the suitability of a planned route.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">How AI Uses Weather Forecasts</h3>
+
+    <p class="text-block">
+        A route optimization system can combine forecast information with a
+        vessel performance model to estimate how different paths may behave.
+        Machine learning models may also learn patterns from historical voyage
+        and environmental datasets.
+    </p>
+
+    <p class="text-block">
+        Forecasts are not perfect descriptions of future conditions. Their
+        uncertainty increases with forecast horizon and varies by region,
+        weather system and data quality. A robust planner should therefore
+        consider several possible scenarios rather than treating one forecast
+        as guaranteed.
+    </p>
+
+    <div class="formula">
+        <strong>Conceptual Weather-Aware Cost</strong>
+        <code>Route Cost = Expected Fuel + Time Penalty + Weather Risk Penalty</code>
+    </div>
+
+    <div class="callout">
+        <strong>Engineering insight:</strong>
+        A favorable current does not automatically make a route safe or optimal.
+        Weather routing must consider the vessel's design, loading condition,
+        forecast reliability and operational limitations.
+    </div>
+</section>
+
+<section class="section" id="fuel">
+    <h2 class="section-heading">05. <span>Fuel Consumption Optimization</span></h2>
+
+    <p class="text-block">
+        Fuel is a major operating expense for many commercial vessels. Route
+        optimization can reduce unnecessary fuel demand by evaluating speed,
+        environmental resistance, voyage distance and propulsion performance.
+    </p>
+
+    <h3 class="subheading">Factors Affecting Fuel Consumption</h3>
+
+    <ul class="list">
+        <li><strong>Vessel speed:</strong> Increasing speed generally increases propulsion power demand substantially.</li>
+        <li><strong>Displacement:</strong> Vessel loading and displacement influence resistance and propulsion requirements.</li>
+        <li><strong>Hull condition:</strong> Fouling and surface roughness can increase resistance.</li>
+        <li><strong>Sea state:</strong> Waves and wind can create additional resistance.</li>
+        <li><strong>Propulsion efficiency:</strong> Engine and propeller operating conditions affect energy use.</li>
+        <li><strong>Current direction:</strong> Currents influence the vessel's progress over the ground.</li>
+    </ul>
+
+    <h3 class="subheading">Speed and Fuel Trade-Off</h3>
+
+    <p class="text-block">
+        A vessel that travels faster may arrive earlier, but it usually requires
+        greater propulsion power. The exact relationship depends on the vessel's
+        operating profile and environmental conditions.
+    </p>
+
+    <div class="formula">
+        <strong>Illustrative Power Relationship</strong>
+        <code>Power ≈ Resistance × Speed</code>
+        <p class="text-block" style="margin:8px 0 0">
+            This is a simplified physical relationship. Actual propulsion
+            calculations require vessel-specific resistance and efficiency models.
+        </p>
+    </div>
+
+    <p class="text-block">
+        AI can evaluate different speed profiles and estimate their effect on
+        voyage duration and fuel use. This supports decisions such as whether
+        a modest speed reduction can achieve meaningful fuel savings without
+        violating arrival requirements.
+    </p>
+</section>
+
+<section class="section" id="objectives">
+    <h2 class="section-heading">06. <span>Multi-Objective Route Optimization</span></h2>
+
+    <p class="text-block">
+        Real maritime planning rarely involves a single objective. A shipping
+        operator may want to minimize fuel consumption, arrive on schedule,
+        reduce emissions and avoid unacceptable weather exposure at the same time.
+        These objectives can conflict.
+    </p>
+
+    <h3 class="subheading">Understanding Trade-Offs</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Fuel Priority</h3>
+            <p>Prefer alternatives with lower estimated fuel consumption while maintaining required safety and schedule limits.</p>
+        </div>
+        <div class="info-card">
+            <h3>Time Priority</h3>
+            <p>Favor faster alternatives when arrival deadlines are important and operational constraints permit.</p>
+        </div>
+        <div class="info-card">
+            <h3>Emission Priority</h3>
+            <p>Evaluate energy use and relevant emissions to support environmental performance objectives.</p>
+        </div>
+    </div>
+
+    <h3 class="subheading">Weighted Optimization</h3>
+
+    <div class="formula">
+        <strong>Illustrative Weighted Objective</strong>
+        <code>J = w₁(Fuel) + w₂(Time) + w₃(Emissions) + w₄(Risk)</code>
+    </div>
+
+    <p class="text-block">
+        The weights represent the relative importance of each objective.
+        A higher fuel weight means the optimizer gives more importance to fuel
+        reduction. However, weights do not make safety constraints optional.
+        Mandatory navigational and vessel limits must remain hard constraints.
+    </p>
+
+    <h3 class="subheading">Pareto Optimality</h3>
+
+    <p class="text-block">
+        In multi-objective optimization, one solution may consume less fuel
+        while another reaches the destination sooner. A solution is Pareto
+        dominated if another feasible solution performs at least as well
+        across all objectives and better in at least one.
+    </p>
+
+    <p class="text-block">
+        A Pareto front contains non-dominated alternatives. It helps decision-makers
+        understand the available trade-offs instead of hiding them inside a
+        single score.
+    </p>
+</section>
+
+<section class="section" id="algorithms">
+    <h2 class="section-heading">07. <span>Optimization Algorithms Used in Maritime AI</span></h2>
+
+    <p class="text-block">
+        Different algorithms can solve different parts of a route planning
+        problem. The best choice depends on the size of the search space,
+        available data, objective functions and safety requirements.
+    </p>
+
+    <h3 class="subheading">1. Graph Search Algorithms</h3>
+
+    <p class="text-block">
+        A navigation environment can be represented as a graph. Nodes represent
+        locations or grid cells, while edges represent possible movements
+        between them. Each edge can have a cost based on distance, estimated
+        fuel, time or environmental exposure.
+    </p>
+
+    <p class="text-block">
+        Dijkstra's algorithm finds shortest paths in graphs with non-negative
+        edge weights. A* uses a heuristic to guide the search toward the goal.
+        These methods are useful for structured pathfinding, although realistic
+        ocean routing requires more than a simple geographical distance graph.
+    </p>
+
+    <h3 class="subheading">2. Genetic Algorithms</h3>
+
+    <p class="text-block">
+        Genetic algorithms are population-based optimization methods inspired
+        by biological evolution. They can explore complex candidate solutions
+        without requiring the search to follow a single direction.
+    </p>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>01. Population</b><span>Generate candidate routes</span></div>
+        <div class="workflow-step"><b>02. Fitness</b><span>Evaluate route quality</span></div>
+        <div class="workflow-step"><b>03. Selection</b><span>Choose promising candidates</span></div>
+        <div class="workflow-step"><b>04. Crossover</b><span>Combine route solutions</span></div>
+        <div class="workflow-step"><b>05. Mutation</b><span>Introduce variation</span></div>
+        <div class="workflow-step"><b>06. Repeat</b><span>Improve candidate population</span></div>
+    </div>
+
+    <p class="text-block">
+        A fitness function can evaluate fuel, time and other objectives.
+        However, every generated candidate must be checked against navigational
+        restrictions and vessel safety constraints. A mathematically attractive
+        route is not automatically a feasible maritime route.
+    </p>
+
+    <h3 class="subheading">3. Reinforcement Learning</h3>
+
+    <p class="text-block">
+        Reinforcement learning trains an agent to make sequential decisions
+        through interaction with an environment. The agent observes a state,
+        chooses an action and receives a reward or penalty.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>State</h3>
+            <p>Current position, vessel condition, environmental data and voyage progress.</p>
+        </div>
+        <div class="info-card">
+            <h3>Action</h3>
+            <p>Select a permitted heading, speed adjustment or route transition.</p>
+        </div>
+        <div class="info-card">
+            <h3>Reward</h3>
+            <p>Represent desirable outcomes such as efficient progress and controlled resource use.</p>
+        </div>
+        <div class="info-card">
+            <h3>Policy</h3>
+            <p>Learn a decision strategy mapping observed states to selected actions.</p>
+        </div>
+    </div>
+
+    <p class="text-block">
+        Maritime reinforcement learning requires carefully designed simulations,
+        realistic constraints and extensive testing. Unsafe exploration must
+        never be transferred directly to a real vessel. Training and validation
+        should account for rare but serious events.
+    </p>
+
+    <h3 class="subheading">Algorithm Comparison</h3>
+
+    <table class="comparison">
+        <thead>
+            <tr><th>Method</th><th>Main Strength</th><th>Important Limitation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Dijkstra</td><td>Reliable shortest-path search on weighted graphs</td><td>Depends on graph representation and edge costs</td></tr>
+            <tr><td>A*</td><td>Uses a heuristic to guide path search</td><td>Performance depends on heuristic quality</td></tr>
+            <tr><td>Genetic Algorithms</td><td>Explores complex candidate solutions</td><td>May require many evaluations and careful tuning</td></tr>
+            <tr><td>Reinforcement Learning</td><td>Can learn sequential decision policies</td><td>Needs safe training, validation and robust simulation</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="section" id="dynamic">
+    <h2 class="section-heading">08. <span>Dynamic Route Adjustment</span></h2>
+
+    <p class="text-block">
+        A voyage plan is created using information available before departure.
+        During the voyage, new information may change the expected conditions.
+        Dynamic route optimization evaluates whether the existing plan remains
+        suitable or whether alternative routes should be considered.
+    </p>
+
+    <h3 class="subheading">Why Routes May Need Updating</h3>
+
+    <ul class="list">
+        <li>New weather forecasts indicate stronger winds or waves.</li>
+        <li>Ocean current estimates change.</li>
+        <li>Unexpected traffic or congestion affects the voyage.</li>
+        <li>Port arrival schedules or operational requirements change.</li>
+        <li>Vessel performance differs from the original estimate.</li>
+        <li>A navigational restriction or safety concern requires reassessment.</li>
+    </ul>
+
+    <h3 class="subheading">Replanning Cycle</h3>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>Monitor</b><span>Collect updated voyage information</span></div>
+        <div class="workflow-step"><b>Detect</b><span>Identify meaningful changes</span></div>
+        <div class="workflow-step"><b>Evaluate</b><span>Compare alternative routes</span></div>
+        <div class="workflow-step"><b>Recommend</b><span>Present revised options</span></div>
+        <div class="workflow-step"><b>Verify</b><span>Human navigational assessment</span></div>
+    </div>
+
+    <div class="callout">
+        <strong>Operational rule:</strong>
+        Route recommendations must be reviewed by authorized maritime personnel.
+        The ship's master retains responsibility for safe navigation in accordance
+        with applicable procedures and regulations.
+    </div>
+</section>
+
+<section class="section" id="constraints">
+    <h2 class="section-heading">09. <span>Navigational Constraints & Route Feasibility</span></h2>
+
+    <p class="text-block">
+        Optimization algorithms may generate many possible paths, but only a
+        subset will be operationally feasible. A route planner must represent
+        the restrictions that apply to the vessel, voyage and navigational area.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Traffic Separation Schemes</h3>
+            <p>Traffic organization measures that help separate opposing or crossing vessel movements.</p>
+        </div>
+        <div class="info-card">
+            <h3>Restricted Areas</h3>
+            <p>Areas where navigation may be prohibited, limited or subject to special conditions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Under-Keel Clearance</h3>
+            <p>Available water depth beneath the vessel's keel, considering draft and relevant margins.</p>
+        </div>
+        <div class="info-card">
+            <h3>Vessel Limitations</h3>
+            <p>Draft, maneuverability, propulsion capability and weather-related operating limits.</p>
+        </div>
+        <div class="info-card">
+            <h3>Port and Channel Access</h3>
+            <p>Entry conditions, channel geometry, tidal considerations and operational restrictions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Collision Regulations</h3>
+            <p>Applicable collision-prevention rules and responsibilities must be respected.</p>
+        </div>
+    </div>
+
+    <p class="text-block">
+        Safety constraints should not simply be treated as small penalties in
+        an optimization score. Some conditions require excluding an option
+        entirely. The planner must distinguish between preferences that can
+        be traded off and requirements that cannot be violated.
+    </p>
+</section>
+
+<section class="section" id="emissions">
+    <h2 class="section-heading">10. <span>Environmental Impact & Emissions Optimization</span></h2>
+
+    <p class="text-block">
+        Maritime route and speed decisions influence energy consumption and
+        emissions. Reducing unnecessary fuel use can support environmental
+        performance, although the relationship between fuel and each pollutant
+        depends on fuel type, engine technology and operating conditions.
+    </p>
+
+    <h3 class="subheading">Environmental Considerations</h3>
+
+    <ul class="list">
+        <li><strong>Carbon dioxide (CO₂):</strong> Directly associated with carbon-containing fuel combustion.</li>
+        <li><strong>Nitrogen oxides (NOx):</strong> Formation depends on combustion conditions and engine characteristics.</li>
+        <li><strong>Sulphur oxides (SOx):</strong> Emissions depend strongly on fuel sulphur content and applicable controls.</li>
+        <li><strong>Energy efficiency:</strong> Voyage planning can support better energy use through route and speed decisions.</li>
+    </ul>
+
+    <h3 class="subheading">AI and Environmental Performance</h3>
+
+    <p class="text-block">
+        AI systems can estimate the environmental consequences of alternative
+        voyage plans and help operators compare energy-related performance.
+        Their outputs may support broader energy-management programs and
+        regulatory reporting processes.
+    </p>
+
+    <div class="callout">
+        <strong>Regulatory context:</strong>
+        The International Maritime Organization (IMO) has established measures
+        addressing ship energy efficiency and greenhouse gas emissions.
+        Route optimization can support operational efficiency, but it does
+        not replace compliance with applicable IMO requirements.
+    </div>
+</section>
+
+<section class="section" id="workflow">
+    <h2 class="section-heading">11. <span>Engineering Workflow: Building an AI Route Optimizer</span></h2>
+
+    <p class="text-block">
+        Developing an intelligent maritime route optimization system requires
+        more than selecting an algorithm. Engineers must define the problem,
+        collect suitable data, build vessel and environmental models, validate
+        results and establish safe operational boundaries.
+    </p>
+
+    <div class="workflow">
+        <div class="workflow-step"><b>01. Define</b><span>Set objectives and constraints</span></div>
+        <div class="workflow-step"><b>02. Collect</b><span>Gather vessel and environmental data</span></div>
+        <div class="workflow-step"><b>03. Model</b><span>Represent routes and vessel performance</span></div>
+        <div class="workflow-step"><b>04. Optimize</b><span>Generate and evaluate candidates</span></div>
+        <div class="workflow-step"><b>05. Validate</b><span>Test feasibility and robustness</span></div>
+        <div class="workflow-step"><b>06. Deploy</b><span>Provide decision support with monitoring</span></div>
+    </div>
+
+    <h3 class="subheading">Validation Metrics</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Fuel Prediction Error</h3>
+            <p>Measures the difference between predicted and observed fuel consumption.</p>
+        </div>
+        <div class="info-card">
+            <h3>ETA Prediction Error</h3>
+            <p>Measures the accuracy of estimated arrival times.</p>
+        </div>
+        <div class="info-card">
+            <h3>Constraint Violations</h3>
+            <p>Checks whether generated routes violate defined navigational or vessel constraints.</p>
+        </div>
+        <div class="info-card">
+            <h3>Robustness</h3>
+            <p>Evaluates performance when forecasts, inputs or operational conditions change.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Validation warning:</strong>
+        A low average prediction error does not guarantee safe performance.
+        Engineers must test edge cases, uncertainty, rare events and failure modes.
+    </div>
+</section>
+
+<section class="section" id="challenges">
+    <h2 class="section-heading">12. <span>Challenges & Limitations of AI Route Optimization</span></h2>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Forecast Uncertainty</h3>
+            <p>Weather and ocean predictions contain uncertainty that can affect route estimates.</p>
+        </div>
+        <div class="info-card">
+            <h3>Incomplete Data</h3>
+            <p>Missing, delayed or inaccurate inputs can produce misleading optimization results.</p>
+        </div>
+        <div class="info-card">
+            <h3>Complex Vessel Models</h3>
+            <p>Accurate fuel and performance models require vessel-specific engineering information.</p>
+        </div>
+        <div class="info-card">
+            <h3>Computational Cost</h3>
+            <p>Large search spaces and repeated optimization can require substantial computing resources.</p>
+        </div>
+        <div class="info-card">
+            <h3>Explainability</h3>
+            <p>Operators need understandable reasons behind recommendations and route trade-offs.</p>
+        </div>
+        <div class="info-card">
+            <h3>Human Factors</h3>
+            <p>Over-reliance on automated recommendations may weaken independent situational judgment.</p>
+        </div>
+    </div>
+
+    <p class="text-block">
+        A particularly important problem is the difference between historical
+        training conditions and future operating conditions. A model trained
+        on one vessel type, region or season may not perform equally well
+        in another environment. This is known as distribution shift.
+    </p>
+
+    <p class="text-block">
+        A reliable system should communicate uncertainty, identify unsupported
+        conditions and allow the operator to reject a recommendation.
+        It should never present a predicted route as a guaranteed safe outcome.
+    </p>
+</section>
+
+<section class="section" id="future">
+    <h2 class="section-heading">13. <span>The Future of Intelligent Maritime Routing</span></h2>
+
+    <p class="text-block">
+        The future of maritime route optimization is likely to involve stronger
+        integration between AI, vessel digital twins, connected ship systems,
+        improved environmental forecasts and advanced decision-support tools.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="card-icon">🧠</div>
+            <h3>Advanced Learning Models</h3>
+            <p>More capable models for learning complex relationships between vessel performance and environmental conditions.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🛳️</div>
+            <h3>Digital Twins</h3>
+            <p>Virtual vessel models for testing route and speed scenarios using engineering and operational data.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌐</div>
+            <h3>Connected Maritime Systems</h3>
+            <p>Integration of ship, port, fleet and environmental information for coordinated planning.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">⚡</div>
+            <h3>Energy-Aware Routing</h3>
+            <p>Optimization that considers emerging propulsion systems and changing energy sources.</p>
+        </div>
+    </div>
+
+    <p class="text-block">
+        As maritime technology develops, intelligent route planning may become
+        increasingly connected to fleet-level optimization. This could help
+        operators coordinate multiple vessels, improve schedule reliability
+        and evaluate energy performance across an entire fleet.
+    </p>
+
+    <div class="callout">
+        <strong>Future perspective:</strong>
+        The most valuable systems will not simply generate a route. They will
+        explain why a route is recommended, quantify uncertainty, show alternative
+        outcomes and support responsible human decisions.
+    </div>
+</section>
+
+<section class="section" id="lab">
+    <h2 class="section-heading">14. <span>Interactive Route Optimization Lab</span></h2>
+
+    <p class="section-intro">
+        Experiment with three hypothetical maritime routes. Adjust weather
+        severity, vessel speed and optimization priority to see how a simplified
+        model changes its ranking of the alternatives.
+    </p>
+
+    <div class="lab">
+        <h3>VOYAGE SIMULATION ENGINE</h3>
+        <p class="lab-description">
+            Configure the voyage conditions and compare estimated performance.
+            This is an educational mathematical model, not a real navigation system.
+        </p>
+
+        <div class="controls">
+            <div class="control">
+                <label for="weather">Weather Severity</label>
+                <input type="range" id="weather" min="1" max="10" value="5">
+                <output id="weatherValue">5 / 10</output>
+            </div>
+
+            <div class="control">
+                <label for="speed">Vessel Speed</label>
+                <input type="range" id="speed" min="10" max="25" value="16">
+                <output id="speedValue">16 knots</output>
+            </div>
+
+            <div class="control">
+                <label for="priority">Optimization Priority</label>
+                <select id="priority">
+                    <option value="fuel">Fuel Efficiency</option>
+                    <option value="time">Voyage Time</option>
+                    <option value="emissions">Lower Emissions</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="primary-btn" id="calculateBtn">OPTIMIZE ROUTES</button>
+
+        <div class="route-results" id="routeResults" aria-live="polite">
+            <div class="route-result">
+                <h4>ROUTE A — DIRECT</h4>
+                <p>Distance: 1,000 NM</p>
+                <p>Weather exposure: Moderate</p>
+                <p>Estimated fuel: Awaiting calculation</p>
+            </div>
+            <div class="route-result">
+                <h4>ROUTE B — WEATHER AWARE</h4>
+                <p>Distance: 1,100 NM</p>
+                <p>Weather exposure: Lower</p>
+                <p>Estimated fuel: Awaiting calculation</p>
+            </div>
+            <div class="route-result">
+                <h4>ROUTE C — ALTERNATIVE</h4>
+                <p>Distance: 1,050 NM</p>
+                <p>Weather exposure: Higher</p>
+                <p>Estimated fuel: Awaiting calculation</p>
+            </div>
+        </div>
+
+        <p class="lab-note">
+            Model assumptions: Route A = 1,000 NM, Route B = 1,100 NM,
+            Route C = 1,050 NM. Weather exposure coefficients are illustrative
+            values, not measured sea-state data. Fuel values are relative
+            synthetic estimates based on distance, speed and a simplified
+            weather multiplier. Emissions are represented by a proportional
+            index, not kilograms of CO₂. No real vessel, forecast, chart or
+            navigational restrictions are being evaluated.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="quiz">
+    <h2 class="section-heading">15. <span>Knowledge Assessment</span></h2>
+
+    <p class="section-intro">
+        Test your understanding of intelligent maritime route optimization.
+        This assessment contains 20 questions with immediate feedback and explanations.
+    </p>
+
+    <div class="quiz-container" id="quizContainer">
+        <div class="quiz-top">
+            <span id="questionCounter">QUESTION 1 / 20</span>
+            <span id="scoreCounter">SCORE: 0</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="questionArea">
+            <div class="question" id="questionText"></div>
+            <div class="answers" id="answersArea"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="quiz-controls">
+            <button class="primary-btn" id="nextBtn" disabled>NEXT QUESTION →</button>
+        </div>
+
+        <div class="result-screen" id="resultScreen">
+            <div class="eyebrow">ASSESSMENT COMPLETED</div>
+            <h3>Your Final Score</h3>
+            <div class="result-score" id="finalScore">0/20</div>
+            <p id="resultMessage" class="text-block"></p>
+            <button class="primary-btn" id="retryBtn">RETAKE ASSESSMENT</button>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="references">
+    <h2 class="section-heading">16. <span>References & Further Reading</span></h2>
+
+    <p class="section-intro">
+        Explore authoritative maritime organizations, environmental data
+        providers and foundational algorithm references to deepen your knowledge.
+    </p>
+
+    <div class="reference-list">
+        <a href="https://www.imo.org/en/OurWork/Safety/Pages/ShipsRouteing.aspx" target="_blank" rel="noopener noreferrer">
+            International Maritime Organization — Ships' Routeing
+        </a>
+
+        <a href="https://www.imo.org/en/OurWork/Environment/Pages/Technical-and-Operational-Measures.aspx" target="_blank" rel="noopener noreferrer">
+            IMO — Technical and Operational Measures for Energy Efficiency
+        </a>
+
+        <a href="https://www.imo.org/en/OurWork/Environment/Pages/Air-Pollution.aspx" target="_blank" rel="noopener noreferrer">
+            IMO — Prevention of Air Pollution from Ships
+        </a>
+
+        <a href="https://www.ecmwf.int/" target="_blank" rel="noopener noreferrer">
+            European Centre for Medium-Range Weather Forecasts (ECMWF)
+        </a>
+
+        <a href="https://oceanservice.noaa.gov/" target="_blank" rel="noopener noreferrer">
+            NOAA Ocean Service — Ocean and Environmental Information
+        </a>
+
+        <a href="https://www.iho.int/" target="_blank" rel="noopener noreferrer">
+            International Hydrographic Organization (IHO)
+        </a>
+
+        <a href="https://www.iala.int/" target="_blank" rel="noopener noreferrer">
+            International Organization for Marine Aids to Navigation (IALA)
+        </a>
+
+        <a href="https://doi.org/10.1007/978-3-319-91086-4" target="_blank" rel="noopener noreferrer">
+            Artificial Intelligence: A Modern Approach — Algorithmic Foundations and Search Concepts
+        </a>
+
+        <a href="https://www.sciencedirect.com/topics/engineering/genetic-algorithm" target="_blank" rel="noopener noreferrer">
+            ScienceDirect — Genetic Algorithms in Engineering
+        </a>
+
+        <a href="https://spinningup.openai.com/en/latest/" target="_blank" rel="noopener noreferrer">
+            OpenAI Spinning Up — Reinforcement Learning Educational Resource
+        </a>
+    </div>
+
+    <div class="callout">
+        <strong>Study recommendation:</strong>
+        Begin with graph search and optimization fundamentals, then study
+        weather routing and vessel performance models before exploring
+        genetic algorithms and reinforcement learning.
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    MARITERRA · INTELLIGENT MARITIME KNOWLEDGE
+    <br><br>
+    DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+</footer>
+
+<script>
+/* ============================
+   INTERACTIVE ROUTE LAB
+============================ */
+
+const weatherInput = document.getElementById("weather");
+const speedInput = document.getElementById("speed");
+const priorityInput = document.getElementById("priority");
+
+weatherInput.addEventListener("input", () => {
+    document.getElementById("weatherValue").textContent =
+        weatherInput.value + " / 10";
+});
+
+speedInput.addEventListener("input", () => {
+    document.getElementById("speedValue").textContent =
+        speedInput.value + " knots";
+});
+
+function calculateRoutes() {
+    const weather = Number(weatherInput.value);
+    const speed = Number(speedInput.value);
+    const priority = priorityInput.value;
+
+    const routes = [
+        {
+            name:"ROUTE A — DIRECT",
+            distance:1000,
+            exposure:0.95
+        },
+        {
+            name:"ROUTE B — WEATHER AWARE",
+            distance:1100,
+            exposure:0.45
+        },
+        {
+            name:"ROUTE C — ALTERNATIVE",
+            distance:1050,
+            exposure:1.25
+        }
+    ];
+
+    const results = routes.map(route => {
+        const weatherMultiplier =
+            1 + (weather * route.exposure * 0.018);
+
+        const speedMultiplier =
+            1 + Math.pow((speed - 15) / 15, 2) * 0.3;
+
+        const fuel =
+            route.distance * 0.8 *
+            weatherMultiplier * speedMultiplier;
+
+        const time = route.distance / speed;
+
+        const emissions = fuel * 2.65;
+
+        let objective;
+
+        if (priority === "fuel") {
+            objective = fuel;
+        } else if (priority === "time") {
+            objective = time;
+        } else {
+            objective = emissions;
+        }
+
+        return {
+            ...route,
+            fuel,
+            time,
+            emissions,
+            objective
+        };
+    });
+
+    const best = results.reduce((a,b) =>
+        a.objective < b.objective ? a : b
+    );
+
+    const resultsContainer =
+        document.getElementById("routeResults");
+
+    resultsContainer.innerHTML = results.map(route => `
+        <div class="route-result ${route.name === best.name ? "best" : ""}">
+            <h4>${route.name}</h4>
+            <p>Distance: <strong>${route.distance.toLocaleString()} NM</strong></p>
+            <p>Estimated fuel index: <strong>${route.fuel.toFixed(1)}</strong></p>
+            <p>Estimated time: <strong>${route.time.toFixed(1)} hours</strong></p>
+            <p>Emissions index: <strong>${route.emissions.toFixed(1)}</strong></p>
+            <p>Weather exposure factor: <strong>${route.exposure.toFixed(2)}</strong></p>
+            ${route.name === best.name
+                ? '<div class="status">★ BEST UNDER SELECTED PRIORITY</div>'
+                : ''}
+        </div>
+    `).join("");
+}
+
+document.getElementById("calculateBtn")
+    .addEventListener("click", calculateRoutes);
+
+
+/* ============================
+   KNOWLEDGE QUIZ - 20 QUESTIONS
+============================ */
+
+const questions = [
+    {
+        q:"1. What is the main purpose of maritime route optimization?",
+        a:[
+            "To select the route with the shortest geographical distance only",
+            "To improve voyage decisions according to objectives and constraints",
+            "To eliminate the need for navigators",
+            "To increase vessel speed in all conditions"
+        ],
+        correct:1,
+        explanation:"Route optimization evaluates multiple operational objectives while respecting navigational and safety constraints."
+    },
+    {
+        q:"2. Why may the shortest route not be the most efficient?",
+        a:[
+            "It always has more ports",
+            "It may involve unfavorable weather or higher fuel consumption",
+            "It always takes longer",
+            "It cannot be represented digitally"
+        ],
+        correct:1,
+        explanation:"Distance alone does not describe the complete operational cost of a voyage."
+    },
+    {
+        q:"3. Which environmental factor can influence vessel resistance?",
+        a:[
+            "Wind and waves",
+            "Crew uniform color",
+            "Office temperature",
+            "Document format"
+        ],
+        correct:0,
+        explanation:"Wind and waves can increase resistance and affect vessel speed and fuel demand."
+    },
+    {
+        q:"4. What is weather routing?",
+        a:[
+            "Planning a voyage without weather information",
+            "Selecting routes based on environmental conditions and forecasts",
+            "Changing the vessel's engine design",
+            "Measuring port warehouse capacity"
+        ],
+        correct:1,
+        explanation:"Weather routing evaluates environmental conditions to support safer and more efficient voyage planning."
+    },
+    {
+        q:"5. What does a dynamic route planner do?",
+        a:[
+            "Creates only one route before departure",
+            "Updates route evaluations when new information becomes available",
+            "Ignores environmental changes",
+            "Automatically removes all navigational restrictions"
+        ],
+        correct:1,
+        explanation:"Dynamic planning reassesses alternatives as weather, traffic or operational conditions change."
+    },
+    {
+        q:"6. Which factor can significantly influence fuel consumption?",
+        a:[
+            "Vessel speed",
+            "Website font size",
+            "Color of navigation screens",
+            "Number of computer folders"
+        ],
+        correct:0,
+        explanation:"Vessel speed has a major influence on propulsion power requirements and fuel consumption."
+    },
+    {
+        q:"7. What is a multi-objective optimization problem?",
+        a:[
+            "A problem with no measurable goals",
+            "A problem that considers several objectives simultaneously",
+            "A problem that only minimizes distance",
+            "A method for drawing geographical maps"
+        ],
+        correct:1,
+        explanation:"Multi-objective optimization evaluates competing goals such as fuel, time, emissions and risk."
+    },
+    {
+        q:"8. What does a weight represent in a weighted objective function?",
+        a:[
+            "The vessel's cargo weight",
+            "The relative importance of an objective",
+            "The depth of the sea",
+            "The number of crew members"
+        ],
+        correct:1,
+        explanation:"Weights express the relative importance assigned to different objective terms."
+    },
+    {
+        q:"9. What is Pareto optimality used to understand?",
+        a:[
+            "Trade-offs between competing objectives",
+            "Only the vessel's maximum speed",
+            "The exact location of every port",
+            "The ship's paint condition"
+        ],
+        correct:0,
+        explanation:"Pareto analysis identifies non-dominated solutions where improving one objective may require sacrificing another."
+    },
+    {
+        q:"10. What is the basic representation used by graph search algorithms?",
+        a:[
+            "Nodes and edges",
+            "Only photographs",
+            "Audio frequencies",
+            "Random text paragraphs"
+        ],
+        correct:0,
+        explanation:"Graph search models locations as nodes and possible movements as edges."
+    },
+    {
+        q:"11. What is a key feature of Dijkstra's algorithm?",
+        a:[
+            "It trains neural networks",
+            "It finds shortest paths in graphs with non-negative edge weights",
+            "It predicts ocean temperatures directly",
+            "It controls ship engines"
+        ],
+        correct:1,
+        explanation:"Dijkstra's algorithm computes shortest paths in graphs with non-negative edge costs."
+    },
+    {
+        q:"12. Which sequence best describes a genetic algorithm?",
+        a:[
+            "Selection, crossover, mutation and repeated evaluation",
+            "Painting, printing and scanning",
+            "Navigation, docking and unloading only",
+            "Encryption and password recovery"
+        ],
+        correct:0,
+        explanation:"Genetic algorithms evolve candidate solutions through selection, crossover and mutation."
+    },
+    {
+        q:"13. In reinforcement learning, what is a reward?",
+        a:[
+            "A signal representing the desirability of an outcome",
+            "A vessel's physical displacement",
+            "A weather forecast map",
+            "A type of navigational chart"
+        ],
+        correct:0,
+        explanation:"Rewards guide the learning agent toward or away from particular outcomes."
+    },
+    {
+        q:"14. What is a state in a maritime reinforcement learning environment?",
+        a:[
+            "The observed conditions relevant to a decision",
+            "Only the name of the ship",
+            "The color of a route line",
+            "A final examination score"
+        ],
+        correct:0,
+        explanation:"The state may include position, weather, vessel condition and voyage progress."
+    },
+    {
+        q:"15. Why must navigational constraints be considered?",
+        a:[
+            "To make every route longer",
+            "To ensure candidate routes are operationally feasible",
+            "To remove all optimization objectives",
+            "To avoid collecting vessel data"
+        ],
+        correct:1,
+        explanation:"Restricted areas, depth, vessel limits and applicable navigation rules affect route feasibility."
+    },
+    {
+        q:"16. What does under-keel clearance describe?",
+        a:[
+            "The available water depth beneath the vessel's keel",
+            "The distance between two ports",
+            "The vessel's fuel tank capacity",
+            "The height of a navigation antenna"
+        ],
+        correct:0,
+        explanation:"Under-keel clearance is an important safety consideration when assessing water depth beneath a vessel."
+    },
+    {
+        q:"17. How can route optimization support environmental performance?",
+        a:[
+            "By increasing fuel use deliberately",
+            "By evaluating energy use and emissions across route alternatives",
+            "By ignoring propulsion performance",
+            "By removing environmental regulations"
+        ],
+        correct:1,
+        explanation:"Evaluating fuel and energy demand can help operators assess environmental consequences of voyage decisions."
+    },
+    {
+        q:"18. What is distribution shift in an AI system?",
+        a:[
+            "A change between training data conditions and operating data conditions",
+            "A change in the ship's flag",
+            "A method for drawing route maps",
+            "A guaranteed improvement in model accuracy"
+        ],
+        correct:0,
+        explanation:"A model may perform poorly when real-world conditions differ from those represented in its training data."
+    },
+    {
+        q:"19. Why is human verification important in AI route planning?",
+        a:[
+            "Because AI recommendations are guaranteed to be correct",
+            "Because recommendations require professional judgment and safety assessment",
+            "Because optimization algorithms cannot calculate anything",
+            "Because weather forecasts are always exact"
+        ],
+        correct:1,
+        explanation:"AI provides decision support, while authorized maritime personnel must verify recommendations and operational safety."
+    },
+    {
+        q:"20. What is the main advantage of a robust route optimization system?",
+        a:[
+            "It hides uncertainty from operators",
+            "It considers uncertainty, constraints and alternative outcomes",
+            "It always chooses the fastest route",
+            "It eliminates the need for maritime regulations"
+        ],
+        correct:1,
+        explanation:"Robust systems evaluate uncertainty and feasibility instead of relying on a single optimistic prediction."
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const questionText = document.getElementById("questionText");
+const answersArea = document.getElementById("answersArea");
+const feedback = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+const questionCounter = document.getElementById("questionCounter");
+const scoreCounter = document.getElementById("scoreCounter");
+const progressBar = document.getElementById("progressBar");
+
+function loadQuestion(){
+    answered = false;
+
+    const item = questions[currentQuestion];
+
+    questionCounter.textContent =
+        `QUESTION ${currentQuestion + 1} / ${questions.length}`;
+
+    scoreCounter.textContent = `SCORE: ${score}`;
+
+    progressBar.style.width =
+        `${(currentQuestion / questions.length) * 100}%`;
+
+    questionText.textContent = item.q;
+    feedback.style.display = "none";
+    feedback.textContent = "";
+    answersArea.innerHTML = "";
+
+    item.a.forEach((answer,index) => {
+        const button = document.createElement("button");
+
+        button.className = "answer";
+        button.textContent = `${String.fromCharCode(65 + index)}. ${answer}`;
+
+        button.addEventListener("click", () => selectAnswer(index));
+
+        answersArea.appendChild(button);
+    });
+
+    nextBtn.disabled = true;
+    nextBtn.textContent =
+        currentQuestion === questions.length - 1
+            ? "VIEW FINAL RESULT"
+            : "NEXT QUESTION →";
+}
+
+function selectAnswer(selected){
+    if(answered) return;
+
+    answered = true;
+
+    const item = questions[currentQuestion];
+    const buttons = answersArea.querySelectorAll(".answer");
+
+    buttons.forEach((button,index) => {
+        button.disabled = true;
+
+        if(index === item.correct){
+            button.classList.add("correct");
+        }
+
+        if(index === selected && selected !== item.correct){
+            button.classList.add("wrong");
+        }
+    });
+
+    if(selected === item.correct){
+        score++;
+        feedback.innerHTML =
+            `<strong style="color:#4ade80">Correct Answer!</strong><br>${item.explanation}`;
+    }else{
+        feedback.innerHTML =
+            `<strong style="color:#fb7185">Incorrect Answer.</strong><br>
+            Correct answer: ${item.a[item.correct]}<br>${item.explanation}`;
+    }
+
+    feedback.style.display = "block";
+    scoreCounter.textContent = `SCORE: ${score}`;
+    nextBtn.disabled = false;
+}
+
+function showResult(){
+    document.getElementById("questionArea").style.display = "none";
+    document.querySelector(".quiz-top").style.display = "none";
+    document.querySelector(".quiz-container .progress").style.display = "none";
+    nextBtn.style.display = "none";
+
+    const resultScreen = document.getElementById("resultScreen");
+    resultScreen.style.display = "block";
+
+    document.getElementById("finalScore").textContent =
+        `${score}/${questions.length}`;
+
+    let message;
+
+    const percentage = (score / questions.length) * 100;
+
+    if(percentage >= 90){
+        message = "Excellent performance! You demonstrate a strong understanding of intelligent maritime route optimization.";
+    }else if(percentage >= 75){
+        message = "Very good work! Review the explanations to strengthen your technical understanding.";
+    }else if(percentage >= 60){
+        message = "Good effort. Revisit the optimization algorithms and operational constraints sections.";
+    }else{
+        message = "Keep learning. Review the topic carefully and try the assessment again.";
+    }
+
+    document.getElementById("resultMessage").textContent = message;
+    progressBar.style.width = "100%";
+}
+
+nextBtn.addEventListener("click", () => {
+    if(!answered) return;
+
+    if(currentQuestion < questions.length - 1){
+        currentQuestion++;
+        loadQuestion();
+    }else{
+        showResult();
+    }
+});
+
+document.getElementById("retryBtn").addEventListener("click", () => {
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+
+    document.getElementById("questionArea").style.display = "block";
+    document.querySelector(".quiz-top").style.display = "flex";
+    document.querySelector(".quiz-container .progress").style.display = "block";
+    nextBtn.style.display = "inline-block";
+    document.getElementById("resultScreen").style.display = "none";
+
+    loadQuestion();
+});
+
+loadQuestion();
+calculateRoutes();
+</script>
+
+</body>
+</html>

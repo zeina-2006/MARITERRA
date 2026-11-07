@@ -1,0 +1,1667 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore maritime communication networks, VHF, MF, HF, satellite communications, GMDSS, AIS, ship-to-shore connectivity and maritime network security.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Maritime Communication Networks</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --mc-bg: #070816;
+            --mc-card: rgba(13, 16, 38, 0.88);
+            --mc-purple: #9333ea;
+            --mc-purple-light: #c084fc;
+            --mc-white: #ffffff;
+            --mc-text: #e5e7eb;
+            --mc-muted: #9ca3af;
+            --mc-border: rgba(192, 132, 252, 0.2);
+        }
+
+        body.communication-page {
+            background: var(--mc-bg);
+            color: var(--mc-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .mc-container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .mc-hero {
+            min-height: 390px;
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 45%, rgba(147,51,234,.22), transparent 35%),
+                linear-gradient(120deg, #070816, #10102b 65%, #101a37);
+            border-bottom: 1px solid var(--mc-border);
+        }
+
+        .mc-hero-content {
+            max-width: 780px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mc-label {
+            color: var(--mc-purple-light);
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .mc-hero h1 {
+            font-size: clamp(36px, 6vw, 66px);
+            line-height: 1.1;
+            margin: 20px 0;
+            color: var(--mc-white);
+        }
+
+        .mc-hero h1 span {
+            color: var(--mc-purple-light);
+        }
+
+        .mc-hero p {
+            color: var(--mc-muted);
+            line-height: 1.9;
+            font-size: 16px;
+            max-width: 700px;
+        }
+
+        .mc-breadcrumb {
+            padding: 22px 0;
+            color: var(--mc-muted);
+            font-size: 13px;
+        }
+
+        .mc-breadcrumb a {
+            color: var(--mc-purple-light);
+            text-decoration: none;
+        }
+
+        .mc-section {
+            padding: 65px 0;
+            border-bottom: 1px solid var(--mc-border);
+        }
+
+        .mc-heading {
+            margin-bottom: 30px;
+        }
+
+        .mc-heading small {
+            color: var(--mc-purple-light);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .mc-heading h2 {
+            color: var(--mc-white);
+            font-size: clamp(25px, 4vw, 36px);
+            margin: 12px 0;
+        }
+
+        .mc-section p {
+            color: var(--mc-muted);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .mc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        .mc-card {
+            background: var(--mc-card);
+            border: 1px solid var(--mc-border);
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .mc-card h3 {
+            color: var(--mc-purple-light);
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .mc-card p {
+            margin: 0;
+        }
+
+        .mc-highlight {
+            background: rgba(147, 51, 234, .08);
+            border-left: 3px solid var(--mc-purple);
+            padding: 22px;
+            border-radius: 8px;
+            margin: 25px 0;
+            color: var(--mc-muted);
+            line-height: 1.9;
+        }
+
+        .mc-highlight strong {
+            color: var(--mc-white);
+        }
+
+        .mc-list {
+            padding-left: 22px;
+            color: var(--mc-muted);
+            line-height: 2;
+        }
+
+        .mc-list li {
+            margin-bottom: 9px;
+        }
+
+        .mc-table-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        .mc-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+        }
+
+        .mc-table th,
+        .mc-table td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--mc-border);
+            color: var(--mc-muted);
+            line-height: 1.7;
+        }
+
+        .mc-table th {
+            color: var(--mc-purple-light);
+            background: rgba(147, 51, 234, .1);
+        }
+
+        .mc-steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .mc-step {
+            padding: 22px 15px;
+            background: var(--mc-card);
+            border: 1px solid var(--mc-border);
+            border-radius: 12px;
+        }
+
+        .mc-step span {
+            display: block;
+            color: var(--mc-purple-light);
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .mc-step h3 {
+            color: var(--mc-white);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .mc-step p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .mc-quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .mc-question {
+            background: var(--mc-card);
+            border: 1px solid var(--mc-border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .mc-question h3 {
+            color: var(--mc-white);
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .mc-question-number {
+            display: block;
+            color: var(--mc-purple-light);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .mc-option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px;
+            border: 1px solid var(--mc-border);
+            border-radius: 9px;
+            margin: 10px 0;
+            cursor: pointer;
+            color: var(--mc-muted);
+            line-height: 1.6;
+            transition: .2s;
+        }
+
+        .mc-option:hover {
+            border-color: var(--mc-purple);
+            background: rgba(147, 51, 234, .07);
+        }
+
+        .mc-option input {
+            margin-top: 5px;
+            accent-color: var(--mc-purple);
+        }
+
+        .mc-option:has(input:checked) {
+            border-color: var(--mc-purple-light);
+            color: var(--mc-white);
+        }
+
+        .mc-explanation {
+            display: none;
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 9px;
+            line-height: 1.8;
+            background: rgba(147, 51, 234, .09);
+            border: 1px solid var(--mc-border);
+            color: var(--mc-muted);
+        }
+
+        .mc-explanation.show {
+            display: block;
+        }
+
+        .mc-explanation strong {
+            color: var(--mc-purple-light);
+        }
+
+        .mc-correct {
+            border-left: 3px solid #22c55e;
+        }
+
+        .mc-incorrect {
+            border-left: 3px solid #ef4444;
+        }
+
+        .mc-button {
+            background: linear-gradient(110deg, var(--mc-purple), #6b21a8);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s;
+            margin: 15px 8px 0 0;
+        }
+
+        .mc-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, .25);
+        }
+
+        .mc-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .mc-result {
+            display: none;
+            padding: 28px;
+            border: 1px solid var(--mc-border);
+            background: var(--mc-card);
+            border-radius: 14px;
+            margin-top: 25px;
+        }
+
+        .mc-result.show {
+            display: block;
+        }
+
+        .mc-result h3 {
+            color: var(--mc-purple-light);
+            margin-bottom: 12px;
+        }
+
+        .mc-result-score {
+            font-size: 38px;
+            color: var(--mc-white);
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .mc-references a {
+            color: var(--mc-purple-light);
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .mc-references li {
+            margin-bottom: 18px;
+        }
+
+        .mc-footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--mc-muted);
+            font-size: 13px;
+        }
+
+        .mc-footer strong {
+            color: var(--mc-purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .mc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mc-steps {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .mc-section {
+                padding: 45px 0;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .mc-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .mc-hero {
+                min-height: 340px;
+                padding: 55px 0;
+            }
+
+            .mc-question {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body class="communication-page">
+
+    <!-- HERO -->
+
+    <header class="mc-hero">
+        <div class="mc-container">
+            <div class="mc-hero-content">
+
+                <span class="mc-label">
+                    MARITERRA / TECHNOLOGY INTEGRATION
+                </span>
+
+                <h1>
+                    Maritime Communication
+                    <span>Networks</span>
+                </h1>
+
+                <p>
+                    Explore how vessels communicate through radio,
+                    satellite systems, digital networks, and
+                    ship-to-shore communication infrastructure.
+                </p>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="mc-container">
+
+        <nav class="mc-breadcrumb">
+            <a href="index.html">Home</a>
+            /
+            <a href="technology.html">Maritime Technology</a>
+            /
+            <a href="technology-integration.html">Technology Integration</a>
+            /
+            Maritime Communication Networks
+        </nav>
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>01 / INTRODUCTION</small>
+                <h2>What Are Maritime Communication Networks?</h2>
+            </div>
+
+            <p>
+                Maritime communication networks are the systems,
+                technologies, equipment, and communication links
+                that allow ships, shore stations, port authorities,
+                other vessels, and satellite services to exchange
+                information.
+            </p>
+
+            <p>
+                These networks support different operational needs.
+                A vessel may use radio communication for navigation
+                and safety, satellite communication for long-distance
+                connectivity, and onboard digital networks to exchange
+                information between navigation and machinery systems.
+            </p>
+
+            <p>
+                Communication requirements differ according to
+                distance, data volume, urgency, reliability,
+                coverage, and the type of information being exchanged.
+            </p>
+
+            <div class="mc-highlight">
+                <strong>Important distinction:</strong>
+                Maritime communication is not one single network.
+                It is an environment containing several communication
+                systems with different purposes, ranges, technical
+                characteristics, and regulatory requirements.
+            </div>
+
+        </section>
+
+        <!-- 02 COMMUNICATION TYPES -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>02 / COMMUNICATION CATEGORIES</small>
+                <h2>Main Types of Maritime Communication</h2>
+            </div>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Ship-to-Ship Communication</h3>
+                    <p>
+                        Communication directly between vessels.
+                        It supports bridge-to-bridge coordination,
+                        navigational safety, and operational
+                        information exchange.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Ship-to-Shore Communication</h3>
+                    <p>
+                        Communication between a vessel and coastal
+                        stations, ports, authorities, or shore-based
+                        operational centers.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Shipboard Communication</h3>
+                    <p>
+                        Communication between equipment and systems
+                        installed on the same vessel, including
+                        navigation, monitoring, and control systems.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Satellite Communication</h3>
+                    <p>
+                        Communication using satellite infrastructure
+                        to provide connectivity over large geographical
+                        areas, depending on service coverage.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 03 RADIO -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>03 / RADIO COMMUNICATION</small>
+                <h2>Maritime Radio Communication</h2>
+            </div>
+
+            <p>
+                Radio communication is a fundamental part of maritime
+                operations. It allows vessels and coastal stations
+                to exchange voice and digital information over
+                designated radio frequencies.
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>VHF — Very High Frequency</h3>
+                    <p>
+                        VHF is commonly used for short-range maritime
+                        communication, including bridge-to-bridge
+                        communication, port operations, and distress
+                        and safety communication.
+                    </p>
+                    <p>
+                        Its coverage is generally influenced by
+                        antenna height, propagation conditions,
+                        and obstructions.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>MF — Medium Frequency</h3>
+                    <p>
+                        MF radio supports medium-range maritime
+                        communication. It is used within the
+                        appropriate GMDSS arrangements for
+                        distress, urgency, safety, and other
+                        communications.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>HF — High Frequency</h3>
+                    <p>
+                        HF radio can support long-range communication
+                        through skywave propagation under suitable
+                        conditions. Its performance can vary with
+                        frequency, time, ionospheric conditions,
+                        and other environmental factors.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Digital Selective Calling (DSC)</h3>
+                    <p>
+                        DSC is a digital calling system used in
+                        maritime radio services. It supports
+                        automated calling and distress alerting
+                        functions within the GMDSS framework.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="mc-highlight">
+                <strong>Technical note:</strong>
+                VHF, MF, and HF are frequency bands, not three
+                interchangeable communication services. Their
+                propagation characteristics and operational roles
+                differ. The suitable choice depends on the required
+                coverage and applicable radio arrangements.
+            </div>
+
+        </section>
+
+        <!-- 04 GMDSS -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>04 / MARITIME SAFETY</small>
+                <h2>Global Maritime Distress and Safety System</h2>
+            </div>
+
+            <p>
+                The Global Maritime Distress and Safety System
+                (GMDSS) is an internationally coordinated system
+                that uses terrestrial and satellite communication
+                technologies to support distress alerting,
+                maritime safety information, and general
+                communication.
+            </p>
+
+            <p>
+                GMDSS requirements are included in Chapter IV
+                of the International Convention for the Safety
+                of Life at Sea (SOLAS).
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Distress Alerting</h3>
+                    <p>
+                        Provides mechanisms for transmitting
+                        distress alerts to relevant rescue
+                        coordination services and stations.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Maritime Safety Information</h3>
+                    <p>
+                        Supports the reception of navigational
+                        warnings, meteorological warnings,
+                        forecasts, and other safety information.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Search and Rescue Support</h3>
+                    <p>
+                        Communication and locating equipment
+                        support search and rescue coordination
+                        and the location of vessels or survival craft.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>General Communication</h3>
+                    <p>
+                        Supports authorized operational and
+                        other communication services in addition
+                        to distress and safety functions.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="mc-highlight">
+                <strong>Regulatory distinction:</strong>
+                GMDSS is a coordinated safety system, not simply
+                another name for satellite internet or ordinary
+                commercial communication. Its equipment and
+                functional requirements are governed by international
+                maritime regulations.
+            </div>
+
+        </section>
+
+        <!-- 05 SATELLITE -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>05 / SATELLITE COMMUNICATION</small>
+                <h2>Satellite Communication at Sea</h2>
+            </div>
+
+            <p>
+                Satellite communication allows ships to exchange
+                information with remote facilities beyond the
+                practical coverage of many terrestrial radio
+                services.
+            </p>
+
+            <p>
+                Depending on the satellite service and terminal,
+                applications may include safety communication,
+                operational data exchange, voice services,
+                internet connectivity, and remote support.
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Geostationary Satellites (GEO)</h3>
+                    <p>
+                        GEO satellites orbit above the equator
+                        with an orbital period matching Earth's
+                        rotation. They appear nearly stationary
+                        relative to a point on Earth, which can
+                        support continuous regional coverage.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Low Earth Orbit (LEO)</h3>
+                    <p>
+                        LEO satellites operate at much lower
+                        altitudes than GEO satellites. They move
+                        relative to the Earth's surface and may
+                        require a constellation and satellite
+                        handover to provide continuous service.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Satellite Terminals</h3>
+                    <p>
+                        Shipboard terminals establish communication
+                        links with satellite networks. Antenna design,
+                        visibility, equipment configuration, and
+                        service availability affect performance.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Coverage and Latency</h3>
+                    <p>
+                        Satellite coverage and delay depend on
+                        orbital characteristics, network design,
+                        service provider, and geographical conditions.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="mc-highlight">
+                <strong>Engineering consideration:</strong>
+                A satellite connection does not guarantee identical
+                performance everywhere. Coverage gaps, antenna
+                obstruction, weather effects on certain frequency
+                bands, network congestion, and service limitations
+                can affect connectivity.
+            </div>
+
+        </section>
+
+        <!-- 06 AIS -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>06 / VESSEL INFORMATION EXCHANGE</small>
+                <h2>Automatic Identification System (AIS)</h2>
+            </div>
+
+            <p>
+                AIS is a maritime radio communication system
+                used to exchange vessel-related information
+                between equipped ships and, where available,
+                shore-based stations.
+            </p>
+
+            <p>
+                AIS uses VHF radio channels and a time-division
+                multiple access mechanism to organize transmissions.
+                The information exchanged can include vessel identity,
+                position, course, speed, and other voyage-related data.
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Static Information</h3>
+                    <p>
+                        Examples include vessel identity, name,
+                        and other relatively stable ship information.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Dynamic Information</h3>
+                    <p>
+                        Examples include position, course over
+                        ground, speed over ground, and heading,
+                        depending on the available equipment inputs.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Voyage-Related Information</h3>
+                    <p>
+                        Information such as destination and
+                        estimated time of arrival may be entered
+                        by the crew and can become outdated if
+                        not maintained.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>AIS Limitations</h3>
+                    <p>
+                        AIS information can be missing, inaccurate,
+                        delayed, incorrectly entered, or unavailable.
+                        It should not be treated as a replacement
+                        for radar, visual lookout, or professional
+                        navigational judgment.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="mc-highlight">
+                <strong>Safety principle:</strong>
+                AIS is an aid to situational awareness. A vessel
+                should not rely on AIS alone to assess collision
+                risk or determine the complete traffic situation.
+            </div>
+
+        </section>
+
+        <!-- 07 ONBOARD NETWORKS -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>07 / ONBOARD NETWORKS</small>
+                <h2>Shipboard Digital Communication Networks</h2>
+            </div>
+
+            <p>
+                Modern ships use internal digital networks to
+                transfer information between navigation equipment,
+                monitoring systems, automation platforms, and
+                other connected devices.
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Serial Communication</h3>
+                    <p>
+                        Serial interfaces transfer data sequentially.
+                        They are used in several maritime equipment
+                        arrangements and may follow specific
+                        IEC 61162 interface requirements.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Ethernet Networks</h3>
+                    <p>
+                        Ethernet supports higher-capacity digital
+                        communication between connected systems.
+                        IEC 61162-450:2024 provides a framework
+                        for high-speed data transfer between
+                        relevant shipboard equipment.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Network Switches</h3>
+                    <p>
+                        Network switches connect devices within
+                        a local network and forward traffic
+                        according to network addressing and
+                        switching behavior.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Gateways</h3>
+                    <p>
+                        Gateways connect different networks
+                        or communication environments and may
+                        perform protocol conversion or controlled
+                        data forwarding.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="mc-highlight">
+                <strong>Important distinction:</strong>
+                A communication interface defines how devices
+                exchange information. It does not automatically
+                guarantee that the receiving application interprets
+                every message correctly or that the network is secure.
+            </div>
+
+        </section>
+
+        <!-- 08 COMMUNICATION WORKFLOW -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>08 / COMMUNICATION WORKFLOW</small>
+                <h2>How Does a Maritime Communication Link Work?</h2>
+            </div>
+
+            <p>
+                A simplified communication process can be represented
+                by four stages. The exact architecture depends on
+                whether the communication is radio-based,
+                satellite-based, or internal to the vessel.
+            </p>
+
+            <div class="mc-steps">
+
+                <article class="mc-step">
+                    <span>STAGE 01</span>
+                    <h3>Information Source</h3>
+                    <p>
+                        A device, operator, or application
+                        creates the information to be transmitted.
+                    </p>
+                </article>
+
+                <article class="mc-step">
+                    <span>STAGE 02</span>
+                    <h3>Transmission</h3>
+                    <p>
+                        The communication system encodes
+                        and sends information through a suitable
+                        communication medium.
+                    </p>
+                </article>
+
+                <article class="mc-step">
+                    <span>STAGE 03</span>
+                    <h3>Reception</h3>
+                    <p>
+                        The receiving equipment detects
+                        and processes the incoming signal
+                        or digital message.
+                    </p>
+                </article>
+
+                <article class="mc-step">
+                    <span>STAGE 04</span>
+                    <h3>Interpretation</h3>
+                    <p>
+                        The receiving application interprets
+                        the information and makes it available
+                        for its intended purpose.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 09 PERFORMANCE -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>09 / NETWORK PERFORMANCE</small>
+                <h2>Factors Affecting Communication Performance</h2>
+            </div>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Coverage</h3>
+                    <p>
+                        The geographical area in which a
+                        communication service can be received
+                        or transmitted reliably.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Latency</h3>
+                    <p>
+                        The time required for information
+                        to travel through a communication system.
+                        It matters for applications that require
+                        timely responses.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Bandwidth</h3>
+                    <p>
+                        The capacity available for transmitting
+                        information. Applications with large
+                        data volumes may require higher capacity.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Reliability</h3>
+                    <p>
+                        The ability of a communication service
+                        to perform consistently under its intended
+                        operating conditions.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Interference</h3>
+                    <p>
+                        Unwanted signals or electromagnetic
+                        conditions can reduce communication
+                        quality or disrupt reception.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Redundancy</h3>
+                    <p>
+                        Alternative equipment or communication
+                        paths can improve resilience when
+                        a primary component or link fails.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 10 CYBERSECURITY -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>10 / NETWORK SECURITY</small>
+                <h2>Cybersecurity in Maritime Communication</h2>
+            </div>
+
+            <p>
+                Communication networks connect equipment,
+                operational systems, and external services.
+                This connectivity creates security risks that
+                must be considered during system design and operation.
+            </p>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Unauthorized Access</h3>
+                    <p>
+                        Attackers may attempt to access network
+                        devices, management interfaces, or
+                        connected systems without authorization.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Message Manipulation</h3>
+                    <p>
+                        Altered or misleading information can
+                        affect the integrity of data exchanged
+                        between systems.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Denial of Service</h3>
+                    <p>
+                        Excessive traffic or malicious activity
+                        may reduce the availability of communication
+                        services.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Network Segmentation</h3>
+                    <p>
+                        Separating networks according to their
+                        operational functions and security
+                        requirements can limit the spread
+                        of an incident.
+                    </p>
+                </article>
+
+            </div>
+
+            <ul class="mc-list">
+                <li>Use access controls and strong authentication where supported.</li>
+                <li>Separate operational technology and business networks appropriately.</li>
+                <li>Monitor network traffic and investigate unusual communication patterns.</li>
+                <li>Maintain secure configurations for network devices.</li>
+                <li>Control remote access and verify authorized service providers.</li>
+                <li>Maintain incident response and recovery procedures.</li>
+                <li>Consider communication availability and integrity in safety planning.</li>
+            </ul>
+
+        </section>
+
+        <!-- 11 CHALLENGES -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>11 / TECHNICAL CHALLENGES</small>
+                <h2>Challenges in Maritime Communication Networks</h2>
+            </div>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Remote Operating Environments</h3>
+                    <p>
+                        Ships may operate far from terrestrial
+                        infrastructure, making communication
+                        dependent on radio and satellite services.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Environmental Conditions</h3>
+                    <p>
+                        Weather, antenna obstruction, sea conditions,
+                        and electromagnetic interference may affect
+                        communication performance.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Equipment Compatibility</h3>
+                    <p>
+                        Different manufacturers and equipment
+                        generations may use different interfaces,
+                        message formats, and network configurations.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Network Availability</h3>
+                    <p>
+                        Equipment faults, power interruptions,
+                        service outages, or physical damage may
+                        interrupt communication.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Cybersecurity Exposure</h3>
+                    <p>
+                        Connected systems may introduce additional
+                        attack paths if access, configuration,
+                        and network boundaries are not managed.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Regulatory Compliance</h3>
+                    <p>
+                        Ships must consider applicable international
+                        requirements, equipment approvals,
+                        operating procedures, and radio regulations.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 12 FUTURE -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>12 / FUTURE DEVELOPMENTS</small>
+                <h2>The Future of Maritime Communication</h2>
+            </div>
+
+            <div class="mc-grid">
+
+                <article class="mc-card">
+                    <h3>Hybrid Connectivity</h3>
+                    <p>
+                        Combining different communication services
+                        may improve connectivity options as vessels
+                        move between coverage areas and operating
+                        environments.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Advanced Satellite Networks</h3>
+                    <p>
+                        Evolving satellite constellations and
+                        services may expand connectivity options
+                        and support new maritime applications.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Digital Maritime Services</h3>
+                    <p>
+                        Continued e-navigation development aims
+                        to harmonize the collection, integration,
+                        exchange, presentation, and analysis
+                        of marine information.
+                    </p>
+                </article>
+
+                <article class="mc-card">
+                    <h3>Cyber-Resilient Networks</h3>
+                    <p>
+                        Security-aware network architectures,
+                        monitoring, and recovery capabilities
+                        will remain important as connectivity
+                        expands.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 13 KNOWLEDGE CHECK -->
+
+        <section class="mc-section" id="knowledge-check">
+
+            <div class="mc-heading">
+                <small>13 / KNOWLEDGE ASSESSMENT</small>
+                <h2>Advanced Knowledge Check</h2>
+            </div>
+
+            <div class="mc-quiz-intro">
+                <p>
+                    Evaluate your understanding of maritime
+                    communication networks through ten
+                    scenario-based technical questions.
+                </p>
+
+                <div class="mc-highlight">
+                    <strong>Instructions:</strong>
+                    Select one answer for each question.
+                    After submitting, review the correct answer
+                    and its engineering explanation.
+                </div>
+            </div>
+
+            <form id="mcQuiz">
+
+                <div id="mcQuestions"></div>
+
+                <button type="submit" class="mc-button" id="mcSubmit">
+                    Submit Assessment
+                </button>
+
+                <button type="button" class="mc-button" id="mcReset">
+                    Reset Assessment
+                </button>
+
+            </form>
+
+            <div class="mc-result" id="mcResult" aria-live="polite">
+                <h3>Assessment Results</h3>
+                <div class="mc-result-score" id="mcScore"></div>
+                <p id="mcFeedback"></p>
+            </div>
+
+        </section>
+
+        <!-- 14 REFERENCES -->
+
+        <section class="mc-section">
+
+            <div class="mc-heading">
+                <small>14 / SCIENTIFIC REFERENCES</small>
+                <h2>References & Further Learning</h2>
+            </div>
+
+            <ul class="mc-list mc-references">
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    Radiocommunications and the Global Maritime Distress
+                    and Safety System (GMDSS).<br>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/radiocommunications-default.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IMO Reference
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    E-navigation — harmonized collection, integration,
+                    exchange, presentation, and analysis of marine information.<br>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/enavigation.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IMO E-navigation
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    Vessel Traffic Services (VTS).<br>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/vesseltrafficservices.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IMO VTS Reference
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Electrotechnical Commission (IEC)</strong><br>
+                    IEC 61162-450:2024 — Multiple talkers and multiple listeners,
+                    Ethernet interconnection.<br>
+                    <a href="https://webstore.iec.ch/en/publication/72731"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IEC Publication
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Telecommunication Union (ITU)</strong><br>
+                    Recommendation ITU-R M.1371 — Technical characteristics
+                    for the VHF Automatic Identification System (AIS).<br>
+                    <a href="https://www.itu.int/rec/R-REC-M.1371/en"
+                       target="_blank" rel="noopener noreferrer">
+                        Official ITU Recommendation
+                    </a>
+                </li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+    <footer class="mc-footer">
+        <p>MARITERRA — Maritime Knowledge & Technology</p>
+        <p>
+            Developed by <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "A vessel is operating beyond reliable coastal VHF coverage. It needs a long-range communication link. Which statement best describes the engineering choice?",
+                options: [
+                    "Increasing the VHF audio volume will extend radio horizon.",
+                    "An appropriate HF or satellite communication service may be selected according to coverage, service requirements, and equipment arrangements.",
+                    "AIS automatically provides a guaranteed global voice connection.",
+                    "A shipboard Ethernet switch can replace the external communication link."
+                ],
+                answer: 1,
+                explanation: "VHF coverage is generally limited by propagation and antenna geometry. HF can provide long-range terrestrial communication under suitable propagation conditions, while satellite services can provide wide-area connectivity subject to coverage and service limitations. A confuses audio volume with radio propagation. C confuses AIS data exchange with global voice communication. D describes an internal network component, not a long-range external link."
+            },
+            {
+                question: "A ship receives an AIS target report showing a vessel's position and course. What is the safest interpretation of this information?",
+                options: [
+                    "AIS information is always accurate because it is transmitted digitally.",
+                    "AIS replaces the need for radar and visual lookout.",
+                    "AIS provides useful situational information, but it must be assessed alongside other available navigational information.",
+                    "AIS confirms that the transmitting vessel is operating correctly."
+                ],
+                answer: 2,
+                explanation: "AIS supports situational awareness but may contain missing, delayed, incorrect, or manually entered information. Radar, visual lookout, and professional judgment remain important. Digital transmission does not guarantee correct source data. AIS also does not verify the overall condition of a vessel."
+            },
+            {
+                question: "A ship's satellite terminal loses connectivity whenever its antenna's line of sight is obstructed by ship structures. Which factor is most directly involved?",
+                options: [
+                    "Satellite link visibility and antenna placement.",
+                    "The color of the vessel's hull.",
+                    "The number of AIS targets displayed.",
+                    "The serial baud rate of an unrelated sensor."
+                ],
+                answer: 0,
+                explanation: "Satellite terminals require a suitable radio path to the satellite. Physical obstruction and antenna placement can interrupt that path. The other factors do not directly explain the loss of satellite visibility."
+            },
+            {
+                question: "Why is GMDSS considered more than an ordinary commercial communication service?",
+                options: [
+                    "It is designed only to provide internet access to ships.",
+                    "It coordinates terrestrial and satellite communication capabilities for distress alerting and maritime safety functions under applicable international requirements.",
+                    "It is simply another name for AIS.",
+                    "It guarantees that every communication message will always be delivered."
+                ],
+                answer: 1,
+                explanation: "GMDSS is an internationally coordinated maritime distress and safety communication system under SOLAS Chapter IV. It includes different terrestrial and satellite technologies and defined safety functions. It is not ordinary internet connectivity or AIS, and no communication system can guarantee delivery in every possible condition."
+            },
+            {
+                question: "An onboard application needs to exchange high-speed digital information with other shipboard navigation and radiocommunication equipment over Ethernet. Which standard is particularly relevant?",
+                options: [
+                    "IEC 61162-450.",
+                    "A standard for VHF voice procedures only.",
+                    "The GNSS positioning service itself.",
+                    "The AIS time-slot mechanism."
+                ],
+                answer: 0,
+                explanation: "IEC 61162-450:2024 specifies interface requirements and test methods for high-speed communication between relevant shipboard navigation and radiocommunication equipment and other connected ship systems using Ethernet. It is not a positioning service or a radio voice procedure."
+            },
+            {
+                question: "A ship uses a GEO satellite service and compares it with a LEO satellite service. Which physical difference is most relevant to their network design?",
+                options: [
+                    "GEO satellites move rapidly across the sky relative to a fixed observer, while LEO satellites remain stationary.",
+                    "GEO satellites have an orbital period matching Earth's rotation, while LEO satellites move relative to the Earth's surface and may require constellation handover.",
+                    "LEO satellites cannot provide digital communication.",
+                    "Both orbital types have identical altitude and coverage characteristics."
+                ],
+                answer: 1,
+                explanation: "A geostationary satellite has an orbital period matching Earth's rotation and appears nearly stationary relative to the surface. LEO satellites move across the sky relative to a ground observer, so a constellation and handover may be needed for continuous service. The other options reverse or misrepresent these orbital characteristics."
+            },
+            {
+                question: "A vessel receives an AIS destination field that no longer matches the ship's actual voyage plan. What is the most likely explanation?",
+                options: [
+                    "AIS automatically derives every voyage field from radar.",
+                    "Voyage-related information may require manual entry or updating and can become outdated.",
+                    "The satellite orbit has changed the destination.",
+                    "The VHF frequency has converted the destination into an incorrect value."
+                ],
+                answer: 1,
+                explanation: "Some AIS voyage-related fields are entered by crew and may not update automatically when a voyage plan changes. The field should therefore be interpreted with awareness of its source and freshness. The other choices incorrectly attribute the problem to unrelated technologies."
+            },
+            {
+                question: "A shipboard network connects navigation equipment with an office network that has internet access. Which security approach best reduces the risk of an incident spreading between the two environments?",
+                options: [
+                    "Connect both networks without access restrictions.",
+                    "Use appropriate network segmentation, controlled gateways, access controls, and monitoring.",
+                    "Disable all logging to reduce network traffic.",
+                    "Assume that Ethernet standards prevent cyberattacks."
+                ],
+                answer: 1,
+                explanation: "Segmentation and controlled communication paths help limit unnecessary connectivity and reduce the potential spread of incidents. Access control and monitoring provide additional protection. Ethernet compatibility does not guarantee security, and disabling logs reduces visibility during investigation."
+            },
+            {
+                question: "A coastal VTS center provides navigational information to vessels in a controlled waterway. Which statement best describes its role?",
+                options: [
+                    "VTS is exclusively an onboard engine monitoring system.",
+                    "VTS is a shore-side service that may provide information, warnings, and traffic organization within its area of operation.",
+                    "VTS replaces the master's responsibility for safe navigation.",
+                    "VTS is the same as a satellite internet provider."
+                ],
+                answer: 1,
+                explanation: "IMO describes VTS as shore-side systems that range from providing information to ships to more extensive traffic management in ports and waterways. It does not replace the master's responsibility for safe navigation, and it is not a satellite internet service."
+            },
+            {
+                question: "A vessel's primary communication link becomes unavailable during an operation. Which architecture principle most directly improves resilience?",
+                options: [
+                    "Depending on one communication provider and one terminal.",
+                    "Removing all alternative communication equipment.",
+                    "Providing appropriately designed alternative communication paths and procedures, with regard to the operation's safety requirements.",
+                    "Increasing the size of stored historical data."
+                ],
+                answer: 2,
+                explanation: "Resilience depends on suitable redundancy, alternative communication arrangements, and operational procedures. The alternatives must be appropriate for the required coverage and safety function. A single point of failure is less resilient. More stored data does not restore an unavailable communication link."
+            }
+        ];
+
+        const questionsContainer = document.getElementById("mcQuestions");
+        const quizForm = document.getElementById("mcQuiz");
+        const resultBox = document.getElementById("mcResult");
+        const scoreElement = document.getElementById("mcScore");
+        const feedbackElement = document.getElementById("mcFeedback");
+        const submitButton = document.getElementById("mcSubmit");
+        const resetButton = document.getElementById("mcReset");
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = "";
+
+            questions.forEach((item, index) => {
+                const questionElement = document.createElement("article");
+                questionElement.className = "mc-question";
+
+                const number = document.createElement("span");
+                number.className = "mc-question-number";
+                number.textContent =
+                    `QUESTION ${String(index + 1).padStart(2, "0")}`;
+
+                const title = document.createElement("h3");
+                title.textContent = item.question;
+
+                questionElement.appendChild(number);
+                questionElement.appendChild(title);
+
+                item.options.forEach((option, optionIndex) => {
+                    const label = document.createElement("label");
+                    label.className = "mc-option";
+
+                    const input = document.createElement("input");
+                    input.type = "radio";
+                    input.name = `question-${index}`;
+                    input.value = optionIndex;
+
+                    const text = document.createElement("span");
+                    text.textContent = option;
+
+                    label.appendChild(input);
+                    label.appendChild(text);
+
+                    questionElement.appendChild(label);
+                });
+
+                const explanation = document.createElement("div");
+                explanation.className = "mc-explanation";
+                explanation.id = `explanation-${index}`;
+
+                questionElement.appendChild(explanation);
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        function submitAssessment(event) {
+            event.preventDefault();
+
+            const answers = [];
+
+            for (let i = 0; i < questions.length; i++) {
+                const selected = document.querySelector(
+                    `input[name="question-${i}"]:checked`
+                );
+
+                if (!selected) {
+                    alert(
+                        `Please answer Question ${i + 1} before submitting.`
+                    );
+
+                    document.querySelectorAll(".mc-question")[i]
+                        .scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    return;
+                }
+
+                answers.push(Number(selected.value));
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                const isCorrect = answers[index] === item.answer;
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                const explanation = document.getElementById(
+                    `explanation-${index}`
+                );
+
+                explanation.classList.add("show");
+                explanation.classList.add(
+                    isCorrect ? "mc-correct" : "mc-incorrect"
+                );
+
+                const correctOption = item.options[item.answer];
+
+                const status = document.createElement("strong");
+                status.textContent = isCorrect
+                    ? "Correct Answer"
+                    : "Incorrect Answer";
+
+                const correctText = document.createElement("p");
+                const correctLabel = document.createElement("strong");
+                correctLabel.textContent = "Correct choice: ";
+                correctText.appendChild(correctLabel);
+                correctText.appendChild(
+                    document.createTextNode(correctOption)
+                );
+
+                const explanationText = document.createElement("p");
+                const explanationLabel = document.createElement("strong");
+                explanationLabel.textContent = "Engineering explanation: ";
+                explanationText.appendChild(explanationLabel);
+                explanationText.appendChild(
+                    document.createTextNode(item.explanation)
+                );
+
+                explanation.replaceChildren(
+                    status,
+                    correctText,
+                    explanationText
+                );
+
+                document.querySelectorAll(
+                    `input[name="question-${index}"]`
+                ).forEach(input => {
+                    input.disabled = true;
+                });
+            });
+
+            scoreElement.textContent = `${score} / 10`;
+
+            if (score >= 9) {
+                feedbackElement.textContent =
+                    "Excellent performance. You demonstrated strong understanding of maritime communication technologies and their operational limitations.";
+            } else if (score >= 7) {
+                feedbackElement.textContent =
+                    "Very good performance. Review the explanations to strengthen your understanding of the more complex communication and safety concepts.";
+            } else if (score >= 5) {
+                feedbackElement.textContent =
+                    "Developing understanding. Revisit radio systems, GMDSS, satellite communication, and network security.";
+            } else {
+                feedbackElement.textContent =
+                    "Further study is recommended. Review the topic carefully before attempting the assessment again.";
+            }
+
+            resultBox.classList.add("show");
+            submitButton.disabled = true;
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function resetAssessment() {
+            quizForm.reset();
+
+            document.querySelectorAll(".mc-explanation").forEach(element => {
+                element.className = "mc-explanation";
+                element.replaceChildren();
+            });
+
+            document.querySelectorAll(".mc-option input").forEach(input => {
+                input.disabled = false;
+            });
+
+            resultBox.classList.remove("show");
+            scoreElement.textContent = "";
+            feedbackElement.textContent = "";
+            submitButton.disabled = false;
+
+            document.getElementById("knowledge-check").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        quizForm.addEventListener("submit", submitAssessment);
+        resetButton.addEventListener("click", resetAssessment);
+
+        renderQuestions();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3553 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A comprehensive engineering guide to Remotely Operated Vehicle (ROV) systems, including vehicle architecture, tether systems, propulsion, buoyancy, sensors, manipulators, control, applications, and operational challenges.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | ROV Systems</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.9);
+
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #a1a1b5;
+
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        /* GLOBAL */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 95px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .section {
+            padding: 85px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.09);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2.3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-label::before {
+            content: "";
+            width: 25px;
+            height: 2px;
+            background: var(--purple);
+        }
+
+        .section-title {
+            color: var(--white);
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .section-intro {
+            max-width: 850px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 2;
+            margin-bottom: 35px;
+        }
+
+        .text-highlight {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 25px;
+        }
+
+        .content-card h3 {
+            color: var(--white);
+            font-size: 1.08rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.9;
+        }
+
+        .content-card ul {
+            padding-left: 20px;
+            margin-top: 12px;
+        }
+
+        .content-card li {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        /* BACKGROUND */
+
+        .glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.11;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-one {
+            background: var(--purple);
+            top: 5%;
+            left: -260px;
+        }
+
+        .glow-two {
+            background: var(--blue);
+            top: 55%;
+            right: -280px;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.93);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .nav-back {
+            border: 1px solid var(--border);
+            padding: 8px 13px;
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 0.77rem;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .nav-back:hover {
+            border-color: var(--purple);
+            color: var(--purple-light);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 95px 0 85px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                radial-gradient(
+                    ellipse at 80% 30%,
+                    rgba(147, 51, 234, 0.15),
+                    transparent 45%
+                ),
+                radial-gradient(
+                    ellipse at 10% 100%,
+                    rgba(37, 99, 235, 0.1),
+                    transparent 45%
+                );
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            margin-bottom: 35px;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--purple-light);
+        }
+
+        .breadcrumb span {
+            color: var(--purple-light);
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 30px;
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--purple-light);
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 1.7px;
+            margin-bottom: 25px;
+        }
+
+        .hero-tag::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--purple-light);
+            box-shadow: 0 0 12px var(--purple);
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 23px;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(
+                90deg,
+                var(--purple-light),
+                var(--blue-light)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 790px;
+            color: #b8bacb;
+            font-size: 0.98rem;
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meta-item {
+            padding: 9px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.76rem;
+        }
+
+        .meta-item strong {
+            color: var(--purple-light);
+        }
+
+        /* QUICK NAVIGATION */
+
+        .quick-nav {
+            padding: 22px 0;
+            background: rgba(12, 16, 36, 0.75);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quick-nav-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .quick-nav-list a {
+            padding: 8px 13px;
+            border: 1px solid rgba(192, 132, 252, 0.13);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-size: 0.74rem;
+            transition: var(--transition);
+        }
+
+        .quick-nav-list a:hover {
+            border-color: var(--purple);
+            color: var(--purple-light);
+        }
+
+        /* GENERAL CONTENT */
+
+        .body-text {
+            color: var(--text-muted);
+            font-size: 0.91rem;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .subheading {
+            color: var(--white);
+            font-size: 1.35rem;
+            margin: 35px 0 15px;
+        }
+
+        .subheading:first-child {
+            margin-top: 0;
+        }
+
+        .info-box {
+            margin-top: 25px;
+            padding: 20px 23px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            color: var(--purple-light);
+            font-size: 0.9rem;
+            margin-bottom: 7px;
+        }
+
+        .info-box p {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            line-height: 1.9;
+        }
+
+        /* SYSTEM ARCHITECTURE */
+
+        .architecture {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 35px;
+        }
+
+        .architecture-item {
+            position: relative;
+            padding: 22px 18px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: rgba(13, 16, 38, 0.85);
+        }
+
+        .architecture-item .step {
+            display: block;
+            color: var(--purple-light);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .architecture-item h3 {
+            color: var(--white);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .architecture-item p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.7;
+        }
+
+        /* COMPONENTS */
+
+        .component-card {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-card);
+            transition: var(--transition);
+        }
+
+        .component-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(192, 132, 252, 0.5);
+        }
+
+        .component-number {
+            color: var(--purple-light);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 14px;
+        }
+
+        .component-card h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .component-card p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.9;
+        }
+
+        /* TABLES */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 15px;
+            background: rgba(147, 51, 234, 0.13);
+            color: var(--purple-light);
+            text-align: left;
+            font-size: 0.8rem;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            vertical-align: top;
+        }
+
+        td strong {
+            color: var(--white);
+        }
+
+        /* CASE STUDY */
+
+        .case-study {
+            padding: 30px;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 12px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(107, 33, 168, 0.16),
+                    rgba(13, 16, 38, 0.9)
+                );
+        }
+
+        .case-study-tag {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 13px;
+        }
+
+        .case-study h3 {
+            color: var(--white);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .case-study p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 2;
+            margin-bottom: 14px;
+        }
+
+        .case-study a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent,
+                    rgba(12, 16, 36, 0.8),
+                    transparent
+                );
+        }
+
+        .quiz-container {
+            max-width: 850px;
+        }
+
+        .quiz-progress {
+            width: 100%;
+            height: 7px;
+            background: rgba(192, 132, 252, 0.12);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 25px 0 30px;
+        }
+
+        .quiz-progress-bar {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                var(--purple-dark),
+                var(--purple-light)
+            );
+            transition: width 0.3s ease;
+        }
+
+        .quiz-question {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(13, 16, 38, 0.85);
+            margin-bottom: 18px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-question h3 {
+            color: var(--white);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid rgba(192, 132, 252, 0.15);
+            border-radius: 7px;
+            background: rgba(7, 8, 22, 0.65);
+            color: var(--text-muted);
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.84rem;
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            border-color: var(--purple);
+            color: var(--white);
+        }
+
+        .quiz-option:disabled {
+            cursor: default;
+        }
+
+        .option-letter {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 5px;
+            background: rgba(147, 51, 234, 0.15);
+            color: var(--purple-light);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .quiz-option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.09);
+            color: #86efac;
+        }
+
+        .quiz-option.correct .option-letter {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+        }
+
+        .quiz-option.wrong {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fca5a5;
+        }
+
+        .quiz-option.wrong .option-letter {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .answer-explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 7px;
+            background: rgba(147, 51, 234, 0.08);
+            border-left: 3px solid var(--purple);
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
+        .answer-explanation.show {
+            display: block;
+        }
+
+        .answer-explanation strong {
+            color: var(--purple-light);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-btn {
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.83rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .quiz-btn.primary {
+            border-color: transparent;
+            background: linear-gradient(
+                110deg,
+                var(--purple-dark),
+                var(--purple)
+            );
+            color: var(--white);
+        }
+
+        .quiz-btn:hover {
+            border-color: var(--purple-light);
+            transform: translateY(-2px);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 27px;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(147, 51, 234, 0.08);
+            text-align: center;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .quiz-score {
+            color: var(--purple-light);
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .quiz-result p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* REFERENCES */
+
+        .reference-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .reference-card {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: rgba(13, 16, 38, 0.75);
+            transition: var(--transition);
+        }
+
+        .reference-card:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .reference-index {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .reference-card h3 {
+            color: var(--white);
+            font-size: 0.88rem;
+            margin-bottom: 6px;
+        }
+
+        .reference-card p {
+            color: var(--text-muted);
+            font-size: 0.77rem;
+            line-height: 1.7;
+            margin-bottom: 9px;
+        }
+
+        .reference-card a {
+            color: var(--purple-light);
+            font-size: 0.76rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            overflow-wrap: anywhere;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 35px 0;
+            background: rgba(5, 6, 17, 0.85);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-logo {
+            color: var(--white);
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .footer-logo span {
+            color: var(--purple-light);
+        }
+
+        .footer-credit {
+            color: var(--text-muted);
+            font-size: 0.79rem;
+        }
+
+        .footer-credit strong {
+            color: var(--purple-light);
+        }
+
+        .footer-copy {
+            width: 100%;
+            padding-top: 18px;
+            border-top: 1px solid rgba(192, 132, 252, 0.1);
+            color: #777b8f;
+            text-align: center;
+            font-size: 0.74rem;
+        }
+
+        /* REVEAL */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.65s ease,
+                transform 0.65s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .grid-4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .grid-3 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .architecture {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .nav-links a {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-content {
+                min-height: 66px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                top: 66px;
+                left: 0;
+                right: 0;
+                padding: 12px 5% 20px;
+                background: rgba(7, 8, 22, 0.99);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 11px 0;
+                font-size: 0.85rem;
+            }
+
+            .nav-back {
+                display: none;
+            }
+
+            .hero {
+                padding: 70px 0;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .section {
+                padding: 65px 0;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .reference-list {
+                grid-template-columns: 1fr;
+            }
+
+            .architecture {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card {
+                padding: 21px;
+            }
+
+            .case-study {
+                padding: 23px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 91%;
+            }
+
+            .hero h1 {
+                font-size: 2.65rem;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .quick-nav-list {
+                gap: 7px;
+            }
+
+            .quick-nav-list a {
+                font-size: 0.68rem;
+            }
+
+            .quiz-question {
+                padding: 18px;
+            }
+
+            .quiz-actions {
+                flex-direction: column;
+            }
+
+            .quiz-btn {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+
+    <!-- NAVIGATION -->
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="index.html" class="logo">
+                MARI<span>TERRA</span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navLinks"
+            >
+                ☰
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#foundations">Foundations</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="#operations">Operations</a></li>
+                <li><a href="#challenges">Challenges</a></li>
+                <li><a href="#future">Future</a></li>
+                <li><a href="#quiz">Assessment</a></li>
+                <li><a href="#references">References</a></li>
+            </ul>
+
+            <a href="marine-robotics.html" class="nav-back">
+                ← Marine Robotics
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>›</span>
+                    <a href="marine-robotics.html">Marine Robotics</a>
+                    <span>›</span>
+                    <span>ROV Systems</span>
+                </div>
+
+                <div class="hero-tag">
+                    TOPIC 01 · MARINE ROBOTICS
+                </div>
+
+                <h1>
+                    ROV
+                    <span>SYSTEMS</span>
+                </h1>
+
+                <p class="hero-description">
+                    Explore the engineering of Remotely Operated
+                    Vehicles (ROVs), the tethered underwater robotic
+                    systems that allow pilots and researchers to
+                    investigate deep-sea environments, inspect
+                    underwater infrastructure, collect scientific
+                    samples, and perform complex subsea operations
+                    from a surface vessel.
+                </p>
+
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <strong>01</strong> / Foundations
+                    </div>
+
+                    <div class="meta-item">
+                        <strong>02</strong> / Applications
+                    </div>
+
+                    <div class="meta-item">
+                        <strong>03</strong> / Challenges
+                    </div>
+
+                    <div class="meta-item">
+                        <strong>04</strong> / Future Developments
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK NAVIGATION -->
+
+        <div class="quick-nav">
+
+            <div class="container quick-nav-list">
+                <a href="#introduction">Introduction</a>
+                <a href="#foundations">Foundations</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#components">Components</a>
+                <a href="#tether">Tether Systems</a>
+                <a href="#control">Control Systems</a>
+                <a href="#applications">Applications</a>
+                <a href="#case-study">Case Study</a>
+                <a href="#challenges">Challenges</a>
+                <a href="#future">Future</a>
+                <a href="#quiz">Quiz</a>
+                <a href="#references">References</a>
+            </div>
+
+        </div>
+
+
+        <!-- INTRODUCTION -->
+
+        <section class="section" id="introduction">
+
+            <div class="container">
+
+                <div class="section-label">
+                    Introduction
+                </div>
+
+                <h2 class="section-title">
+                    What Is a Remotely Operated Vehicle?
+                </h2>
+
+                <p class="body-text">
+                    A <span class="text-highlight">Remotely Operated
+                    Vehicle (ROV)</span> is an unoccupied underwater
+                    robotic vehicle controlled by a human operator
+                    from a remote location, commonly a surface ship
+                    or offshore support platform.
+                </p>
+
+                <p class="body-text">
+                    Unlike a conventional crewed submarine, an ROV
+                    does not carry a human pilot inside its pressure
+                    hull. Instead, it receives commands from an
+                    operator through a tether or umbilical cable.
+                    This connection can also transmit electrical
+                    power, live video, sensor measurements, and
+                    operational data between the vehicle and the
+                    surface control station.
+                </p>
+
+                <p class="body-text">
+                    ROVs are particularly useful when underwater
+                    missions require continuous visual observation,
+                    precise maneuvering, specialized tools, or
+                    direct intervention in environments that are
+                    difficult or dangerous for human divers to reach.
+                </p>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Remote Operation</h3>
+                        <p>
+                            A human pilot controls the vehicle from
+                            the surface using control interfaces,
+                            cameras, sonar displays, and instrument
+                            feedback. The operator can change
+                            direction, depth, speed, and tool
+                            operation according to mission needs.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Continuous Data Connection</h3>
+                        <p>
+                            The tether provides a communication path
+                            between the vehicle and the surface
+                            system. Depending on its design, it may
+                            carry electrical power, commands,
+                            telemetry, video, and high-bandwidth
+                            digital data.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Important Engineering Distinction</h4>
+                    <p>
+                        ROVs are remotely operated, but they may
+                        include automatic functions such as depth
+                        holding, heading control, or station keeping.
+                        These automatic functions do not necessarily
+                        make the vehicle a fully autonomous AUV.
+                        The level of automation depends on the
+                        specific control architecture.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOUNDATIONS -->
+
+        <section class="section" id="foundations">
+
+            <div class="container">
+
+                <div class="section-label">
+                    01 / Foundations
+                </div>
+
+                <h2 class="section-title">
+                    Engineering Foundations of ROV Systems
+                </h2>
+
+                <p class="section-intro">
+                    Understanding ROV engineering requires
+                    knowledge of underwater mechanics, pressure
+                    resistance, buoyancy, propulsion, electrical
+                    systems, communication, and human-machine
+                    interaction. These disciplines work together
+                    to allow a vehicle to operate safely and
+                    accurately underwater.
+                </p>
+
+
+                <h3 class="subheading">
+                    1.1 Types and Classification of ROVs
+                </h3>
+
+                <p class="body-text">
+                    ROVs are designed for different operating
+                    environments and mission requirements.
+                    Their size, depth capability, payload,
+                    propulsion, tooling, and control systems
+                    can vary considerably.
+                </p>
+
+                <div class="grid-3">
+
+                    <div class="content-card">
+                        <h3>Observation-Class ROVs</h3>
+                        <p>
+                            Generally compact vehicles used for
+                            visual inspection, observation,
+                            photography, environmental monitoring,
+                            and relatively light sensor payloads.
+                            They commonly prioritize portability
+                            and ease of deployment.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Science-Class ROVs</h3>
+                        <p>
+                            Research-configured vehicles equipped
+                            with scientific instruments, cameras,
+                            sampling equipment, sonar, and
+                            specialized payloads for oceanographic
+                            investigations and seabed research.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Work-Class ROVs</h3>
+                        <p>
+                            Larger and more powerful systems
+                            designed for demanding offshore tasks,
+                            including infrastructure inspection,
+                            intervention, construction support,
+                            and operation of specialized tools.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Classification Note</h4>
+                    <p>
+                        These are common functional categories,
+                        not a complete universal classification
+                        standard. Actual vehicle classification
+                        and capability depend on the organization,
+                        mission, and operational requirements.
+                    </p>
+                </div>
+
+
+                <h3 class="subheading">
+                    1.2 Pressure and Structural Design
+                </h3>
+
+                <p class="body-text">
+                    Water pressure increases with depth. Every
+                    underwater vehicle must therefore be designed
+                    to withstand the pressure conditions associated
+                    with its maximum operating depth.
+                </p>
+
+                <p class="body-text">
+                    The approximate absolute pressure in seawater
+                    can be estimated using:
+                </p>
+
+                <div class="content-card">
+                    <h3>Hydrostatic Pressure</h3>
+
+                    <p>
+                        <strong style="color: var(--purple-light);">
+                            P = P₀ + ρgh
+                        </strong>
+                    </p>
+
+                    <ul>
+                        <li>P = Absolute pressure at depth.</li>
+                        <li>P₀ = Atmospheric pressure at the surface.</li>
+                        <li>ρ = Water density.</li>
+                        <li>g = Gravitational acceleration.</li>
+                        <li>h = Depth below the surface.</li>
+                    </ul>
+                </div>
+
+                <p class="body-text" style="margin-top: 20px;">
+                    For seawater, pressure increases approximately
+                    by one atmosphere for every 10 meters of depth.
+                    This is an engineering approximation; the
+                    exact value depends on water density and local
+                    conditions.
+                </p>
+
+                <p class="body-text">
+                    Structural design must consider pressure
+                    differentials, material strength, sealing,
+                    fatigue, corrosion, and the geometry of
+                    pressure-resistant components.
+                </p>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Pressure Housings</h3>
+                        <p>
+                            Sealed enclosures protect sensitive
+                            electronics, batteries, and other
+                            equipment from the surrounding water.
+                            Their design depends on material
+                            properties, wall thickness, geometry,
+                            sealing arrangements, and rated depth.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Pressure-Compensated Components</h3>
+                        <p>
+                            Some components use oil-filled or
+                            pressure-compensated designs so that
+                            internal and external pressures can
+                            remain closer to equilibrium. This
+                            approach is used in suitable motors,
+                            connectors, and hydraulic equipment.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <h3 class="subheading">
+                    1.3 Buoyancy and Vehicle Stability
+                </h3>
+
+                <p class="body-text">
+                    Buoyancy is the upward force exerted by a fluid
+                    on an immersed object. It is fundamental to
+                    underwater vehicle design because it affects
+                    how easily the ROV can maintain depth, move,
+                    and remain stable.
+                </p>
+
+                <div class="content-card">
+                    <h3>Archimedes' Principle</h3>
+
+                    <p>
+                        The buoyant force acting on a submerged
+                        object equals the weight of the fluid
+                        displaced by that object.
+                    </p>
+
+                    <p style="margin-top: 12px; color: var(--purple-light);">
+                        Fᵦ = ρ × g × V
+                    </p>
+
+                    <ul>
+                        <li>Fᵦ = Buoyant force.</li>
+                        <li>ρ = Fluid density.</li>
+                        <li>g = Gravitational acceleration.</li>
+                        <li>V = Displaced fluid volume.</li>
+                    </ul>
+                </div>
+
+                <p class="body-text" style="margin-top: 20px;">
+                    Engineers balance the vehicle's weight and
+                    buoyancy to achieve the required operating
+                    condition. A vehicle may be designed to be
+                    slightly negatively buoyant, slightly
+                    positively buoyant, or approximately
+                    neutrally buoyant, depending on its mission
+                    and recovery strategy.
+                </p>
+
+                <p class="body-text">
+                    Deep-water ROVs often use
+                    <span class="text-highlight">syntactic foam</span>.
+                    This buoyancy material contains hollow
+                    microspheres embedded in a resin matrix.
+                    It is designed to provide buoyancy while
+                    resisting high hydrostatic pressure.
+                </p>
+
+
+                <h3 class="subheading">
+                    1.4 Degrees of Freedom
+                </h3>
+
+                <p class="body-text">
+                    ROV movement is commonly described using
+                    six degrees of freedom: three translational
+                    movements and three rotational movements.
+                </p>
+
+                <div class="grid-3">
+
+                    <div class="component-card">
+                        <div class="component-number">01 / TRANSLATION</div>
+                        <h3>Surge</h3>
+                        <p>
+                            Forward and backward movement along
+                            the vehicle's longitudinal axis.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">02 / TRANSLATION</div>
+                        <h3>Sway</h3>
+                        <p>
+                            Sideways movement along the vehicle's
+                            lateral axis.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">03 / TRANSLATION</div>
+                        <h3>Heave</h3>
+                        <p>
+                            Vertical movement upward and downward.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">04 / ROTATION</div>
+                        <h3>Roll</h3>
+                        <p>
+                            Rotation around the longitudinal axis.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">05 / ROTATION</div>
+                        <h3>Pitch</h3>
+                        <p>
+                            Rotation around the lateral axis,
+                            causing the nose to move up or down.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">06 / ROTATION</div>
+                        <h3>Yaw</h3>
+                        <p>
+                            Rotation around the vertical axis,
+                            changing the vehicle's heading.
+                        </p>
+                    </div>
+
+                </div>
+
+                <p class="body-text" style="margin-top: 25px;">
+                    Not every ROV can actively control all six
+                    degrees of freedom independently. The number
+                    and arrangement of thrusters determine the
+                    available motion and maneuverability.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SYSTEM ARCHITECTURE -->
+
+        <section class="section" id="architecture">
+
+            <div class="container">
+
+                <div class="section-label">
+                    System Architecture
+                </div>
+
+                <h2 class="section-title">
+                    How an ROV System Is Organized
+                </h2>
+
+                <p class="section-intro">
+                    An ROV is not just the underwater vehicle.
+                    It is part of a larger operational system
+                    that includes surface equipment, launch
+                    and recovery machinery, power distribution,
+                    communication links, and human operators.
+                </p>
+
+                <div class="architecture">
+
+                    <div class="architecture-item">
+                        <span class="step">01 / SURFACE</span>
+                        <h3>Support Vessel</h3>
+                        <p>
+                            Provides the operating platform,
+                            electrical supply, deployment area,
+                            and mission support.
+                        </p>
+                    </div>
+
+                    <div class="architecture-item">
+                        <span class="step">02 / CONTROL</span>
+                        <h3>Control Station</h3>
+                        <p>
+                            Allows pilots to monitor video,
+                            sensor readings, system status,
+                            and vehicle movement.
+                        </p>
+                    </div>
+
+                    <div class="architecture-item">
+                        <span class="step">03 / DEPLOYMENT</span>
+                        <h3>Launch & Recovery System</h3>
+                        <p>
+                            Uses equipment such as winches,
+                            cranes, and A-frames to deploy
+                            and recover the vehicle.
+                        </p>
+                    </div>
+
+                    <div class="architecture-item">
+                        <span class="step">04 / CONNECTION</span>
+                        <h3>Umbilical & Tether</h3>
+                        <p>
+                            Transmits commands, power,
+                            telemetry, and other data
+                            between system components.
+                        </p>
+                    </div>
+
+                    <div class="architecture-item">
+                        <span class="step">05 / UNDERWATER</span>
+                        <h3>ROV Vehicle</h3>
+                        <p>
+                            Contains the frame, thrusters,
+                            electronics, cameras, sensors,
+                            and mission tools.
+                        </p>
+                    </div>
+
+                    <div class="architecture-item">
+                        <span class="step">06 / MISSION</span>
+                        <h3>Payload & Tooling</h3>
+                        <p>
+                            Includes manipulators, samplers,
+                            sonar, inspection equipment,
+                            and mission-specific instruments.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>System-Level Thinking</h4>
+                    <p>
+                        A vehicle's performance depends on the
+                        complete system. For example, a powerful
+                        ROV may still be unable to perform its
+                        mission if its tether management,
+                        launch equipment, power supply, or
+                        communication system is inadequate.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPONENTS -->
+
+        <section class="section" id="components">
+
+            <div class="container">
+
+                <div class="section-label">
+                    02 / Main Components
+                </div>
+
+                <h2 class="section-title">
+                    The Main Components of an ROV
+                </h2>
+
+                <p class="section-intro">
+                    The ROV vehicle integrates mechanical,
+                    electrical, electronic, hydraulic, and
+                    software subsystems. Each component has
+                    a specific function, but all must work
+                    together for safe and reliable operation.
+                </p>
+
+                <div class="grid-3">
+
+                    <div class="component-card">
+                        <div class="component-number">01 / STRUCTURE</div>
+                        <h3>Frame and Chassis</h3>
+                        <p>
+                            The structural frame supports the
+                            vehicle's components and payloads.
+                            It is designed to withstand
+                            operational loads, impacts, and
+                            underwater environmental conditions.
+                            Open-frame designs may also reduce
+                            hydrodynamic resistance.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">02 / PROPULSION</div>
+                        <h3>Thrusters</h3>
+                        <p>
+                            Electric or hydraulic propulsion
+                            units generate forces that move
+                            the ROV. Their arrangement determines
+                            the vehicle's movement capability
+                            and maneuverability.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">03 / BUOYANCY</div>
+                        <h3>Syntactic Foam</h3>
+                        <p>
+                            Provides buoyancy while resisting
+                            the pressure associated with deep
+                            underwater operation. Its volume
+                            and placement affect vehicle balance
+                            and stability.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">04 / IMAGING</div>
+                        <h3>Cameras and Lighting</h3>
+                        <p>
+                            Video and still cameras provide
+                            visual information to operators.
+                            LED lighting illuminates dark
+                            underwater environments. Pan-and-tilt
+                            units can change viewing direction.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">05 / ELECTRONICS</div>
+                        <h3>Control Electronics</h3>
+                        <p>
+                            Embedded controllers, power
+                            electronics, communication devices,
+                            and data acquisition systems manage
+                            the vehicle's functions and connect
+                            its subsystems.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">06 / TOOLING</div>
+                        <h3>Manipulator Arms</h3>
+                        <p>
+                            Robotic arms can grasp objects,
+                            collect samples, operate tools,
+                            and manipulate underwater
+                            equipment. Their capabilities
+                            depend on their design and payload.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">07 / MEASUREMENT</div>
+                        <h3>Navigation Sensors</h3>
+                        <p>
+                            Depth sensors, heading references,
+                            inertial systems, DVLs, and
+                            acoustic positioning equipment
+                            help estimate the vehicle's
+                            position and movement.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">08 / PROTECTION</div>
+                        <h3>Pressure Housings and Connectors</h3>
+                        <p>
+                            Protect electronic equipment
+                            and provide sealed connections
+                            between electrical, data, and
+                            sensor subsystems.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <div class="component-number">09 / POWER</div>
+                        <h3>Power Distribution</h3>
+                        <p>
+                            Receives and distributes electrical
+                            energy to thrusters, lighting,
+                            sensors, computing hardware,
+                            and mission tools.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <h3 class="subheading">
+                    3.1 Thruster Arrangements
+                </h3>
+
+                <p class="body-text">
+                    Thrusters are positioned to generate the
+                    forces and moments required for maneuvering.
+                    A vehicle may use horizontal thrusters
+                    for forward and lateral movement and
+                    vertical thrusters for depth control.
+                </p>
+
+                <p class="body-text">
+                    More advanced configurations may use
+                    angled thrusters to provide additional
+                    control authority. The vehicle controller
+                    combines individual thruster commands
+                    to achieve the desired movement.
+                </p>
+
+
+                <h3 class="subheading">
+                    3.2 Cameras, Sonar, and Visibility
+                </h3>
+
+                <p class="body-text">
+                    Underwater visibility can be limited by
+                    darkness, suspended particles, sediment,
+                    and water conditions. Cameras provide
+                    detailed visual information, but they
+                    cannot always provide reliable visibility
+                    over long distances.
+                </p>
+
+                <p class="body-text">
+                    Imaging sonar can support navigation
+                    and object detection when optical
+                    visibility is poor. It uses acoustic
+                    signals rather than visible light.
+                    The choice between camera and sonar
+                    depends on the mission and environment.
+                </p>
+
+
+                <h3 class="subheading">
+                    3.3 Manipulators and Sampling Equipment
+                </h3>
+
+                <p class="body-text">
+                    Manipulators are robotic arms that allow
+                    an ROV to interact physically with
+                    underwater objects. Depending on the
+                    design, they may use hydraulic or
+                    electric actuation.
+                </p>
+
+                <p class="body-text">
+                    Some manipulators provide multiple
+                    functions and several degrees of freedom,
+                    enabling tasks such as grasping samples,
+                    opening or closing equipment, positioning
+                    tools, and placing instruments.
+                </p>
+
+                <div class="info-box">
+                    <h4>Payload Design Consideration</h4>
+                    <p>
+                        Adding more instruments or tools
+                        increases the vehicle's payload and
+                        may affect buoyancy, drag, power
+                        consumption, stability, and available
+                        maneuvering force. Payload integration
+                        must therefore be considered during
+                        the system design stage.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TETHER SYSTEMS -->
+
+        <section class="section" id="tether">
+
+            <div class="container">
+
+                <div class="section-label">
+                    Communication & Power
+                </div>
+
+                <h2 class="section-title">
+                    Tether and Umbilical Systems
+                </h2>
+
+                <p class="section-intro">
+                    The tether is one of the defining elements
+                    of many ROV systems. It connects the
+                    underwater vehicle to the surface system
+                    and provides the pathway for commands,
+                    telemetry, power, and mission data.
+                </p>
+
+                <h3 class="subheading">
+                    4.1 What Does the Tether Do?
+                </h3>
+
+                <p class="body-text">
+                    A tether is a cable or cable assembly
+                    connecting the ROV to its support system.
+                    Depending on its design, it may contain
+                    electrical conductors, optical fibers,
+                    strength members, and protective layers.
+                </p>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Command Transmission</h3>
+                        <p>
+                            Transfers pilot commands and
+                            control instructions from the
+                            surface system to the vehicle.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Power Delivery</h3>
+                        <p>
+                            Some systems transmit electrical
+                            power through the tether, while
+                            other designs use onboard power
+                            or a combination of power sources.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Data and Video</h3>
+                        <p>
+                            Returns camera images, sensor
+                            measurements, telemetry, and
+                            operational information to the
+                            surface station.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Mechanical Connection</h3>
+                        <p>
+                            The cable also has mechanical
+                            properties that must account
+                            for tension, bending, handling,
+                            and environmental loading.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <h3 class="subheading">
+                    4.2 Electrical and Fiber-Optic Connections
+                </h3>
+
+                <p class="body-text">
+                    Electrical conductors can deliver power
+                    and support communication. Fiber-optic
+                    cables transmit data as light and are
+                    useful when high-bandwidth communication
+                    is required over long distances.
+                </p>
+
+                <p class="body-text">
+                    The choice of cable depends on power
+                    requirements, data rate, cable length,
+                    operating depth, mechanical strength,
+                    and system architecture.
+                </p>
+
+
+                <h3 class="subheading">
+                    4.3 Tether Management Systems
+                </h3>
+
+                <p class="body-text">
+                    Some large ROV systems use a
+                    <span class="text-highlight">
+                    Tether Management System (TMS)
+                    </span>.
+                    The TMS acts as an intermediate platform
+                    between the ship and the ROV. It can
+                    store or manage a shorter vehicle tether
+                    while remaining connected to the ship
+                    through a longer umbilical.
+                </p>
+
+                <p class="body-text">
+                    This arrangement can reduce the effect
+                    of surface-vessel movement on the ROV's
+                    immediate tether and provide more
+                    controlled deployment and recovery.
+                </p>
+
+                <div class="content-card">
+                    <h3>Typical Two-Stage Connection</h3>
+
+                    <p>
+                        Surface vessel → Main umbilical →
+                        Tether Management System →
+                        Short vehicle tether → ROV.
+                    </p>
+
+                    <p style="margin-top: 12px;">
+                        This is one common architecture,
+                        not a requirement for every ROV.
+                        Smaller systems may connect directly
+                        to the surface control station.
+                    </p>
+                </div>
+
+
+                <h3 class="subheading">
+                    4.4 Launch and Recovery Equipment
+                </h3>
+
+                <p class="body-text">
+                    Launch and Recovery Systems (LARS)
+                    support the safe movement of an ROV
+                    between the deck and the water.
+                    Depending on the system, equipment
+                    may include:
+                </p>
+
+                <div class="grid-3">
+
+                    <div class="component-card">
+                        <h3>Winches</h3>
+                        <p>
+                            Manage cable deployment and
+                            recovery while controlling
+                            cable tension and handling.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <h3>A-Frames and Cranes</h3>
+                        <p>
+                            Lift and move the vehicle
+                            or deployment equipment
+                            over the side of the vessel.
+                        </p>
+                    </div>
+
+                    <div class="component-card">
+                        <h3>Handling Frames</h3>
+                        <p>
+                            Support controlled movement
+                            and protection of the vehicle
+                            during deployment and recovery.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Operational Risk</h4>
+                    <p>
+                        Cable handling is a major operational
+                        consideration. Excessive tension,
+                        entanglement, abrasion, incorrect
+                        deployment, and contact with
+                        underwater structures can threaten
+                        both the vehicle and the support
+                        system.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTROL SYSTEMS -->
+
+        <section class="section" id="control">
+
+            <div class="container">
+
+                <div class="section-label">
+                    Control Engineering
+                </div>
+
+                <h2 class="section-title">
+                    ROV Control and Operating Principles
+                </h2>
+
+                <p class="section-intro">
+                    ROV control combines human commands,
+                    onboard electronics, sensor feedback,
+                    control algorithms, and propulsion
+                    systems. The objective is to convert
+                    an operator's desired movement into
+                    coordinated actions by the vehicle.
+                </p>
+
+                <h3 class="subheading">
+                    5.1 Surface Control Station
+                </h3>
+
+                <p class="body-text">
+                    The control station is where pilots
+                    operate the vehicle and monitor its
+                    condition. It may contain:
+                </p>
+
+                <ul style="padding-left: 22px; margin-bottom: 25px;">
+                    <li class="body-text">Pilot joysticks and control interfaces.</li>
+                    <li class="body-text">Video and camera displays.</li>
+                    <li class="body-text">Sonar and navigation displays.</li>
+                    <li class="body-text">Vehicle status and telemetry screens.</li>
+                    <li class="body-text">Power and communication monitoring.</li>
+                    <li class="body-text">Mission recording and data storage systems.</li>
+                </ul>
+
+                <h3 class="subheading">
+                    5.2 Closed-Loop Control
+                </h3>
+
+                <p class="body-text">
+                    In a closed-loop control system, the
+                    controller receives feedback from
+                    sensors and compares the measured
+                    vehicle state with the desired state.
+                    It then adjusts control outputs to
+                    reduce the difference.
+                </p>
+
+                <div class="content-card">
+                    <h3>Basic Feedback Process</h3>
+
+                    <p>
+                        Desired movement → Controller →
+                        Thrusters → Vehicle movement →
+                        Sensors → Feedback to controller.
+                    </p>
+
+                    <p style="margin-top: 14px;">
+                        For example, when a pilot requests
+                        a specific depth, an automatic
+                        depth controller can compare the
+                        target depth with the measured
+                        depth and adjust vertical thrust.
+                    </p>
+                </div>
+
+
+                <h3 class="subheading">
+                    5.3 Manual and Automatic Functions
+                </h3>
+
+                <div class="table-wrapper">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Control Mode</th>
+                                <th>How It Works</th>
+                                <th>Typical Purpose</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><strong>Manual Control</strong></td>
+                                <td>
+                                    Pilot directly commands
+                                    movement through the
+                                    control interface.
+                                </td>
+                                <td>
+                                    Precise maneuvering and
+                                    intervention.
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Depth Hold</strong></td>
+                                <td>
+                                    Controller maintains
+                                    a selected depth using
+                                    sensor feedback.
+                                </td>
+                                <td>
+                                    Reducing unwanted
+                                    vertical movement.
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Heading Hold</strong></td>
+                                <td>
+                                    Controller maintains
+                                    a selected heading.
+                                </td>
+                                <td>
+                                    Stable vehicle orientation.
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><strong>Station Keeping</strong></td>
+                                <td>
+                                    Uses available navigation
+                                    and motion feedback to
+                                    maintain a position.
+                                </td>
+                                <td>
+                                    Inspection and
+                                    precision work.
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Why Feedback Matters</h4>
+                    <p>
+                        Underwater vehicles are affected by
+                        currents, drag, tether forces, and
+                        changing payload conditions.
+                        Feedback control helps compensate
+                        for disturbances, but its performance
+                        depends on sensor accuracy, control
+                        design, available thruster force,
+                        and the surrounding environment.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPLICATIONS -->
+
+        <section class="section" id="applications">
+
+            <div class="container">
+
+                <div class="section-label">
+                    02 / Practical Applications
+                </div>
+
+                <h2 class="section-title">
+                    Where Are ROV Systems Used?
+                </h2>
+
+                <p class="section-intro">
+                    ROVs are used in scientific, industrial,
+                    environmental, and offshore operations.
+                    Their value comes from combining
+                    underwater access, remote observation,
+                    precise movement, and specialized tools.
+                </p>
+
+                <div class="grid-3">
+
+                    <div class="content-card">
+                        <h3>Deep-Sea Exploration</h3>
+                        <p>
+                            Scientists use ROVs to investigate
+                            deep-sea habitats, geological
+                            formations, hydrothermal vents,
+                            and underwater ecosystems.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Marine Research</h3>
+                        <p>
+                            Research vehicles collect water,
+                            sediment, geological, and biological
+                            samples while recording images
+                            and environmental measurements.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Offshore Energy</h3>
+                        <p>
+                            ROVs inspect subsea pipelines,
+                            offshore structures, cables,
+                            connectors, and underwater
+                            equipment used in energy projects.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Infrastructure Inspection</h3>
+                        <p>
+                            They examine underwater foundations,
+                            bridges, dams, ports, ship hulls,
+                            and other submerged structures.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Search and Recovery</h3>
+                        <p>
+                            Specialized vehicles can assist
+                            in locating underwater objects,
+                            documenting wreck sites, and
+                            supporting recovery operations.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Environmental Monitoring</h3>
+                        <p>
+                            ROVs can observe marine habitats,
+                            monitor environmental changes,
+                            and carry instruments for
+                            underwater measurements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <h3 class="subheading">
+                    6.1 Example: Underwater Infrastructure Inspection
+                </h3>
+
+                <p class="body-text">
+                    Consider an offshore pipeline inspection
+                    mission. An ROV can be deployed from a
+                    support vessel and directed along the
+                    pipeline route.
+                </p>
+
+                <p class="body-text">
+                    Its cameras provide visual inspection,
+                    while sonar can help identify features
+                    when visibility is limited. Additional
+                    instruments may measure environmental
+                    conditions or examine specific defects.
+                    Recorded data can then be reviewed
+                    by engineers to assess the pipeline's
+                    condition.
+                </p>
+
+                <p class="body-text">
+                    If the mission requires intervention,
+                    a suitable vehicle may carry manipulators
+                    or specialized tools. The exact work
+                    depends on vehicle capability,
+                    operational procedures, and safety
+                    requirements.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CASE STUDY -->
+
+        <section class="section" id="case-study">
+
+            <div class="container">
+
+                <div class="section-label">
+                    Real-World Engineering
+                </div>
+
+                <h2 class="section-title">
+                    Case Study: WHOI ROV Jason
+                </h2>
+
+                <div class="case-study">
+
+                    <span class="case-study-tag">
+                        SCIENTIFIC DEEP-SEA ROV
+                    </span>
+
+                    <h3>Jason — National Deep Submergence Facility</h3>
+
+                    <p>
+                        Jason is a scientific remotely operated
+                        vehicle developed by the Woods Hole
+                        Oceanographic Institution (WHOI).
+                        It provides researchers with access
+                        to the seafloor while the scientific
+                        and operating teams remain aboard
+                        the support vessel.
+                    </p>
+
+                    <p>
+                        Jason can operate in different system
+                        configurations. WHOI describes a
+                        two-body arrangement in which the
+                        vehicle is connected through a
+                        shorter tether to Medea, while
+                        a reinforced fiber-optic cable
+                        connects the system to the ship.
+                    </p>
+
+                    <p>
+                        Medea acts as a buffer between
+                        the surface vessel and Jason.
+                        It helps reduce the transmission
+                        of surface-vessel movement to
+                        the working vehicle and provides
+                        additional observation and lighting.
+                    </p>
+
+                    <p>
+                        Jason uses multiple electric thrusters,
+                        cameras, sonar, lighting, scientific
+                        instruments, and manipulator arms.
+                        These systems allow researchers
+                        to inspect the seafloor and collect
+                        samples for scientific analysis.
+                    </p>
+
+                    <p>
+                        According to WHOI's published
+                        specifications, Jason's depth
+                        capability is up to 4,500 meters
+                        in single-body mode and 6,500 meters
+                        in two-body mode. These figures
+                        describe this particular vehicle
+                        configuration and should not be
+                        treated as standard ROV limits.
+                    </p>
+
+                    <p>
+                        Official technical information:
+                        <a
+                            href="https://ndsf.whoi.edu/jason/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            WHOI — ROV Jason
+                        </a>
+                    </p>
+
+                    <p>
+                        Detailed specifications:
+                        <a
+                            href="https://ndsf.whoi.edu/jason/specifications-jason/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Jason Specifications
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHALLENGES -->
+
+        <section class="section" id="challenges">
+
+            <div class="container">
+
+                <div class="section-label">
+                    03 / Technical Challenges
+                </div>
+
+                <h2 class="section-title">
+                    Engineering Challenges in ROV Operations
+                </h2>
+
+                <p class="section-intro">
+                    ROV engineering must account for difficult
+                    underwater conditions. A design that works
+                    well in a controlled environment may face
+                    serious limitations when exposed to depth,
+                    currents, poor visibility, mechanical loads,
+                    and long operational periods.
+                </p>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>1. High Hydrostatic Pressure</h3>
+                        <p>
+                            Pressure increases with depth
+                            and can damage housings, seals,
+                            connectors, and other components
+                            if they are not designed for
+                            the intended operating conditions.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>2. Tether Management</h3>
+                        <p>
+                            Cable tension, drag, entanglement,
+                            abrasion, and contact with
+                            underwater structures can
+                            restrict movement and create
+                            operational hazards.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>3. Limited Visibility</h3>
+                        <p>
+                            Darkness and suspended particles
+                            can reduce camera effectiveness.
+                            Sonar and appropriate lighting
+                            help, but do not eliminate
+                            all visibility limitations.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>4. Underwater Currents</h3>
+                        <p>
+                            Currents create additional
+                            forces on the vehicle and tether.
+                            The propulsion system must
+                            provide sufficient control
+                            authority for the mission.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>5. Corrosion and Water Ingress</h3>
+                        <p>
+                            Seawater can damage exposed
+                            materials, connectors, and
+                            electrical equipment. Sealing,
+                            material selection, inspection,
+                            and maintenance are essential.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>6. Power and Thermal Management</h3>
+                        <p>
+                            Thrusters, electronics, lighting,
+                            and tools consume power.
+                            Electrical losses and heat
+                            generation must be considered
+                            in system design.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>7. Navigation Uncertainty</h3>
+                        <p>
+                            Underwater navigation can be
+                            difficult because conventional
+                            satellite positioning is not
+                            directly available to a submerged
+                            vehicle. Acoustic and inertial
+                            methods may be required.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>8. Maintenance and Reliability</h3>
+                        <p>
+                            Connectors, thrusters, seals,
+                            cables, and tools require
+                            inspection and maintenance.
+                            Component failure can interrupt
+                            an expensive mission.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>9. Human Factors</h3>
+                        <p>
+                            Pilots must interpret video,
+                            sonar, sensor information,
+                            and vehicle feedback while
+                            controlling the system.
+                            Workload and communication
+                            between team members matter.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>10. Operational Safety</h3>
+                        <p>
+                            Deployment, recovery, lifting,
+                            cable handling, electrical
+                            systems, and interaction with
+                            other subsea equipment require
+                            documented procedures and
+                            risk assessment.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Engineering Perspective</h4>
+                    <p>
+                        Reliability is not achieved by
+                        strengthening one component alone.
+                        It requires coordinated mechanical,
+                        electrical, software, operational,
+                        and maintenance planning across
+                        the complete ROV system.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FUTURE -->
+
+        <section class="section" id="future">
+
+            <div class="container">
+
+                <div class="section-label">
+                    04 / Future Developments
+                </div>
+
+                <h2 class="section-title">
+                    The Future of ROV Technology
+                </h2>
+
+                <p class="section-intro">
+                    ROV development is moving toward more
+                    capable sensing, improved control,
+                    advanced communication, smarter
+                    automation, and more efficient
+                    subsea operations.
+                </p>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>1. AI-Assisted Inspection</h3>
+                        <p>
+                            Computer vision and machine
+                            learning can help analyze
+                            underwater images, identify
+                            potential defects, classify
+                            objects, and organize inspection
+                            data. Their results still require
+                            validation and appropriate
+                            human oversight.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>2. Advanced Manipulation</h3>
+                        <p>
+                            Improved robotic arms, force
+                            feedback, and tool integration
+                            may support more precise
+                            intervention and complex
+                            subsea tasks.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>3. Improved Navigation</h3>
+                        <p>
+                            Better sensor fusion, acoustic
+                            positioning, inertial systems,
+                            and mapping techniques can
+                            improve underwater localization
+                            and inspection accuracy.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>4. Smarter Control Systems</h3>
+                        <p>
+                            More advanced controllers can
+                            support improved station keeping,
+                            disturbance compensation,
+                            assisted piloting, and
+                            mission-specific automation.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>5. Better Tether Technologies</h3>
+                        <p>
+                            Developments in cable materials,
+                            fiber-optic communication,
+                            handling systems, and
+                            management technologies may
+                            improve operational capability.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>6. Hybrid Robotic Systems</h3>
+                        <p>
+                            Future systems may combine
+                            remotely operated and autonomous
+                            functions, allowing operators
+                            to supervise automated tasks
+                            while retaining direct control
+                            when intervention is needed.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="info-box">
+                    <h4>Future Technology Is Not the Same as Current Capability</h4>
+                    <p>
+                        AI-assisted perception, autonomous
+                        functions, and advanced manipulation
+                        are active areas of development.
+                        Their availability and reliability
+                        vary between platforms and missions.
+                        They should not be assumed to exist
+                        in every modern ROV.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUIZ -->
+
+        <section class="section quiz-section" id="quiz">
+
+            <div class="container quiz-container">
+
+                <div class="section-label">
+                    Knowledge Assessment
+                </div>
+
+                <h2 class="section-title">
+                    Test Your ROV Knowledge
+                </h2>
+
+                <p class="section-intro">
+                    Answer the following 10 questions to
+                    evaluate your understanding of ROV
+                    architecture, mechanical systems,
+                    tether technology, control principles,
+                    applications, and operational challenges.
+                    Each question has one correct answer.
+                </p>
+
+                <div class="quiz-progress">
+                    <div
+                        class="quiz-progress-bar"
+                        id="quizProgressBar"
+                    ></div>
+                </div>
+
+                <div id="quizQuestions"></div>
+
+                <div class="quiz-actions">
+
+                    <button
+                        type="button"
+                        class="quiz-btn primary"
+                        id="submitQuiz"
+                    >
+                        Submit Assessment
+                    </button>
+
+                    <button
+                        type="button"
+                        class="quiz-btn"
+                        id="resetQuiz"
+                    >
+                        Reset Quiz
+                    </button>
+
+                </div>
+
+                <div
+                    class="quiz-result"
+                    id="quizResult"
+                    aria-live="polite"
+                >
+                    <h3>Assessment Result</h3>
+                    <div class="quiz-score" id="quizScore"></div>
+                    <p id="quizMessage"></p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REFERENCES -->
+
+        <section class="section" id="references">
+
+            <div class="container">
+
+                <div class="section-label">
+                    Scientific References
+                </div>
+
+                <h2 class="section-title">
+                    Research & Technical References
+                </h2>
+
+                <p class="section-intro">
+                    The technical content on this page is
+                    supported by oceanographic institutions,
+                    technical organizations, and documented
+                    ROV engineering information.
+                </p>
+
+                <div class="reference-list">
+
+                    <div class="reference-card">
+                        <span class="reference-index">01</span>
+
+                        <div>
+                            <h3>NOAA Ocean Exploration — ROVs</h3>
+
+                            <p>
+                                ROV operating principles,
+                                tether connections, cameras,
+                                sonar, manipulators, and
+                                scientific applications.
+                            </p>
+
+                            <a
+                                href="https://oceanexplorer.noaa.gov/technology/subs-rovs/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access NOAA Reference
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">02</span>
+
+                        <div>
+                            <h3>WHOI — ROV Jason</h3>
+
+                            <p>
+                                A real scientific ROV system,
+                                its operational architecture,
+                                two-body configuration,
+                                instruments, and mission uses.
+                            </p>
+
+                            <a
+                                href="https://ndsf.whoi.edu/jason/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access WHOI Reference
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">03</span>
+
+                        <div>
+                            <h3>WHOI — Jason Specifications</h3>
+
+                            <p>
+                                Published technical
+                                specifications, depth capability,
+                                propulsion, dimensions,
+                                and tether information.
+                            </p>
+
+                            <a
+                                href="https://ndsf.whoi.edu/jason/specifications-jason/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access Technical Specifications
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">04</span>
+
+                        <div>
+                            <h3>WHOI — Jason FAQs</h3>
+
+                            <p>
+                                Detailed explanations of
+                                Jason and Medea, vehicle
+                                movement, sampling systems,
+                                and operating principles.
+                            </p>
+
+                            <a
+                                href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/ndsf-jason/jason-faqs/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access WHOI FAQs
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">05</span>
+
+                        <div>
+                            <h3>IMCA R 004 — Safe and Efficient Operation of ROVs</h3>
+
+                            <p>
+                                Recommended Practice,
+                                Revision 6, February 2024.
+                                Covers ROV operations,
+                                equipment, personnel,
+                                and operational safety.
+                            </p>
+
+                            <a
+                                href="https://www.imca-int.com/resources/technical-library/document/60d8d35a-c55b-ee11-8def-6045bdd2c0c0/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access IMCA Guidance
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">06</span>
+
+                        <div>
+                            <h3>National Oceanography Centre — ROVs</h3>
+
+                            <p>
+                                Overview of remotely operated
+                                vehicles, underwater exploration,
+                                vehicle equipment, and
+                                scientific capabilities.
+                            </p>
+
+                            <a
+                                href="https://www.noc.ac.uk/our-work/marine-technology/ocean-vehicles/remotely-operated-vehicles"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access NOC Reference
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">07</span>
+
+                        <div>
+                            <h3>NOAA — What Is an ROV?</h3>
+
+                            <p>
+                                Introductory explanation
+                                of remotely operated vehicles,
+                                surface control, and
+                                tether-based communication.
+                            </p>
+
+                            <a
+                                href="https://oceanexplorer.noaa.gov/ocean-fact/rov/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access NOAA Ocean Fact
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <div class="reference-card">
+                        <span class="reference-index">08</span>
+
+                        <div>
+                            <h3>WHOI — Jason Interactive Technical Overview</h3>
+
+                            <p>
+                                Information about syntactic
+                                foam, thrusters, navigation,
+                                hydraulic systems, manipulators,
+                                cameras, and lighting.
+                            </p>
+
+                            <a
+                                href="https://www.whoi.edu/home/interactive/jason/jason.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Access Technical Overview
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="info-box">
+                    <h4>Reference and Accuracy Note</h4>
+                    <p>
+                        The references are provided for further
+                        study and verification. Vehicle
+                        specifications belong to the specific
+                        model and configuration cited.
+                        General engineering explanations
+                        should not be interpreted as
+                        universal specifications for all ROVs.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div class="footer-logo">
+                MARI<span>TERRA</span>
+            </div>
+
+            <div class="footer-credit">
+                Developed & Designed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </div>
+
+            <div class="footer-copy">
+                © 2026 MARITERRA. All Rights Reserved.
+                Educational content for maritime technology.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // MOBILE NAVIGATION
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            menuToggle.textContent = isOpen ? "×" : "☰";
+
+        });
+
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", function () {
+
+                navLinks.classList.remove("active");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.textContent = "☰";
+
+            });
+
+        });
+
+
+        // SCROLL REVEAL
+
+        const revealElements = document.querySelectorAll(
+            ".content-card, .component-card, .architecture-item, .reference-card"
+        );
+
+        if ("IntersectionObserver" in window) {
+
+            const observer = new IntersectionObserver(
+                function (entries, observerInstance) {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observerInstance.unobserve(entry.target);
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.08
+                }
+            );
+
+            revealElements.forEach(element => {
+                element.classList.add("reveal");
+                observer.observe(element);
+            });
+
+        }
+
+
+        // QUIZ DATA
+
+        const questions = [
+
+            {
+                question: "What does ROV stand for?",
+                options: [
+                    "Remote Ocean Vessel",
+                    "Remotely Operated Vehicle",
+                    "Robotic Observation Vessel",
+                    "Remote Operational Vision"
+                ],
+                correct: 1,
+                explanation:
+                    "ROV stands for Remotely Operated Vehicle. It is an unoccupied underwater robotic vehicle controlled by an operator from a remote location."
+            },
+
+            {
+                question: "What is the main purpose of the tether in a typical ROV system?",
+                options: [
+                    "To increase water pressure around the vehicle",
+                    "To replace the propulsion system",
+                    "To provide a connection for commands, data, and sometimes power",
+                    "To measure ocean salinity only"
+                ],
+                correct: 2,
+                explanation:
+                    "The tether provides the communication and connection pathway between the ROV and its surface system. Depending on the design, it can also deliver electrical power."
+            },
+
+            {
+                question: "Which material is commonly used to provide buoyancy in deep-water ROVs?",
+                options: [
+                    "Ordinary rubber",
+                    "Syntactic foam",
+                    "Unprotected steel",
+                    "Copper wire"
+                ],
+                correct: 1,
+                explanation:
+                    "Syntactic foam contains hollow microspheres within a resin matrix. It provides buoyancy while being designed to withstand high hydrostatic pressure."
+            },
+
+            {
+                question: "Which component generates the forces needed to move an ROV?",
+                options: [
+                    "Thrusters",
+                    "Video monitors",
+                    "Sample containers",
+                    "Pressure seals"
+                ],
+                correct: 0,
+                explanation:
+                    "Thrusters generate propulsion forces. Their number, orientation, and control determine the vehicle's movement capabilities."
+            },
+
+            {
+                question: "What is the primary role of a Tether Management System (TMS)?",
+                options: [
+                    "To analyze biological samples",
+                    "To replace all underwater sensors",
+                    "To manage the vehicle tether and help isolate the ROV from surface movement",
+                    "To increase camera resolution"
+                ],
+                correct: 2,
+                explanation:
+                    "A TMS manages the shorter tether connected to the ROV and can reduce the direct effect of surface-vessel movement on the working vehicle."
+            },
+
+            {
+                question: "Which statement best describes closed-loop control?",
+                options: [
+                    "The vehicle moves without any sensor feedback",
+                    "The controller uses measured feedback to adjust system outputs",
+                    "The operator switches off the thrusters permanently",
+                    "The vehicle only receives visual images"
+                ],
+                correct: 1,
+                explanation:
+                    "Closed-loop control compares measured system behavior with a desired state and adjusts outputs to reduce the error."
+            },
+
+            {
+                question: "What is the main purpose of a manipulator arm?",
+                options: [
+                    "To provide satellite positioning underwater",
+                    "To increase the vehicle's buoyancy",
+                    "To transmit fiber-optic signals",
+                    "To interact with objects and perform underwater tasks"
+                ],
+                correct: 3,
+                explanation:
+                    "Manipulator arms allow an ROV to grasp samples, operate tools, handle objects, and perform suitable underwater intervention tasks."
+            },
+
+            {
+                question: "Why can imaging sonar be useful when camera visibility is poor?",
+                options: [
+                    "It uses acoustic signals to detect features",
+                    "It produces sunlight underwater",
+                    "It removes the need for all navigation systems",
+                    "It increases the water temperature"
+                ],
+                correct: 0,
+                explanation:
+                    "Imaging sonar uses sound waves rather than visible light. It can provide useful information when suspended particles or darkness limit camera visibility."
+            },
+
+            {
+                question: "What is one important reason for using a Launch and Recovery System?",
+                options: [
+                    "To control marine animal behavior",
+                    "To perform laboratory analysis",
+                    "To deploy and recover the ROV safely",
+                    "To replace the ROV's pressure housing"
+                ],
+                correct: 2,
+                explanation:
+                    "Launch and Recovery Systems use equipment such as winches, cranes, and A-frames to move the ROV safely between the vessel and the water."
+            },
+
+            {
+                question: "Which statement about ROV autonomy is most accurate?",
+                options: [
+                    "Every ROV is completely autonomous",
+                    "An ROV may have automatic control functions while remaining remotely operated",
+                    "An ROV cannot use any automatic control",
+                    "An ROV is always controlled by GPS underwater"
+                ],
+                correct: 1,
+                explanation:
+                    "An ROV can use automatic functions such as depth hold or heading hold while a human operator remains responsible for remote operation. This does not automatically make it a fully autonomous AUV."
+            }
+
+        ];
+
+
+        // QUIZ ELEMENTS
+
+        const quizQuestions = document.getElementById("quizQuestions");
+
+        const submitQuiz = document.getElementById("submitQuiz");
+
+        const resetQuiz = document.getElementById("resetQuiz");
+
+        const quizProgressBar = document.getElementById(
+            "quizProgressBar"
+        );
+
+        const quizResult = document.getElementById("quizResult");
+
+        const quizScore = document.getElementById("quizScore");
+
+        const quizMessage = document.getElementById("quizMessage");
+
+        let selectedAnswers = new Array(questions.length).fill(null);
+
+        let submitted = false;
+
+
+        // RENDER QUESTIONS
+
+        function renderQuiz() {
+
+            quizQuestions.innerHTML = "";
+
+            questions.forEach((question, questionIndex) => {
+
+                const questionCard = document.createElement("div");
+
+                questionCard.className = "quiz-question";
+
+                const questionNumber = document.createElement("div");
+
+                questionNumber.className = "question-number";
+
+                questionNumber.textContent =
+                    `QUESTION ${String(questionIndex + 1).padStart(2, "0")} / 10`;
+
+                const questionTitle = document.createElement("h3");
+
+                questionTitle.textContent = question.question;
+
+                const optionsContainer = document.createElement("div");
+
+                optionsContainer.className = "quiz-options";
+
+                const letters = ["A", "B", "C", "D"];
+
+                question.options.forEach((option, optionIndex) => {
+
+                    const button = document.createElement("button");
+
+                    button.type = "button";
+
+                    button.className = "quiz-option";
+
+                    button.disabled = submitted;
+
+                    const letter = document.createElement("span");
+
+                    letter.className = "option-letter";
+
+                    letter.textContent = letters[optionIndex];
+
+                    const optionText = document.createElement("span");
+
+                    optionText.textContent = option;
+
+                    button.appendChild(letter);
+
+                    button.appendChild(optionText);
+
+                    if (selectedAnswers[questionIndex] === optionIndex) {
+                        button.style.borderColor = "var(--purple-light)";
+                        button.style.background = "rgba(147, 51, 234, 0.1)";
+                    }
+
+                    if (submitted) {
+
+                        if (optionIndex === question.correct) {
+                            button.classList.add("correct");
+                        }
+
+                        if (
+                            selectedAnswers[questionIndex] === optionIndex &&
+                            optionIndex !== question.correct
+                        ) {
+                            button.classList.add("wrong");
+                        }
+
+                    }
+
+                    button.addEventListener("click", function () {
+
+                        if (submitted) return;
+
+                        selectedAnswers[questionIndex] = optionIndex;
+
+                        updateProgress();
+
+                        renderQuiz();
+
+                    });
+
+                    optionsContainer.appendChild(button);
+
+                });
+
+                const explanation = document.createElement("div");
+
+                explanation.className = "answer-explanation";
+
+                explanation.innerHTML =
+                    `<strong>Explanation:</strong> ${question.explanation}`;
+
+                if (submitted) {
+                    explanation.classList.add("show");
+                }
+
+                questionCard.appendChild(questionNumber);
+
+                questionCard.appendChild(questionTitle);
+
+                questionCard.appendChild(optionsContainer);
+
+                questionCard.appendChild(explanation);
+
+                quizQuestions.appendChild(questionCard);
+
+            });
+
+            updateProgress();
+
+        }
+
+
+        // UPDATE PROGRESS
+
+        function updateProgress() {
+
+            const answeredCount = selectedAnswers.filter(
+                answer => answer !== null
+            ).length;
+
+            const percentage =
+                (answeredCount / questions.length) * 100;
+
+            quizProgressBar.style.width = `${percentage}%`;
+
+        }
+
+
+        // SUBMIT QUIZ
+
+        submitQuiz.addEventListener("click", function () {
+
+            if (submitted) return;
+
+            const unanswered = selectedAnswers.filter(
+                answer => answer === null
+            ).length;
+
+            if (unanswered > 0) {
+
+                quizMessage.textContent =
+                    `Please answer all questions. ${unanswered} question(s) remain unanswered.`;
+
+                quizScore.textContent = "";
+
+                quizResult.classList.add("show");
+
+                return;
+
+            }
+
+            let score = 0;
+
+            questions.forEach((question, index) => {
+
+                if (selectedAnswers[index] === question.correct) {
+                    score++;
+                }
+
+            });
+
+            submitted = true;
+
+            renderQuiz();
+
+            quizScore.textContent = `${score} / 10`;
+
+            const percentage = score * 10;
+
+            if (percentage >= 90) {
+
+                quizMessage.textContent =
+                    "Excellent! You have a strong understanding of ROV systems.";
+
+            } else if (percentage >= 70) {
+
+                quizMessage.textContent =
+                    "Very good! Review the explanations to strengthen your knowledge.";
+
+            } else if (percentage >= 50) {
+
+                quizMessage.textContent =
+                    "Good effort. Revisit the technical sections and try again.";
+
+            } else {
+
+                quizMessage.textContent =
+                    "You need more practice. Review the foundations and repeat the assessment.";
+
+            }
+
+            quizResult.classList.add("show");
+
+            submitQuiz.textContent = "Assessment Completed";
+
+            submitQuiz.disabled = true;
+
+            submitQuiz.style.opacity = "0.6";
+
+        });
+
+
+        // RESET QUIZ
+
+        resetQuiz.addEventListener("click", function () {
+
+            selectedAnswers = new Array(questions.length).fill(null);
+
+            submitted = false;
+
+            quizResult.classList.remove("show");
+
+            quizScore.textContent = "";
+
+            quizMessage.textContent = "";
+
+            submitQuiz.textContent = "Submit Assessment";
+
+            submitQuiz.disabled = false;
+
+            submitQuiz.style.opacity = "1";
+
+            renderQuiz();
+
+        });
+
+
+        // INITIALIZE QUIZ
+
+        renderQuiz();
+
+    </script>
+
+</body>
+</html>

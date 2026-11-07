@@ -1,0 +1,2917 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Machine Learning Fundamentals | MARITERRA</title>
+    <meta name="description" content="A comprehensive maritime learning module covering machine learning fundamentals, algorithms, training methods, maritime applications, limitations, and assessment.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --ml-bg: #070816;
+            --ml-panel: #100e22;
+            --ml-panel-light: #17132d;
+            --ml-purple: #9333ea;
+            --ml-light: #c4b5fd;
+            --ml-blue: #38bdf8;
+            --ml-white: #f5f3ff;
+            --ml-muted: #aaa7c2;
+            --ml-border: rgba(168, 85, 247, 0.23);
+            --ml-green: #6ee7b7;
+            --ml-red: #fb7185;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--ml-bg);
+            color: var(--ml-white);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .ml-page {
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 10% 10%, rgba(147, 51, 234, 0.12), transparent 35%),
+                radial-gradient(ellipse at 90% 50%, rgba(56, 189, 248, 0.06), transparent 35%),
+                var(--ml-bg);
+        }
+
+        .ml-container {
+            width: min(1250px, 91%);
+            margin: auto;
+        }
+
+        .ml-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ml-light);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .ml-label::before {
+            content: "";
+            width: 25px;
+            height: 1px;
+            background: var(--ml-purple);
+            box-shadow: 0 0 10px var(--ml-purple);
+        }
+
+        /* NAVIGATION */
+
+        .ml-navigation {
+            padding: 22px 4.5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--ml-border);
+            background: rgba(7, 8, 22, 0.88);
+            backdrop-filter: blur(15px);
+            gap: 15px;
+        }
+
+        .ml-brand {
+            color: var(--ml-white);
+            font-family: "Orbitron", sans-serif;
+            font-size: 19px;
+            letter-spacing: 3px;
+        }
+
+        .ml-brand span {
+            color: var(--ml-light);
+        }
+
+        .ml-back {
+            color: var(--ml-light);
+            border: 1px solid var(--ml-border);
+            padding: 11px 18px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .ml-back:hover {
+            border-color: var(--ml-purple);
+            background: rgba(147, 51, 234, 0.12);
+            transform: translateX(-4px);
+        }
+
+        /* HERO */
+
+        .ml-hero {
+            min-height: 570px;
+            padding: 100px 0 85px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--ml-border);
+            isolation: isolate;
+        }
+
+        .ml-hero::before {
+            content: "";
+            position: absolute;
+            width: 490px;
+            height: 490px;
+            border-radius: 50%;
+            border: 1px solid rgba(196, 181, 253, 0.16);
+            right: -100px;
+            top: 35px;
+            box-shadow: 0 0 100px rgba(147, 51, 234, 0.12);
+            animation: ml-rotate 35s linear infinite;
+            z-index: -1;
+        }
+
+        .ml-hero::after {
+            content: "";
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border: 1px dashed rgba(56, 189, 248, 0.35);
+            border-radius: 50%;
+            right: -30px;
+            top: 105px;
+            animation: ml-rotate 25s linear infinite reverse;
+            z-index: -1;
+        }
+
+        .ml-hero-content {
+            max-width: 830px;
+        }
+
+        .ml-hero h1 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(38px, 6vw, 72px);
+            font-weight: 600;
+            line-height: 1.2;
+            margin: 25px 0;
+            letter-spacing: -2px;
+        }
+
+        .ml-hero h1 span {
+            display: block;
+            color: var(--ml-light);
+            text-shadow: 0 0 35px rgba(147, 51, 234, 0.4);
+        }
+
+        .ml-hero-description {
+            max-width: 680px;
+            color: var(--ml-muted);
+            font-size: 14px;
+            line-height: 2.1;
+            margin-bottom: 32px;
+        }
+
+        .ml-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+        }
+
+        .ml-btn {
+            min-height: 47px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 23px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .ml-btn-primary {
+            color: white;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            border: 1px solid transparent;
+        }
+
+        .ml-btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .ml-btn-secondary {
+            color: var(--ml-light);
+            border: 1px solid var(--ml-border);
+            background: transparent;
+        }
+
+        .ml-btn-secondary:hover {
+            border-color: var(--ml-purple);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .ml-hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin-top: 55px;
+        }
+
+        .ml-stat {
+            border-left: 2px solid var(--ml-purple);
+            padding-left: 14px;
+        }
+
+        .ml-stat strong {
+            display: block;
+            font-family: "Orbitron", sans-serif;
+            font-size: 22px;
+        }
+
+        .ml-stat span {
+            display: block;
+            margin-top: 6px;
+            color: var(--ml-muted);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* GENERAL SECTIONS */
+
+        .ml-section {
+            padding: 90px 0;
+        }
+
+        .ml-heading {
+            max-width: 790px;
+            margin-bottom: 45px;
+        }
+
+        .ml-heading.center {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .ml-heading.center .ml-label {
+            justify-content: center;
+        }
+
+        .ml-heading h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(26px, 4vw, 42px);
+            line-height: 1.4;
+            font-weight: 500;
+            margin: 18px 0;
+        }
+
+        .ml-heading h2 span {
+            color: var(--ml-light);
+        }
+
+        .ml-heading p {
+            color: var(--ml-muted);
+            font-size: 12px;
+            line-height: 2.1;
+        }
+
+        .ml-text {
+            color: var(--ml-muted);
+            font-size: 12px;
+            line-height: 2.1;
+        }
+
+        /* CONCEPT */
+
+        .ml-concept-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .ml-concept-visual {
+            min-height: 350px;
+            border: 1px solid var(--ml-border);
+            border-radius: 8px;
+            background:
+                radial-gradient(circle, rgba(147, 51, 234, 0.2), transparent 65%),
+                linear-gradient(145deg, #17112b, #090a19);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ml-brain {
+            width: 150px;
+            height: 150px;
+            border: 1px solid var(--ml-light);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(147, 51, 234, 0.14);
+            box-shadow: 0 0 50px rgba(147, 51, 234, 0.25);
+            animation: ml-pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        .ml-brain strong {
+            font-family: "Orbitron", sans-serif;
+            font-size: 34px;
+            color: var(--ml-light);
+        }
+
+        .ml-brain span {
+            font-size: 8px;
+            letter-spacing: 2px;
+            margin-top: 7px;
+        }
+
+        .ml-ring {
+            position: absolute;
+            width: 230px;
+            height: 230px;
+            border: 1px dashed rgba(56, 189, 248, 0.45);
+            border-radius: 50%;
+            animation: ml-rotate 18s linear infinite;
+        }
+
+        .ml-ring-two {
+            width: 310px;
+            height: 310px;
+            border-color: rgba(196, 181, 253, 0.2);
+            animation-direction: reverse;
+            animation-duration: 27s;
+        }
+
+        .ml-orbit-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--ml-blue);
+            box-shadow: 0 0 15px var(--ml-blue);
+            position: absolute;
+        }
+
+        .ml-dot-one { top: 23%; left: 25%; }
+        .ml-dot-two { right: 22%; bottom: 25%; background: var(--ml-light); }
+
+        .ml-concept-points {
+            display: grid;
+            gap: 13px;
+            margin-top: 25px;
+        }
+
+        .ml-concept-point {
+            padding: 15px;
+            border-left: 2px solid var(--ml-purple);
+            background: rgba(147, 51, 234, 0.06);
+        }
+
+        .ml-concept-point strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .ml-concept-point p {
+            margin: 0;
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        /* AI VS ML */
+
+        .ml-comparison {
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.08), transparent);
+            border-top: 1px solid var(--ml-border);
+            border-bottom: 1px solid var(--ml-border);
+        }
+
+        .ml-comparison-box {
+            padding: 35px;
+            border: 1px solid var(--ml-border);
+            background: rgba(16, 14, 34, 0.8);
+            border-radius: 8px;
+        }
+
+        .ml-comparison-visual {
+            display: grid;
+            grid-template-columns: 1fr 0.8fr 1.5fr;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .ml-compare-card {
+            padding: 25px 15px;
+            text-align: center;
+            border: 1px solid var(--ml-border);
+            border-radius: 6px;
+            background: #121026;
+            transition: 0.3s;
+        }
+
+        .ml-compare-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--ml-purple);
+        }
+
+        .ml-compare-card strong {
+            display: block;
+            font-family: "Orbitron", sans-serif;
+            color: var(--ml-light);
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .ml-compare-card span {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .ml-compare-card.deep {
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .ml-compare-note {
+            margin-top: 25px;
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 2;
+            text-align: center;
+        }
+
+        /* LEARNING TYPES */
+
+        .ml-types-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .ml-type-card {
+            min-height: 310px;
+            padding: 27px;
+            border: 1px solid var(--ml-border);
+            border-radius: 7px;
+            background: linear-gradient(145deg, #17132d, #0b0b1b);
+            transition: 0.35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ml-type-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ml-purple);
+            box-shadow: 0 15px 35px rgba(147, 51, 234, 0.12);
+        }
+
+        .ml-type-number {
+            color: var(--ml-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .ml-type-icon {
+            width: 55px;
+            height: 55px;
+            margin: 23px 0;
+            border: 1px solid var(--ml-border);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: var(--ml-light);
+            font-size: 22px;
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .ml-type-card h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .ml-type-card p {
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .ml-type-example {
+            margin-top: 18px;
+            padding: 13px;
+            border-left: 2px solid var(--ml-purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .ml-type-example strong {
+            display: block;
+            color: var(--ml-light);
+            font-size: 9px;
+            letter-spacing: 1px;
+            margin-bottom: 7px;
+        }
+
+        .ml-type-example span {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        /* PROCESS */
+
+        .ml-process {
+            background: #0b0a1a;
+            border-top: 1px solid var(--ml-border);
+            border-bottom: 1px solid var(--ml-border);
+        }
+
+        .ml-process-flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            align-items: stretch;
+        }
+
+        .ml-process-step {
+            padding: 22px 15px;
+            min-height: 190px;
+            text-align: center;
+            border: 1px solid var(--ml-border);
+            border-radius: 6px;
+            background: rgba(20, 16, 39, 0.8);
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .ml-process-step:hover {
+            transform: translateY(-6px);
+            border-color: var(--ml-purple);
+        }
+
+        .ml-process-step .number {
+            color: var(--ml-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 11px;
+        }
+
+        .ml-process-step h3 {
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 18px 0 10px;
+        }
+
+        .ml-process-step p {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        /* ALGORITHMS */
+
+        .ml-algorithms {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .ml-algorithm {
+            padding: 23px;
+            border: 1px solid var(--ml-border);
+            border-radius: 6px;
+            background: rgba(16, 14, 34, 0.8);
+        }
+
+        .ml-algorithm h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 13px;
+            color: var(--ml-light);
+            margin: 0 0 10px;
+        }
+
+        .ml-algorithm p {
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        /* MARITIME APPLICATIONS */
+
+        .ml-applications-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .ml-application {
+            padding: 25px;
+            min-height: 210px;
+            border: 1px solid var(--ml-border);
+            background: linear-gradient(145deg, #17132d, #0b0b1b);
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .ml-application:hover {
+            transform: translateY(-6px);
+            border-color: var(--ml-purple);
+        }
+
+        .ml-application .app-index {
+            color: var(--ml-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        .ml-application h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 18px 0 10px;
+        }
+
+        .ml-application p {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.9;
+        }
+
+        /* INTERACTIVE LAB */
+
+        .ml-lab {
+            background:
+                radial-gradient(ellipse at 50% 50%, rgba(147, 51, 234, 0.12), transparent 65%),
+                #0b0a1a;
+            border-top: 1px solid var(--ml-border);
+            border-bottom: 1px solid var(--ml-border);
+        }
+
+        .ml-lab-box {
+            padding: 35px;
+            border: 1px solid var(--ml-border);
+            background: rgba(16, 14, 34, 0.9);
+            border-radius: 8px;
+        }
+
+        .ml-lab-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .ml-lab-button {
+            padding: 12px 18px;
+            color: var(--ml-muted);
+            border: 1px solid var(--ml-border);
+            background: transparent;
+            cursor: pointer;
+            font-size: 10px;
+            transition: 0.3s;
+        }
+
+        .ml-lab-button.active,
+        .ml-lab-button:hover {
+            color: white;
+            border-color: var(--ml-purple);
+            background: rgba(147, 51, 234, 0.17);
+        }
+
+        .ml-lab-result {
+            min-height: 125px;
+            padding: 23px;
+            border-left: 2px solid var(--ml-purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .ml-lab-result h3 {
+            color: var(--ml-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 14px;
+            margin: 0 0 12px;
+        }
+
+        .ml-lab-result p {
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 2;
+            margin: 0;
+        }
+
+        .ml-lab-warning {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.9;
+            margin-top: 18px;
+        }
+
+        /* CASE STUDY */
+
+        .ml-case-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .ml-case-panel {
+            padding: 30px;
+            border: 1px solid var(--ml-border);
+            background: linear-gradient(145deg, #17132d, #0b0b1b);
+            border-radius: 7px;
+        }
+
+        .ml-case-panel h3 {
+            font-family: "Orbitron", sans-serif;
+            color: var(--ml-light);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .ml-case-panel p {
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        .ml-case-data {
+            display: grid;
+            gap: 12px;
+        }
+
+        .ml-data-row {
+            padding: 16px;
+            border: 1px solid var(--ml-border);
+            background: rgba(16, 14, 34, 0.8);
+        }
+
+        .ml-data-row span {
+            display: block;
+            color: var(--ml-muted);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .ml-data-row strong {
+            display: block;
+            margin-top: 7px;
+            color: var(--ml-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 17px;
+        }
+
+        /* LIMITATIONS */
+
+        .ml-limitations {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .ml-limitation {
+            padding: 23px;
+            border: 1px solid var(--ml-border);
+            border-radius: 6px;
+            background: rgba(16, 14, 34, 0.8);
+        }
+
+        .ml-limitation h3 {
+            font-size: 13px;
+            margin: 0 0 10px;
+        }
+
+        .ml-limitation p {
+            color: var(--ml-muted);
+            font-size: 10px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .ml-limitation .risk {
+            color: var(--ml-red);
+        }
+
+        /* QUIZ */
+
+        .ml-quiz-section {
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(147, 51, 234, 0.13), transparent 55%),
+                #0b0a1a;
+            border-top: 1px solid var(--ml-border);
+        }
+
+        .ml-quiz {
+            padding: 35px;
+            border: 1px solid var(--ml-border);
+            border-radius: 8px;
+            background: rgba(16, 14, 34, 0.94);
+        }
+
+        .ml-quiz-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .ml-quiz-top h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .ml-quiz-counter {
+            color: var(--ml-light);
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        .ml-progress-track {
+            width: 100%;
+            height: 5px;
+            background: rgba(196, 181, 253, 0.1);
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .ml-progress-fill {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--ml-purple), var(--ml-blue));
+            transition: width 0.3s;
+        }
+
+        .ml-question {
+            margin-bottom: 27px;
+        }
+
+        .ml-question h4 {
+            font-size: 14px;
+            line-height: 1.9;
+            font-weight: 500;
+            margin: 0 0 17px;
+        }
+
+        .ml-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .ml-option {
+            width: 100%;
+            text-align: left;
+            padding: 15px 17px;
+            color: var(--ml-muted);
+            background: rgba(7, 8, 22, 0.8);
+            border: 1px solid var(--ml-border);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            line-height: 1.7;
+            transition: 0.2s;
+        }
+
+        .ml-option:hover:not(:disabled) {
+            border-color: var(--ml-purple);
+            color: white;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .ml-option:disabled {
+            cursor: default;
+        }
+
+        .ml-option.correct {
+            border-color: var(--ml-green);
+            color: var(--ml-green);
+            background: rgba(110, 231, 183, 0.08);
+        }
+
+        .ml-option.wrong {
+            border-color: var(--ml-red);
+            color: var(--ml-red);
+            background: rgba(251, 113, 133, 0.08);
+        }
+
+        .ml-feedback {
+            display: none;
+            padding: 17px;
+            margin-top: 17px;
+            border-left: 2px solid var(--ml-purple);
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--ml-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .ml-feedback.show {
+            display: block;
+            animation: ml-appear 0.35s ease;
+        }
+
+        .ml-feedback strong {
+            display: block;
+            color: var(--ml-light);
+            margin-bottom: 6px;
+        }
+
+        .ml-quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .ml-quiz-navigation button {
+            border: 0;
+        }
+
+        .ml-quiz-navigation button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ml-result {
+            display: none;
+            text-align: center;
+            padding: 35px 20px;
+            border: 1px solid var(--ml-border);
+            background: rgba(147, 51, 234, 0.07);
+            border-radius: 6px;
+        }
+
+        .ml-result.show {
+            display: block;
+            animation: ml-appear 0.5s ease;
+        }
+
+        .ml-result h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 24px;
+            color: var(--ml-light);
+        }
+
+        .ml-result-score {
+            font-family: "Orbitron", sans-serif;
+            font-size: 52px;
+            margin: 20px 0;
+        }
+
+        .ml-result p {
+            color: var(--ml-muted);
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        /* REFERENCES */
+
+        .ml-references {
+            display: grid;
+            gap: 12px;
+        }
+
+        .ml-reference {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 18px;
+            border: 1px solid var(--ml-border);
+            background: rgba(16, 14, 34, 0.75);
+            transition: 0.3s;
+        }
+
+        .ml-reference:hover {
+            border-color: var(--ml-purple);
+            transform: translateX(5px);
+        }
+
+        .ml-reference strong {
+            display: block;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .ml-reference span {
+            display: block;
+            margin-top: 5px;
+            color: var(--ml-muted);
+            font-size: 9px;
+        }
+
+        .ml-reference a {
+            color: var(--ml-light);
+            font-size: 10px;
+            white-space: nowrap;
+        }
+
+        .ml-footer {
+            padding: 45px 4%;
+            text-align: center;
+            border-top: 1px solid var(--ml-border);
+            background: #060611;
+        }
+
+        .ml-footer-logo {
+            font-family: "Orbitron", sans-serif;
+            font-size: 23px;
+            letter-spacing: 5px;
+        }
+
+        .ml-footer p {
+            color: var(--ml-muted);
+            font-size: 9px;
+            line-height: 2;
+            letter-spacing: 1px;
+            margin-top: 13px;
+        }
+
+        .ml-footer .developer {
+            color: var(--ml-light);
+        }
+
+        /* ANIMATIONS */
+
+        .ml-reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .ml-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes ml-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes ml-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.2); }
+            50% { box-shadow: 0 0 65px rgba(147, 51, 234, 0.4); }
+        }
+
+        @keyframes ml-appear {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .ml-types-grid,
+            .ml-applications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ml-process-flow {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .ml-concept-grid,
+            .ml-case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ml-concept-grid {
+                gap: 30px;
+            }
+
+            .ml-comparison-visual {
+                grid-template-columns: 1fr;
+            }
+
+            .ml-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ml-applications-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ml-process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ml-navigation {
+                padding: 18px 5%;
+            }
+
+            .ml-hero {
+                min-height: 520px;
+                padding: 80px 0;
+            }
+
+            .ml-hero::before {
+                right: -300px;
+            }
+
+            .ml-hero::after {
+                right: -220px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .ml-container {
+                width: 90%;
+            }
+
+            .ml-section {
+                padding: 65px 0;
+            }
+
+            .ml-hero h1 {
+                font-size: 37px;
+                letter-spacing: -1px;
+            }
+
+            .ml-hero-description {
+                font-size: 12px;
+            }
+
+            .ml-hero-stats {
+                gap: 18px;
+            }
+
+            .ml-stat strong {
+                font-size: 18px;
+            }
+
+            .ml-applications-grid,
+            .ml-process-flow,
+            .ml-algorithms,
+            .ml-limitations {
+                grid-template-columns: 1fr;
+            }
+
+            .ml-quiz,
+            .ml-lab-box,
+            .ml-comparison-box {
+                padding: 20px;
+            }
+
+            .ml-brand {
+                font-size: 15px;
+            }
+
+            .ml-back {
+                padding: 9px 10px;
+                font-size: 9px;
+            }
+
+            .ml-reference {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .ml-reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ml-page">
+
+    <!-- NAVIGATION -->
+
+    <header class="ml-navigation">
+        <a href="artificial-intelligence.html" class="ml-brand">
+            MARI<span>TERRA</span>
+        </a>
+
+        <a href="artificial-intelligence.html" class="ml-back">
+            ← BACK TO AI LEARNING PATH
+        </a>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="ml-hero">
+            <div class="ml-container">
+
+                <div class="ml-hero-content ml-reveal">
+
+                    <span class="ml-label">
+                        TOPIC 02 / MACHINE LEARNING
+                    </span>
+
+                    <h1>
+                        MACHINE
+                        <span>LEARNING.</span>
+                    </h1>
+
+                    <p class="ml-hero-description">
+                        Explore how computer systems learn patterns from
+                        data, improve their performance through experience,
+                        and generate predictions without being explicitly
+                        programmed for every individual task. Discover
+                        the algorithms, training methods, and intelligent
+                        applications transforming modern maritime operations.
+                    </p>
+
+                    <div class="ml-hero-actions">
+                        <a href="#ml-concept" class="ml-btn ml-btn-primary">
+                            START LEARNING →
+                        </a>
+
+                        <a href="#ml-quiz" class="ml-btn ml-btn-secondary">
+                            TAKE THE ASSESSMENT
+                        </a>
+                    </div>
+
+                    <div class="ml-hero-stats">
+                        <div class="ml-stat">
+                            <strong>03</strong>
+                            <span>Learning Paradigms</span>
+                        </div>
+
+                        <div class="ml-stat">
+                            <strong>20</strong>
+                            <span>Assessment Questions</span>
+                        </div>
+
+                        <div class="ml-stat">
+                            <strong>360°</strong>
+                            <span>Maritime Applications</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 01: INTRODUCTION -->
+
+        <section class="ml-section" id="ml-concept">
+            <div class="ml-container ml-concept-grid">
+
+                <div class="ml-reveal">
+
+                    <span class="ml-label">
+                        01 / FUNDAMENTAL CONCEPT
+                    </span>
+
+                    <div class="ml-heading">
+                        <h2>
+                            What Is
+                            <span>Machine Learning?</span>
+                        </h2>
+                    </div>
+
+                    <p class="ml-text">
+                        Machine Learning (ML) is a branch of Artificial
+                        Intelligence that enables computer systems to
+                        identify patterns in data and use those patterns
+                        to make predictions or decisions.
+                    </p>
+
+                    <p class="ml-text">
+                        Instead of writing a separate rule for every
+                        possible situation, developers provide a learning
+                        algorithm with relevant data. The algorithm
+                        adjusts its internal parameters during training
+                        to capture relationships in that data.
+                    </p>
+
+                    <p class="ml-text">
+                        After training, the resulting model can process
+                        new inputs and generate outputs. Its performance
+                        depends on the quality of its data, the suitability
+                        of its algorithm, and how well it generalizes
+                        to situations it has not previously encountered.
+                    </p>
+
+                    <div class="ml-concept-points">
+
+                        <div class="ml-concept-point">
+                            <strong>Learning from Data</strong>
+                            <p>
+                                Models identify useful relationships
+                                within examples rather than relying only
+                                on manually written rules.
+                            </p>
+                        </div>
+
+                        <div class="ml-concept-point">
+                            <strong>Pattern Recognition</strong>
+                            <p>
+                                Algorithms discover trends, similarities,
+                                and unusual behavior in complex datasets.
+                            </p>
+                        </div>
+
+                        <div class="ml-concept-point">
+                            <strong>Prediction and Generalization</strong>
+                            <p>
+                                A trained model applies learned patterns
+                                to new data, although predictions remain
+                                subject to uncertainty.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="ml-concept-visual ml-reveal">
+
+                    <div class="ml-ring"></div>
+                    <div class="ml-ring ml-ring-two"></div>
+
+                    <span class="ml-orbit-dot ml-dot-one"></span>
+                    <span class="ml-orbit-dot ml-dot-two"></span>
+
+                    <div class="ml-brain">
+                        <strong>ML</strong>
+                        <span>LEARNING ENGINE</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 02: AI VS ML VS DL -->
+
+        <section class="ml-section ml-comparison">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        02 / UNDERSTANDING THE RELATIONSHIP
+                    </span>
+
+                    <h2>
+                        AI, Machine Learning
+                        <span>& Deep Learning.</span>
+                    </h2>
+
+                    <p>
+                        These terms are related, but they do not describe
+                        exactly the same technology. Understanding their
+                        relationship is essential before studying
+                        advanced intelligent systems.
+                    </p>
+                </div>
+
+                <div class="ml-comparison-box ml-reveal">
+
+                    <div class="ml-comparison-visual">
+
+                        <div class="ml-compare-card">
+                            <strong>AI</strong>
+                            <span>
+                                Artificial Intelligence
+                                <br>
+                                The broad field of intelligent systems.
+                            </span>
+                        </div>
+
+                        <div class="ml-compare-card">
+                            <strong>ML</strong>
+                            <span>
+                                Machine Learning
+                                <br>
+                                A subset of Artificial Intelligence.
+                            </span>
+                        </div>
+
+                        <div class="ml-compare-card deep">
+                            <strong>DL</strong>
+                            <span>
+                                Deep Learning
+                                <br>
+                                A specialized subset of Machine Learning
+                                using multi-layer neural networks.
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <p class="ml-compare-note">
+                        Relationship: Deep Learning is part of Machine
+                        Learning, and Machine Learning is part of
+                        Artificial Intelligence. Not every AI system
+                        uses machine learning, and not every ML model
+                        uses deep neural networks.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 03: THREE LEARNING PARADIGMS -->
+
+        <section class="ml-section">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        03 / CORE LEARNING PARADIGMS
+                    </span>
+
+                    <h2>
+                        Three Ways Machines
+                        <span>Learn.</span>
+                    </h2>
+
+                    <p>
+                        Machine learning methods are commonly organized
+                        into three major paradigms. Each approach uses
+                        a different source of information or feedback.
+                    </p>
+                </div>
+
+                <div class="ml-types-grid">
+
+                    <article class="ml-type-card ml-reveal">
+
+                        <span class="ml-type-number">
+                            PARADIGM 01
+                        </span>
+
+                        <div class="ml-type-icon">◎</div>
+
+                        <h3>Supervised Learning</h3>
+
+                        <p>
+                            The model learns from labeled examples.
+                            Each training example contains input data
+                            and a known target output. During training,
+                            the model compares its prediction with
+                            the correct answer and adjusts its parameters.
+                        </p>
+
+                        <div class="ml-type-example">
+                            <strong>MARITIME EXAMPLE</strong>
+                            <span>
+                                Predicting engine condition using historical
+                                sensor measurements labeled as normal
+                                or faulty.
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="ml-type-card ml-reveal">
+
+                        <span class="ml-type-number">
+                            PARADIGM 02
+                        </span>
+
+                        <div class="ml-type-icon">⌘</div>
+
+                        <h3>Unsupervised Learning</h3>
+
+                        <p>
+                            The model analyzes data without predefined
+                            target labels. It attempts to discover
+                            hidden structures, clusters, similarities,
+                            or unusual observations.
+                        </p>
+
+                        <div class="ml-type-example">
+                            <strong>MARITIME EXAMPLE</strong>
+                            <span>
+                                Grouping vessels according to operating
+                                patterns or identifying unusual fuel
+                                consumption behavior.
+                            </span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="ml-type-card ml-reveal">
+
+                        <span class="ml-type-number">
+                            PARADIGM 03
+                        </span>
+
+                        <div class="ml-type-icon">↗</div>
+
+                        <h3>Reinforcement Learning</h3>
+
+                        <p>
+                            An agent interacts with an environment,
+                            takes actions, and receives rewards or
+                            penalties. It learns a policy that aims
+                            to maximize cumulative reward over time.
+                        </p>
+
+                        <div class="ml-type-example">
+                            <strong>MARITIME EXAMPLE</strong>
+                            <span>
+                                Researching route or control strategies
+                                in a simulated maritime environment
+                                under safety constraints.
+                            </span>
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 04: TRAINING PROCESS -->
+
+        <section class="ml-section ml-process">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        04 / MODEL DEVELOPMENT
+                    </span>
+
+                    <h2>
+                        How a Machine Learning
+                        <span>Model Is Built.</span>
+                    </h2>
+
+                    <p>
+                        Building a useful ML model is a structured
+                        engineering process. Training is only one
+                        part of the complete workflow.
+                    </p>
+                </div>
+
+                <div class="ml-process-flow">
+
+                    <article class="ml-process-step ml-reveal">
+                        <span class="number">STEP 01</span>
+                        <h3>Data Collection</h3>
+                        <p>
+                            Gather relevant sensor readings,
+                            operational records, and historical
+                            observations.
+                        </p>
+                    </article>
+
+                    <article class="ml-process-step ml-reveal">
+                        <span class="number">STEP 02</span>
+                        <h3>Data Preparation</h3>
+                        <p>
+                            Clean errors, handle missing values,
+                            select features, and prepare data
+                            for learning.
+                        </p>
+                    </article>
+
+                    <article class="ml-process-step ml-reveal">
+                        <span class="number">STEP 03</span>
+                        <h3>Model Training</h3>
+                        <p>
+                            Use a selected algorithm to learn
+                            patterns and optimize model parameters.
+                        </p>
+                    </article>
+
+                    <article class="ml-process-step ml-reveal">
+                        <span class="number">STEP 04</span>
+                        <h3>Model Evaluation</h3>
+                        <p>
+                            Test the model using unseen data
+                            and suitable performance metrics.
+                        </p>
+                    </article>
+
+                    <article class="ml-process-step ml-reveal">
+                        <span class="number">STEP 05</span>
+                        <h3>Deployment & Monitoring</h3>
+                        <p>
+                            Integrate the model into a system
+                            and monitor its performance over time.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 05: ALGORITHMS -->
+
+        <section class="ml-section">
+            <div class="ml-container">
+
+                <div class="ml-heading ml-reveal">
+                    <span class="ml-label">
+                        05 / IMPORTANT ALGORITHMS
+                    </span>
+
+                    <h2>
+                        Algorithms Behind
+                        <span>Machine Learning.</span>
+                    </h2>
+
+                    <p>
+                        Different algorithms are designed for different
+                        types of problems. Selecting an algorithm requires
+                        understanding the available data, target outcome,
+                        operating constraints, and acceptable error.
+                    </p>
+                </div>
+
+                <div class="ml-algorithms">
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Linear Regression</h3>
+                        <p>
+                            Estimates a continuous numerical value by
+                            modeling relationships between input features
+                            and an output variable. It can be used as
+                            a baseline for fuel-consumption estimation.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Logistic Regression</h3>
+                        <p>
+                            Estimates class probabilities, often for
+                            binary classification tasks such as predicting
+                            whether an observation belongs to a particular
+                            risk category.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Decision Trees</h3>
+                        <p>
+                            Split data through a sequence of feature-based
+                            decisions. Their structure can be easier
+                            to interpret than many complex models.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Random Forest</h3>
+                        <p>
+                            Combines predictions from multiple decision
+                            trees. It can improve predictive stability
+                            and handle various structured-data problems.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Support Vector Machines</h3>
+                        <p>
+                            Identify decision boundaries that separate
+                            classes. Kernel methods can model nonlinear
+                            relationships in suitable datasets.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>K-Means Clustering</h3>
+                        <p>
+                            Groups observations into clusters based
+                            on their similarity to cluster centers.
+                            It is a common unsupervised learning method.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Neural Networks</h3>
+                        <p>
+                            Use connected computational units arranged
+                            in layers to learn complex relationships.
+                            They are useful for many advanced data tasks.
+                        </p>
+                    </article>
+
+                    <article class="ml-algorithm ml-reveal">
+                        <h3>Reinforcement Learning Algorithms</h3>
+                        <p>
+                            Methods such as Q-learning help an agent
+                            learn action strategies through interaction
+                            with an environment and reward feedback.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 06: MARITIME APPLICATIONS -->
+
+        <section class="ml-section" style="background:rgba(147,51,234,0.045);">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        06 / MARITIME ENGINEERING APPLICATIONS
+                    </span>
+
+                    <h2>
+                        Machine Learning
+                        <span>Across the Maritime Industry.</span>
+                    </h2>
+
+                    <p>
+                        ML can support several maritime operations.
+                        Its usefulness depends on reliable data,
+                        appropriate validation, and integration
+                        with existing operational systems.
+                    </p>
+                </div>
+
+                <div class="ml-applications-grid">
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 01</span>
+                        <h3>Vessel Performance Prediction</h3>
+                        <p>
+                            Analyze historical operating conditions
+                            to estimate performance indicators and
+                            identify changes in vessel behavior.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 02</span>
+                        <h3>Fuel Consumption Estimation</h3>
+                        <p>
+                            Model relationships between speed, load,
+                            weather, and fuel consumption to support
+                            more informed operational planning.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 03</span>
+                        <h3>Equipment Condition Analysis</h3>
+                        <p>
+                            Identify patterns in vibration, temperature,
+                            and pressure measurements that may indicate
+                            changing machinery conditions.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 04</span>
+                        <h3>Weather Pattern Analysis</h3>
+                        <p>
+                            Analyze environmental datasets to support
+                            forecasting and maritime planning.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 05</span>
+                        <h3>Port Traffic Forecasting</h3>
+                        <p>
+                            Estimate patterns in vessel arrivals,
+                            port activity, and operational demand.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 06</span>
+                        <h3>Abnormal Behavior Detection</h3>
+                        <p>
+                            Discover unusual patterns in vessel
+                            movements, sensor measurements, or
+                            operational records.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 07</span>
+                        <h3>Navigation Support</h3>
+                        <p>
+                            Use learned patterns to support route
+                            assessment and navigational decisions,
+                            alongside established safety procedures.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 08</span>
+                        <h3>Marine Environmental Monitoring</h3>
+                        <p>
+                            Analyze environmental observations
+                            to help identify patterns in water
+                            quality and marine conditions.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">APPLICATION 09</span>
+                        <h3>Maritime Logistics</h3>
+                        <p>
+                            Support demand estimation, cargo-flow
+                            analysis, and operational resource planning.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 07: INTERACTIVE LEARNING LAB -->
+
+        <section class="ml-section ml-lab">
+            <div class="ml-container">
+
+                <div class="ml-heading ml-reveal">
+                    <span class="ml-label">
+                        07 / INTERACTIVE LEARNING LAB
+                    </span>
+
+                    <h2>
+                        Choose the Right
+                        <span>Learning Method.</span>
+                    </h2>
+
+                    <p>
+                        Explore how the three learning paradigms
+                        approach different maritime engineering
+                        problems. Select a method to reveal a
+                        practical example.
+                    </p>
+                </div>
+
+                <div class="ml-lab-box ml-reveal">
+
+                    <p class="ml-text">
+                        Imagine that a vessel operator wants to understand
+                        the condition of a marine engine using sensor data.
+                        The method selected depends on the available
+                        information and the goal of the analysis.
+                    </p>
+
+                    <div class="ml-lab-controls">
+
+                        <button class="ml-lab-button active"
+                                data-lab="supervised">
+                            SUPERVISED
+                        </button>
+
+                        <button class="ml-lab-button"
+                                data-lab="unsupervised">
+                            UNSUPERVISED
+                        </button>
+
+                        <button class="ml-lab-button"
+                                data-lab="reinforcement">
+                            REINFORCEMENT
+                        </button>
+
+                    </div>
+
+                    <div class="ml-lab-result" id="mlLabResult" aria-live="polite">
+
+                        <h3>Supervised Learning</h3>
+
+                        <p>
+                            The training dataset contains engine measurements
+                            paired with known condition labels. The model
+                            learns to classify new observations using
+                            those examples.
+                        </p>
+
+                    </div>
+
+                    <p class="ml-lab-warning">
+                        Educational simulation: this activity explains
+                        the learning concepts. It does not train a real
+                        machine learning model or diagnose an actual engine.
+                    </p>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 08: CASE STUDY -->
+
+        <section class="ml-section">
+            <div class="ml-container">
+
+                <div class="ml-heading ml-reveal">
+                    <span class="ml-label">
+                        08 / ENGINEERING CASE STUDY
+                    </span>
+
+                    <h2>
+                        A Machine Learning
+                        <span>Engine Monitoring Scenario.</span>
+                    </h2>
+
+                    <p>
+                        Consider a hypothetical vessel whose engineering
+                        team monitors its main engine using onboard sensors.
+                        The objective is to identify unusual operating
+                        patterns before they develop into more serious issues.
+                    </p>
+                </div>
+
+                <div class="ml-case-grid">
+
+                    <div class="ml-case-panel ml-reveal">
+
+                        <span class="ml-label">SCENARIO</span>
+
+                        <h3>
+                            Detecting Changes in Engine Operating Patterns.
+                        </h3>
+
+                        <p>
+                            The system collects temperature, pressure,
+                            vibration, and operating-load measurements.
+                            A trained model compares incoming observations
+                            with patterns learned from historical data.
+                        </p>
+
+                        <p>
+                            If an observation differs significantly
+                            from expected behavior, the system can
+                            flag it for further engineering investigation.
+                        </p>
+
+                        <p>
+                            The alert is not proof of an equipment failure.
+                            Engineers must review the measurements,
+                            operating conditions, sensor reliability,
+                            and maintenance records.
+                        </p>
+
+                    </div>
+
+                    <div class="ml-case-data ml-reveal">
+
+                        <div class="ml-data-row">
+                            <span>DATA INPUT 01</span>
+                            <strong>Temperature</strong>
+                        </div>
+
+                        <div class="ml-data-row">
+                            <span>DATA INPUT 02</span>
+                            <strong>Pressure</strong>
+                        </div>
+
+                        <div class="ml-data-row">
+                            <span>DATA INPUT 03</span>
+                            <strong>Vibration</strong>
+                        </div>
+
+                        <div class="ml-data-row">
+                            <span>DATA INPUT 04</span>
+                            <strong>Operating Load</strong>
+                        </div>
+
+                        <div class="ml-data-row">
+                            <span>MODEL OUTPUT</span>
+                            <strong>Condition Estimate</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 09: LIMITATIONS -->
+
+        <section class="ml-section" style="background:rgba(147,51,234,0.045);">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        09 / ENGINEERING LIMITATIONS
+                    </span>
+
+                    <h2>
+                        What Machine Learning
+                        <span>Cannot Guarantee.</span>
+                    </h2>
+
+                    <p>
+                        ML systems can provide valuable analytical support,
+                        but their predictions are not automatically
+                        accurate, reliable, or suitable for every
+                        operational situation.
+                    </p>
+                </div>
+
+                <div class="ml-limitations">
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Data Quality Problems</h3>
+                        <p>
+                            Missing measurements, incorrect labels,
+                            sensor errors, and inconsistent records
+                            can reduce model reliability.
+                        </p>
+                    </article>
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Overfitting</h3>
+                        <p>
+                            A model may memorize training examples
+                            and perform poorly when it encounters
+                            new operating conditions.
+                        </p>
+                    </article>
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Data Bias</h3>
+                        <p>
+                            Training data that does not represent
+                            the real operational environment may
+                            produce systematically unreliable results.
+                        </p>
+                    </article>
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Model Drift</h3>
+                        <p>
+                            Changes in equipment, operating practices,
+                            weather, or data distributions can reduce
+                            performance after deployment.
+                        </p>
+                    </article>
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Limited Explainability</h3>
+                        <p>
+                            Some complex models provide predictions
+                            that are difficult for operators to
+                            interpret and independently verify.
+                        </p>
+                    </article>
+
+                    <article class="ml-limitation ml-reveal">
+                        <h3 class="risk">Safety and Cybersecurity</h3>
+                        <p>
+                            Model outputs can be affected by manipulated
+                            data, compromised systems, or unsafe
+                            integration with operational technology.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 10: FUTURE -->
+
+        <section class="ml-section">
+            <div class="ml-container">
+
+                <div class="ml-heading ml-reveal">
+                    <span class="ml-label">
+                        10 / FUTURE DEVELOPMENTS
+                    </span>
+
+                    <h2>
+                        The Future of Machine Learning
+                        <span>in Maritime Operations.</span>
+                    </h2>
+
+                    <p>
+                        Machine learning is expected to remain an important
+                        part of maritime digitalization. Its future value
+                        will depend not only on more advanced algorithms,
+                        but also on reliable data, safe integration,
+                        technical standards, and qualified professionals.
+                    </p>
+                </div>
+
+                <div class="ml-applications-grid">
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">FUTURE 01</span>
+                        <h3>Edge Machine Learning</h3>
+                        <p>
+                            Running suitable models closer to onboard
+                            sensors and equipment can reduce dependence
+                            on continuous cloud connectivity.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">FUTURE 02</span>
+                        <h3>Digital Twins</h3>
+                        <p>
+                            ML models can help analyze data associated
+                            with digital representations of vessels
+                            and marine systems.
+                        </p>
+                    </article>
+
+                    <article class="ml-application ml-reveal">
+                        <span class="app-index">FUTURE 03</span>
+                        <h3>Human-AI Collaboration</h3>
+                        <p>
+                            Intelligent systems can support maritime
+                            professionals while preserving human
+                            supervision and operational accountability.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 11: QUIZ -->
+
+        <section class="ml-section ml-quiz-section" id="ml-quiz">
+            <div class="ml-container">
+
+                <div class="ml-heading center ml-reveal">
+                    <span class="ml-label">
+                        KNOWLEDGE ASSESSMENT
+                    </span>
+
+                    <h2>
+                        Test Your
+                        <span>Understanding.</span>
+                    </h2>
+
+                    <p>
+                        Complete all 20 questions to evaluate your
+                        understanding of machine learning concepts
+                        and their maritime engineering applications.
+                        Each question provides immediate feedback
+                        and an explanation.
+                    </p>
+                </div>
+
+                <div class="ml-quiz ml-reveal" id="mlQuiz">
+
+                    <div class="ml-quiz-top">
+                        <h3>Machine Learning Assessment</h3>
+                        <span class="ml-quiz-counter" id="mlQuizCounter">
+                            QUESTION 01 / 20
+                        </span>
+                    </div>
+
+                    <div class="ml-progress-track">
+                        <div class="ml-progress-fill" id="mlProgress"></div>
+                    </div>
+
+                    <div id="mlQuestionArea">
+
+                        <div class="ml-question">
+                            <h4 id="mlQuestionText"></h4>
+                            <div class="ml-options" id="mlOptions"></div>
+                            <div class="ml-feedback" id="mlFeedback"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="ml-quiz-navigation">
+
+                        <button class="ml-btn ml-btn-secondary"
+                                id="mlPrevious"
+                                disabled>
+                            ← PREVIOUS
+                        </button>
+
+                        <button class="ml-btn ml-btn-primary"
+                                id="mlNext"
+                                disabled>
+                            NEXT QUESTION →
+                        </button>
+
+                    </div>
+
+                    <div class="ml-result" id="mlResult">
+
+                        <span class="ml-label">
+                            ASSESSMENT COMPLETED
+                        </span>
+
+                        <h3>Your Learning Result</h3>
+
+                        <div class="ml-result-score" id="mlFinalScore">
+                            0 / 20
+                        </div>
+
+                        <p id="mlResultMessage"></p>
+
+                        <button class="ml-btn ml-btn-primary"
+                                id="mlRestart">
+                            RETAKE ASSESSMENT
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- 12: REFERENCES -->
+
+        <section class="ml-section">
+            <div class="ml-container">
+
+                <div class="ml-heading ml-reveal">
+                    <span class="ml-label">
+                        ACADEMIC REFERENCES
+                    </span>
+
+                    <h2>
+                        Explore the
+                        <span>Scientific Foundations.</span>
+                    </h2>
+
+                    <p>
+                        The following resources provide further reading
+                        on machine learning theory, algorithms,
+                        model evaluation, and practical implementation.
+                    </p>
+                </div>
+
+                <div class="ml-references">
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>1. Scikit-learn — Machine Learning Documentation</strong>
+                            <span>Algorithms, model selection, preprocessing, and evaluation.</span>
+                        </div>
+                        <a href="https://scikit-learn.org/stable/user_guide.html"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>2. Google — Machine Learning Crash Course</strong>
+                            <span>Foundational machine learning concepts and practical exercises.</span>
+                        </div>
+                        <a href="https://developers.google.com/machine-learning/crash-course"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>3. IBM — What Is Machine Learning?</strong>
+                            <span>Introduction to ML concepts and common learning approaches.</span>
+                        </div>
+                        <a href="https://www.ibm.com/think/topics/machine-learning"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>4. Stanford University — CS229</strong>
+                            <span>Machine Learning course materials and theoretical foundations.</span>
+                        </div>
+                        <a href="https://cs229.stanford.edu/"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>5. IMO — Digitalization in Shipping</strong>
+                            <span>Maritime digitalization context and industry developments.</span>
+                        </div>
+                        <a href="https://www.imo.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                    <div class="ml-reference ml-reveal">
+                        <div>
+                            <strong>6. UNCTAD — Review of Maritime Transport</strong>
+                            <span>Research and analysis of maritime transport developments.</span>
+                        </div>
+                        <a href="https://unctad.org/topic/transport-and-trade-logistics/review-of-maritime-transport"
+                           target="_blank" rel="noopener noreferrer">
+                            OPEN SOURCE ↗
+                        </a>
+                    </div>
+
+                </div>
+
+                <p class="ml-text" style="margin-top:22px;">
+                    Note: These references provide background learning
+                    material. Specific maritime machine learning
+                    applications should also be supported by relevant
+                    technical studies, validated datasets, and
+                    operational evidence.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="ml-footer">
+
+        <div class="ml-footer-logo">MARITERRA</div>
+
+        <p>
+            THE FUTURE OF MARITIME KNOWLEDGE
+            <br>
+            © 2026 MARITERRA. All rights reserved.
+            <br>
+            Designed & Developed by
+            <span class="developer">Engineer Zeinab Mohamed</span>
+        </p>
+
+        <a href="artificial-intelligence.html" class="ml-back">
+            ← RETURN TO THE LEARNING PATH
+        </a>
+
+    </footer>
+
+</div>
+
+
+<script>
+    // INTERACTIVE LEARNING LAB
+
+    const mlLabButtons = document.querySelectorAll(".ml-lab-button");
+    const mlLabResult = document.getElementById("mlLabResult");
+
+    const mlLabContent = {
+        supervised: {
+            title: "Supervised Learning",
+            description:
+                "The training dataset contains engine measurements paired with known condition labels. The model learns from these examples and can classify new observations. This approach requires suitable labeled training data."
+        },
+
+        unsupervised: {
+            title: "Unsupervised Learning",
+            description:
+                "The system receives engine measurements without predefined condition labels. It searches for groups, unusual patterns, and observations that differ from normal operating behavior. An engineer must investigate the findings."
+        },
+
+        reinforcement: {
+            title: "Reinforcement Learning",
+            description:
+                "An agent interacts with a simulated engine-control environment, selects actions, and receives reward feedback. It attempts to learn a useful control policy. Safety constraints and simulation validation are essential before any real-world consideration."
+        }
+    };
+
+    mlLabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+
+            const selected = button.dataset.lab;
+            const content = mlLabContent[selected];
+
+            mlLabButtons.forEach((item) => {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            mlLabResult.innerHTML = `
+                <h3>${content.title}</h3>
+                <p>${content.description}</p>
+            `;
+        });
+    });
+
+
+    // KNOWLEDGE ASSESSMENT
+
+    const mlQuestions = [
+        {
+            question: "1. What is the main purpose of Machine Learning?",
+            options: [
+                "To make computers operate without electricity",
+                "To enable systems to learn patterns from data",
+                "To replace all human decisions",
+                "To store unlimited information"
+            ],
+            answer: 1,
+            explanation: "Machine Learning enables systems to identify patterns from data and use learned relationships to make predictions or decisions."
+        },
+        {
+            question: "2. Which statement correctly describes the relationship between AI and ML?",
+            options: [
+                "AI and ML are completely unrelated",
+                "AI is a subset of ML",
+                "ML is a subset of AI",
+                "They always mean exactly the same thing"
+            ],
+            answer: 2,
+            explanation: "Artificial Intelligence is the broader field. Machine Learning is one approach within AI."
+        },
+        {
+            question: "3. What type of data is used in supervised learning?",
+            options: [
+                "Labeled training data",
+                "Only random numbers",
+                "Data without any input features",
+                "Only live video"
+            ],
+            answer: 0,
+            explanation: "Supervised learning uses input examples paired with known target labels or values."
+        },
+        {
+            question: "4. Which learning paradigm discovers patterns without predefined target labels?",
+            options: [
+                "Supervised learning",
+                "Reinforcement learning",
+                "Manual programming",
+                "Unsupervised learning"
+            ],
+            answer: 3,
+            explanation: "Unsupervised learning analyzes unlabeled data to discover structures, clusters, or unusual observations."
+        },
+        {
+            question: "5. What is the main feedback mechanism in reinforcement learning?",
+            options: [
+                "A fixed list of correct answers",
+                "Rewards and penalties",
+                "A database password",
+                "Image resolution"
+            ],
+            answer: 1,
+            explanation: "An agent receives rewards or penalties after taking actions in an environment and uses this feedback to improve its policy."
+        },
+        {
+            question: "6. Which example best represents supervised learning in marine engineering?",
+            options: [
+                "Grouping vessels without known categories",
+                "Randomly changing engine speed",
+                "Predicting engine condition using labeled historical measurements",
+                "Drawing a ship manually"
+            ],
+            answer: 2,
+            explanation: "Known engine condition labels allow a model to learn relationships between sensor measurements and the target condition."
+        },
+        {
+            question: "7. What is the purpose of data preprocessing?",
+            options: [
+                "To prepare and improve the usability of data",
+                "To remove every feature",
+                "To guarantee perfect predictions",
+                "To avoid model evaluation"
+            ],
+            answer: 0,
+            explanation: "Preprocessing can include cleaning, handling missing values, transforming variables, and preparing features."
+        },
+        {
+            question: "8. Why should a model be evaluated using unseen data?",
+            options: [
+                "To increase the size of the training set",
+                "To make the model memorize examples",
+                "To avoid measuring accuracy",
+                "To assess how well it generalizes to new observations"
+            ],
+            answer: 3,
+            explanation: "Unseen test data helps estimate performance on observations that were not used to train the model."
+        },
+        {
+            question: "9. Which algorithm is commonly used for regression tasks?",
+            options: [
+                "K-Means",
+                "Linear Regression",
+                "Random shuffle",
+                "Manual classification"
+            ],
+            answer: 1,
+            explanation: "Linear Regression models relationships between features and a continuous numerical target."
+        },
+        {
+            question: "10. What is the main purpose of K-Means?",
+            options: [
+                "Predicting a labeled target directly",
+                "Controlling a physical engine",
+                "Grouping similar observations into clusters",
+                "Encrypting maritime databases"
+            ],
+            answer: 2,
+            explanation: "K-Means is an unsupervised clustering algorithm that groups observations around cluster centers."
+        },
+        {
+            question: "11. What is overfitting?",
+            options: [
+                "A model performs well on training data but poorly on new data",
+                "A model has no training data",
+                "A model always produces correct predictions",
+                "A model uses too few features by definition"
+            ],
+            answer: 0,
+            explanation: "Overfitting occurs when a model learns training-specific patterns or noise and fails to generalize effectively."
+        },
+        {
+            question: "12. Which sensor measurement could be useful in engine condition analysis?",
+            options: [
+                "Website font size",
+                "Screen brightness",
+                "Browser history",
+                "Vibration measurements"
+            ],
+            answer: 3,
+            explanation: "Vibration measurements can contain useful information about machinery behavior and possible mechanical abnormalities."
+        },
+        {
+            question: "13. What is a feature in a machine learning dataset?",
+            options: [
+                "The final report design",
+                "An input variable used by the model",
+                "A website navigation button",
+                "A model's company name"
+            ],
+            answer: 1,
+            explanation: "A feature is an input variable that describes an observation, such as temperature, pressure, or operating load."
+        },
+        {
+            question: "14. What does model generalization mean?",
+            options: [
+                "Memorizing all training examples",
+                "Using only one data point",
+                "Performing effectively on relevant new data",
+                "Removing the evaluation stage"
+            ],
+            answer: 2,
+            explanation: "Generalization is the ability to apply learned relationships to new observations from the relevant problem domain."
+        },
+        {
+            question: "15. What is model drift?",
+            options: [
+                "A change that reduces model performance over time",
+                "A method for naming algorithms",
+                "An increase in screen resolution",
+                "A way to remove all training data"
+            ],
+            answer: 0,
+            explanation: "Changes in real-world data patterns can make a previously trained model less reliable after deployment."
+        },
+        {
+            question: "16. Which example is an unsupervised maritime application?",
+            options: [
+                "Training with labeled engine failures",
+                "Predicting a known target value",
+                "Learning from a reward signal",
+                "Grouping vessels according to similar operational patterns"
+            ],
+            answer: 3,
+            explanation: "Clustering vessels based on their characteristics or operational patterns is an example of unsupervised learning."
+        },
+        {
+            question: "17. Why is data quality important in maritime ML systems?",
+            options: [
+                "It eliminates the need for engineers",
+                "Poor or inaccurate data can produce unreliable outputs",
+                "It guarantees that all predictions are correct",
+                "It makes validation unnecessary"
+            ],
+            answer: 1,
+            explanation: "Sensor errors, missing measurements, and inconsistent records can negatively affect model training and predictions."
+        },
+        {
+            question: "18. What should happen when an ML model flags unusual engine behavior?",
+            options: [
+                "Immediately shut down every vessel",
+                "Assume the engine has definitely failed",
+                "Investigate the measurements and operating context",
+                "Delete all sensor records"
+            ],
+            answer: 2,
+            explanation: "An anomaly flag is an indication for further investigation, not definitive proof of equipment failure."
+        },
+        {
+            question: "19. What is one potential benefit of edge machine learning?",
+            options: [
+                "Processing suitable data closer to onboard devices",
+                "Removing all onboard sensors",
+                "Guaranteeing zero system failures",
+                "Preventing all network communication"
+            ],
+            answer: 0,
+            explanation: "Edge processing can reduce dependence on continuous cloud connectivity and may improve response time."
+        },
+        {
+            question: "20. What is the most appropriate role of ML in safety-critical maritime operations?",
+            options: [
+                "Replace every safety regulation",
+                "Make every decision without supervision",
+                "Guarantee that accidents cannot occur",
+                "Provide validated analytical support within safe operational procedures"
+            ],
+            answer: 3,
+            explanation: "Machine Learning can support professional decisions, but it must be validated, monitored, and integrated with safety procedures and human responsibility."
+        }
+    ];
+
+    let mlCurrentQuestion = 0;
+    let mlScore = 0;
+    let mlAnswers = new Array(mlQuestions.length).fill(null);
+
+    const mlQuestionText = document.getElementById("mlQuestionText");
+    const mlOptions = document.getElementById("mlOptions");
+    const mlFeedback = document.getElementById("mlFeedback");
+    const mlCounter = document.getElementById("mlQuizCounter");
+    const mlProgress = document.getElementById("mlProgress");
+    const mlPrevious = document.getElementById("mlPrevious");
+    const mlNext = document.getElementById("mlNext");
+    const mlQuestionArea = document.getElementById("mlQuestionArea");
+    const mlResult = document.getElementById("mlResult");
+
+    function renderMLQuestion() {
+
+        const current = mlQuestions[mlCurrentQuestion];
+        const previousAnswer = mlAnswers[mlCurrentQuestion];
+
+        mlCounter.textContent =
+            `QUESTION ${String(mlCurrentQuestion + 1).padStart(2, "0")} / 20`;
+
+        mlProgress.style.width =
+            `${((mlCurrentQuestion + 1) / mlQuestions.length) * 100}%`;
+
+        mlQuestionText.textContent = current.question;
+        mlOptions.innerHTML = "";
+        mlFeedback.className = "ml-feedback";
+        mlFeedback.innerHTML = "";
+
+        current.options.forEach((option, index) => {
+
+            const button = document.createElement("button");
+
+            button.className = "ml-option";
+            button.textContent =
+                `${String.fromCharCode(65 + index)}. ${option}`;
+
+            if (previousAnswer !== null) {
+
+                button.disabled = true;
+
+                if (index === current.answer) {
+                    button.classList.add("correct");
+                }
+
+                if (index === previousAnswer && previousAnswer !== current.answer) {
+                    button.classList.add("wrong");
+                }
+
+            }
+
+            button.addEventListener("click", () => {
+                selectMLAnswer(index);
+            });
+
+            mlOptions.appendChild(button);
+
+        });
+
+        if (previousAnswer !== null) {
+            showMLFeedback(previousAnswer);
+        }
+
+        mlPrevious.disabled = mlCurrentQuestion === 0;
+        mlNext.disabled = previousAnswer === null;
+
+        mlNext.textContent =
+            mlCurrentQuestion === mlQuestions.length - 1
+                ? "VIEW RESULTS →"
+                : "NEXT QUESTION →";
+    }
+
+
+    function selectMLAnswer(selectedIndex) {
+
+        if (mlAnswers[mlCurrentQuestion] !== null) {
+            return;
+        }
+
+        mlAnswers[mlCurrentQuestion] = selectedIndex;
+
+        if (selectedIndex === mlQuestions[mlCurrentQuestion].answer) {
+            mlScore++;
+        }
+
+        renderMLQuestion();
+    }
+
+
+    function showMLFeedback(selectedIndex) {
+
+        const current = mlQuestions[mlCurrentQuestion];
+        const isCorrect = selectedIndex === current.answer;
+
+        mlFeedback.className = "ml-feedback show";
+
+        const title = isCorrect
+            ? "✓ Correct Answer"
+            : "✕ Incorrect Answer";
+
+        const answerText =
+            current.options[current.answer];
+
+        mlFeedback.innerHTML = `
+            <strong>${title}</strong>
+            <div>Correct answer: ${answerText}</div>
+            <div>${current.explanation}</div>
+        `;
+    }
+
+
+    mlNext.addEventListener("click", () => {
+
+        if (mlCurrentQuestion < mlQuestions.length - 1) {
+
+            mlCurrentQuestion++;
+            renderMLQuestion();
+
+        } else {
+
+            showMLResult();
+
+        }
+
+    });
+
+
+    mlPrevious.addEventListener("click", () => {
+
+        if (mlCurrentQuestion > 0) {
+
+            mlCurrentQuestion--;
+            renderMLQuestion();
+
+        }
+
+    });
+
+
+    function showMLResult() {
+
+        mlQuestionArea.style.display = "none";
+        document.querySelector(".ml-quiz-navigation").style.display = "none";
+
+        mlResult.classList.add("show");
+
+        document.getElementById("mlFinalScore").textContent =
+            `${mlScore} / ${mlQuestions.length}`;
+
+        const percentage = (mlScore / mlQuestions.length) * 100;
+
+        let message;
+
+        if (percentage >= 90) {
+            message = "Excellent performance. You have demonstrated a strong understanding of Machine Learning fundamentals.";
+        } else if (percentage >= 75) {
+            message = "Very good work. You understand most of the key concepts. Review the explanations for the questions you missed.";
+        } else if (percentage >= 60) {
+            message = "Good progress. Review the learning paradigms, algorithms, and maritime examples to strengthen your understanding.";
+        } else {
+            message = "Keep learning. Revisit the main sections and try the assessment again to improve your understanding.";
+        }
+
+        document.getElementById("mlResultMessage").textContent =
+            `${percentage}% — ${message}`;
+    }
+
+
+    document.getElementById("mlRestart").addEventListener("click", () => {
+
+        mlCurrentQuestion = 0;
+        mlScore = 0;
+        mlAnswers = new Array(mlQuestions.length).fill(null);
+
+        mlQuestionArea.style.display = "block";
+        document.querySelector(".ml-quiz-navigation").style.display = "flex";
+
+        mlResult.classList.remove("show");
+
+        renderMLQuestion();
+
+        document.getElementById("ml-quiz").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+
+    renderMLQuestion();
+
+
+    // SCROLL REVEAL ANIMATION
+
+    const mlRevealElements = document.querySelectorAll(".ml-reveal");
+
+    if ("IntersectionObserver" in window) {
+
+        const mlObserver = new IntersectionObserver((entries, observer) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        }, {
+            threshold: 0.1
+        });
+
+        mlRevealElements.forEach((element) => {
+            mlObserver.observe(element);
+        });
+
+    } else {
+
+        mlRevealElements.forEach((element) => {
+            element.classList.add("visible");
+        });
+
+    }
+
+</script>
+
+</body>
+</html>

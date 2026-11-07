@@ -1,0 +1,1804 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore remote ship operations and maritime communication systems, including shore control centres, satellite communication, connectivity, latency, cybersecurity, human supervision, and communication-loss procedures.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Remote Operations and Communication</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101226;
+            --surface-light: #171a34;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a6a8c4;
+            --border: rgba(196, 181, 253, 0.17);
+            --success: #34d399;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            padding: 75px 0 55px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.12), rgba(56, 189, 248, 0.04));
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: var(--purple-light);
+        }
+
+        .topic-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            max-width: 950px;
+            margin-bottom: 22px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 850px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta span {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            color: var(--purple-light);
+        }
+
+        main {
+            padding: 55px 0 80px;
+        }
+
+        .content-section {
+            margin-bottom: 48px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgba(16, 18, 38, 0.78);
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            color: var(--purple-light);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--blue);
+            font-size: 1rem;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            color: var(--muted);
+            padding-left: 24px;
+            margin: 12px 0 18px;
+        }
+
+        li {
+            margin-bottom: 9px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .concept-card {
+            padding: 22px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+        }
+
+        .concept-card h3 {
+            margin-top: 0;
+        }
+
+        .concept-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .formula {
+            background: #090b1b;
+            border-left: 3px solid var(--purple);
+            padding: 20px;
+            margin: 18px 0;
+            border-radius: 8px;
+            color: var(--purple-light);
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .note {
+            padding: 18px 20px;
+            margin: 22px 0;
+            border-radius: 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .warning {
+            border-color: rgba(251, 113, 133, 0.35);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .process div {
+            text-align: center;
+            padding: 16px 10px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--purple-light);
+            font-size: 0.83rem;
+        }
+
+        .process div span {
+            display: block;
+            color: var(--blue);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        th {
+            background: var(--surface-light);
+            color: var(--purple-light);
+        }
+
+        .question {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin: 0 0 15px;
+        }
+
+        .option {
+            display: block;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-right: 9px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(52, 211, 153, 0.09);
+            color: var(--success);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(251, 113, 133, 0.08);
+            color: var(--danger);
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 15px;
+            margin-top: 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 13px 23px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            background: transparent;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+
+        #result {
+            display: none;
+            margin-top: 22px;
+            padding: 22px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid var(--blue);
+        }
+
+        #result h3 {
+            margin-top: 0;
+        }
+
+        .references li {
+            margin-bottom: 13px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 800px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-section {
+                padding: 22px 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 50px 0 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> /
+            <a href="autonomous-ships.html">Autonomous Ships</a> /
+            Topic 07
+        </div>
+
+        <div class="topic-number">AUTONOMOUS SHIPS — TOPIC 07</div>
+
+        <h1>Remote Operations and <span class="gradient">Communication</span></h1>
+
+        <p class="hero-description">
+            Explore how remote operators supervise autonomous vessels,
+            how shore control centres interact with ships, and how maritime
+            communication networks support monitoring, decision-making,
+            and operational safety.
+        </p>
+
+        <div class="meta">
+            <span>Maritime Communication</span>
+            <span>Remote Ship Operations</span>
+            <span>Shore Control Centres</span>
+            <span>Cybersecurity</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="content-section">
+        <h2>1. Introduction to Remote Ship Operations</h2>
+
+        <p>
+            Remote ship operations involve monitoring, supervising, or
+            controlling a vessel from a location outside the ship. This
+            location may be a shore control centre, a remote operations
+            facility, or another authorised control station.
+        </p>
+
+        <p>
+            Remote operations are particularly important in maritime
+            automation because they allow qualified personnel to monitor
+            vessel performance, review operational information, support
+            decision-making, and intervene when necessary.
+        </p>
+
+        <p>
+            The level of remote involvement varies. Some ships may operate
+            with onboard crews while receiving remote technical support.
+            Other systems may allow shore-based operators to supervise
+            specific functions or directly control certain vessel operations.
+        </p>
+
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>Remote Monitoring</h3>
+                <p>
+                    Observing vessel position, machinery status, alarms,
+                    sensor information, and operational performance from shore.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>Remote Assistance</h3>
+                <p>
+                    Providing information, recommendations, and technical
+                    support to onboard personnel or autonomous systems.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>Remote Control</h3>
+                <p>
+                    Sending authorised commands from a remote location to
+                    control selected vessel functions.
+                </p>
+            </div>
+        </div>
+
+        <div class="note">
+            <p>
+                <strong>Important distinction:</strong> Remote monitoring,
+                remote assistance, and remote control are not the same thing.
+                A vessel can be remotely monitored without being remotely
+                controlled.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>2. Shore Control Centres (SCCs)</h2>
+
+        <p>
+            A Shore Control Centre is a land-based facility used to monitor
+            or control vessels operating at sea. It may provide operators
+            with access to navigation information, machinery data,
+            communication systems, alarms, and operational tools.
+        </p>
+
+        <p>
+            Depending on the operational design, a centre may supervise
+            one vessel or coordinate the activities of several vessels.
+            The number of vessels an operator can supervise safely depends
+            on system complexity, workload, operational conditions,
+            and the support available.
+        </p>
+
+        <h3>2.1 Main Components of a Shore Control Centre</h3>
+
+        <ul>
+            <li>
+                <strong>Operator Workstations:</strong> Interfaces used to
+                monitor vessel information and issue authorised commands.
+            </li>
+            <li>
+                <strong>Navigation Displays:</strong> Present position,
+                routes, electronic charts, traffic information, and alerts.
+            </li>
+            <li>
+                <strong>Communication Systems:</strong> Maintain data and
+                voice communication with the vessel and relevant services.
+            </li>
+            <li>
+                <strong>Monitoring Platforms:</strong> Display machinery
+                performance, equipment status, and system health.
+            </li>
+            <li>
+                <strong>Alarm Management:</strong> Identifies abnormal
+                conditions and helps operators prioritise responses.
+            </li>
+            <li>
+                <strong>Cybersecurity Infrastructure:</strong> Protects
+                communication channels, systems, and operational access.
+            </li>
+            <li>
+                <strong>Backup Facilities:</strong> Support continuity
+                during equipment or facility failures.
+            </li>
+        </ul>
+
+        <h3>2.2 Operator Responsibilities</h3>
+
+        <p>
+            Remote operators may be responsible for reviewing vessel status,
+            monitoring alarms, evaluating abnormal situations, communicating
+            with the ship or other authorities, and initiating approved
+            responses.
+        </p>
+
+        <p>
+            Their responsibilities must be clearly defined. The system
+            should specify who has authority to issue commands, who is
+            responsible for operational decisions, and how control is
+            transferred when necessary.
+        </p>
+
+        <h3>2.3 Human-Machine Interface (HMI)</h3>
+
+        <p>
+            The Human-Machine Interface is the part of the system through
+            which operators interact with vessel technology. A good HMI
+            should present important information clearly and help operators
+            understand the current state of the vessel.
+        </p>
+
+        <ul>
+            <li>Clear navigation and machinery displays.</li>
+            <li>Prioritised alarms and warnings.</li>
+            <li>Visible communication and connection status.</li>
+            <li>Clear indication of control authority.</li>
+            <li>Command confirmation and feedback.</li>
+            <li>Recorded actions and operational events.</li>
+        </ul>
+
+        <div class="note">
+            <p>
+                A large number of screens does not necessarily create a
+                better control centre. Poorly organised information can
+                increase operator workload and delay important decisions.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>3. Maritime Communication Architecture</h2>
+
+        <p>
+            Remote operations depend on communication links that allow
+            information to travel between the vessel, shore control centre,
+            and other authorised systems.
+        </p>
+
+        <p>
+            Communication architecture defines how data is collected,
+            transmitted, received, protected, and delivered to the systems
+            that need it.
+        </p>
+
+        <h3>3.1 Ship-to-Shore Communication</h3>
+
+        <p>
+            Ship-to-shore communication transfers information from the
+            vessel to land-based facilities. Examples include position
+            reports, equipment status, sensor information, alarms,
+            operational records, and video feeds where supported.
+        </p>
+
+        <h3>3.2 Shore-to-Ship Communication</h3>
+
+        <p>
+            Shore-to-ship communication transfers information in the
+            opposite direction. It may include operational instructions,
+            route updates, authorised control commands, software updates,
+            and requests for additional information.
+        </p>
+
+        <h3>3.3 Communication Flow</h3>
+
+        <div class="process">
+            <div><span>01</span>Ship Sensors</div>
+            <div><span>02</span>Onboard Systems</div>
+            <div><span>03</span>Communication Link</div>
+            <div><span>04</span>Shore Centre</div>
+            <div><span>05</span>Operator Response</div>
+        </div>
+
+        <p>
+            Information collected onboard is processed and prepared for
+            transmission. The communication network carries the information
+            to the shore centre, where authorised personnel or software
+            systems interpret it and decide whether further action is needed.
+        </p>
+
+        <p>
+            If an authorised command is sent back to the vessel, the onboard
+            system must verify that the command is valid, permitted, and
+            consistent with the vessel's safety requirements.
+        </p>
+
+        <div class="note">
+            <p>
+                Communication should not be treated as an unrestricted path
+                from a shore computer to a ship's actuators. Authentication,
+                authorisation, command validation, and onboard safety
+                protections are essential.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>4. Maritime Communication Technologies</h2>
+
+        <p>
+            Ships operate across different geographic areas and environments.
+            No single communication technology provides every capability
+            under all conditions. Maritime communication systems therefore
+            use different technologies according to coverage, capacity,
+            reliability, and operational requirements.
+        </p>
+
+        <h3>4.1 Satellite Communication</h3>
+
+        <p>
+            Satellite communication enables ships to exchange information
+            over large distances, including in areas far from coastal
+            communication infrastructure.
+        </p>
+
+        <p>
+            Satellite services may support operational data, internet
+            connectivity, voice communication, monitoring information,
+            and other authorised applications.
+        </p>
+
+        <p>
+            Satellite systems differ in orbit, coverage, latency, capacity,
+            cost, and service characteristics.
+        </p>
+
+        <h3>4.2 Geostationary Earth Orbit (GEO)</h3>
+
+        <p>
+            Geostationary satellites orbit above the equator at an altitude
+            of approximately 35,786 kilometres. Their orbital period matches
+            Earth's rotation, making them appear stationary relative to a
+            point on the Earth's surface.
+        </p>
+
+        <p>
+            GEO systems can provide broad coverage, but the long signal
+            travel distance introduces noticeable communication latency.
+        </p>
+
+        <h3>4.3 Low Earth Orbit (LEO)</h3>
+
+        <p>
+            Low Earth Orbit satellites operate much closer to Earth than
+            GEO satellites. Their shorter distance can reduce signal
+            travel time, although coverage requires a constellation of
+            satellites and coordination as satellites move across the sky.
+        </p>
+
+        <h3>4.4 Medium Earth Orbit (MEO)</h3>
+
+        <p>
+            Medium Earth Orbit satellites operate between LEO and GEO
+            altitudes. They provide another option for satellite
+            communication and navigation-related services, depending
+            on the system design.
+        </p>
+
+        <h3>4.5 Terrestrial Communication</h3>
+
+        <p>
+            Near coastlines and in ports, terrestrial networks may provide
+            communication through cellular systems, coastal radio stations,
+            or other land-based infrastructure.
+        </p>
+
+        <p>
+            Cellular technologies can provide useful data connectivity
+            when coverage is available. However, they cannot be assumed
+            to provide continuous service across open oceans.
+        </p>
+
+        <h3>4.6 Maritime Radio Systems</h3>
+
+        <p>
+            Marine radio systems support ship-to-ship and ship-to-shore
+            communication. Depending on the equipment and operating area,
+            these may include VHF, MF, HF, and other radio services.
+        </p>
+
+        <p>
+            The Global Maritime Distress and Safety System (GMDSS) uses
+            designated communication and alerting arrangements to support
+            maritime distress, urgency, safety, and search-and-rescue
+            communication.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Technology</th>
+                        <th>Main Strength</th>
+                        <th>Important Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GEO Satellite</td>
+                        <td>Broad geographic coverage</td>
+                        <td>Higher signal travel latency</td>
+                    </tr>
+                    <tr>
+                        <td>LEO Satellite</td>
+                        <td>Potentially lower latency</td>
+                        <td>Requires constellation and handover management</td>
+                    </tr>
+                    <tr>
+                        <td>MEO Satellite</td>
+                        <td>Alternative orbit and service characteristics</td>
+                        <td>Performance depends on system design</td>
+                    </tr>
+                    <tr>
+                        <td>Cellular Networks</td>
+                        <td>High data capacity in covered areas</td>
+                        <td>Limited geographic coverage at sea</td>
+                    </tr>
+                    <tr>
+                        <td>VHF Radio</td>
+                        <td>Local maritime voice and data applications</td>
+                        <td>Limited range and propagation conditions</td>
+                    </tr>
+                    <tr>
+                        <td>HF Radio</td>
+                        <td>Long-distance radio communication</td>
+                        <td>Propagation and signal conditions vary</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note">
+            <p>
+                Different communication technologies are not automatically
+                interchangeable. A system must be designed around its
+                operational purpose, required availability, coverage,
+                and applicable maritime requirements.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>5. Communication Performance: Latency, Bandwidth and Reliability</h2>
+
+        <p>
+            A remote operation system must consider more than whether a
+            communication connection exists. The quality and timing of
+            transmitted information can directly affect operational decisions.
+        </p>
+
+        <h3>5.1 Latency</h3>
+
+        <p>
+            Latency is the time required for information to travel from
+            its source to its destination. In remote ship operations,
+            latency can affect how quickly an operator receives information
+            and how quickly a command reaches the vessel.
+        </p>
+
+        <div class="formula">
+            Round-Trip Time (RTT) =
+            Time from sending a message until its response is received
+        </div>
+
+        <p>
+            For example, if a remote operator sends a request and receives
+            confirmation after a delay, the operator must know whether
+            the information is still current enough to support the intended
+            action.
+        </p>
+
+        <h3>5.2 Bandwidth</h3>
+
+        <p>
+            Bandwidth describes the capacity of a communication link to
+            carry data over time. Video streams and large sensor datasets
+            generally require more bandwidth than short status messages.
+        </p>
+
+        <h3>5.3 Reliability and Availability</h3>
+
+        <p>
+            Reliability concerns whether a communication system performs
+            correctly over time. Availability concerns whether the service
+            is operational and accessible when needed.
+        </p>
+
+        <h3>5.4 Packet Loss</h3>
+
+        <p>
+            Packet loss occurs when some transmitted data packets fail
+            to reach their destination. Significant packet loss can
+            interrupt video, delay information, or affect data exchange.
+        </p>
+
+        <h3>5.5 Jitter</h3>
+
+        <p>
+            Jitter is variation in packet arrival time. Even if the
+            average delay is acceptable, inconsistent timing can affect
+            real-time communication and control applications.
+        </p>
+
+        <h3>5.6 Link Availability</h3>
+
+        <p>
+            A vessel may move between satellite coverage areas, coastal
+            networks, or different communication services. The system
+            must manage changes in available links without creating
+            unsafe interruptions.
+        </p>
+
+        <div class="note warning">
+            <p>
+                A communication connection that is technically active
+                may still be unsuitable for time-critical remote control.
+                Latency, data freshness, packet loss, and system health
+                must all be considered.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>6. Communication Redundancy and Network Management</h2>
+
+        <p>
+            Communication redundancy means providing alternative ways
+            to exchange information if a primary communication path
+            becomes unavailable or unreliable.
+        </p>
+
+        <h3>6.1 Multiple Communication Links</h3>
+
+        <p>
+            A vessel may use a combination of satellite, cellular,
+            and radio communication systems. The available combination
+            depends on vessel design and operational requirements.
+        </p>
+
+        <h3>6.2 Automatic Link Switching</h3>
+
+        <p>
+            Some communication architectures can switch between available
+            networks according to predefined policies. This process is
+            often called failover or link switching.
+        </p>
+
+        <p>
+            The switching process must consider whether the alternative
+            connection is authenticated, sufficiently reliable, and
+            suitable for the data being transmitted.
+        </p>
+
+        <h3>6.3 Data Prioritisation</h3>
+
+        <p>
+            When bandwidth is limited, systems may prioritise information
+            according to operational importance.
+        </p>
+
+        <ul>
+            <li>Critical safety alerts and emergency information.</li>
+            <li>Essential vessel status and navigation information.</li>
+            <li>Operational commands and confirmations.</li>
+            <li>Machinery monitoring information.</li>
+            <li>Non-essential video and general data.</li>
+        </ul>
+
+        <h3>6.4 Store-and-Forward Communication</h3>
+
+        <p>
+            Some non-time-critical information can be stored onboard
+            and transmitted later when a suitable connection becomes
+            available. This approach is useful for logs, reports,
+            and selected operational records.
+        </p>
+
+        <p>
+            However, delayed transmission is not appropriate for every
+            type of data. Time-critical safety information requires
+            a different handling strategy.
+        </p>
+
+        <h3>6.5 Network Monitoring</h3>
+
+        <p>
+            Network management systems can monitor connection status,
+            latency, bandwidth, packet loss, and other performance
+            indicators. These measurements help determine whether
+            a communication path remains suitable for its intended use.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>7. Remote Control and Operational Authority</h2>
+
+        <p>
+            Remote control requires more than transmitting commands.
+            The vessel and shore centre must have a clearly defined
+            arrangement for control authority, command validation,
+            acknowledgement, and emergency response.
+        </p>
+
+        <h3>7.1 Control Authority</h3>
+
+        <p>
+            Control authority identifies which person or system is
+            currently authorised to control a particular vessel function.
+            This may be an onboard operator, an automated onboard system,
+            or an authorised remote operator.
+        </p>
+
+        <h3>7.2 Command Authentication</h3>
+
+        <p>
+            The vessel should verify the identity of the source sending
+            a command. Authentication helps prevent unauthorised systems
+            or individuals from issuing operational instructions.
+        </p>
+
+        <h3>7.3 Command Authorisation</h3>
+
+        <p>
+            Authentication alone is not enough. Authorisation determines
+            whether the authenticated user or system has permission
+            to perform the requested action.
+        </p>
+
+        <h3>7.4 Command Validation</h3>
+
+        <p>
+            The onboard system should evaluate whether a command is
+            valid, correctly formatted, within permitted limits, and
+            compatible with the vessel's current operating state.
+        </p>
+
+        <h3>7.5 Command Acknowledgement</h3>
+
+        <p>
+            The system should provide clear feedback indicating whether
+            a command was received, accepted, rejected, or executed.
+            An operator should not assume that a command has been
+            successfully carried out merely because it was transmitted.
+        </p>
+
+        <h3>7.6 Transfer of Control</h3>
+
+        <p>
+            If control is transferred between onboard and remote systems,
+            the transition must be clearly managed. The system should
+            prevent conflicting commands and make the current control
+            authority visible to relevant operators.
+        </p>
+
+        <div class="note">
+            <p>
+                Control authority should be unambiguous. Two independent
+                operators or systems issuing conflicting commands can
+                create dangerous situations.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>8. Loss of Communication and Safe Response</h2>
+
+        <p>
+            Communication loss is one of the most important failure
+            scenarios in remote ship operations. It can occur because
+            of equipment failure, coverage gaps, severe weather,
+            interference, power problems, or cyber incidents.
+        </p>
+
+        <h3>8.1 Detecting Communication Failure</h3>
+
+        <p>
+            The vessel and shore centre may use connection monitoring,
+            heartbeat messages, timeout thresholds, and link-health
+            indicators to identify a failed or degraded connection.
+        </p>
+
+        <h3>8.2 Predefined Contingency Procedures</h3>
+
+        <p>
+            A vessel should have a defined response for different
+            communication failure conditions. The appropriate action
+            depends on the vessel's design, location, traffic situation,
+            weather, operational mode, and available onboard capabilities.
+        </p>
+
+        <h3>8.3 Possible Safe Responses</h3>
+
+        <ul>
+            <li>
+                <strong>Switch to an Alternative Link:</strong>
+                Use another available communication channel if it is
+                authorised and suitable.
+            </li>
+            <li>
+                <strong>Continue a Restricted Autonomous Mode:</strong>
+                Continue only if the onboard system can safely manage
+                the current situation under its approved operating limits.
+            </li>
+            <li>
+                <strong>Reduce Operational Complexity:</strong>
+                Avoid starting non-essential manoeuvres or operations
+                when supervision is unavailable.
+            </li>
+            <li>
+                <strong>Move to a Defined Safe Condition:</strong>
+                Execute a pre-assessed response appropriate to the
+                vessel and its environment.
+            </li>
+            <li>
+                <strong>Restore Contact:</strong>
+                Attempt communication recovery through approved
+                channels and procedures.
+            </li>
+        </ul>
+
+        <div class="note warning">
+            <p>
+                <strong>Critical safety point:</strong> There is no single
+                universal response to communication loss. A vessel should
+                not automatically stop in the middle of a traffic lane,
+                continue its route indefinitely, or perform an arbitrary
+                manoeuvre. Its response must be designed and validated
+                for its operational context.
+            </p>
+        </div>
+
+        <h3>8.4 Graceful Degradation</h3>
+
+        <p>
+            Graceful degradation means that a system reduces or disables
+            selected functions when important resources become unavailable,
+            while attempting to preserve essential safety functions.
+        </p>
+
+        <p>
+            For example, if video transmission becomes unavailable,
+            the vessel may still be able to send essential navigation
+            status messages through a lower-bandwidth connection.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>9. Cybersecurity in Remote Maritime Operations</h2>
+
+        <p>
+            Remote ship operations create communication paths between
+            vessels, shore facilities, service providers, and external
+            networks. These connections increase the importance of
+            cybersecurity.
+        </p>
+
+        <h3>9.1 Common Cybersecurity Threats</h3>
+
+        <ul>
+            <li>
+                <strong>Unauthorised Access:</strong>
+                Attackers may attempt to access control systems or
+                sensitive operational information.
+            </li>
+            <li>
+                <strong>Phishing:</strong>
+                Personnel may be tricked into revealing credentials
+                or opening malicious files.
+            </li>
+            <li>
+                <strong>Malware and Ransomware:</strong>
+                Malicious software can disrupt computers, networks,
+                and operational services.
+            </li>
+            <li>
+                <strong>Denial-of-Service Attacks:</strong>
+                Attackers may attempt to make communication services
+                unavailable.
+            </li>
+            <li>
+                <strong>Command Manipulation:</strong>
+                Attackers may attempt to alter, inject, or replay
+                unauthorised operational messages.
+            </li>
+            <li>
+                <strong>Data Interception:</strong>
+                Sensitive information may be exposed if communication
+                channels are not properly protected.
+            </li>
+        </ul>
+
+        <h3>9.2 Cybersecurity Protection Measures</h3>
+
+        <ul>
+            <li>Strong authentication and multi-factor authentication.</li>
+            <li>Encryption for sensitive communication.</li>
+            <li>Network segmentation between operational and business systems.</li>
+            <li>Role-based access control and least privilege.</li>
+            <li>Secure software updates and vulnerability management.</li>
+            <li>Continuous monitoring and security logging.</li>
+            <li>Incident response and recovery procedures.</li>
+            <li>Regular cybersecurity training for personnel.</li>
+        </ul>
+
+        <h3>9.3 Operational Technology (OT) Security</h3>
+
+        <p>
+            Operational Technology refers to systems that monitor or
+            control physical equipment and processes. In ships, OT may
+            include propulsion control, steering systems, machinery
+            automation, and other industrial control components.
+        </p>
+
+        <p>
+            OT security requires particular care because a cybersecurity
+            action that is acceptable in an ordinary office network
+            may disrupt a safety-critical vessel function.
+        </p>
+
+        <div class="note">
+            <p>
+                Cybersecurity must protect not only information
+                confidentiality but also the integrity and availability
+                of systems that influence physical vessel operations.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>10. Human Factors and Remote Operator Workload</h2>
+
+        <p>
+            Moving operational supervision from a ship to a shore centre
+            changes how people interact with maritime systems. It does
+            not remove the need for human judgement, training, and
+            clearly defined responsibilities.
+        </p>
+
+        <h3>10.1 Situational Awareness</h3>
+
+        <p>
+            Situational awareness is the operator's understanding of
+            what is happening, what it means, and what may happen next.
+            Remote operators may have to build this understanding
+            through electronic displays, sensor information, video,
+            alarms, and communication with the vessel.
+        </p>
+
+        <h3>10.2 Workload and Fatigue</h3>
+
+        <p>
+            Monitoring multiple vessels or complex systems can create
+            high mental workload. Long periods of monitoring may also
+            lead to fatigue and reduced attention.
+        </p>
+
+        <h3>10.3 Alarm Fatigue</h3>
+
+        <p>
+            Alarm fatigue occurs when operators receive excessive,
+            repetitive, or poorly prioritised alarms. Important warnings
+            may be overlooked when they are mixed with large numbers
+            of less important notifications.
+        </p>
+
+        <h3>10.4 Training and Competence</h3>
+
+        <p>
+            Remote operators require appropriate maritime knowledge,
+            technical training, familiarity with control interfaces,
+            and clear procedures for abnormal situations.
+        </p>
+
+        <h3>10.5 Human-Machine Teamwork</h3>
+
+        <p>
+            Autonomous systems and human operators must have clearly
+            defined roles. Operators need to understand system
+            capabilities, limitations, confidence levels, and the
+            conditions under which human intervention is required.
+        </p>
+
+        <div class="note">
+            <p>
+                Remote operation does not mean removing humans from
+                maritime safety. It changes where human supervision
+                takes place and how people interact with vessel systems.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>11. Regulatory and Operational Considerations</h2>
+
+        <p>
+            Remote ship operations must consider applicable international
+            conventions, flag-state requirements, coastal-state rules,
+            classification requirements, and the vessel's approved
+            operational arrangements.
+        </p>
+
+        <h3>11.1 IMO and Maritime Autonomous Surface Ships</h3>
+
+        <p>
+            The International Maritime Organization (IMO) has been
+            developing an international regulatory framework for
+            Maritime Autonomous Surface Ships (MASS).
+        </p>
+
+        <p>
+            The IMO's non-mandatory MASS Code was adopted in May 2026
+            and is intended to provide a framework addressing safety
+            and related considerations for autonomous ship operations.
+            Its scope and applicability must be checked against the
+            relevant ship type, voyage, and regulatory provisions.
+        </p>
+
+        <p>
+            Remote operation arrangements may involve questions about
+            the role of remote operators, responsibility, communication
+            reliability, control authority, and the relationship between
+            onboard and shore-based functions.
+        </p>
+
+        <h3>11.2 GMDSS and Emergency Communication</h3>
+
+        <p>
+            The Global Maritime Distress and Safety System is an
+            international maritime safety communication framework.
+            It supports distress alerting, safety information, and
+            communication arrangements for ships covered by the
+            relevant requirements.
+        </p>
+
+        <p>
+            Remote operational communication should not be assumed
+            to replace required distress and safety communication
+            equipment or procedures.
+        </p>
+
+        <h3>11.3 Responsibility and Accountability</h3>
+
+        <p>
+            Operational arrangements must clearly address who is
+            responsible for decisions and actions. Remote operation
+            does not automatically transfer every legal responsibility
+            from the shipowner, master, operator, or other relevant party
+            to a shore control centre.
+        </p>
+
+        <div class="note warning">
+            <p>
+                Regulatory requirements evolve. A technical learning
+                page is not a substitute for checking current IMO
+                instruments, flag-state rules, and the vessel's
+                applicable approvals before real-world operation.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>12. Practical Engineering Scenario</h2>
+
+        <p>
+            Consider an autonomous cargo vessel travelling on an
+            international voyage. Its shore control centre monitors
+            its route, machinery condition, and communication status.
+        </p>
+
+        <h3>Step 1 — Normal Operation</h3>
+        <p>
+            The vessel transmits position reports, navigation status,
+            equipment information, and selected sensor data to the
+            shore centre.
+        </p>
+
+        <h3>Step 2 — Communication Degradation</h3>
+        <p>
+            The primary satellite link experiences increasing latency
+            and packet loss. The communication monitoring system
+            identifies that the connection is becoming unreliable.
+        </p>
+
+        <h3>Step 3 — Network Response</h3>
+        <p>
+            The communication system evaluates whether an alternative
+            authorised link is available. Essential operational
+            information is prioritised.
+        </p>
+
+        <h3>Step 4 — Operator Awareness</h3>
+        <p>
+            The shore operator receives a warning that the primary
+            connection is degraded and reviews the vessel's latest
+            available status information.
+        </p>
+
+        <h3>Step 5 — Safe Operational Response</h3>
+        <p>
+            If the connection cannot be restored, the vessel follows
+            its approved contingency procedure. Its onboard systems
+            continue only those functions that are safe and supported
+            under the defined operating conditions.
+        </p>
+
+        <h3>Step 6 — Recovery and Verification</h3>
+        <p>
+            After communication is restored, the shore centre and
+            vessel verify connection integrity, exchange updated
+            operational information, and confirm the current control
+            authority before resuming any remote control activity.
+        </p>
+
+        <p>
+            This scenario demonstrates why remote operations require
+            communication redundancy, onboard autonomy, clear control
+            authority, and tested contingency procedures.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>13. Engineering Challenges and Future Developments</h2>
+
+        <h3>Current Engineering Challenges</h3>
+
+        <ul>
+            <li>Maintaining reliable connectivity over long maritime distances.</li>
+            <li>Managing latency and limited communication capacity.</li>
+            <li>Protecting communication networks from cyber threats.</li>
+            <li>Maintaining clear control authority during system transitions.</li>
+            <li>Designing safe responses to communication loss.</li>
+            <li>Reducing remote operator workload and alarm fatigue.</li>
+            <li>Integrating equipment from different manufacturers.</li>
+            <li>Meeting technical and regulatory requirements across jurisdictions.</li>
+        </ul>
+
+        <h3>Future Developments</h3>
+
+        <ul>
+            <li>
+                <strong>Hybrid Satellite Networks:</strong>
+                Combining different satellite services and terrestrial
+                networks to improve connectivity.
+            </li>
+            <li>
+                <strong>AI-Assisted Monitoring:</strong>
+                Helping operators identify abnormal patterns and
+                prioritise important events.
+            </li>
+            <li>
+                <strong>Predictive Communication Management:</strong>
+                Anticipating network degradation and preparing
+                alternative communication paths.
+            </li>
+            <li>
+                <strong>Advanced Digital Twins:</strong>
+                Providing remote operators with richer models of
+                vessel condition and behaviour.
+            </li>
+            <li>
+                <strong>Improved Cybersecurity:</strong>
+                Applying stronger identity management, monitoring,
+                and secure command validation.
+            </li>
+            <li>
+                <strong>Human-Centred Control Centres:</strong>
+                Improving interfaces, alarm design, workload management,
+                and operator decision support.
+            </li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>14. Key Takeaways</h2>
+
+        <ul>
+            <li>Remote operations allow authorised personnel to monitor, support, or control vessels from shore.</li>
+            <li>Remote monitoring is different from remote control.</li>
+            <li>Shore Control Centres provide interfaces and facilities for vessel supervision.</li>
+            <li>Ship-to-shore and shore-to-ship communication support information exchange.</li>
+            <li>Satellite, terrestrial, and radio systems provide different communication capabilities.</li>
+            <li>Latency, bandwidth, packet loss, jitter, and availability affect communication quality.</li>
+            <li>Redundant links and network monitoring can improve communication resilience.</li>
+            <li>Control authority and command validation must be clearly defined.</li>
+            <li>Communication-loss procedures must be designed for the vessel's actual operating context.</li>
+            <li>Cybersecurity and human factors are essential parts of safe remote operations.</li>
+        </ul>
+    </section>
+
+    <section class="content-section" id="quiz">
+        <h2>15. Knowledge Assessment</h2>
+
+        <p>
+            Answer all 10 questions to test your understanding of remote
+            ship operations and maritime communication. Submit your
+            answers to receive your score, corrections, and explanations.
+        </p>
+
+        <div id="questions"></div>
+
+        <div class="quiz-actions">
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+            <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+        </div>
+
+        <div id="result" aria-live="polite"></div>
+    </section>
+
+    <section class="content-section">
+        <h2>16. Technical References and Further Reading</h2>
+
+        <ul class="references">
+            <li>
+                <strong>International Maritime Organization (IMO):</strong>
+                <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                    Official maritime safety and regulatory resources.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — Maritime Autonomous Surface Ships:</strong>
+                <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                    IMO information and developments relating to autonomous ships.
+                </a>
+            </li>
+
+            <li>
+                <strong>IMO — Global Maritime Distress and Safety System:</strong>
+                <a href="https://www.imo.org/en/OurWork/Safety/Pages/RadioCommunications-Default.aspx" target="_blank" rel="noopener noreferrer">
+                    Maritime radio communication and safety information.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Telecommunication Union (ITU):</strong>
+                <a href="https://www.itu.int/" target="_blank" rel="noopener noreferrer">
+                    International telecommunications standards and radio regulations.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Association of Marine Aids to Navigation and Lighthouse Authorities (IALA):</strong>
+                <a href="https://www.iala.int/" target="_blank" rel="noopener noreferrer">
+                    Maritime navigation systems and technical guidance.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Organization for Standardization (ISO):</strong>
+                <a href="https://www.iso.org/" target="_blank" rel="noopener noreferrer">
+                    International standards, including information security and risk management.
+                </a>
+            </li>
+
+            <li>
+                <strong>International Electrotechnical Commission (IEC):</strong>
+                <a href="https://www.iec.ch/" target="_blank" rel="noopener noreferrer">
+                    Standards related to electrical, electronic, and industrial systems.
+                </a>
+            </li>
+
+            <li>
+                <strong>DNV — Maritime:</strong>
+                <a href="https://www.dnv.com/maritime/" target="_blank" rel="noopener noreferrer">
+                    Maritime technology, classification, and technical publications.
+                </a>
+            </li>
+        </ul>
+
+        <p>
+            These references are starting points for further study.
+            Specific remote-operation projects require applicable
+            regulatory instruments, technical standards, equipment
+            documentation, and vessel-specific risk assessments.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED
+    <br>
+    MARITERRA — EXPLORING THE FUTURE OF MARITIME TECHNOLOGY
+</footer>
+
+<script>
+    const quizData = [
+        {
+            question: "1. What is the main purpose of a Shore Control Centre?",
+            options: [
+                "To manufacture ship engines",
+                "To monitor, support, or control vessels from shore",
+                "To replace all maritime communication systems",
+                "To provide fuel directly to ships"
+            ],
+            answer: 1,
+            explanation: "A Shore Control Centre provides facilities and systems for authorised personnel to supervise or control vessel operations remotely."
+        },
+        {
+            question: "2. What is the difference between remote monitoring and remote control?",
+            options: [
+                "They always mean the same thing",
+                "Monitoring observes vessel information, while control involves issuing operational commands",
+                "Monitoring requires no communication",
+                "Remote control only means watching video"
+            ],
+            answer: 1,
+            explanation: "Remote monitoring involves observing vessel status. Remote control involves sending authorised commands that affect vessel functions."
+        },
+        {
+            question: "3. Which satellite orbit is commonly associated with satellites approximately 35,786 km above the equator?",
+            options: [
+                "Low Earth Orbit",
+                "Medium Earth Orbit",
+                "Geostationary Earth Orbit",
+                "Polar surface orbit"
+            ],
+            answer: 2,
+            explanation: "Geostationary satellites orbit at approximately 35,786 km above the equator and appear stationary relative to Earth's surface."
+        },
+        {
+            question: "4. What does communication latency describe?",
+            options: [
+                "The time delay in transmitting information",
+                "The physical size of a satellite",
+                "The amount of fuel used by a vessel",
+                "The number of crew members onboard"
+            ],
+            answer: 0,
+            explanation: "Latency is the time required for data to travel between communication endpoints. It can affect remote monitoring and control."
+        },
+        {
+            question: "5. What is bandwidth?",
+            options: [
+                "The vessel's maximum turning angle",
+                "The capacity of a communication link to carry data over time",
+                "The distance between two ports",
+                "The strength of a ship's hull"
+            ],
+            answer: 1,
+            explanation: "Bandwidth describes how much data a communication link can carry over a given period."
+        },
+        {
+            question: "6. Why is communication redundancy important?",
+            options: [
+                "It guarantees that no failure can ever occur",
+                "It provides alternative communication paths when a primary link fails",
+                "It removes the need for cybersecurity",
+                "It makes all communication systems identical"
+            ],
+            answer: 1,
+            explanation: "Redundancy provides alternative ways to communicate when a primary link becomes unavailable or unreliable."
+        },
+        {
+            question: "7. What should a vessel do if remote communication is lost?",
+            options: [
+                "Always stop immediately in its current position",
+                "Continue its route indefinitely",
+                "Follow a predefined and context-appropriate contingency procedure",
+                "Disable all onboard safety systems"
+            ],
+            answer: 2,
+            explanation: "The appropriate response depends on the vessel, location, traffic, weather, operating mode, and onboard capabilities. It must be predefined and validated."
+        },
+        {
+            question: "8. What is the purpose of command authentication?",
+            options: [
+                "To verify the identity of the command source",
+                "To increase the ship's speed",
+                "To calculate ocean depth",
+                "To replace navigation sensors"
+            ],
+            answer: 0,
+            explanation: "Authentication verifies who or what is sending a command and helps prevent unauthorised access."
+        },
+        {
+            question: "9. What does alarm fatigue mean in a remote control centre?",
+            options: [
+                "A vessel running out of electrical power",
+                "Operators becoming less responsive because of excessive or poorly prioritised alarms",
+                "A satellite changing its orbit",
+                "A failure of the ship's propulsion system"
+            ],
+            answer: 1,
+            explanation: "Excessive, repetitive, or poorly prioritised alarms can overwhelm operators and make important warnings easier to miss."
+        },
+        {
+            question: "10. Why should remote operational communication not be assumed to replace GMDSS requirements?",
+            options: [
+                "Because GMDSS supports specific maritime distress and safety communication functions",
+                "Because GMDSS is only used for entertainment",
+                "Because remote control systems cannot send any information",
+                "Because all ships use the same communication equipment"
+            ],
+            answer: 0,
+            explanation: "GMDSS is an international maritime safety communication framework. Remote operational links should not be assumed to replace required distress and safety arrangements."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById("questions");
+
+        container.innerHTML = quizData.map((item, index) => `
+            <div class="question" id="question-${index}">
+                <h3>${item.question}</h3>
+
+                ${item.options.map((option, optionIndex) => `
+                    <label class="option" id="option-${index}-${optionIndex}">
+                        <input
+                            type="radio"
+                            name="question-${index}"
+                            value="${optionIndex}"
+                        >
+                        ${option}
+                    </label>
+                `).join("")}
+
+                <div class="explanation" id="explanation-${index}"></div>
+            </div>
+        `).join("");
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let unanswered = 0;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            if (!selected) {
+                unanswered++;
+            }
+        });
+
+        if (unanswered > 0) {
+            alert(`Please answer all questions. Unanswered: ${unanswered}`);
+            return;
+        }
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            const selectedValue = Number(selected.value);
+
+            const correctOption = document.getElementById(
+                `option-${index}-${item.answer}`
+            );
+
+            const selectedOption = document.getElementById(
+                `option-${index}-${selectedValue}`
+            );
+
+            const explanation = document.getElementById(
+                `explanation-${index}`
+            );
+
+            if (selectedValue === item.answer) {
+                score++;
+                selectedOption.classList.add("correct");
+            } else {
+                selectedOption.classList.add("incorrect");
+                correctOption.classList.add("correct");
+            }
+
+            explanation.innerHTML = `
+                <strong>Correct answer:</strong>
+                ${item.options[item.answer]}
+                <br><br>
+                <strong>Explanation:</strong>
+                ${item.explanation}
+            `;
+
+            explanation.classList.add("show");
+
+            document.querySelectorAll(
+                `input[name="question-${index}"]`
+            ).forEach(input => input.disabled = true);
+        });
+
+        const percentage = (score / quizData.length) * 100;
+        let message = "";
+
+        if (percentage >= 90) {
+            message = "Excellent! You have a strong understanding of remote ship operations.";
+        } else if (percentage >= 70) {
+            message = "Good work! Review the explanations to strengthen your knowledge.";
+        } else if (percentage >= 50) {
+            message = "A fair attempt. Review the topic and try again.";
+        } else {
+            message = "You need more practice. Revisit the learning material before retrying.";
+        }
+
+        const result = document.getElementById("result");
+
+        result.innerHTML = `
+            <h3>Assessment Results</h3>
+            <p><strong>Score:</strong> ${score} / ${quizData.length}</p>
+            <p><strong>Percentage:</strong> ${percentage}%</p>
+            <p>${message}</p>
+            <p>Correct answers are highlighted in green.
+            Incorrect selections are highlighted in red.</p>
+        `;
+
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetQuiz() {
+        renderQuiz();
+
+        const result = document.getElementById("result");
+        result.style.display = "none";
+        result.innerHTML = "";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>

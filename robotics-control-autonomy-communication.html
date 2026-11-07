@@ -1,0 +1,2998 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore marine robotics control architectures, autonomy levels, mission planning, underwater communication, decision-making, and human-robot interaction.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Robotics Control, Autonomy & Communication</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --card: rgba(16, 19, 43, 0.9);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --blue: #2563eb;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #a1a1aa;
+            --border: rgba(192, 132, 252, 0.2);
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1150px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                radial-gradient(circle at 80% 40%, rgba(147,51,234,0.22), transparent 40%),
+                linear-gradient(110deg, #070816, #0d1027);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: -100px;
+            top: 30px;
+            border: 1px solid rgba(192,132,252,0.16);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 45px rgba(147,51,234,0.025),
+                0 0 0 90px rgba(147,51,234,0.02);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+            padding: 75px 0;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 5.3vw, 3.9rem);
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: #c4c4d0;
+            max-width: 760px;
+            font-size: 1.05rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .hero-tags span,
+        .tag {
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            background: rgba(147,51,234,0.1);
+            border-radius: 30px;
+            padding: 6px 13px;
+            font-size: 0.78rem;
+        }
+
+        /* MAIN CONTENT */
+
+        main {
+            padding: 55px 0 85px;
+        }
+
+        .section {
+            margin-bottom: 65px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-heading {
+            margin-bottom: 25px;
+        }
+
+        .section-heading .number {
+            color: var(--purple-light);
+            font-size: 0.76rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .section-heading h2 {
+            color: var(--white);
+            font-size: clamp(1.6rem, 4vw, 2.35rem);
+            line-height: 1.3;
+            margin: 7px 0;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            max-width: 850px;
+        }
+
+        .content-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 27px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            border-color: rgba(192,132,252,0.5);
+            transform: translateY(-3px);
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.18rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: #c7c7d2;
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 22px;
+            color: #c7c7d2;
+            margin: 12px 0;
+        }
+
+        .content-card li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #f0e5ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .three-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .small-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            transition: var(--transition);
+        }
+
+        .small-card:hover {
+            border-color: var(--purple-light);
+            transform: translateY(-3px);
+        }
+
+        .small-card h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .small-card p {
+            color: var(--muted);
+            font-size: 0.93rem;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .note {
+            border-left: 3px solid var(--purple);
+            background: rgba(147,51,234,0.08);
+            padding: 18px 22px;
+            border-radius: 0 10px 10px 0;
+            color: #d6c8e8;
+            margin: 20px 0;
+        }
+
+        .formula {
+            text-align: center;
+            padding: 22px;
+            background: rgba(147,51,234,0.09);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 18px 0;
+            color: var(--white);
+            font-size: 1.15rem;
+        }
+
+        .formula small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+            background: var(--card);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            color: #c7c7d2;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147,51,234,0.1);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PROCESS */
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .process-step {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147,51,234,0.08);
+        }
+
+        .process-step span {
+            display: block;
+            color: var(--purple-light);
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* QUIZ */
+
+        .quiz-container {
+            background: linear-gradient(145deg, rgba(147,51,234,0.12), rgba(12,16,36,0.95));
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 30px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: rgba(7,8,22,0.55);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .question h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #c7c7d2;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            background: rgba(147,51,234,0.1);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+            cursor: pointer;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(147,51,234,0.1);
+            color: #d8c6ee;
+            font-size: 0.9rem;
+        }
+
+        .question.correct {
+            border-color: #22c55e;
+        }
+
+        .question.incorrect {
+            border-color: #ef4444;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: 1px solid var(--purple);
+            padding: 12px 23px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            color: white;
+            background: var(--purple);
+        }
+
+        .btn-primary:hover {
+            background: #7e22ce;
+        }
+
+        .btn-secondary {
+            color: var(--purple-light);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(147,51,234,0.12);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147,51,234,0.1);
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .quiz-result p {
+            color: var(--text);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 850px) {
+            .three-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .process {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid,
+            .three-grid,
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 390px;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .nav-content {
+                min-height: 65px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+            <a href="marine-robotics.html" class="back-link">← Marine Robotics</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="eyebrow">MARINE ROBOTICS / TOPIC 07</div>
+
+                <h1>
+                    Robotics Control, <span>Autonomy & Communication</span>
+                </h1>
+
+                <p>
+                    Explore the intelligent systems that allow marine robots
+                    to interpret commands, control movement, plan missions,
+                    make decisions, and exchange information with operators
+                    and other vehicles. Understand how control architectures,
+                    autonomous behavior, and underwater communication
+                    work together in complex marine environments.
+                </p>
+
+                <div class="hero-tags">
+                    <span>Control Systems</span>
+                    <span>Autonomous Navigation</span>
+                    <span>Mission Planning</span>
+                    <span>Underwater Communication</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="section" id="introduction">
+            <div class="section-heading">
+                <span class="number">01 / FOUNDATIONS</span>
+                <h2>Understanding Control, Autonomy & Communication</h2>
+                <p>
+                    Marine robots require coordinated control and
+                    information systems to operate safely and
+                    effectively in complex underwater environments.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Are Robotics Control, Autonomy & Communication?</h3>
+
+                <p>
+                    Robotics control, autonomy, and communication are
+                    interconnected engineering disciplines that allow
+                    marine robotic platforms to perform movements,
+                    execute mission instructions, respond to sensor
+                    information, and exchange data.
+                </p>
+
+                <p>
+                    Control systems regulate how a vehicle moves and
+                    responds to commands. Autonomous systems allow
+                    it to perform selected tasks with limited or
+                    no continuous human intervention. Communication
+                    systems transfer commands, status information,
+                    and collected data between vehicles, operators,
+                    and supporting infrastructure.
+                </p>
+
+                <p>
+                    These technologies are essential in ROVs, AUVs,
+                    USVs, underwater gliders, and collaborative
+                    marine robotic systems.
+                </p>
+            </div>
+
+            <div class="three-grid">
+                <div class="small-card">
+                    <span class="tag">01</span>
+                    <h3>Control</h3>
+                    <p>
+                        Regulates movement, position, orientation,
+                        speed, and system responses.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <span class="tag">02</span>
+                    <h3>Autonomy</h3>
+                    <p>
+                        Enables vehicles to execute tasks,
+                        interpret observations, and make
+                        selected decisions independently.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <span class="tag">03</span>
+                    <h3>Communication</h3>
+                    <p>
+                        Exchanges commands, telemetry, status
+                        information, and mission data.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                <strong>Important distinction:</strong>
+                A vehicle can have automatic control without being
+                fully autonomous. For example, an ROV may automatically
+                maintain its depth while the operator remains responsible
+                for navigation and mission decisions.
+            </div>
+        </section>
+
+        <!-- 02 CONTROL SYSTEMS -->
+
+        <section class="section" id="control">
+            <div class="section-heading">
+                <span class="number">02 / CONTROL ENGINEERING</span>
+                <h2>Fundamentals of Marine Robot Control</h2>
+                <p>
+                    Control systems translate desired vehicle behavior
+                    into commands that operate motors, thrusters,
+                    rudders, and other actuators.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Is a Control System?</h3>
+
+                <p>
+                    A control system is an arrangement of hardware
+                    and software that manages the behavior of a
+                    dynamic system.
+                </p>
+
+                <p>
+                    In marine robotics, a controller receives
+                    information about the vehicle's current state,
+                    compares it with a desired state, and calculates
+                    the control action needed to reduce the difference.
+                </p>
+
+                <p>
+                    The controller may send commands to thrusters,
+                    steering mechanisms, buoyancy systems, or
+                    other actuators depending on the vehicle design.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Open-Loop Control</h3>
+
+                <p>
+                    Open-loop control applies a command without
+                    using feedback from the system output to
+                    correct the command.
+                </p>
+
+                <p>
+                    For example, a controller may activate a
+                    motor for a specified duration without
+                    measuring whether the vehicle actually
+                    reaches the intended position.
+                </p>
+
+                <ul>
+                    <li>Simple control structure.</li>
+                    <li>Does not require output feedback.</li>
+                    <li>Cannot automatically correct disturbances.</li>
+                    <li>May be unsuitable for precise underwater positioning.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Closed-Loop Control</h3>
+
+                <p>
+                    Closed-loop control uses feedback to compare
+                    the actual system output with a desired
+                    reference value.
+                </p>
+
+                <p>
+                    The controller calculates the error and
+                    adjusts its output to reduce that error.
+                </p>
+
+                <div class="formula">
+                    Error = Desired State − Measured State
+                    <small>
+                        The controller uses this difference to
+                        determine an appropriate control action.
+                    </small>
+                </div>
+
+                <p>
+                    For example, an underwater vehicle commanded
+                    to maintain a depth of 20 meters can use
+                    pressure sensor measurements to estimate
+                    its current depth and adjust vertical thrust.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Feedback Control Architecture</h3>
+
+                <p>
+                    A typical feedback control loop includes:
+                </p>
+
+                <ol>
+                    <li>
+                        <strong>Reference:</strong>
+                        The desired position, depth, heading, or speed.
+                    </li>
+                    <li>
+                        <strong>Sensor measurement:</strong>
+                        Information describing the current vehicle state.
+                    </li>
+                    <li>
+                        <strong>Error calculation:</strong>
+                        Comparison between desired and measured values.
+                    </li>
+                    <li>
+                        <strong>Controller:</strong>
+                        Calculates the required control response.
+                    </li>
+                    <li>
+                        <strong>Actuator:</strong>
+                        Executes the command through motors or thrusters.
+                    </li>
+                    <li>
+                        <strong>Feedback:</strong>
+                        New measurements update the control process.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h3>PID Control</h3>
+
+                <p>
+                    Proportional-Integral-Derivative (PID) control
+                    is a widely used feedback control method.
+                    It calculates a control output using three
+                    components of the control error.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Proportional (P):</strong>
+                        Responds to the current error.
+                    </li>
+                    <li>
+                        <strong>Integral (I):</strong>
+                        Responds to accumulated error over time.
+                    </li>
+                    <li>
+                        <strong>Derivative (D):</strong>
+                        Responds to the rate at which error changes.
+                    </li>
+                </ul>
+
+                <div class="formula">
+                    u(t) = Kp e(t) + Ki ∫e(t)dt + Kd de(t)/dt
+                    <small>
+                        Simplified continuous-time PID equation.
+                    </small>
+                </div>
+
+                <p>
+                    PID controllers can be used for depth,
+                    heading, speed, and other control tasks.
+                    Their performance depends on correct tuning,
+                    system dynamics, sensor quality, and operating conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Advanced Control Methods</h3>
+
+                <p>
+                    More demanding missions may require control
+                    methods beyond conventional PID.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Model Predictive Control (MPC):</strong>
+                        Uses a model to predict future behavior
+                        and optimize control actions over a
+                        prediction horizon.
+                    </li>
+                    <li>
+                        <strong>Adaptive Control:</strong>
+                        Adjusts controller behavior when system
+                        characteristics change or are uncertain.
+                    </li>
+                    <li>
+                        <strong>Robust Control:</strong>
+                        Seeks reliable performance despite
+                        disturbances and modeling uncertainty.
+                    </li>
+                    <li>
+                        <strong>Nonlinear Control:</strong>
+                        Addresses systems whose dynamics cannot
+                        be accurately represented by simple
+                        linear relationships.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 03 CONTROL ARCHITECTURE -->
+
+        <section class="section" id="architecture">
+            <div class="section-heading">
+                <span class="number">03 / SYSTEM ARCHITECTURE</span>
+                <h2>Marine Robotics Control Architecture</h2>
+                <p>
+                    A control architecture organizes the components
+                    responsible for sensing, decision-making,
+                    movement, and supervision.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Major Architecture Components</h3>
+
+                <ul>
+                    <li>
+                        <strong>Perception layer:</strong>
+                        Processes sensor information about the
+                        vehicle and its surroundings.
+                    </li>
+                    <li>
+                        <strong>State estimation:</strong>
+                        Estimates position, velocity, orientation,
+                        and other vehicle states.
+                    </li>
+                    <li>
+                        <strong>Guidance:</strong>
+                        Determines the desired direction,
+                        path, or trajectory.
+                    </li>
+                    <li>
+                        <strong>Control:</strong>
+                        Calculates the commands required to
+                        follow the guidance instructions.
+                    </li>
+                    <li>
+                        <strong>Actuation:</strong>
+                        Converts commands into physical movement.
+                    </li>
+                    <li>
+                        <strong>Mission management:</strong>
+                        Coordinates high-level tasks,
+                        operational modes, and mission progress.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Guidance, Navigation, and Control (GNC)</h3>
+
+                <p>
+                    GNC is a common engineering framework for
+                    organizing vehicle movement and navigation.
+                </p>
+
+                <p>
+                    Although the three functions are closely
+                    connected, they have different responsibilities.
+                </p>
+
+                <div class="grid">
+                    <div class="small-card">
+                        <h3>Guidance</h3>
+                        <p>
+                            Determines where the vehicle should
+                            go and how it should follow the
+                            planned path.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <h3>Navigation</h3>
+                        <p>
+                            Estimates where the vehicle is,
+                            how it is moving, and its orientation.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <h3>Control</h3>
+                        <p>
+                            Produces actuator commands to
+                            achieve the desired vehicle behavior.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <h3>Integration</h3>
+                        <p>
+                            Combines the three functions
+                            into a coordinated vehicle operation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Sensor Fusion and State Estimation</h3>
+
+                <p>
+                    Marine vehicles may combine information
+                    from several sensors to estimate their
+                    movement and orientation.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>IMU:</strong>
+                        Measures angular velocity and acceleration.
+                    </li>
+                    <li>
+                        <strong>Pressure sensor:</strong>
+                        Provides depth-related measurements.
+                    </li>
+                    <li>
+                        <strong>Compass:</strong>
+                        Provides heading information.
+                    </li>
+                    <li>
+                        <strong>DVL:</strong>
+                        Measures vehicle velocity relative
+                        to the bottom or surrounding water,
+                        depending on its operating mode.
+                    </li>
+                    <li>
+                        <strong>Acoustic positioning:</strong>
+                        Can provide position information using
+                        external acoustic references.
+                    </li>
+                </ul>
+
+                <p>
+                    Sensor fusion combines measurements to
+                    improve state estimation and reduce the
+                    weaknesses of individual sensors.
+                </p>
+
+                <p>
+                    Techniques may include Kalman filtering,
+                    Extended Kalman Filters (EKF), and
+                    other estimation algorithms.
+                </p>
+            </div>
+
+            <div class="note">
+                Underwater navigation cannot normally rely on
+                GPS while submerged. Vehicles must use suitable
+                combinations of inertial, acoustic, velocity,
+                depth, and environmental measurements.
+                Sensor fusion can reduce estimation errors,
+                but it does not eliminate every source of uncertainty.
+            </div>
+        </section>
+
+        <!-- 04 AUTONOMY -->
+
+        <section class="section" id="autonomy">
+            <div class="section-heading">
+                <span class="number">04 / AUTONOMOUS SYSTEMS</span>
+                <h2>Understanding Autonomy in Marine Robotics</h2>
+                <p>
+                    Autonomy describes the ability of a robotic
+                    system to perform tasks and make selected
+                    decisions without requiring continuous
+                    human control.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Is Autonomous Operation?</h3>
+
+                <p>
+                    An autonomous marine robot uses onboard
+                    sensors, software, control systems, and
+                    decision-making logic to execute a mission.
+                </p>
+
+                <p>
+                    Before deployment, operators may define
+                    mission objectives, operating boundaries,
+                    waypoints, safety rules, and recovery conditions.
+                </p>
+
+                <p>
+                    During operation, the vehicle uses its
+                    onboard systems to follow the mission
+                    and respond to selected events.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Levels of Operational Autonomy</h3>
+
+                <p>
+                    There is no single universal autonomy scale
+                    used by every marine robotics manufacturer.
+                    The following levels provide a practical
+                    educational classification.
+                </p>
+
+                <div class="grid">
+                    <div class="small-card">
+                        <span class="tag">LEVEL 01</span>
+                        <h3>Direct Teleoperation</h3>
+                        <p>
+                            A human operator continuously sends
+                            movement commands and supervises
+                            vehicle behavior.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <span class="tag">LEVEL 02</span>
+                        <h3>Assisted Control</h3>
+                        <p>
+                            The vehicle automatically maintains
+                            selected states, such as depth,
+                            heading, or altitude, while the
+                            operator remains in control.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <span class="tag">LEVEL 03</span>
+                        <h3>Supervised Autonomy</h3>
+                        <p>
+                            The vehicle executes defined tasks
+                            independently while a human
+                            monitors mission progress and
+                            can intervene when communication allows.
+                        </p>
+                    </div>
+
+                    <div class="small-card">
+                        <span class="tag">LEVEL 04</span>
+                        <h3>Adaptive Autonomy</h3>
+                        <p>
+                            The vehicle can adjust selected
+                            mission actions according to
+                            environmental observations,
+                            constraints, or unexpected events.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Autonomy Does Not Mean No Human Involvement</h3>
+
+                <p>
+                    Autonomous operation does not automatically
+                    mean that a vehicle can perform every mission
+                    without supervision.
+                </p>
+
+                <p>
+                    Humans may still be responsible for mission
+                    planning, deployment, safety constraints,
+                    monitoring, recovery, data validation,
+                    and maintenance.
+                </p>
+
+                <p>
+                    The appropriate level of autonomy depends
+                    on the mission's risk, environment,
+                    vehicle capability, and communication availability.
+                </p>
+            </div>
+        </section>
+
+        <!-- 05 MISSION PLANNING -->
+
+        <section class="section" id="mission-planning">
+            <div class="section-heading">
+                <span class="number">05 / AUTONOMOUS OPERATION</span>
+                <h2>Mission Planning and Decision-Making</h2>
+                <p>
+                    Mission planning defines what the vehicle
+                    should accomplish, where it should operate,
+                    and how it should respond to different situations.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Mission Planning Fundamentals</h3>
+
+                <p>
+                    A mission plan is a structured set of
+                    objectives, navigation instructions,
+                    operational limits, and decision rules.
+                </p>
+
+                <p>
+                    An underwater survey mission, for example,
+                    may specify an area to map, a target depth,
+                    a desired survey pattern, sensor settings,
+                    and a recovery location.
+                </p>
+
+                <ul>
+                    <li>Define the mission objective.</li>
+                    <li>Specify the operational area.</li>
+                    <li>Set waypoints and planned trajectories.</li>
+                    <li>Define depth, speed, and safety constraints.</li>
+                    <li>Configure sensor and data collection schedules.</li>
+                    <li>Estimate energy requirements.</li>
+                    <li>Define recovery and contingency behavior.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Path Planning vs. Trajectory Tracking</h3>
+
+                <p>
+                    Path planning and trajectory tracking are
+                    related but different engineering functions.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Path planning:</strong>
+                        Determines a suitable route from a
+                        starting location to a destination,
+                        considering obstacles and constraints.
+                    </li>
+                    <li>
+                        <strong>Trajectory planning:</strong>
+                        Adds time and motion requirements to
+                        the planned route, such as speed,
+                        acceleration, and arrival timing.
+                    </li>
+                    <li>
+                        <strong>Trajectory tracking:</strong>
+                        Uses navigation and control systems
+                        to follow the desired trajectory.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Decision-Making Systems</h3>
+
+                <p>
+                    Decision-making logic allows a vehicle
+                    to select an action based on sensor
+                    information, mission objectives, and
+                    predefined constraints.
+                </p>
+
+                <p>
+                    A vehicle may be programmed to change
+                    its behavior when it detects an obstacle,
+                    low battery reserves, unexpected depth,
+                    or a sensor fault.
+                </p>
+
+                <p>
+                    Decision-making methods can include:
+                </p>
+
+                <ul>
+                    <li>Rule-based decision systems.</li>
+                    <li>Finite State Machines (FSM).</li>
+                    <li>Behavior-based control.</li>
+                    <li>Optimization-based decision methods.</li>
+                    <li>Machine learning and selected AI methods.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Finite State Machines (FSM)</h3>
+
+                <p>
+                    A Finite State Machine represents system
+                    behavior through a set of defined states
+                    and transitions between them.
+                </p>
+
+                <p>
+                    An AUV mission may use states such as:
+                </p>
+
+                <ol>
+                    <li>Pre-deployment checks.</li>
+                    <li>Mission initialization.</li>
+                    <li>Underwater navigation.</li>
+                    <li>Survey or inspection.</li>
+                    <li>Obstacle response.</li>
+                    <li>Return or recovery.</li>
+                    <li>Mission completion.</li>
+                </ol>
+
+                <p>
+                    A transition occurs when a specific
+                    condition is satisfied, such as reaching
+                    a waypoint or detecting a fault.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Obstacle Detection and Avoidance</h3>
+
+                <p>
+                    Marine robots may encounter rocks,
+                    underwater structures, cables, marine
+                    organisms, and other obstacles.
+                </p>
+
+                <p>
+                    Obstacle avoidance systems use sensors
+                    such as sonar, cameras, and other
+                    environmental instruments to detect
+                    potential hazards.
+                </p>
+
+                <p>
+                    The autonomy system may evaluate the
+                    detected obstacle and select a safe
+                    response, such as changing heading,
+                    adjusting depth, slowing down, or
+                    stopping the mission.
+                </p>
+            </div>
+        </section>
+
+        <!-- 06 AI -->
+
+        <section class="section" id="ai">
+            <div class="section-heading">
+                <span class="number">06 / INTELLIGENT SYSTEMS</span>
+                <h2>Artificial Intelligence in Marine Robotics</h2>
+                <p>
+                    AI can support perception, classification,
+                    planning, and selected decision-making tasks
+                    in marine robotic platforms.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>AI-Based Perception</h3>
+
+                <p>
+                    AI-based perception uses algorithms to
+                    interpret information collected by sensors.
+                </p>
+
+                <p>
+                    For example, computer vision models can
+                    process underwater images to identify
+                    objects, inspect structures, or classify
+                    marine organisms.
+                </p>
+
+                <p>
+                    Sonar-processing algorithms can also help
+                    interpret acoustic observations and
+                    identify features in underwater environments.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Machine Learning</h3>
+
+                    <p>
+                        Machine learning algorithms identify
+                        patterns in data and use learned
+                        relationships to support prediction
+                        or classification.
+                    </p>
+
+                    <p>
+                        Applications include environmental
+                        classification, sensor anomaly detection,
+                        and predictive maintenance.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Reinforcement Learning</h3>
+
+                    <p>
+                        Reinforcement learning trains an
+                        agent to select actions through
+                        interactions with an environment
+                        or simulation.
+                    </p>
+
+                    <p>
+                        Research applications include
+                        adaptive control, navigation,
+                        and decision-making.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>AI-Based Navigation Support</h3>
+
+                    <p>
+                        Learning-based algorithms may help
+                        estimate environmental conditions,
+                        identify obstacles, and support
+                        route selection.
+                    </p>
+
+                    <p>
+                        Their reliability must be validated
+                        under realistic underwater conditions.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Predictive Maintenance</h3>
+
+                    <p>
+                        AI can analyze motor measurements,
+                        battery data, vibration, and
+                        temperature to identify patterns
+                        associated with equipment degradation.
+                    </p>
+
+                    <p>
+                        This can support earlier maintenance
+                        decisions when reliable data is available.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                AI is not a substitute for safety engineering.
+                A model that performs well in simulation may
+                fail in real water because of sensor noise,
+                poor visibility, unfamiliar environments,
+                or conditions missing from its training data.
+            </div>
+        </section>
+
+        <!-- 07 COMMUNICATION -->
+
+        <section class="section" id="communication">
+            <div class="section-heading">
+                <span class="number">07 / COMMUNICATION SYSTEMS</span>
+                <h2>Underwater Communication Technologies</h2>
+                <p>
+                    Communication allows marine robots to
+                    exchange information with operators,
+                    support vessels, underwater instruments,
+                    and other robotic platforms.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Why Is Underwater Communication Difficult?</h3>
+
+                <p>
+                    Communication underwater is more challenging
+                    than ordinary wireless communication in air.
+                    Radio-frequency signals are strongly attenuated
+                    in seawater, especially over practical
+                    underwater operating distances.
+                </p>
+
+                <p>
+                    As a result, underwater systems commonly
+                    use acoustic communication, while optical
+                    and specialized electromagnetic methods
+                    are used in more limited conditions.
+                </p>
+
+                <p>
+                    Each technology has different limitations
+                    involving range, data rate, latency,
+                    water conditions, and equipment requirements.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Acoustic Communication</h3>
+
+                <p>
+                    Underwater acoustic communication uses
+                    sound waves to transmit digital information
+                    through water.
+                </p>
+
+                <p>
+                    Acoustic modems convert digital data into
+                    acoustic signals and recover information
+                    from received signals.
+                </p>
+
+                <p>
+                    This technology is useful for underwater
+                    telemetry, selected command messages,
+                    positioning support, and data exchange
+                    between underwater equipment.
+                </p>
+
+                <ul>
+                    <li>Can support communication over relatively long underwater distances.</li>
+                    <li>Does not require a physical tether.</li>
+                    <li>Usually has lower data rates than many optical links.</li>
+                    <li>Propagation delay can be significant.</li>
+                    <li>Performance is affected by noise and multipath propagation.</li>
+                    <li>Available bandwidth depends on range and operating conditions.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Optical Underwater Communication</h3>
+
+                <p>
+                    Optical communication uses light to transmit
+                    information through water, often using
+                    LED or laser-based systems.
+                </p>
+
+                <p>
+                    It can provide high data rates over
+                    relatively short distances when water
+                    conditions and alignment are suitable.
+                </p>
+
+                <ul>
+                    <li>Potentially high data-transfer rates.</li>
+                    <li>Low propagation latency.</li>
+                    <li>Limited by water turbidity and optical attenuation.</li>
+                    <li>Requires suitable transmitter-receiver alignment.</li>
+                    <li>Usually more suitable for short-range links.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Electromagnetic Communication Underwater</h3>
+
+                <p>
+                    Electromagnetic communication uses
+                    electromagnetic fields to transmit
+                    information.
+                </p>
+
+                <p>
+                    Conventional radio communication is
+                    strongly limited underwater because
+                    seawater is conductive and attenuates
+                    radio-frequency signals.
+                </p>
+
+                <p>
+                    Specialized low-frequency electromagnetic
+                    methods may be used in selected applications,
+                    particularly over limited distances or
+                    in shallow-water conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Tether-Based Communication</h3>
+
+                <p>
+                    A tether or umbilical can connect an
+                    underwater ROV to a surface control station.
+                </p>
+
+                <p>
+                    Depending on the system design, the tether
+                    may carry electrical power and communication
+                    signals through copper conductors or
+                    fiber-optic links.
+                </p>
+
+                <p>
+                    Tether-based systems can provide a
+                    high-capacity communication connection,
+                    but the physical cable introduces
+                    operational constraints involving
+                    movement, entanglement, drag, and cable management.
+                </p>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technology</th>
+                            <th>Main Advantage</th>
+                            <th>Main Limitation</th>
+                            <th>Typical Use</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Acoustic</td>
+                            <td>Longer underwater range</td>
+                            <td>Limited bandwidth and latency</td>
+                            <td>Underwater telemetry and commands</td>
+                        </tr>
+
+                        <tr>
+                            <td>Optical</td>
+                            <td>High data rate</td>
+                            <td>Short range and water clarity dependence</td>
+                            <td>Short-range data transfer</td>
+                        </tr>
+
+                        <tr>
+                            <td>Electromagnetic</td>
+                            <td>Low latency in suitable conditions</td>
+                            <td>Strong seawater attenuation</td>
+                            <td>Specialized short-range applications</td>
+                        </tr>
+
+                        <tr>
+                            <td>Tether / Fiber Optic</td>
+                            <td>High-capacity wired connection</td>
+                            <td>Physical cable constraints</td>
+                            <td>ROV control and data links</td>
+                        </tr>
+
+                        <tr>
+                            <td>Satellite / Radio</td>
+                            <td>Long-distance surface communication</td>
+                            <td>Requires suitable above-water operation</td>
+                            <td>Surfaced vehicle communication</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note">
+                Underwater vehicles generally cannot use ordinary
+                GPS or satellite communication while submerged.
+                A vehicle may surface periodically to obtain a
+                satellite or GNSS position fix and exchange
+                information through an above-water communication link.
+            </div>
+        </section>
+
+        <!-- 08 NETWORKS -->
+
+        <section class="section" id="networks">
+            <div class="section-heading">
+                <span class="number">08 / NETWORK ARCHITECTURE</span>
+                <h2>Marine Robotic Networks and Data Exchange</h2>
+                <p>
+                    Communication networks connect robotic vehicles
+                    with other systems and supporting infrastructure.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Underwater Acoustic Networks</h3>
+
+                <p>
+                    An underwater acoustic network consists of
+                    underwater nodes that exchange information
+                    through acoustic communication links.
+                </p>
+
+                <p>
+                    Network nodes may include underwater sensors,
+                    autonomous vehicles, fixed instruments,
+                    surface gateways, and acoustic modems.
+                </p>
+
+                <p>
+                    These networks can support environmental
+                    monitoring, scientific data collection,
+                    selected vehicle coordination, and
+                    underwater observation systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Surface Gateways and Communication Relays</h3>
+
+                <p>
+                    A surface gateway can connect underwater
+                    acoustic communication systems with
+                    conventional above-water networks.
+                </p>
+
+                <p>
+                    For example, an underwater vehicle may
+                    send a short acoustic message to a
+                    surface buoy. The buoy can then forward
+                    information through radio, cellular,
+                    or satellite communication when available.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Communication Protocols</h3>
+
+                <p>
+                    Communication protocols define how devices
+                    format, address, transmit, receive,
+                    and interpret information.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Physical layer:</strong>
+                        Defines the physical transmission
+                        method and signal characteristics.
+                    </li>
+                    <li>
+                        <strong>Data link layer:</strong>
+                        Organizes data frames and manages
+                        access to the communication medium.
+                    </li>
+                    <li>
+                        <strong>Network layer:</strong>
+                        Supports addressing and routing
+                        where required.
+                    </li>
+                    <li>
+                        <strong>Application layer:</strong>
+                        Defines the meaning and structure
+                        of exchanged commands and data.
+                    </li>
+                </ul>
+
+                <p>
+                    Not every underwater communication system
+                    implements the same protocol stack.
+                    Acoustic networks often require
+                    specialized protocols designed for
+                    their propagation and bandwidth constraints.
+                </p>
+            </div>
+        </section>
+
+        <!-- 09 HUMAN ROBOT INTERACTION -->
+
+        <section class="section" id="interaction">
+            <div class="section-heading">
+                <span class="number">09 / HUMAN-ROBOT INTERACTION</span>
+                <h2>Operator Interfaces and Human-Robot Interaction</h2>
+                <p>
+                    Marine robotic systems often combine
+                    automated behavior with human supervision
+                    and operational decision-making.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Human-Robot Interaction (HRI)</h3>
+
+                <p>
+                    Human-Robot Interaction describes how
+                    people communicate with, supervise,
+                    and collaborate with robotic systems.
+                </p>
+
+                <p>
+                    In marine operations, an operator may
+                    define a mission, monitor vehicle status,
+                    issue commands, review sensor data,
+                    and respond to alerts.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Control Station</h3>
+
+                    <p>
+                        A control station provides the
+                        operator with interfaces for
+                        commanding and monitoring a vehicle.
+                    </p>
+
+                    <ul>
+                        <li>Vehicle status display.</li>
+                        <li>Navigation and mission maps.</li>
+                        <li>Camera and sonar visualization.</li>
+                        <li>Command and control interface.</li>
+                        <li>Warnings and fault notifications.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Telemetry</h3>
+
+                    <p>
+                        Telemetry is the collection and
+                        transmission of measurements
+                        and operating information.
+                    </p>
+
+                    <ul>
+                        <li>Battery status.</li>
+                        <li>Vehicle depth and heading.</li>
+                        <li>Motor and thruster information.</li>
+                        <li>Navigation estimates.</li>
+                        <li>System warnings and fault reports.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Command and Control</h3>
+
+                <p>
+                    Operators may send commands to change
+                    a vehicle's direction, depth, speed,
+                    mission mode, or operating parameters.
+                </p>
+
+                <p>
+                    The communication architecture must
+                    account for latency, loss of connection,
+                    authorization, command validation,
+                    and safe behavior when commands cannot
+                    be delivered.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Human Supervision and Control Authority</h3>
+
+                <p>
+                    Some systems allow an operator to
+                    take control from an autonomous mode.
+                    Other systems may require the vehicle
+                    to complete a predefined safe behavior
+                    before a new control mode becomes active.
+                </p>
+
+                <p>
+                    Clear control authority is essential:
+                    the operator and autonomous system
+                    must not issue conflicting commands
+                    without a defined arbitration mechanism.
+                </p>
+            </div>
+        </section>
+
+        <!-- 10 SAFETY -->
+
+        <section class="section" id="safety">
+            <div class="section-heading">
+                <span class="number">10 / SAFETY & RELIABILITY</span>
+                <h2>Fault Detection, Recovery and Safe Operation</h2>
+                <p>
+                    Reliable marine robotics requires systems
+                    that can detect abnormal conditions and
+                    respond appropriately.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Fault Detection</h3>
+
+                <p>
+                    Fault detection identifies conditions
+                    that may indicate a failure or abnormal
+                    behavior in a robotic platform.
+                </p>
+
+                <p>
+                    Examples include:
+                </p>
+
+                <ul>
+                    <li>Unexpected battery voltage changes.</li>
+                    <li>Motor or thruster malfunction.</li>
+                    <li>Navigation sensor disagreement.</li>
+                    <li>Communication loss.</li>
+                    <li>Unexpected depth or heading behavior.</li>
+                    <li>Excessive temperature or current.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Fault-Tolerant Control</h3>
+
+                <p>
+                    Fault-tolerant control aims to maintain
+                    acceptable system operation despite
+                    selected component failures or degradation.
+                </p>
+
+                <p>
+                    Depending on the vehicle design,
+                    responses may include using remaining
+                    actuators, changing control parameters,
+                    reducing mission demands, or entering
+                    a safe operating mode.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Communication Loss and Safe Fallback</h3>
+
+                <p>
+                    An underwater robot may lose its
+                    communication link because of
+                    acoustic interference, distance,
+                    environmental conditions, or
+                    equipment failure.
+                </p>
+
+                <p>
+                    A safe fallback policy must be
+                    defined before deployment.
+                    Depending on the platform and mission,
+                    possible responses include:
+                </p>
+
+                <ul>
+                    <li>Continue a previously authorized mission.</li>
+                    <li>Hold position or enter a safe state.</li>
+                    <li>Return toward a recovery location.</li>
+                    <li>Surface when the vehicle design permits.</li>
+                    <li>Attempt communication again at defined intervals.</li>
+                </ul>
+
+                <p>
+                    These behaviors are platform-specific.
+                    Surfacing, for example, may be unsafe
+                    under ice or in certain operating conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Cybersecurity and Command Integrity</h3>
+
+                <p>
+                    Networked marine robots may face risks
+                    involving unauthorized access, altered
+                    commands, data interception, and
+                    communication disruption.
+                </p>
+
+                <p>
+                    Security measures can include:
+                </p>
+
+                <ul>
+                    <li>Authentication of authorized operators.</li>
+                    <li>Encryption where supported and appropriate.</li>
+                    <li>Command validation and access control.</li>
+                    <li>Secure software updates.</li>
+                    <li>Event logging and system monitoring.</li>
+                    <li>Network segmentation and secure configuration.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 11 APPLICATIONS -->
+
+        <section class="section" id="applications">
+            <div class="section-heading">
+                <span class="number">11 / PRACTICAL APPLICATIONS</span>
+                <h2>Applications in Marine Operations</h2>
+                <p>
+                    Control, autonomy, and communication
+                    technologies support a wide range of
+                    scientific and industrial marine missions.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Autonomous Ocean Surveys</h3>
+                    <p>
+                        AUVs can follow planned survey routes,
+                        collect sensor measurements, and
+                        generate information about the
+                        seafloor and water column.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Offshore Infrastructure Inspection</h3>
+                    <p>
+                        ROVs and AUVs can inspect underwater
+                        pipelines, cables, platforms, and
+                        other subsea infrastructure.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Environmental Monitoring</h3>
+                    <p>
+                        Autonomous systems can collect
+                        environmental measurements and
+                        support long-duration ocean
+                        observation programs.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Marine Search Operations</h3>
+                    <p>
+                        Robotic platforms can support
+                        underwater search tasks using
+                        sonar, cameras, navigation,
+                        and mission-planning systems.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Multi-Robot Collaboration</h3>
+                    <p>
+                        Multiple marine robots can coordinate
+                        selected tasks, share information,
+                        and divide survey or monitoring areas.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Scientific Exploration</h3>
+                    <p>
+                        Autonomous and remotely operated
+                        vehicles enable researchers to
+                        explore environments that are
+                        difficult or hazardous for humans.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12 MULTI ROBOT -->
+
+        <section class="section" id="multi-robot">
+            <div class="section-heading">
+                <span class="number">12 / ADVANCED SYSTEMS</span>
+                <h2>Multi-Robot Coordination and Cooperative Missions</h2>
+                <p>
+                    Multiple robotic platforms can work
+                    together when their navigation,
+                    communication, and task allocation
+                    systems are properly coordinated.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Cooperative Marine Robotics</h3>
+
+                <p>
+                    A cooperative mission uses multiple
+                    robotic vehicles or sensor platforms
+                    to achieve a shared objective.
+                </p>
+
+                <p>
+                    For example, a surface vehicle may
+                    support underwater vehicles by
+                    relaying communication, collecting
+                    data, or helping coordinate mission areas.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Task Allocation</h3>
+
+                <p>
+                    Task allocation determines which
+                    vehicle should perform each part
+                    of a mission.
+                </p>
+
+                <p>
+                    Decisions may depend on vehicle
+                    capabilities, remaining energy,
+                    location, sensor payload, and
+                    communication availability.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Formation Control</h3>
+
+                <p>
+                    Formation control coordinates the
+                    relative positions and movements
+                    of multiple vehicles.
+                </p>
+
+                <p>
+                    Maintaining a formation underwater
+                    is challenging because vehicles
+                    experience changing currents,
+                    navigation uncertainty, and
+                    communication delays.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Communication Constraints in Cooperative Missions</h3>
+
+                <p>
+                    A multi-robot system cannot assume
+                    that every vehicle can exchange
+                    information continuously.
+                </p>
+
+                <p>
+                    Acoustic links may have limited
+                    bandwidth, variable delays, and
+                    packet losses. Cooperative algorithms
+                    must be designed to work with
+                    intermittent information and
+                    incomplete knowledge of other vehicles.
+                </p>
+            </div>
+        </section>
+
+        <!-- 13 OPERATIONAL WORKFLOW -->
+
+        <section class="section" id="workflow">
+            <div class="section-heading">
+                <span class="number">13 / OPERATIONAL WORKFLOW</span>
+                <h2>How an Autonomous Marine Mission Works</h2>
+                <p>
+                    The following workflow illustrates
+                    how planning, sensing, control,
+                    communication, and recovery are
+                    integrated in an autonomous mission.
+                </p>
+            </div>
+
+            <div class="process">
+                <div class="process-step">
+                    <span>STEP 01</span>
+                    <h3>Mission Definition</h3>
+                    <p>
+                        Engineers and operators define
+                        objectives, operating boundaries,
+                        and mission requirements.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 02</span>
+                    <h3>Mission Configuration</h3>
+                    <p>
+                        Waypoints, sensor settings,
+                        control parameters, and safety
+                        conditions are configured.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 03</span>
+                    <h3>Deployment</h3>
+                    <p>
+                        The vehicle is deployed and
+                        its navigation, sensing, and
+                        control systems are activated.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 04</span>
+                    <h3>State Estimation</h3>
+                    <p>
+                        Sensors provide information
+                        about the vehicle's position,
+                        orientation, and movement.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 05</span>
+                    <h3>Guidance and Control</h3>
+                    <p>
+                        The system calculates commands
+                        to follow the planned path
+                        or perform the required task.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 06</span>
+                    <h3>Autonomous Decisions</h3>
+                    <p>
+                        The vehicle evaluates selected
+                        events and responds according
+                        to its mission rules.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 07</span>
+                    <h3>Communication</h3>
+                    <p>
+                        Available communication links
+                        exchange status messages,
+                        commands, and selected data.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 08</span>
+                    <h3>Recovery and Analysis</h3>
+                    <p>
+                        The vehicle is recovered,
+                        collected data is reviewed,
+                        and mission performance is evaluated.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 14 CHALLENGES -->
+
+        <section class="section" id="challenges">
+            <div class="section-heading">
+                <span class="number">14 / TECHNICAL CHALLENGES</span>
+                <h2>Engineering Challenges and Limitations</h2>
+                <p>
+                    Reliable autonomy is difficult because
+                    underwater vehicles operate with
+                    incomplete information, uncertain
+                    environmental conditions, and
+                    communication constraints.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Navigation Uncertainty</h3>
+                    <p>
+                        Inertial navigation errors can
+                        accumulate over time, while
+                        acoustic positioning may be
+                        unavailable or intermittent.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Communication Delay</h3>
+                    <p>
+                        Acoustic signals travel much
+                        slower than electromagnetic
+                        signals in air, creating
+                        significant delays over distance.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Limited Bandwidth</h3>
+                    <p>
+                        Underwater acoustic links often
+                        cannot support the same data
+                        rates as conventional high-speed
+                        wireless networks.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Environmental Disturbances</h3>
+                    <p>
+                        Currents, waves, turbulence,
+                        changing water properties,
+                        and obstacles can affect
+                        vehicle motion and sensing.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Sensor Limitations</h3>
+                    <p>
+                        Sensor noise, poor visibility,
+                        calibration errors, and
+                        environmental interference
+                        can reduce perception quality.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Energy Constraints</h3>
+                    <p>
+                        Computing, sensing, propulsion,
+                        and communication all consume
+                        limited onboard energy.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Autonomy Validation</h3>
+                    <p>
+                        Algorithms must be tested in
+                        realistic conditions to ensure
+                        safe responses to unfamiliar
+                        situations and failures.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>System Integration</h3>
+                    <p>
+                        Navigation, control, communication,
+                        and autonomy software must work
+                        together reliably across
+                        different hardware components.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15 FUTURE -->
+
+        <section class="section" id="future">
+            <div class="section-heading">
+                <span class="number">15 / FUTURE DEVELOPMENTS</span>
+                <h2>The Future of Marine Robotics Intelligence</h2>
+                <p>
+                    Research continues to improve the ability
+                    of marine robots to understand their
+                    environment, coordinate missions,
+                    and operate reliably with limited
+                    human intervention.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Adaptive Autonomy</h3>
+                    <p>
+                        Future systems may adjust mission
+                        behavior more effectively as
+                        environmental conditions and
+                        available resources change.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>AI-Based Perception</h3>
+                    <p>
+                        Improved learning algorithms
+                        may support more reliable
+                        underwater object detection,
+                        classification, and environmental
+                        interpretation.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Cooperative Robotic Networks</h3>
+                    <p>
+                        Multiple underwater and surface
+                        vehicles may coordinate tasks
+                        through improved distributed
+                        planning and communication.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Hybrid Communication</h3>
+                    <p>
+                        Combining acoustic, optical,
+                        tethered, and above-water links
+                        may improve communication
+                        flexibility across mission phases.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Fault-Tolerant Intelligence</h3>
+                    <p>
+                        Improved monitoring and
+                        fault-management algorithms
+                        may help vehicles respond
+                        more safely to component failures.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Edge Computing</h3>
+                    <p>
+                        More onboard processing can
+                        allow vehicles to interpret
+                        sensor data and make selected
+                        decisions without transmitting
+                        every raw measurement.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                The goal is not simply to remove humans
+                from marine operations. It is to combine
+                reliable automation, suitable autonomy,
+                effective communication, and human
+                supervision in a way that improves
+                safety and mission performance.
+            </div>
+        </section>
+
+        <!-- 16 KNOWLEDGE REVIEW -->
+
+        <section class="section" id="review">
+            <div class="section-heading">
+                <span class="number">16 / KNOWLEDGE REVIEW</span>
+                <h2>Key Engineering Concepts</h2>
+                <p>
+                    Review the main concepts before
+                    completing the final assessment.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What You Should Understand</h3>
+
+                <ul>
+                    <li>
+                        Control systems regulate the movement
+                        and behavior of marine robotic platforms.
+                    </li>
+                    <li>
+                        Open-loop control does not use output
+                        feedback to correct commands.
+                    </li>
+                    <li>
+                        Closed-loop control uses feedback
+                        to reduce the difference between
+                        desired and measured states.
+                    </li>
+                    <li>
+                        PID control combines proportional,
+                        integral, and derivative responses.
+                    </li>
+                    <li>
+                        Guidance determines the desired path,
+                        navigation estimates the vehicle state,
+                        and control generates actuator commands.
+                    </li>
+                    <li>
+                        Autonomy allows selected tasks and
+                        decisions to be performed without
+                        continuous human intervention.
+                    </li>
+                    <li>
+                        Mission planning defines objectives,
+                        waypoints, constraints, and recovery behavior.
+                    </li>
+                    <li>
+                        Acoustic communication is useful
+                        underwater but has bandwidth and
+                        latency limitations.
+                    </li>
+                    <li>
+                        Optical communication can provide
+                        high data rates over suitable
+                        short-range links.
+                    </li>
+                    <li>
+                        Human supervision, fault detection,
+                        and safe fallback behavior remain
+                        important in autonomous marine systems.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 17 QUIZ -->
+
+        <section class="section" id="quiz">
+            <div class="section-heading">
+                <span class="number">17 / KNOWLEDGE ASSESSMENT</span>
+                <h2>Test Your Understanding</h2>
+                <p>
+                    Answer all ten questions to assess
+                    your understanding of marine robotics
+                    control, autonomy, and communication.
+                </p>
+            </div>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    Select one answer for each question.
+                    Your score and explanations will appear
+                    after you submit all answers.
+                </p>
+
+                <form id="quizForm">
+
+                    <div class="question" data-answer="b">
+                        <h3>1. What is the primary purpose of a marine robot control system?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            To store all collected data permanently.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            To regulate vehicle behavior and movement.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            To generate satellite signals.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            To increase seawater temperature.
+                        </label>
+
+                        <div class="explanation">
+                            Control systems regulate vehicle movement
+                            and behavior by generating commands
+                            for the appropriate actuators.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>2. What is the main difference between open-loop and closed-loop control?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            Open-loop control always uses more sensors.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            Closed-loop control cannot use feedback.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            Closed-loop control uses feedback to adjust system behavior.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            There is no difference.
+                        </label>
+
+                        <div class="explanation">
+                            Closed-loop control measures the system
+                            output and uses the error between
+                            desired and measured values to
+                            calculate corrective actions.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="a">
+                        <h3>3. Which three components form a PID controller?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            Proportional, Integral, Derivative.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            Position, Inspection, Detection.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            Power, Input, Direction.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            Pressure, Information, Data.
+                        </label>
+
+                        <div class="explanation">
+                            PID stands for Proportional,
+                            Integral, and Derivative control.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="d">
+                        <h3>4. What is the main role of navigation in a GNC architecture?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            To generate electrical power.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            To select the battery chemistry.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            To create communication encryption keys only.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            To estimate the vehicle's position, movement, and orientation.
+                        </label>
+
+                        <div class="explanation">
+                            Navigation estimates the vehicle's
+                            state, including its position,
+                            velocity, and orientation.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="b">
+                        <h3>5. What does autonomy allow a marine robot to do?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            Operate without any software.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            Perform selected tasks and decisions without continuous human control.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            Communicate through GPS while submerged.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            Ignore all safety constraints.
+                        </label>
+
+                        <div class="explanation">
+                            Autonomy allows a vehicle to execute
+                            defined tasks and make selected
+                            decisions independently, within
+                            its programmed capabilities.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>6. Why is acoustic communication commonly used underwater?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="a">
+                            It provides unlimited data bandwidth.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="b">
+                            It is identical to ordinary Wi-Fi.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="c">
+                            Sound can propagate through water over useful distances.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="d">
+                            It requires no communication hardware.
+                        </label>
+
+                        <div class="explanation">
+                            Acoustic communication uses sound
+                            waves, which can travel through water
+                            over useful distances, although
+                            bandwidth and latency are limitations.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="a">
+                        <h3>7. What is a major limitation of underwater optical communication?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="a">
+                            Its performance is affected by water clarity and alignment.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="b">
+                            It cannot transmit digital information.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="c">
+                            It always requires a physical tether.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="d">
+                            It can only be used above the sea surface.
+                        </label>
+
+                        <div class="explanation">
+                            Optical communication can provide
+                            high data rates, but water turbidity,
+                            optical attenuation, range, and
+                            alignment affect performance.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="d">
+                        <h3>8. What is the purpose of a Finite State Machine in mission software?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="a">
+                            To increase battery voltage.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="b">
+                            To replace all navigation sensors.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="c">
+                            To transmit sonar images.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="d">
+                            To organize system behavior into states and transitions.
+                        </label>
+
+                        <div class="explanation">
+                            An FSM organizes behavior into
+                            defined states and transitions
+                            triggered by specified conditions.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="b">
+                        <h3>9. What should an autonomous vehicle have when communication is lost?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="a">
+                            No response under any circumstances.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="b">
+                            A predefined safe fallback policy.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="c">
+                            An assumption that the operator is still connected.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="d">
+                            Automatic deletion of all mission data.
+                        </label>
+
+                        <div class="explanation">
+                            A safe fallback policy defines
+                            what the vehicle should do when
+                            communication is unavailable,
+                            based on the platform and mission.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>10. Why is human supervision still important in autonomous marine robotics?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="a">
+                            Because autonomous systems cannot use sensors.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="b">
+                            Because all marine robots are permanently tethered.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="c">
+                            Because mission planning, safety, recovery, and exceptional decisions may require human responsibility.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="d">
+                            Because autonomy prevents all failures.
+                        </label>
+
+                        <div class="explanation">
+                            Autonomous systems have limitations.
+                            Human operators remain important for
+                            planning, safety oversight, recovery,
+                            and decisions beyond the vehicle's
+                            validated capabilities.
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="btn btn-primary" id="submitQuiz">
+                            Submit Answers
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" id="resetQuiz">
+                            Reset Quiz
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite">
+                    <h3 id="scoreText"></h3>
+                    <p id="resultMessage"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 18 REFERENCES -->
+
+        <section class="section" id="references">
+            <div class="section-heading">
+                <span class="number">18 / TECHNICAL REFERENCES</span>
+                <h2>Further Reading & Research Resources</h2>
+                <p>
+                    Explore scientific institutions and
+                    engineering publications for deeper
+                    study of marine robotics.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Recommended Technical Sources</h3>
+
+                <ul>
+                    <li>
+                        <a href="https://acomms.whoi.edu/"
+                           target="_blank" rel="noopener noreferrer">
+                            WHOI Acoustic Communications Group
+                        </a>
+                        — Underwater acoustic communication,
+                        modems, telemetry, and positioning.
+                    </li>
+
+                    <li>
+                        <a href="https://www2.whoi.edu/site/osl/"
+                           target="_blank" rel="noopener noreferrer">
+                            WHOI Oceanographic Systems Laboratory
+                        </a>
+                        — AUV design, underwater acoustics,
+                        embedded systems, and marine robotics.
+                    </li>
+
+                    <li>
+                        <a href="https://oceanexplorer.noaa.gov/technology/subs-auvs/"
+                           target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Exploration — Autonomous Underwater Vehicles
+                        </a>
+                        — AUV operations, mission capabilities,
+                        and underwater exploration.
+                    </li>
+
+                    <li>
+                        <a href="https://doi.org/10.1016/j.eng.2025.08.002"
+                           target="_blank" rel="noopener noreferrer">
+                            The State of the Art in Key Technologies for AUVs
+                        </a>
+                        — Review of AUV design, planning,
+                        control, perception, communication,
+                        and artificial intelligence.
+                    </li>
+
+                    <li>
+                        <a href="https://doi.org/10.1007/s40435-025-01963-5"
+                           target="_blank" rel="noopener noreferrer">
+                            Trajectory Tracking Control of AUVs
+                        </a>
+                        — Review of classical and
+                        AI-based control approaches.
+                    </li>
+
+                    <li>
+                        <a href="https://www.mdpi.com/2076-3417/10/4/1256"
+                           target="_blank" rel="noopener noreferrer">
+                            Autonomous Underwater Vehicles: Localization,
+                            Navigation, and Communication for Collaborative Missions
+                        </a>
+                        — Underwater localization,
+                        communication, and cooperation.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>
+                MARITERRA | Marine Technology & Engineering Education
+            </p>
+            <p>
+                Developed by <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const quizForm = document.getElementById("quizForm");
+
+        const questions = Array.from(
+            document.querySelectorAll(".question")
+        );
+
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+
+        const quizResult = document.getElementById("quizResult");
+        const scoreText = document.getElementById("scoreText");
+        const resultMessage = document.getElementById("resultMessage");
+
+        let submitted = false;
+
+        submitButton.addEventListener("click", function () {
+            if (submitted) {
+                return;
+            }
+
+            let score = 0;
+            let answered = 0;
+
+            questions.forEach(function (question) {
+                const selected = question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+                if (selected) {
+                    answered++;
+                }
+            });
+
+            if (answered !== questions.length) {
+                alert("Please answer all 10 questions before submitting.");
+                return;
+            }
+
+            questions.forEach(function (question) {
+                const correctAnswer = question.dataset.answer;
+
+                const selected = question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+                const explanation = question.querySelector(".explanation");
+
+                question.querySelectorAll("input").forEach(function (input) {
+                    input.disabled = true;
+                });
+
+                if (selected.value === correctAnswer) {
+                    score++;
+                    question.classList.add("correct");
+                } else {
+                    question.classList.add("incorrect");
+                }
+
+                explanation.style.display = "block";
+            });
+
+            submitted = true;
+            submitButton.disabled = true;
+
+            scoreText.textContent = "Your Score: " + score + " / 10";
+
+            if (score === 10) {
+                resultMessage.textContent =
+                    "Excellent! You have demonstrated a strong understanding of marine robotics control, autonomy, and communication.";
+            } else if (score >= 8) {
+                resultMessage.textContent =
+                    "Very good! Review the explanations to strengthen your technical understanding.";
+            } else if (score >= 6) {
+                resultMessage.textContent =
+                    "Good progress. Revisit the technical sections and review the questions you missed.";
+            } else {
+                resultMessage.textContent =
+                    "You need more practice. Review the learning material and try the assessment again.";
+            }
+
+            quizResult.style.display = "block";
+
+            quizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            questions.forEach(function (question) {
+                question.classList.remove("correct", "incorrect");
+
+                question.querySelectorAll("input").forEach(function (input) {
+                    input.disabled = false;
+                });
+
+                question.querySelector(".explanation").style.display = "none";
+            });
+
+            submitted = false;
+            submitButton.disabled = false;
+
+            quizResult.style.display = "none";
+            scoreText.textContent = "";
+            resultMessage.textContent = "";
+
+            quizForm.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+    </script>
+
+</body>
+</html>

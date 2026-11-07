@@ -1,0 +1,2294 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore inertial navigation systems, IMUs, accelerometers, gyroscopes, sensor fusion, GNSS integration, DVL aiding, and maritime positioning.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Inertial Navigation & Positioning</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --in-bg: #070816;
+            --in-card: rgba(13, 16, 38, 0.94);
+            --in-purple: #9333ea;
+            --in-light: #c084fc;
+            --in-text: #e5e7eb;
+            --in-muted: #a1a1aa;
+            --in-border: rgba(192, 132, 252, 0.2);
+            --in-green: #4ade80;
+            --in-red: #f87171;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--in-bg);
+            color: var(--in-text);
+        }
+
+        .in-page {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .in-hero {
+            position: relative;
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(
+                    ellipse at 80% 35%,
+                    rgba(147, 51, 234, 0.2),
+                    transparent 48%
+                ),
+                linear-gradient(
+                    120deg,
+                    #070816,
+                    #10102a 65%,
+                    #17102c
+                );
+            border-bottom: 1px solid var(--in-border);
+        }
+
+        .in-hero::after {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(192, 132, 252, 0.13);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 35px rgba(147, 51, 234, 0.025),
+                0 0 0 75px rgba(147, 51, 234, 0.02);
+            pointer-events: none;
+        }
+
+        .in-hero-content {
+            width: min(1180px, 92%);
+            margin: auto;
+            padding: 80px 0 90px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .in-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 28px;
+            color: var(--in-muted);
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .in-breadcrumb a {
+            color: var(--in-light);
+            text-decoration: none;
+        }
+
+        .in-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 15px;
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            border-radius: 30px;
+            background: rgba(147, 51, 234, 0.1);
+            color: var(--in-light);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 22px;
+        }
+
+        .in-label::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--in-light);
+            box-shadow: 0 0 12px var(--in-purple);
+        }
+
+        .in-hero h1 {
+            max-width: 850px;
+            color: #ffffff;
+            font-size: clamp(37px, 5.5vw, 67px);
+            line-height: 1.12;
+            letter-spacing: -1.8px;
+            margin: 0 0 22px;
+        }
+
+        .in-hero h1 span {
+            display: block;
+            color: var(--in-light);
+        }
+
+        .in-hero-description {
+            max-width: 720px;
+            color: #c7c5d3;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        .in-hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 22px;
+            border-radius: 7px;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            transition: 0.3s ease;
+        }
+
+        .in-hero-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(147, 51, 234, 0.3);
+        }
+
+        .in-container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        .in-intro {
+            padding: 75px 0 35px;
+            text-align: center;
+        }
+
+        .in-section-label {
+            color: var(--in-light);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .in-intro h2,
+        .in-section-heading h2 {
+            color: #ffffff;
+            font-size: clamp(26px, 4vw, 37px);
+            line-height: 1.3;
+            margin: 0 0 18px;
+        }
+
+        .in-intro p {
+            max-width: 850px;
+            margin: auto;
+            color: var(--in-muted);
+            font-size: 14px;
+            line-height: 1.95;
+        }
+
+        .in-content-section {
+            padding: 35px 0;
+        }
+
+        .in-section-heading {
+            margin-bottom: 27px;
+        }
+
+        .in-section-heading p {
+            max-width: 820px;
+            color: var(--in-muted);
+            font-size: 14px;
+            line-height: 1.9;
+            margin: 0;
+        }
+
+        .in-article {
+            padding: 30px;
+            margin-bottom: 20px;
+            background: var(--in-card);
+            border: 1px solid var(--in-border);
+            border-radius: 11px;
+        }
+
+        .in-article h3 {
+            color: #ffffff;
+            font-size: 20px;
+            line-height: 1.4;
+            margin: 0 0 16px;
+        }
+
+        .in-article h4 {
+            color: var(--in-light);
+            font-size: 15px;
+            margin: 23px 0 10px;
+        }
+
+        .in-article p {
+            color: #b7b7c5;
+            font-size: 13px;
+            line-height: 1.95;
+            margin: 0 0 13px;
+        }
+
+        .in-article p:last-child {
+            margin-bottom: 0;
+        }
+
+        .in-article ul,
+        .in-article ol {
+            padding-left: 22px;
+            margin: 12px 0;
+            color: #b7b7c5;
+        }
+
+        .in-article li {
+            padding-left: 4px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.85;
+        }
+
+        .in-article strong {
+            color: #e9d5ff;
+        }
+
+        .in-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .in-info-card {
+            padding: 23px;
+            background: rgba(13, 16, 38, 0.78);
+            border: 1px solid var(--in-border);
+            border-radius: 10px;
+        }
+
+        .in-info-card h3 {
+            color: var(--in-light);
+            font-size: 16px;
+            margin: 0 0 12px;
+        }
+
+        .in-info-card p {
+            color: var(--in-muted);
+            font-size: 13px;
+            line-height: 1.85;
+            margin: 0;
+        }
+
+        .in-callout {
+            margin: 22px 0;
+            padding: 22px 24px;
+            background: rgba(147, 51, 234, 0.09);
+            border-left: 3px solid var(--in-purple);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .in-callout strong {
+            display: block;
+            color: var(--in-light);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .in-callout p {
+            margin: 0;
+        }
+
+        .in-formula {
+            margin: 18px 0;
+            padding: 19px;
+            text-align: center;
+            background: rgba(7, 8, 22, 0.8);
+            border: 1px solid var(--in-border);
+            border-radius: 8px;
+            color: #e9d5ff;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .in-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin: 18px 0;
+        }
+
+        .in-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 570px;
+        }
+
+        .in-table th,
+        .in-table td {
+            padding: 14px;
+            text-align: left;
+            border: 1px solid rgba(192, 132, 252, 0.15);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .in-table th {
+            color: var(--in-light);
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        .in-table td {
+            color: #b7b7c5;
+            background: rgba(7, 8, 22, 0.35);
+        }
+
+        .in-steps {
+            counter-reset: in-step;
+            list-style: none;
+            padding: 0 !important;
+        }
+
+        .in-steps li {
+            position: relative;
+            padding: 0 0 18px 48px;
+            margin-bottom: 17px;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+        }
+
+        .in-steps li::before {
+            counter-increment: in-step;
+            content: counter(in-step, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 34px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            background: rgba(147, 51, 234, 0.15);
+            color: var(--in-light);
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .in-quiz {
+            padding: 35px;
+            margin: 55px 0 85px;
+            background: linear-gradient(
+                145deg,
+                rgba(18, 18, 45, 0.98),
+                rgba(10, 11, 28, 0.98)
+            );
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            border-radius: 13px;
+        }
+
+        .in-quiz-header {
+            margin-bottom: 28px;
+        }
+
+        .in-quiz-header h2 {
+            color: #ffffff;
+            font-size: 27px;
+            margin: 0 0 10px;
+        }
+
+        .in-quiz-header p {
+            color: var(--in-muted);
+            font-size: 13px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .in-progress-track {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 22px 0 30px;
+        }
+
+        .in-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7e22ce, #c084fc);
+            transition: width 0.3s ease;
+        }
+
+        .in-question {
+            padding: 21px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.13);
+        }
+
+        .in-question h3 {
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0 0 15px;
+        }
+
+        .in-question-number {
+            color: var(--in-light);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .in-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid rgba(192, 132, 252, 0.13);
+            border-radius: 7px;
+            color: #c5c5d0;
+            font-size: 12px;
+            line-height: 1.7;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .in-option:hover {
+            border-color: rgba(192, 132, 252, 0.55);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .in-option input {
+            margin-top: 3px;
+            accent-color: var(--in-purple);
+            flex-shrink: 0;
+        }
+
+        .in-option.correct {
+            border-color: var(--in-green);
+            background: rgba(74, 222, 128, 0.08);
+        }
+
+        .in-option.wrong {
+            border-color: var(--in-red);
+            background: rgba(248, 113, 113, 0.08);
+        }
+
+        .in-explanation {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 7px;
+            background: rgba(147, 51, 234, 0.08);
+            color: #c4b5fd;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .in-quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .in-quiz-button {
+            padding: 13px 21px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .in-quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.25);
+        }
+
+        .in-quiz-button.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--in-border);
+        }
+
+        .in-result {
+            display: none;
+            margin-top: 25px;
+            padding: 23px;
+            border: 1px solid var(--in-border);
+            border-radius: 9px;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .in-result h3 {
+            color: var(--in-light);
+            font-size: 20px;
+            margin: 0 0 10px;
+        }
+
+        .in-result p {
+            color: #d4d4df;
+            font-size: 13px;
+            line-height: 1.8;
+            margin: 5px 0;
+        }
+
+        .in-references a {
+            color: var(--in-light);
+            text-decoration: none;
+        }
+
+        .in-references a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .in-footer {
+            padding: 35px 5%;
+            text-align: center;
+            border-top: 1px solid var(--in-border);
+            background: rgba(7, 8, 22, 0.95);
+        }
+
+        .in-footer-brand {
+            color: var(--in-light);
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .in-footer p {
+            color: var(--in-muted);
+            font-size: 12px;
+            line-height: 1.8;
+            margin: 5px 0;
+        }
+
+        .in-footer strong {
+            color: #e9d5ff;
+        }
+
+        .in-back {
+            display: inline-block;
+            margin-top: 17px;
+            color: var(--in-light);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .in-back:hover {
+            color: #ffffff;
+        }
+
+        @media (max-width: 760px) {
+            .in-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .in-hero::after {
+                right: -120px;
+                opacity: 0.6;
+            }
+
+            .in-article {
+                padding: 23px 19px;
+            }
+
+            .in-quiz {
+                padding: 25px 18px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .in-hero {
+                min-height: 410px;
+            }
+
+            .in-hero-content {
+                padding: 65px 0;
+            }
+
+            .in-hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .in-hero-description {
+                font-size: 14px;
+            }
+
+            .in-breadcrumb {
+                font-size: 10px;
+            }
+
+            .in-quiz-actions {
+                flex-direction: column;
+            }
+
+            .in-quiz-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="in-page">
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+        <nav class="navbar">
+            <a href="index.html" class="logo">MARITERRA</a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="technology.html">Maritime Technology</a>
+                <a href="marine-robotics.html">Marine Robotics</a>
+                <a href="smart-navigation.html" class="active">Smart Navigation</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+
+    <section class="in-hero">
+        <div class="in-hero-content">
+
+            <div class="in-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="technology.html">Maritime Technology</a>
+                <span>/</span>
+                <a href="smart-navigation.html">Smart Navigation</a>
+                <span>/</span>
+                <span>Topic 04</span>
+            </div>
+
+            <div class="in-label">
+                SMART NAVIGATION — TOPIC 04
+            </div>
+
+            <h1>
+                INERTIAL NAVIGATION
+                <span>& POSITIONING</span>
+            </h1>
+
+            <p class="in-hero-description">
+                Discover how inertial measurement units, gyroscopes,
+                accelerometers, and navigation algorithms estimate
+                vessel movement, orientation, velocity, and position
+                when satellite positioning is limited or unavailable.
+            </p>
+
+            <a href="#in-content" class="in-hero-button">
+                EXPLORE THE TECHNOLOGY
+                <span>→</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- INTRODUCTION -->
+
+    <section class="in-intro in-container">
+
+        <div class="in-section-label">EXPLORE THE ENGINEERING</div>
+
+        <h2>Understanding Inertial Navigation</h2>
+
+        <p>
+            Inertial Navigation is a positioning approach that uses
+            measurements of acceleration and angular motion to estimate
+            how a vessel moves through space. Unlike satellite navigation,
+            an inertial system does not need to continuously receive
+            external positioning signals. It can continue estimating
+            movement during temporary GNSS outages, making it valuable
+            for ships, submarines, underwater vehicles, and offshore
+            operations. However, its errors accumulate over time, so
+            practical systems often combine inertial measurements with
+            external sensors and positioning references.
+        </p>
+
+    </section>
+
+    <main class="in-container" id="in-content">
+
+        <!-- SECTION 01 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">01 — FOUNDATIONS</div>
+                <h2>What Is Inertial Navigation?</h2>
+                <p>
+                    The principles behind estimating motion without
+                    continuously depending on an external position signal.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>1.1 The Basic Concept</h3>
+
+                <p>
+                    An Inertial Navigation System (INS) estimates the
+                    position, velocity, and orientation of a moving
+                    platform by processing measurements from inertial
+                    sensors. These measurements describe how the platform
+                    accelerates and rotates relative to a reference frame.
+                </p>
+
+                <p>
+                    The system starts from an initial position, velocity,
+                    and orientation. It then updates its motion estimate
+                    by continuously processing new sensor measurements.
+                    This process is commonly called <strong>dead reckoning</strong>
+                    when position is advanced using estimated movement.
+                </p>
+
+                <div class="in-callout">
+                    <strong>Core Engineering Principle</strong>
+                    <p>
+                        An inertial system does not directly measure
+                        geographic position. It measures motion and
+                        calculates position by integrating those
+                        measurements over time.
+                    </p>
+                </div>
+
+                <h4>Why Is It Important in Maritime Operations?</h4>
+
+                <ul>
+                    <li>Maintaining short-term navigation estimates during GNSS signal loss.</li>
+                    <li>Supporting underwater vehicles that cannot receive ordinary satellite signals while submerged.</li>
+                    <li>Providing vessel attitude information such as roll, pitch, and heading-related motion.</li>
+                    <li>Supporting offshore survey, subsea inspection, and dynamic positioning applications.</li>
+                    <li>Providing motion data to navigation, stabilization, and control systems.</li>
+                </ul>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>1.2 Position, Velocity, and Attitude</h3>
+
+                <p>
+                    An INS commonly estimates several related navigation
+                    quantities. These values are connected, but they
+                    describe different aspects of the vessel's movement.
+                </p>
+
+                <div class="in-grid">
+
+                    <div class="in-info-card">
+                        <h3>Position</h3>
+                        <p>
+                            Describes where the vessel is located.
+                            It may be represented using latitude,
+                            longitude, and height or depth-related
+                            reference information.
+                        </p>
+                    </div>
+
+                    <div class="in-info-card">
+                        <h3>Velocity</h3>
+                        <p>
+                            Describes the rate and direction of movement.
+                            It can be expressed as north, east, and
+                            down velocity components.
+                        </p>
+                    </div>
+
+                    <div class="in-info-card">
+                        <h3>Attitude</h3>
+                        <p>
+                            Describes the orientation of the vessel,
+                            commonly represented by roll, pitch,
+                            and yaw or heading.
+                        </p>
+                    </div>
+
+                    <div class="in-info-card">
+                        <h3>Angular Rate</h3>
+                        <p>
+                            Describes how quickly the vessel rotates
+                            around its body axes. It is measured
+                            using gyroscopes.
+                        </p>
+                    </div>
+
+                </div>
+
+                <p>
+                    Accurate navigation requires these quantities to
+                    be interpreted together. For example, acceleration
+                    measured along the vessel's forward axis must be
+                    transformed into an appropriate navigation reference
+                    frame before it can be used to update geographic
+                    velocity and position.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 02 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">02 — SENSOR TECHNOLOGY</div>
+                <h2>IMU Components and Measurements</h2>
+                <p>
+                    Understanding the sensors that provide the raw
+                    measurements used by inertial navigation algorithms.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>2.1 Inertial Measurement Unit (IMU)</h3>
+
+                <p>
+                    An Inertial Measurement Unit is a sensor assembly
+                    that measures the movement and rotation of a platform.
+                    A typical IMU contains three-axis accelerometers and
+                    three-axis gyroscopes. Some units also include
+                    magnetometers or additional environmental sensors.
+                </p>
+
+                <h4>Accelerometers</h4>
+
+                <p>
+                    Accelerometers measure specific force along their
+                    sensitive axes. They detect changes in motion and
+                    the effect of gravity as experienced by the sensor.
+                    Their measurements are essential for estimating
+                    velocity and position.
+                </p>
+
+                <h4>Gyroscopes</h4>
+
+                <p>
+                    Gyroscopes measure angular rate: how quickly the
+                    platform rotates around its axes. The navigation
+                    algorithm uses these measurements to update the
+                    estimated orientation of the vessel.
+                </p>
+
+                <h4>Magnetometers</h4>
+
+                <p>
+                    Magnetometers measure the surrounding magnetic field.
+                    They may provide heading-related information in
+                    suitable conditions, but magnetic disturbances from
+                    steel structures, electrical equipment, and nearby
+                    magnetic sources can affect their readings.
+                </p>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>2.2 IMU vs INS</h3>
+
+                <p>
+                    These terms are related but are not interchangeable.
+                    An IMU is primarily a measurement unit, while an INS
+                    includes the processing and navigation algorithms
+                    required to calculate navigation states.
+                </p>
+
+                <div class="in-table-wrap">
+                    <table class="in-table">
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>IMU</th>
+                                <th>INS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Main role</td>
+                                <td>Measures acceleration and angular rate.</td>
+                                <td>Estimates position, velocity, and orientation.</td>
+                            </tr>
+                            <tr>
+                                <td>Typical components</td>
+                                <td>Accelerometers and gyroscopes.</td>
+                                <td>IMU, processor, navigation software, and initialization data.</td>
+                            </tr>
+                            <tr>
+                                <td>Output</td>
+                                <td>Raw or calibrated sensor measurements.</td>
+                                <td>Navigation estimates and system status.</td>
+                            </tr>
+                            <tr>
+                                <td>External aiding</td>
+                                <td>Not necessarily included.</td>
+                                <td>May integrate GNSS, DVL, odometry, or other references.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="in-callout">
+                    <strong>Important Distinction</strong>
+                    <p>
+                        An IMU alone does not automatically provide a
+                        reliable geographic position. Navigation software
+                        must process its measurements, apply calibration
+                        and alignment information, and account for errors.
+                    </p>
+                </div>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>2.3 Types of Inertial Sensors</h3>
+
+                <p>
+                    Inertial sensors are available in different
+                    technologies and performance classes. Their
+                    accuracy, size, cost, power consumption, and
+                    long-term stability vary significantly.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>MEMS sensors:</strong>
+                        Micro-Electro-Mechanical Systems are compact,
+                        relatively low-cost sensors commonly used in
+                        consumer, industrial, and navigation applications.
+                    </li>
+
+                    <li>
+                        <strong>Fiber Optic Gyroscopes (FOG):</strong>
+                        Use optical interference principles to measure
+                        rotation and are used in many higher-performance
+                        navigation systems.
+                    </li>
+
+                    <li>
+                        <strong>Ring Laser Gyroscopes (RLG):</strong>
+                        Use counter-propagating laser beams to measure
+                        angular rotation and are used in demanding
+                        navigation applications.
+                    </li>
+
+                    <li>
+                        <strong>Mechanical gyroscopes:</strong>
+                        Use a rotating mechanical element and are
+                        associated with traditional inertial
+                        navigation designs.
+                    </li>
+                </ul>
+
+                <p>
+                    No sensor technology is automatically best for every
+                    vessel. Selection depends on the required accuracy,
+                    operating duration, environmental conditions,
+                    installation constraints, and available budget.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 03 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">03 — NAVIGATION PROCESSING</div>
+                <h2>How an INS Calculates Movement</h2>
+                <p>
+                    From raw measurements to an estimated navigation solution.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>3.1 The Navigation Calculation Process</h3>
+
+                <p>
+                    An inertial navigation algorithm processes measurements
+                    in a sequence. The exact implementation depends on the
+                    system architecture, sensor grade, reference frame,
+                    and navigation application.
+                </p>
+
+                <ol class="in-steps">
+                    <li>
+                        <strong>Initialization:</strong>
+                        The system receives initial position, velocity,
+                        and attitude information. The quality of these
+                        initial values affects the navigation solution.
+                    </li>
+
+                    <li>
+                        <strong>Sensor measurement:</strong>
+                        Accelerometers and gyroscopes provide new
+                        measurements at regular intervals.
+                    </li>
+
+                    <li>
+                        <strong>Calibration and correction:</strong>
+                        The system compensates for known sensor biases,
+                        scale-factor errors, misalignment, and other
+                        modeled effects.
+                    </li>
+
+                    <li>
+                        <strong>Attitude update:</strong>
+                        Angular-rate measurements are processed to
+                        update the estimated orientation of the vessel.
+                    </li>
+
+                    <li>
+                        <strong>Acceleration transformation:</strong>
+                        Measured specific force is transformed from
+                        the sensor or body frame into a navigation frame.
+                    </li>
+
+                    <li>
+                        <strong>Velocity update:</strong>
+                        Corrected acceleration is integrated over time
+                        to estimate changes in velocity.
+                    </li>
+
+                    <li>
+                        <strong>Position update:</strong>
+                        Estimated velocity is integrated to update
+                        the vessel's position.
+                    </li>
+
+                    <li>
+                        <strong>Quality monitoring:</strong>
+                        The system evaluates uncertainty and compares
+                        available measurements from external references.
+                    </li>
+                </ol>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>3.2 Mathematical Principles</h3>
+
+                <p>
+                    In simplified form, acceleration can be integrated
+                    to estimate velocity, and velocity can be integrated
+                    to estimate displacement.
+                </p>
+
+                <div class="in-formula">
+                    Velocity = Initial Velocity + Integrated Acceleration
+                </div>
+
+                <div class="in-formula">
+                    Displacement = Initial Position + Integrated Velocity
+                </div>
+
+                <p>
+                    These expressions describe the basic idea, not the
+                    complete equations used in a real navigation system.
+                    Practical INS algorithms must account for orientation,
+                    gravity, Earth's rotation, coordinate transformations,
+                    and the movement of the Earth-fixed reference frame.
+                </p>
+
+                <h4>Reference Frames</h4>
+
+                <ul>
+                    <li>
+                        <strong>Body frame:</strong>
+                        Axes fixed to the vessel or sensor unit.
+                    </li>
+                    <li>
+                        <strong>Navigation frame:</strong>
+                        A local reference frame, often North-East-Down
+                        or East-North-Up.
+                    </li>
+                    <li>
+                        <strong>Earth-centered reference frame:</strong>
+                        A global coordinate frame used in some
+                        navigation calculations.
+                    </li>
+                </ul>
+
+                <p>
+                    Correct transformation between these frames is
+                    essential. A small orientation error can cause
+                    acceleration to be assigned to the wrong direction,
+                    which may produce significant position errors over time.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 04 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">04 — ERROR AND ACCURACY</div>
+                <h2>Inertial Drift and Navigation Errors</h2>
+                <p>
+                    Why an inertial system can continue operating while
+                    its estimated position gradually becomes less accurate.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>4.1 Understanding Inertial Drift</h3>
+
+                <p>
+                    Inertial navigation relies on repeated integration
+                    of sensor measurements. Even small measurement
+                    errors can accumulate as the system continues
+                    calculating velocity and position.
+                </p>
+
+                <p>
+                    For example, a small accelerometer bias may cause
+                    an increasing velocity error. As that velocity error
+                    is integrated again, the estimated position may
+                    diverge from the vessel's actual position.
+                </p>
+
+                <h4>Common Sources of Error</h4>
+
+                <ul>
+                    <li><strong>Bias:</strong> A persistent offset in sensor measurements.</li>
+                    <li><strong>Noise:</strong> Random variations in sensor readings.</li>
+                    <li><strong>Scale-factor error:</strong> A difference between the true input and the measured response.</li>
+                    <li><strong>Misalignment:</strong> Incorrect orientation between sensor axes and the intended reference frame.</li>
+                    <li><strong>Temperature effects:</strong> Changes in sensor behavior as operating temperature changes.</li>
+                    <li><strong>Vibration:</strong> Mechanical disturbance that can affect measurements and installation stability.</li>
+                    <li><strong>Initial alignment error:</strong> Incorrect initial orientation or motion conditions.</li>
+                </ul>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>4.2 Error Growth and Operating Time</h3>
+
+                <p>
+                    The rate at which an INS loses accuracy depends on
+                    sensor quality, calibration, navigation algorithm,
+                    initial conditions, and the availability of external
+                    aiding sources.
+                </p>
+
+                <p>
+                    A higher-grade inertial system may maintain useful
+                    accuracy for longer periods without external updates.
+                    A lower-cost system may experience faster drift and
+                    require more frequent corrections.
+                </p>
+
+                <div class="in-callout">
+                    <strong>Engineering Insight</strong>
+                    <p>
+                        "GNSS-denied operation" does not mean that
+                        position remains perfectly accurate. It means
+                        the system can continue estimating movement
+                        without receiving a new satellite position fix.
+                        Its uncertainty normally increases with time.
+                    </p>
+                </div>
+
+                <h4>Ways to Reduce Navigation Errors</h4>
+
+                <ul>
+                    <li>Use appropriate sensor calibration and alignment.</li>
+                    <li>Select inertial sensors suitable for the required mission.</li>
+                    <li>Integrate independent external measurements.</li>
+                    <li>Monitor estimated uncertainty and sensor health.</li>
+                    <li>Use redundant references where operationally appropriate.</li>
+                    <li>Inspect installation, mounting, vibration, and temperature conditions.</li>
+                </ul>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 05 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">05 — SENSOR FUSION</div>
+                <h2>GNSS/INS Integration and Sensor Fusion</h2>
+                <p>
+                    Combining complementary navigation sources to
+                    improve continuity and reliability.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>5.1 Why Combine GNSS and INS?</h3>
+
+                <p>
+                    GNSS provides externally referenced position and
+                    velocity information, but its signals can be
+                    interrupted, obstructed, jammed, or spoofed.
+                    An INS can continue estimating short-term movement
+                    during those interruptions, but its errors accumulate.
+                </p>
+
+                <p>
+                    Combining the two systems allows each source to
+                    compensate for some of the other's weaknesses.
+                    GNSS can help correct inertial drift, while inertial
+                    measurements can provide continuous short-term
+                    motion estimates between GNSS updates.
+                </p>
+
+                <div class="in-grid">
+
+                    <div class="in-info-card">
+                        <h3>GNSS Contribution</h3>
+                        <p>
+                            Provides an externally referenced position
+                            and velocity estimate when satellite
+                            measurements are available and trustworthy.
+                        </p>
+                    </div>
+
+                    <div class="in-info-card">
+                        <h3>INS Contribution</h3>
+                        <p>
+                            Provides high-rate motion and orientation
+                            estimates and supports continuity during
+                            temporary GNSS interruptions.
+                        </p>
+                    </div>
+
+                </div>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>5.2 Sensor Fusion Algorithms</h3>
+
+                <p>
+                    Sensor fusion combines information from multiple
+                    sources to produce a navigation estimate that
+                    considers the strengths and uncertainties of
+                    the available measurements.
+                </p>
+
+                <h4>Kalman Filtering</h4>
+
+                <p>
+                    A Kalman filter is a mathematical estimation method
+                    used in many navigation systems. It predicts the
+                    next navigation state using a system model, then
+                    updates that prediction when new measurements
+                    become available.
+                </p>
+
+                <p>
+                    The filter also estimates uncertainty. This allows
+                    the system to consider how much confidence should
+                    be placed in the predicted state and in incoming
+                    measurements.
+                </p>
+
+                <h4>Common Integration Architectures</h4>
+
+                <ul>
+                    <li>
+                        <strong>Loosely coupled integration:</strong>
+                        GNSS position or velocity solutions are supplied
+                        to the navigation filter as measurements.
+                    </li>
+                    <li>
+                        <strong>Tightly coupled integration:</strong>
+                        The navigation filter processes GNSS observations
+                        at a lower measurement level, such as satellite
+                        pseudorange and Doppler measurements, alongside
+                        inertial data.
+                    </li>
+                    <li>
+                        <strong>Deep integration:</strong>
+                        GNSS receiver tracking and inertial information
+                        are more closely integrated to support signal
+                        tracking and navigation under challenging conditions.
+                    </li>
+                </ul>
+
+                <p>
+                    The appropriate architecture depends on receiver
+                    design, mission requirements, processing capability,
+                    and the expected operating environment.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 06 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">06 — MARITIME APPLICATIONS</div>
+                <h2>Inertial Navigation in the Maritime Environment</h2>
+                <p>
+                    How inertial systems support surface vessels,
+                    underwater vehicles, and offshore operations.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>6.1 Surface Vessel Navigation</h3>
+
+                <p>
+                    On surface vessels, inertial systems can support
+                    navigation continuity, vessel motion measurement,
+                    and the integration of navigation sensors.
+                </p>
+
+                <ul>
+                    <li>Supporting position estimation during temporary GNSS outages.</li>
+                    <li>Providing roll, pitch, and heading-related information.</li>
+                    <li>Supporting stabilization and motion compensation systems.</li>
+                    <li>Assisting navigation systems that combine multiple sensor sources.</li>
+                    <li>Providing motion information for offshore survey equipment.</li>
+                </ul>
+
+                <p>
+                    The INS output must still be checked against other
+                    available navigation references. It should not be
+                    treated as an unquestionable source of truth.
+                </p>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>6.2 Underwater Vehicles and Subsea Operations</h3>
+
+                <p>
+                    Submerged vehicles cannot normally receive ordinary
+                    GNSS signals directly through seawater. They therefore
+                    use alternative methods to estimate their position
+                    and movement.
+                </p>
+
+                <h4>Doppler Velocity Log (DVL)</h4>
+
+                <p>
+                    A DVL measures the velocity of a vehicle relative
+                    to the seabed or surrounding water using acoustic
+                    Doppler measurements. When bottom lock is available,
+                    it can provide useful velocity information relative
+                    to the seabed.
+                </p>
+
+                <p>
+                    Water-track measurements estimate velocity relative
+                    to the surrounding water instead. This is not
+                    necessarily the same as velocity over the seabed,
+                    particularly when currents are present.
+                </p>
+
+                <h4>Acoustic Positioning</h4>
+
+                <p>
+                    Underwater acoustic positioning systems use sound
+                    signals exchanged between transponders, seabed
+                    references, or support vessels to estimate the
+                    position of submerged platforms.
+                </p>
+
+                <h4>Other Supporting Technologies</h4>
+
+                <ul>
+                    <li>Pressure sensors and depth measurement systems.</li>
+                    <li>Acoustic navigation and ranging systems.</li>
+                    <li>USBL and LBL positioning systems.</li>
+                    <li>Terrain-relative navigation in suitable environments.</li>
+                    <li>GNSS updates when the vehicle surfaces or uses an appropriate external antenna arrangement.</li>
+                </ul>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>6.3 INS and DVL Integration</h3>
+
+                <p>
+                    An INS and DVL can complement each other in underwater
+                    navigation. The INS estimates motion using inertial
+                    measurements, while the DVL supplies velocity
+                    observations that can help limit inertial drift.
+                </p>
+
+                <p>
+                    When DVL bottom lock is lost because of altitude,
+                    seabed characteristics, water conditions, or
+                    operational geometry, the navigation system may
+                    continue using inertial estimates. However, position
+                    uncertainty can increase until useful external
+                    measurements become available again.
+                </p>
+
+                <div class="in-callout">
+                    <strong>Do Not Confuse the Measurements</strong>
+                    <p>
+                        DVL velocity relative to the seabed and DVL
+                        velocity relative to the water are different
+                        measurements. Current velocity can make the
+                        distinction operationally important.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 07 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">07 — ENGINEERING CHALLENGES</div>
+                <h2>Technical Challenges and System Reliability</h2>
+                <p>
+                    The practical limitations that engineers must
+                    consider when designing and operating inertial
+                    navigation systems.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>7.1 Environmental and Installation Challenges</h3>
+
+                <ul>
+                    <li>
+                        <strong>Vessel vibration:</strong>
+                        Engines, propellers, and machinery can introduce
+                        vibration that affects sensor measurements.
+                    </li>
+                    <li>
+                        <strong>Temperature variation:</strong>
+                        Changes in temperature may affect sensor bias
+                        and scale-factor stability.
+                    </li>
+                    <li>
+                        <strong>Mechanical alignment:</strong>
+                        Incorrect mounting orientation can create
+                        systematic navigation errors.
+                    </li>
+                    <li>
+                        <strong>Magnetic interference:</strong>
+                        Nearby electrical and ferromagnetic equipment
+                        can affect magnetometer-based measurements.
+                    </li>
+                    <li>
+                        <strong>Acoustic conditions:</strong>
+                        DVL and acoustic positioning performance can
+                        be affected by seabed properties, water conditions,
+                        and geometry.
+                    </li>
+                </ul>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>7.2 GNSS-Denied and Degraded Environments</h3>
+
+                <p>
+                    GNSS-denied operation can occur when satellite
+                    signals are obstructed, unavailable, or deliberately
+                    disrupted. Inertial navigation can support continuity,
+                    but the system must monitor how uncertainty grows.
+                </p>
+
+                <p>
+                    Engineers may combine inertial measurements with
+                    radar observations, DVL, acoustic references,
+                    visual navigation, or other independent sources
+                    where suitable.
+                </p>
+
+                <p>
+                    The choice of aiding source depends on the vessel,
+                    environment, available equipment, and the required
+                    navigation accuracy.
+                </p>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>7.3 Data Integrity and Cybersecurity</h3>
+
+                <p>
+                    An integrated navigation solution depends on the
+                    quality and trustworthiness of its input data.
+                    A sensor can produce plausible-looking measurements
+                    even when it is malfunctioning or compromised.
+                </p>
+
+                <ul>
+                    <li>Monitor sensor status, validity, and measurement quality.</li>
+                    <li>Compare independent data sources when available.</li>
+                    <li>Detect unexpected changes and inconsistent measurements.</li>
+                    <li>Protect navigation interfaces and configuration access.</li>
+                    <li>Maintain secure software and equipment update procedures.</li>
+                    <li>Provide clear alarms when integrity cannot be verified.</li>
+                    <li>Ensure operators understand fallback modes and system limitations.</li>
+                </ul>
+
+                <p>
+                    Redundant sensors do not guarantee reliability if
+                    they share the same failure mode, power source,
+                    data network, or incorrect reference information.
+                    Independence and integrity monitoring matter.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 08 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">08 — PRACTICAL ENGINEERING</div>
+                <h2>Operational Scenarios and Applications</h2>
+                <p>
+                    Applying inertial navigation principles to
+                    real maritime situations.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>8.1 Scenario: Temporary GNSS Signal Loss</h3>
+
+                <p>
+                    A vessel is operating near a location where satellite
+                    signals become temporarily unavailable.
+                </p>
+
+                <ol>
+                    <li>The GNSS receiver reports loss or degradation of its position solution.</li>
+                    <li>The INS continues processing accelerometer and gyroscope measurements.</li>
+                    <li>The navigation system estimates vessel movement using its current state.</li>
+                    <li>The system monitors uncertainty and indicates that external positioning is unavailable.</li>
+                    <li>When trustworthy GNSS measurements return, the integrated system can use them to correct its estimate.</li>
+                </ol>
+
+                <p>
+                    The operator should verify the navigation solution
+                    using other available references and follow the
+                    vessel's approved procedures.
+                </p>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>8.2 Scenario: Underwater Survey Vehicle</h3>
+
+                <p>
+                    An autonomous underwater vehicle is conducting
+                    a subsea inspection mission.
+                </p>
+
+                <ol>
+                    <li>The IMU measures the vehicle's acceleration and angular motion.</li>
+                    <li>The INS calculates orientation, velocity, and position estimates.</li>
+                    <li>The DVL provides velocity measurements when suitable acoustic returns are available.</li>
+                    <li>Depth sensors provide additional vertical reference information.</li>
+                    <li>Acoustic positioning updates may correct the estimated position when available.</li>
+                    <li>The navigation system monitors data quality and uncertainty throughout the mission.</li>
+                </ol>
+
+                <p>
+                    This architecture provides a more robust navigation
+                    solution than relying on inertial measurements alone,
+                    although its actual accuracy depends on the quality
+                    and availability of each sensor.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- SECTION 09 -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">09 — FUTURE DEVELOPMENTS</div>
+                <h2>The Future of Inertial Maritime Navigation</h2>
+                <p>
+                    New sensor technologies and algorithms are improving
+                    navigation resilience and system integration.
+                </p>
+            </div>
+
+            <article class="in-article">
+
+                <h3>9.1 Emerging Technologies</h3>
+
+                <ul>
+                    <li>
+                        <strong>Advanced MEMS:</strong>
+                        Improvements in sensor design, calibration,
+                        and processing may support smaller and more
+                        capable inertial systems.
+                    </li>
+                    <li>
+                        <strong>Fiber optic and advanced optical sensors:</strong>
+                        Continued development supports high-performance
+                        navigation applications.
+                    </li>
+                    <li>
+                        <strong>Multi-sensor fusion:</strong>
+                        Combining inertial, acoustic, satellite,
+                        radar, and velocity measurements can improve
+                        navigation continuity.
+                    </li>
+                    <li>
+                        <strong>Machine learning:</strong>
+                        Data-driven methods may assist anomaly detection,
+                        sensor monitoring, and environmental estimation.
+                    </li>
+                    <li>
+                        <strong>Resilient PNT:</strong>
+                        Navigation architectures increasingly consider
+                        multiple positioning, navigation, and timing
+                        sources rather than relying on GNSS alone.
+                    </li>
+                </ul>
+
+            </article>
+
+            <article class="in-article">
+
+                <h3>9.2 Intelligent Navigation and Autonomy</h3>
+
+                <p>
+                    Future autonomous and remotely operated vessels
+                    will depend on reliable estimates of position,
+                    velocity, and orientation. Inertial systems can
+                    contribute to this capability by providing
+                    continuous motion information.
+                </p>
+
+                <p>
+                    However, autonomy requires more than an accurate
+                    position estimate. A complete navigation architecture
+                    must also consider obstacle detection, route planning,
+                    environmental awareness, collision avoidance,
+                    communications, system integrity, and human oversight.
+                </p>
+
+                <div class="in-callout">
+                    <strong>Final Engineering Perspective</strong>
+                    <p>
+                        Inertial navigation is not a replacement for
+                        every other navigation technology. Its greatest
+                        value comes from providing continuous motion
+                        estimates as part of a carefully designed,
+                        monitored, and integrated navigation architecture.
+                    </p>
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section class="in-content-section">
+
+            <div class="in-section-heading">
+                <div class="in-section-label">10 — TECHNICAL REFERENCES</div>
+                <h2>Further Reading and Standards</h2>
+                <p>
+                    Technical resources for deeper study of inertial
+                    navigation and maritime system integration.
+                </p>
+            </div>
+
+            <article class="in-article in-references">
+
+                <h3>Recommended References</h3>
+
+                <ul>
+                    <li>
+                        <a href="https://www.imca-int.com/resources/technical-library/document/6d07f45c-c55b-ee11-8def-6045bdd2c7e3/"
+                           target="_blank" rel="noopener noreferrer">
+                            IMCA — An Introduction to Inertial Navigation Systems
+                        </a>
+                        <p>
+                            Guidance covering INS technology, aided
+                            navigation, applications, and limitations
+                            in offshore survey operations.
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="https://www.imo.org/en/ourwork/safety/pages/docs-shipbornerc-navigationequipment.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization — Shipborne Navigation Equipment
+                        </a>
+                        <p>
+                            IMO performance standards and related
+                            documents for shipborne navigation equipment.
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="https://wwwcdn.imo.org/localresources/en/KnowledgeCentre/IndexofIMOResolutions/MSCResolutions/MSC.252%2883%29.pdf"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO Resolution MSC.252(83) — Revised Performance Standards for INS
+                        </a>
+                        <p>
+                            Requirements addressing navigation
+                            information integration, integrity monitoring,
+                            sensor selection, and system operation.
+                        </p>
+                    </li>
+
+                    <li>
+                        <a href="https://www.teledynemarine.com/en-us/products/product-line/Pages/Inertial-Navigation-Systems.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            Teledyne Marine — Inertial Navigation Systems
+                        </a>
+                        <p>
+                            Examples of marine INS solutions and
+                            GNSS/INS integration approaches.
+                        </p>
+                    </li>
+                </ul>
+
+                <p>
+                    These resources provide technical background.
+                    Applicable requirements should always be checked
+                    against the vessel's flag-state rules, equipment
+                    approval, installation date, and operational context.
+                </p>
+
+            </article>
+
+        </section>
+
+        <!-- KNOWLEDGE ASSESSMENT -->
+
+        <section class="in-quiz" id="quiz">
+
+            <div class="in-quiz-header">
+                <div class="in-section-label">KNOWLEDGE ASSESSMENT</div>
+                <h2>Test Your Understanding</h2>
+                <p>
+                    Complete all 10 questions to evaluate your
+                    understanding of inertial navigation and
+                    maritime positioning.
+                </p>
+            </div>
+
+            <div class="in-progress-track">
+                <div class="in-progress-bar" id="inProgressBar"></div>
+            </div>
+
+            <div id="inQuestions">
+
+                <div class="in-question" data-answer="1">
+                    <div class="in-question-number">QUESTION 01</div>
+                    <h3>What is the main purpose of an Inertial Navigation System?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q1" value="0">
+                        To transmit satellite signals to other vessels.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q1" value="1">
+                        To estimate position, velocity, and orientation using inertial measurements.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q1" value="2">
+                        To measure seawater salinity only.
+                    </label>
+
+                    <div class="in-explanation">
+                        An INS processes inertial measurements to estimate
+                        the movement and navigation state of a platform.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="2">
+                    <div class="in-question-number">QUESTION 02</div>
+                    <h3>Which measurements are typically provided by an IMU?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q2" value="0">
+                        Water depth and salinity only.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q2" value="1">
+                        Satellite identity and chart updates.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q2" value="2">
+                        Linear specific force and angular rate.
+                    </label>
+
+                    <div class="in-explanation">
+                        Accelerometers measure specific force, while
+                        gyroscopes measure angular rate.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="0">
+                    <div class="in-question-number">QUESTION 03</div>
+                    <h3>What is the key difference between an IMU and an INS?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q3" value="0">
+                        An IMU measures motion, while an INS processes measurements to estimate navigation states.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q3" value="1">
+                        An IMU always provides geographic position, while an INS only measures temperature.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q3" value="2">
+                        There is no difference between them.
+                    </label>
+
+                    <div class="in-explanation">
+                        An IMU is a measurement unit. An INS includes
+                        navigation processing and algorithms that use
+                        inertial measurements to estimate position,
+                        velocity, and orientation.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="1">
+                    <div class="in-question-number">QUESTION 04</div>
+                    <h3>Why does inertial navigation drift increase over time?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q4" value="0">
+                        Because the vessel always stops moving.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q4" value="1">
+                        Because small sensor errors accumulate through integration.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q4" value="2">
+                        Because GNSS satellites continuously change their names.
+                    </label>
+
+                    <div class="in-explanation">
+                        Bias, noise, and other measurement errors can
+                        accumulate when acceleration and velocity are
+                        repeatedly integrated.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="2">
+                    <div class="in-question-number">QUESTION 05</div>
+                    <h3>What is the main advantage of combining GNSS and INS?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q5" value="0">
+                        It removes the need for all navigation sensors.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q5" value="1">
+                        It guarantees perfect positioning in every environment.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q5" value="2">
+                        It combines external position updates with continuous inertial motion estimates.
+                    </label>
+
+                    <div class="in-explanation">
+                        GNSS can help correct inertial drift, while INS
+                        can maintain short-term motion estimates during
+                        temporary GNSS interruptions.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="0">
+                    <div class="in-question-number">QUESTION 06</div>
+                    <h3>What does a DVL commonly measure in underwater navigation?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q6" value="0">
+                        Velocity relative to the seabed or surrounding water, depending on the tracking mode.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q6" value="1">
+                        Satellite signal strength above the ocean.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q6" value="2">
+                        The vessel's magnetic field only.
+                    </label>
+
+                    <div class="in-explanation">
+                        A DVL uses acoustic Doppler measurements to
+                        estimate velocity relative to the seabed
+                        or surrounding water.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="1">
+                    <div class="in-question-number">QUESTION 07</div>
+                    <h3>What is the purpose of a Kalman filter in navigation?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q7" value="0">
+                        To replace all physical sensors.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q7" value="1">
+                        To estimate navigation states by combining predictions and measurements.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q7" value="2">
+                        To control the vessel's engine temperature only.
+                    </label>
+
+                    <div class="in-explanation">
+                        Kalman filtering predicts system states and
+                        updates those predictions using measurements
+                        while estimating uncertainty.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="2">
+                    <div class="in-question-number">QUESTION 08</div>
+                    <h3>Why can a submerged vehicle not normally rely on direct GNSS positioning?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q8" value="0">
+                        GNSS satellites only work at night.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q8" value="1">
+                        GNSS signals require a magnetic compass.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q8" value="2">
+                        Satellite signals do not normally penetrate seawater sufficiently for direct underwater reception.
+                    </label>
+
+                    <div class="in-explanation">
+                        Submerged vehicles generally need inertial,
+                        acoustic, DVL, and other underwater positioning
+                        methods instead of direct GNSS reception.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="0">
+                    <div class="in-question-number">QUESTION 09</div>
+                    <h3>Which factor can introduce errors into inertial measurements?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q9" value="0">
+                        Sensor bias, vibration, temperature changes, and misalignment.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q9" value="1">
+                        The use of a digital display.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q9" value="2">
+                        The presence of an electronic chart.
+                    </label>
+
+                    <div class="in-explanation">
+                        Sensor characteristics and environmental
+                        conditions can affect measurement accuracy
+                        and navigation performance.
+                    </div>
+                </div>
+
+                <div class="in-question" data-answer="1">
+                    <div class="in-question-number">QUESTION 10</div>
+                    <h3>What should an integrated navigation system do when sensor integrity cannot be verified?</h3>
+
+                    <label class="in-option">
+                        <input type="radio" name="q10" value="0">
+                        Continue using the questionable data without indication.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q10" value="1">
+                        Indicate the integrity problem and prevent unsuitable data from being used for dependent functions.
+                    </label>
+
+                    <label class="in-option">
+                        <input type="radio" name="q10" value="2">
+                        Automatically hide every navigation alarm.
+                    </label>
+
+                    <div class="in-explanation">
+                        Integrity monitoring and clear indications
+                        help operators identify unreliable information
+                        and avoid unsafe use of questionable data.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="in-quiz-actions">
+                <button class="in-quiz-button" id="inSubmit" type="button">
+                    SUBMIT ANSWERS
+                </button>
+
+                <button class="in-quiz-button secondary" id="inReset" type="button">
+                    RESET QUIZ
+                </button>
+            </div>
+
+            <div class="in-result" id="inResult" aria-live="polite">
+                <h3 id="inScore"></h3>
+                <p id="inFeedback"></p>
+                <p id="inCorrectCount"></p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer class="in-footer">
+
+        <div class="in-footer-brand">MARITERRA</div>
+
+        <p>
+            Exploring the Technologies Shaping the Maritime World
+        </p>
+
+        <p>
+            Designed & Developed by
+            <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+
+        <a href="smart-navigation.html" class="in-back">
+            ← Back to Smart Navigation
+        </a>
+
+    </footer>
+
+</div>
+
+<script>
+    const inQuestions = document.querySelectorAll(".in-question");
+    const inProgressBar = document.getElementById("inProgressBar");
+    const inSubmit = document.getElementById("inSubmit");
+    const inReset = document.getElementById("inReset");
+    const inResult = document.getElementById("inResult");
+
+    const inScore = document.getElementById("inScore");
+    const inFeedback = document.getElementById("inFeedback");
+    const inCorrectCount = document.getElementById("inCorrectCount");
+
+    let inSubmitted = false;
+
+    function updateProgress() {
+        let answered = 0;
+
+        inQuestions.forEach((question) => {
+            if (question.querySelector('input[type="radio"]:checked')) {
+                answered++;
+            }
+        });
+
+        const percentage = (answered / inQuestions.length) * 100;
+        inProgressBar.style.width = percentage + "%";
+    }
+
+    inQuestions.forEach((question) => {
+        question.querySelectorAll('input[type="radio"]').forEach((input) => {
+            input.addEventListener("change", () => {
+                if (!inSubmitted) {
+                    updateProgress();
+                }
+            });
+        });
+    });
+
+    inSubmit.addEventListener("click", () => {
+        if (inSubmitted) {
+            return;
+        }
+
+        let answered = 0;
+
+        inQuestions.forEach((question) => {
+            if (question.querySelector('input[type="radio"]:checked')) {
+                answered++;
+            }
+        });
+
+        if (answered !== inQuestions.length) {
+            alert("Please answer all 10 questions before submitting.");
+            return;
+        }
+
+        let score = 0;
+
+        inQuestions.forEach((question) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector('input[type="radio"]:checked');
+            const explanation = question.querySelector(".in-explanation");
+
+            const options = question.querySelectorAll(".in-option");
+
+            options.forEach((option) => {
+                const input = option.querySelector("input");
+
+                input.disabled = true;
+
+                if (input.value === correctAnswer) {
+                    option.classList.add("correct");
+                }
+
+                if (input.checked && input.value !== correctAnswer) {
+                    option.classList.add("wrong");
+                }
+            });
+
+            if (selected.value === correctAnswer) {
+                score++;
+            }
+
+            explanation.style.display = "block";
+        });
+
+        const percentage = (score / inQuestions.length) * 100;
+
+        inScore.textContent = `Your Score: ${score} / ${inQuestions.length}`;
+
+        inCorrectCount.textContent =
+            `Correct answers: ${score} | Incorrect answers: ${inQuestions.length - score}`;
+
+        if (percentage >= 90) {
+            inFeedback.textContent =
+                "Excellent performance. You demonstrate a strong understanding of inertial navigation and maritime positioning.";
+        } else if (percentage >= 70) {
+            inFeedback.textContent =
+                "Good work. Review the explanations to strengthen your understanding of the technical details.";
+        } else if (percentage >= 50) {
+            inFeedback.textContent =
+                "You have a basic understanding, but several engineering concepts need more review.";
+        } else {
+            inFeedback.textContent =
+                "More study is recommended. Revisit the topic sections and try the assessment again.";
+        }
+
+        inResult.style.display = "block";
+        inResult.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        inSubmitted = true;
+        inSubmit.disabled = true;
+        inSubmit.style.opacity = "0.5";
+        inSubmit.style.cursor = "not-allowed";
+    });
+
+    inReset.addEventListener("click", () => {
+        inQuestions.forEach((question) => {
+            question.querySelectorAll('input[type="radio"]').forEach((input) => {
+                input.checked = false;
+                input.disabled = false;
+            });
+
+            question.querySelectorAll(".in-option").forEach((option) => {
+                option.classList.remove("correct", "wrong");
+            });
+
+            question.querySelector(".in-explanation").style.display = "none";
+        });
+
+        inProgressBar.style.width = "0%";
+        inResult.style.display = "none";
+
+        inScore.textContent = "";
+        inFeedback.textContent = "";
+        inCorrectCount.textContent = "";
+
+        inSubmitted = false;
+        inSubmit.disabled = false;
+        inSubmit.style.opacity = "1";
+        inSubmit.style.cursor = "pointer";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+</script>
+
+</body>
+</html>

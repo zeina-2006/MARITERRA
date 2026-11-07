@@ -1,0 +1,1280 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070816">
+<title>AI, Maritime Safety & Environmental Protection | MARITERRA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#070816;
+    --panel:#101126;
+    --panel2:#171831;
+    --purple:#9333ea;
+    --lavender:#c4b5fd;
+    --blue:#38bdf8;
+    --text:#f4f1ff;
+    --muted:#a6a4c2;
+    --line:rgba(196,181,253,.16);
+    --green:#4ade80;
+    --red:#fb7185;
+    --amber:#fbbf24;
+}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+body{
+    background:radial-gradient(circle at 75% 0%,rgba(147,51,234,.13),transparent 30%),var(--bg);
+    color:var(--text);font-family:'Inter',sans-serif;line-height:1.75;
+}
+a{color:var(--lavender);text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+.topbar{
+    position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;
+    align-items:center;padding:15px 5%;background:rgba(7,8,22,.92);
+    backdrop-filter:blur(16px);border-bottom:1px solid var(--line)
+}
+.logo{font-family:'Orbitron';font-weight:800;letter-spacing:3px}
+.logo span{color:var(--lavender)}
+.back-btn{border:1px solid rgba(196,181,253,.4);padding:9px 17px;border-radius:30px;color:white;transition:.3s;font-size:.85rem}
+.back-btn:hover{background:var(--purple);border-color:var(--purple);transform:translateY(-2px)}
+.hero{
+    min-height:470px;padding:90px 8% 75px;position:relative;overflow:hidden;
+    display:flex;align-items:center;
+    background:linear-gradient(100deg,rgba(7,8,22,.97),rgba(22,12,48,.82)),
+    radial-gradient(circle at 80% 40%,rgba(147,51,234,.35),transparent 35%);
+    border-bottom:1px solid var(--line)
+}
+.hero:before,.hero:after{
+    content:"";position:absolute;border:1px solid rgba(196,181,253,.15);
+    border-radius:50%;animation:rotate 24s linear infinite
+}
+.hero:before{width:430px;height:430px;right:8%;top:5%}
+.hero:after{width:310px;height:310px;right:12%;top:17%;border-style:dashed;animation-direction:reverse}
+@keyframes rotate{to{transform:rotate(360deg)}}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.eyebrow{color:var(--lavender);letter-spacing:4px;font-size:.75rem;font-weight:800;text-transform:uppercase}
+.hero h1{font-family:'Orbitron';font-size:clamp(2rem,5vw,3.7rem);line-height:1.2;margin:20px 0}
+.hero h1 span{color:var(--lavender);text-shadow:0 0 25px rgba(147,51,234,.5)}
+.hero p{color:var(--muted);max-width:680px;font-size:1.04rem}
+.hero-tags{display:flex;gap:10px;flex-wrap:wrap;margin-top:27px}
+.hero-tags span{border:1px solid var(--line);background:rgba(147,51,234,.1);padding:7px 13px;border-radius:30px;font-size:.75rem;color:var(--lavender)}
+.layout{width:min(1450px,94%);margin:45px auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:30px}
+.sidebar{align-self:start;position:sticky;top:90px;background:rgba(16,17,38,.8);border:1px solid var(--line);border-radius:18px;padding:22px;max-height:calc(100vh - 110px);overflow:auto}
+.sidebar h3{font-family:'Orbitron';font-size:.85rem;margin-bottom:17px;color:var(--lavender)}
+.sidebar a{display:block;color:var(--muted);font-size:.82rem;padding:9px 11px;border-radius:8px;margin:3px 0;transition:.25s}
+.sidebar a:hover{background:rgba(147,51,234,.15);color:white;transform:translateX(4px)}
+.content{min-width:0}
+.section{margin-bottom:65px;scroll-margin-top:100px}
+.section-heading{margin-bottom:23px}
+.section-heading .number{font-family:'Orbitron';color:var(--lavender);font-size:.75rem;letter-spacing:3px}
+.section-heading h2{font-family:'Orbitron';font-size:clamp(1.35rem,3vw,2rem);margin:8px 0}
+.section-heading p{color:var(--muted);max-width:850px}
+p{color:#c7c4db;margin:12px 0}
+h3{color:#eee9ff}
+strong{color:white}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.info-card,.topic-card,.callout,.lab,.quiz-box,.reference-card{
+    background:linear-gradient(145deg,rgba(21,22,49,.95),rgba(13,14,32,.95));
+    border:1px solid var(--line);border-radius:17px;padding:23px;
+    transition:transform .3s,border-color .3s,box-shadow .3s
+}
+.info-card:hover,.topic-card:hover,.reference-card:hover{transform:translateY(-5px);border-color:rgba(196,181,253,.5);box-shadow:0 15px 35px rgba(0,0,0,.22)}
+.card-icon{font-size:1.7rem;margin-bottom:10px}
+.info-card h3,.topic-card h3{font-size:1.03rem;margin-bottom:9px}
+.info-card p,.topic-card p{font-size:.9rem;margin:0}
+ul.clean{padding-left:20px;color:#c7c4db}
+ul.clean li{margin:8px 0}
+.callout{border-left:3px solid var(--purple);background:rgba(147,51,234,.09);margin:22px 0}
+.callout strong{color:var(--lavender)}
+.diagram{padding:25px;border:1px solid var(--line);border-radius:17px;background:rgba(12,13,31,.8);overflow-x:auto;margin:22px 0}
+.flow{display:flex;align-items:center;justify-content:center;gap:10px;min-width:650px}
+.flow-node{flex:1;text-align:center;padding:16px 10px;border-radius:12px;border:1px solid rgba(196,181,253,.35);background:rgba(147,51,234,.12);font-size:.82rem;color:#eee9ff}
+.flow-arrow{color:var(--lavender);font-size:1.3rem}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin:20px 0}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{padding:14px;text-align:left;border-bottom:1px solid var(--line);font-size:.86rem}
+th{background:rgba(147,51,234,.16);color:var(--lavender)}
+td{color:#c7c4db}
+tr:last-child td{border-bottom:0}
+.metric{font-family:'Orbitron';font-size:1.35rem;color:var(--lavender);margin-bottom:5px}
+.lab{padding:28px}
+.lab-intro{color:var(--muted);font-size:.9rem}
+.control{margin:22px 0}
+.control label{display:flex;justify-content:space-between;gap:10px;font-size:.88rem;margin-bottom:9px}
+.control input{width:100%;accent-color:var(--purple)}
+.result-panel{background:rgba(147,51,234,.1);border:1px solid rgba(196,181,253,.25);border-radius:14px;padding:22px;margin-top:22px}
+.result-number{font-family:'Orbitron';font-size:2.2rem;color:var(--lavender)}
+.result-bar{height:10px;background:#292744;border-radius:20px;overflow:hidden;margin:12px 0}
+.result-bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--blue));transition:width .5s}
+.primary-btn{background:linear-gradient(100deg,var(--purple),#6d28d9);color:white;border:0;padding:12px 22px;border-radius:9px;font-weight:700;margin-top:12px}
+.primary-btn:hover{filter:brightness(1.15);transform:translateY(-2px)}
+.quiz-box{padding:28px}
+.quiz-progress{height:7px;background:#292744;border-radius:20px;margin:15px 0 25px;overflow:hidden}
+.quiz-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));width:0;transition:.3s}
+.question{font-size:1.08rem;font-weight:700;margin:20px 0}
+.option{display:block;width:100%;text-align:left;padding:13px 15px;margin:9px 0;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.025);color:#d8d5e9;transition:.2s}
+.option:hover:not(:disabled){border-color:var(--lavender);background:rgba(147,51,234,.1)}
+.option.correct{border-color:var(--green);background:rgba(74,222,128,.1)}
+.option.wrong{border-color:var(--red);background:rgba(251,113,133,.1)}
+.option:disabled{cursor:default}
+.feedback{padding:15px;border-radius:10px;margin-top:15px;font-size:.9rem;display:none}
+.feedback.show{display:block}
+.quiz-controls{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-top:20px}
+.score-panel{text-align:center;padding:30px}
+.score-panel .result-number{font-size:3rem}
+.references{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.reference-card{padding:16px}
+.reference-card a{font-weight:700}
+.reference-card p{font-size:.8rem;margin:5px 0 0}
+.small-note{font-size:.8rem;color:var(--muted)}
+footer{text-align:center;border-top:1px solid var(--line);padding:35px 15px;color:var(--muted);font-size:.8rem;letter-spacing:2px}
+footer strong{color:var(--lavender)}
+@media(max-width:950px){.layout{grid-template-columns:1fr}.sidebar{position:relative;top:auto;max-height:none}.sidebar nav{display:grid;grid-template-columns:repeat(2,1fr);gap:2px}}
+@media(max-width:650px){.hero{padding:65px 7%;min-height:420px}.hero:before{right:-220px}.hero:after{right:-160px}.grid-2,.grid-3,.references{grid-template-columns:1fr}.layout{width:92%;margin:28px auto}.sidebar nav{grid-template-columns:1fr}.info-card,.lab,.quiz-box{padding:19px}.topbar{padding:13px 4%}}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+    <div class="logo">MARI<span>TERRA</span></div>
+    <a class="back-btn" href="artificial-intelligence.html">← Back to AI Hub</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Technology Hub / Artificial Intelligence / Topic 14</div>
+        <h1>AI, MARITIME SAFETY <span>& ENVIRONMENTAL PROTECTION</span></h1>
+        <p>
+            Discover how artificial intelligence supports safer maritime operations,
+            accident prevention, emergency response, environmental monitoring,
+            pollution detection, and the protection of marine ecosystems.
+        </p>
+        <div class="hero-tags">
+            <span>Risk Prediction</span>
+            <span>Accident Prevention</span>
+            <span>Pollution Monitoring</span>
+            <span>Marine Protection</span>
+        </div>
+    </div>
+</section>
+
+<div class="layout">
+<aside class="sidebar">
+    <h3>TOPIC CONTENTS</h3>
+    <nav>
+        <a href="#overview">01. Overview</a>
+        <a href="#safety">02. Maritime Safety</a>
+        <a href="#risk">03. Risk Assessment</a>
+        <a href="#collision">04. Collision Prevention</a>
+        <a href="#grounding">05. Grounding Risk</a>
+        <a href="#machinery">06. Machinery Safety</a>
+        <a href="#crew">07. Crew Safety</a>
+        <a href="#emergency">08. Emergency Response</a>
+        <a href="#monitoring">09. Environmental Monitoring</a>
+        <a href="#pollution">10. Pollution Detection</a>
+        <a href="#oil">11. Oil Spill Response</a>
+        <a href="#emissions">12. Emissions & Climate</a>
+        <a href="#ecosystem">13. Marine Ecosystems</a>
+        <a href="#regulations">14. Regulations</a>
+        <a href="#challenges">15. Challenges</a>
+        <a href="#future">16. Future Directions</a>
+        <a href="#lab">Interactive Lab</a>
+        <a href="#quiz">Knowledge Assessment</a>
+        <a href="#references">References</a>
+    </nav>
+</aside>
+
+<main class="content">
+
+<section class="section" id="overview">
+    <div class="section-heading">
+        <div class="number">01 / FOUNDATIONS</div>
+        <h2>AI for Maritime Safety & Environmental Protection</h2>
+        <p>Connecting operational safety with the protection of the marine environment.</p>
+    </div>
+    <p>
+        Maritime transportation operates in a complex environment involving ships,
+        crews, ports, coastal infrastructure, weather systems, marine ecosystems,
+        and international shipping routes. Accidents, equipment failures, human
+        errors, and pollution incidents can have serious consequences.
+    </p>
+    <p>
+        Artificial Intelligence can analyze large volumes of operational and
+        environmental information to identify patterns, estimate risk, detect
+        unusual conditions, and support timely decisions.
+    </p>
+    <div class="grid-3">
+        <div class="info-card">
+            <div class="card-icon">🛡️</div>
+            <h3>Safety Intelligence</h3>
+            <p>Identify potential hazards and support safer navigation, ship operations, and crew activities.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🚨</div>
+            <h3>Emergency Intelligence</h3>
+            <p>Analyze incident information and help response teams understand developing situations.</p>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">🌊</div>
+            <h3>Environmental Intelligence</h3>
+            <p>Monitor marine conditions, identify pollution indicators, and support environmental protection.</p>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Core principle:</strong>
+        AI can improve awareness and decision support, but it does not eliminate
+        maritime risk. Safety management, professional judgment, approved
+        procedures, and regulatory compliance remain essential.
+    </div>
+</section>
+
+<section class="section" id="safety">
+    <div class="section-heading">
+        <div class="number">02 / SAFETY ENGINEERING</div>
+        <h2>Understanding Maritime Safety Systems</h2>
+        <p>How AI fits into established safety engineering and risk management.</p>
+    </div>
+    <p>
+        Maritime safety is built around preventing accidents, controlling hazards,
+        protecting people, and reducing damage to ships and the environment.
+        It includes navigation safety, machinery safety, fire protection,
+        cargo safety, emergency preparedness, and occupational health.
+    </p>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Preventive Safety</h3>
+            <p>Identify hazards early, monitor operating conditions, and reduce the likelihood of unsafe events.</p>
+        </div>
+        <div class="info-card">
+            <h3>Detective Safety</h3>
+            <p>Recognize abnormal conditions through sensors, alarms, inspection, and operational monitoring.</p>
+        </div>
+        <div class="info-card">
+            <h3>Protective Safety</h3>
+            <p>Use engineered safeguards, emergency systems, and approved procedures to limit consequences.</p>
+        </div>
+        <div class="info-card">
+            <h3>Learning & Improvement</h3>
+            <p>Analyze incidents, near misses, and operational evidence to improve future safety performance.</p>
+        </div>
+    </div>
+    <p>
+        AI can contribute to each stage, but it must be integrated into a defined
+        safety management process rather than treated as a replacement for it.
+    </p>
+</section>
+
+<section class="section" id="risk">
+    <div class="section-heading">
+        <div class="number">03 / RISK ANALYSIS</div>
+        <h2>AI-Based Maritime Risk Assessment</h2>
+        <p>From hazard information to structured risk awareness.</p>
+    </div>
+    <p>
+        Risk assessment involves understanding hazards, estimating how likely
+        harmful events may be, evaluating their consequences, and selecting
+        appropriate controls. AI models can support this process by analyzing
+        historical incidents, environmental conditions, vessel characteristics,
+        and current operational information.
+    </p>
+    <h3>Risk Assessment Workflow</h3>
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Hazard<br>Identification</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Data<br>Collection</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Risk<br>Estimation</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Human<br>Evaluation</div>
+        </div>
+    </div>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Classification Models</h3>
+            <p>Estimate whether an operational situation belongs to a defined risk category using historical examples.</p>
+        </div>
+        <div class="info-card">
+            <h3>Anomaly Detection</h3>
+            <p>Identify unusual combinations of sensor readings, navigation data, or operational events.</p>
+        </div>
+        <div class="info-card">
+            <h3>Time-Series Forecasting</h3>
+            <p>Analyze changing environmental and operational conditions to estimate future trends.</p>
+        </div>
+        <div class="info-card">
+            <h3>Decision Support</h3>
+            <p>Present risk indicators, supporting evidence, uncertainty, and possible response options.</p>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Important distinction:</strong>
+        A model's risk score is not the same as a formal safety assessment.
+        A prediction should be interpreted in context, including its uncertainty,
+        assumptions, and the consequences of an incorrect result.
+    </div>
+</section>
+
+<section class="section" id="collision">
+    <div class="section-heading">
+        <div class="number">04 / NAVIGATION SAFETY</div>
+        <h2>AI for Collision Prevention</h2>
+        <p>Supporting situational awareness and collision-risk evaluation.</p>
+    </div>
+    <p>
+        Collision prevention requires continuous awareness of surrounding traffic,
+        vessel movement, environmental conditions, and navigational constraints.
+        AI can analyze multiple data sources to help identify developing
+        encounter situations.
+    </p>
+    <h3>Relevant Data Sources</h3>
+    <ul class="clean">
+        <li><strong>AIS:</strong> reported vessel identity, position, course, and speed information.</li>
+        <li><strong>Radar and ARPA:</strong> target detection and tracking information.</li>
+        <li><strong>GNSS:</strong> positioning and navigation information.</li>
+        <li><strong>Gyrocompass and speed sensors:</strong> heading and movement information.</li>
+        <li><strong>Weather information:</strong> wind, visibility, sea state, and other relevant conditions.</li>
+    </ul>
+    <h3>Collision-Risk Concepts</h3>
+    <div class="grid-2">
+        <div class="info-card">
+            <div class="metric">CPA</div>
+            <h3>Closest Point of Approach</h3>
+            <p>The predicted closest distance between two vessels if their current relative motion continues.</p>
+        </div>
+        <div class="info-card">
+            <div class="metric">TCPA</div>
+            <h3>Time to CPA</h3>
+            <p>The estimated time until the vessels reach their predicted closest point of approach.</p>
+        </div>
+    </div>
+    <p>
+        AI can combine CPA/TCPA information with traffic density, vessel type,
+        navigation context, and uncertainty to support collision-risk assessment.
+        It must not replace proper lookout, safe speed, COLREGs compliance,
+        or the master's and officer's responsibilities.
+    </p>
+    <div class="callout">
+        <strong>Critical safety rule:</strong>
+        An AI system must not encourage a maneuver solely because a numerical
+        risk score is high or low. Navigational decisions must follow applicable
+        rules, local conditions, and professional judgment.
+    </div>
+</section>
+
+<section class="section" id="grounding">
+    <div class="section-heading">
+        <div class="number">05 / NAVIGATIONAL HAZARDS</div>
+        <h2>Grounding & Navigational Hazard Prediction</h2>
+        <p>Recognizing conditions that may increase the likelihood of grounding.</p>
+    </div>
+    <p>
+        Grounding may occur when a vessel unintentionally makes contact with
+        the seabed or another underwater obstruction. Relevant factors include
+        water depth, vessel draft, tide, position uncertainty, chart quality,
+        under-keel clearance, speed, and navigational decisions.
+    </p>
+    <div class="grid-2">
+        <div class="topic-card">
+            <h3>Depth & Chart Information</h3>
+            <p>Analyze available bathymetric and electronic chart information to support hazard awareness.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Position Monitoring</h3>
+            <p>Compare vessel movement with the intended route and identify deviations for review.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Tide & Environmental Data</h3>
+            <p>Consider changing water levels and relevant environmental information in planning.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Route Risk Analysis</h3>
+            <p>Identify sections of a route where available information indicates increased navigational concern.</p>
+        </div>
+    </div>
+    <p>
+        AI-based predictions depend on the accuracy and suitability of charts,
+        positioning data, vessel particulars, and environmental information.
+        They cannot replace official nautical publications or approved navigation procedures.
+    </p>
+</section>
+
+<section class="section" id="machinery">
+    <div class="section-heading">
+        <div class="number">06 / ENGINEERING SAFETY</div>
+        <h2>AI for Machinery & Engine-Room Safety</h2>
+        <p>Monitoring equipment conditions to support safe ship operation.</p>
+    </div>
+    <p>
+        Marine machinery systems operate under changing loads, temperatures,
+        pressures, and environmental conditions. Abnormal readings may indicate
+        developing equipment problems that require investigation.
+    </p>
+    <div class="grid-3">
+        <div class="info-card">
+            <h3>Temperature Monitoring</h3>
+            <p>Analyze cooling water, exhaust gas, bearings, and lubrication temperatures.</p>
+        </div>
+        <div class="info-card">
+            <h3>Vibration Analysis</h3>
+            <p>Identify unusual vibration patterns in rotating machinery and supporting equipment.</p>
+        </div>
+        <div class="info-card">
+            <h3>Pressure Monitoring</h3>
+            <p>Evaluate trends in lubrication, cooling, fuel, and compressed-air systems.</p>
+        </div>
+    </div>
+    <h3>AI-Based Fault Detection</h3>
+    <p>
+        Machine learning can identify deviations from expected operating patterns.
+        For example, an unusual combination of rising bearing temperature and
+        vibration may trigger an inspection recommendation.
+    </p>
+    <p>
+        The system should distinguish an observed symptom from a confirmed
+        root cause. A high temperature alone does not prove a specific component
+        has failed.
+    </p>
+    <div class="callout">
+        <strong>Safety boundary:</strong>
+        AI alerts must not disable alarms, override protective trips, or alter
+        machinery control settings without an approved engineering and safety process.
+    </div>
+</section>
+
+<section class="section" id="crew">
+    <div class="section-heading">
+        <div class="number">07 / HUMAN FACTORS</div>
+        <h2>Crew Safety & Human Factors</h2>
+        <p>Protecting the people who operate and maintain ships.</p>
+    </div>
+    <p>
+        Maritime safety depends on people working under demanding conditions,
+        including long periods at sea, changing weather, fatigue, workload,
+        and complex communication requirements.
+    </p>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Fatigue Risk Support</h3>
+            <p>Analyze approved work-rest records and operational patterns to help identify potential fatigue concerns.</p>
+        </div>
+        <div class="info-card">
+            <h3>Computer Vision</h3>
+            <p>Support detection of selected PPE compliance issues and unsafe conditions in controlled environments.</p>
+        </div>
+        <div class="info-card">
+            <h3>Training Analytics</h3>
+            <p>Identify learning needs using training assessments and simulation performance data.</p>
+        </div>
+        <div class="info-card">
+            <h3>Safety Communication</h3>
+            <p>Help organize safety reports, procedures, and incident information for authorized personnel.</p>
+        </div>
+    </div>
+    <p>
+        Monitoring people creates privacy, fairness, and trust concerns.
+        Systems should use proportionate data collection, transparent policies,
+        access restrictions, and appropriate safeguards. Automated monitoring
+        should not be treated as a substitute for a healthy safety culture.
+    </p>
+</section>
+
+<section class="section" id="emergency">
+    <div class="section-heading">
+        <div class="number">08 / EMERGENCY MANAGEMENT</div>
+        <h2>AI-Assisted Emergency Response</h2>
+        <p>Supporting coordination during fires, flooding, distress, and other emergencies.</p>
+    </div>
+    <p>
+        Emergencies at sea can develop quickly and involve incomplete information.
+        Response teams need to understand the incident, identify available
+        resources, communicate clearly, and follow established emergency plans.
+    </p>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Incident Classification</h3>
+            <p>Organize incoming reports and sensor information into useful incident categories.</p>
+        </div>
+        <div class="info-card">
+            <h3>Situation Awareness</h3>
+            <p>Combine available vessel, weather, location, and equipment information to present a clearer operational picture.</p>
+        </div>
+        <div class="info-card">
+            <h3>Resource Coordination</h3>
+            <p>Help response teams review possible resources, locations, and coordination requirements.</p>
+        </div>
+        <div class="info-card">
+            <h3>Search & Rescue Support</h3>
+            <p>Analyze available search-area information and assist authorized teams with planning and prioritization.</p>
+        </div>
+    </div>
+    <h3>Emergency Information Workflow</h3>
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Incident<br>Detection</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Information<br>Verification</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Response<br>Assessment</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Authorized<br>Action</div>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Never rely on AI alone during an emergency.</strong>
+        Established distress communication, emergency procedures, command
+        structures, and authorized rescue coordination take priority.
+    </div>
+</section>
+
+<section class="section" id="monitoring">
+    <div class="section-heading">
+        <div class="number">09 / ENVIRONMENTAL INTELLIGENCE</div>
+        <h2>AI for Marine Environmental Monitoring</h2>
+        <p>Observing the condition of the marine environment using multiple data sources.</p>
+    </div>
+    <p>
+        Marine environmental monitoring involves observing water quality,
+        marine habitats, weather, ocean conditions, and potential sources
+        of pollution. AI can help analyze large datasets collected over
+        different locations and time periods.
+    </p>
+    <div class="grid-3">
+        <div class="info-card">
+            <h3>Satellite Imagery</h3>
+            <p>Analyze large-scale images to identify possible environmental changes and unusual surface patterns.</p>
+        </div>
+        <div class="info-card">
+            <h3>Ocean Sensors</h3>
+            <p>Analyze measurements such as temperature, salinity, dissolved oxygen, and turbidity.</p>
+        </div>
+        <div class="info-card">
+            <h3>Remote Monitoring</h3>
+            <p>Combine remote observations with field measurements to support environmental assessment.</p>
+        </div>
+    </div>
+    <h3>Environmental Data Categories</h3>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Data Type</th><th>Example Variables</th><th>Potential Application</th></tr></thead>
+            <tbody>
+                <tr><td>Water Quality</td><td>Temperature, pH, dissolved oxygen, turbidity</td><td>Unusual water-condition detection</td></tr>
+                <tr><td>Ocean Conditions</td><td>Currents, waves, sea surface temperature</td><td>Environmental pattern analysis</td></tr>
+                <tr><td>Satellite Data</td><td>Multispectral imagery and surface observations</td><td>Large-area monitoring</td></tr>
+                <tr><td>Acoustic Data</td><td>Underwater sound recordings</td><td>Selected marine activity monitoring</td></tr>
+                <tr><td>Field Surveys</td><td>Species observations and habitat measurements</td><td>Ecological assessment support</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="section" id="pollution">
+    <div class="section-heading">
+        <div class="number">10 / POLLUTION DETECTION</div>
+        <h2>AI-Based Marine Pollution Detection</h2>
+        <p>Identifying possible pollution indicators from images and environmental data.</p>
+    </div>
+    <p>
+        Marine pollution can involve oil, plastics, chemicals, sewage,
+        and other harmful substances. Detecting an incident early can help
+        authorities investigate and coordinate an appropriate response.
+    </p>
+    <div class="grid-2">
+        <div class="topic-card">
+            <h3>Oil-Slick Image Analysis</h3>
+            <p>Computer vision and satellite-image analysis can help identify surface patterns that may be consistent with oil slicks.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Plastic Waste Monitoring</h3>
+            <p>Image analysis can support the identification and mapping of visible floating debris in suitable observation conditions.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Water Quality Anomalies</h3>
+            <p>Models can flag unusual sensor readings for further sampling and investigation.</p>
+        </div>
+        <div class="topic-card">
+            <h3>Discharge Pattern Analysis</h3>
+            <p>Combine authorized operational records and environmental observations to identify events requiring review.</p>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Detection is not confirmation.</strong>
+        Satellite imagery, sensor readings, and computer-vision outputs may
+        be affected by weather, sunlight, sea state, sensor limitations,
+        and other environmental conditions. Suspected pollution requires
+        appropriate verification.
+    </div>
+</section>
+
+<section class="section" id="oil">
+    <div class="section-heading">
+        <div class="number">11 / OIL SPILL RESPONSE</div>
+        <h2>AI for Oil Spill Monitoring & Response Planning</h2>
+        <p>Supporting the understanding of a spill and the coordination of response resources.</p>
+    </div>
+    <p>
+        An oil spill can spread under the influence of currents, wind, waves,
+        and other environmental factors. Response planning requires timely
+        observations, reliable forecasts, and coordination among responsible
+        organizations.
+    </p>
+    <h3>How AI Can Help</h3>
+    <ul class="clean">
+        <li>Analyze satellite and aerial imagery to identify possible slick areas.</li>
+        <li>Combine ocean-current and wind information with suitable environmental models.</li>
+        <li>Support estimates of possible spill movement under stated assumptions.</li>
+        <li>Help organize observations and response information from multiple sources.</li>
+        <li>Support scenario comparison for authorized response planners.</li>
+    </ul>
+    <p>
+        Oil-spill trajectory prediction is not simply an AI classification task.
+        It involves physical processes and environmental modeling. AI may
+        complement numerical models, but uncertainty in weather forecasts,
+        spill characteristics, and observations must be considered.
+    </p>
+    <div class="callout">
+        <strong>Operational caution:</strong>
+        AI-generated spill maps are not a substitute for verified observations,
+        official response plans, or the decisions of qualified environmental
+        response authorities.
+    </div>
+</section>
+
+<section class="section" id="emissions">
+    <div class="section-heading">
+        <div class="number">12 / EMISSIONS & CLIMATE</div>
+        <h2>AI for Emissions Monitoring & Climate Performance</h2>
+        <p>Using data analysis to understand fuel use, emissions, and operational efficiency.</p>
+    </div>
+    <p>
+        Ships and port activities consume energy and contribute to greenhouse
+        gas emissions and local air pollutants. AI can help analyze fuel
+        consumption, equipment operation, voyage information, and environmental
+        measurements to support performance monitoring.
+    </p>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Fuel Consumption Analysis</h3>
+            <p>Identify patterns in fuel use and compare performance under different operating conditions.</p>
+        </div>
+        <div class="info-card">
+            <h3>CO₂ Estimation Support</h3>
+            <p>Combine fuel consumption data with appropriate emission factors to estimate carbon dioxide emissions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Air Quality Monitoring</h3>
+            <p>Analyze relevant monitoring data for pollutants and unusual local air-quality patterns.</p>
+        </div>
+        <div class="info-card">
+            <h3>Energy Optimization</h3>
+            <p>Support the analysis of operating profiles and energy-saving opportunities.</p>
+        </div>
+    </div>
+    <p>
+        Different pollutants require different measurement and estimation
+        approaches. CO₂ can be estimated from fuel consumption and applicable
+        emission factors. NOx and SOx depend on factors such as combustion,
+        engine technology, fuel characteristics, and exhaust treatment.
+    </p>
+    <div class="callout">
+        <strong>Regulatory context:</strong>
+        The IMO MARPOL Annex VI framework addresses air pollution from ships.
+        AI can support monitoring and analysis, but it does not replace
+        required measurements, reporting, verification, or compliance procedures.
+    </div>
+</section>
+
+<section class="section" id="ecosystem">
+    <div class="section-heading">
+        <div class="number">13 / MARINE ECOLOGY</div>
+        <h2>AI for Marine Ecosystem Protection</h2>
+        <p>Applying intelligent analysis to support biodiversity and habitat monitoring.</p>
+    </div>
+    <p>
+        Marine ecosystems include coral reefs, coastal wetlands, seagrass
+        meadows, fish populations, marine mammals, and many other habitats
+        and species. Human activities can affect these ecosystems through
+        pollution, underwater noise, habitat disturbance, and climate change.
+    </p>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Species Identification</h3>
+            <p>Computer vision and acoustic classification can assist researchers in identifying selected marine species.</p>
+        </div>
+        <div class="info-card">
+            <h3>Habitat Mapping</h3>
+            <p>Satellite and underwater imagery can help map and monitor selected marine habitats.</p>
+        </div>
+        <div class="info-card">
+            <h3>Underwater Noise Analysis</h3>
+            <p>Machine learning can classify acoustic patterns and support research into underwater noise.</p>
+        </div>
+        <div class="info-card">
+            <h3>Long-Term Change Detection</h3>
+            <p>Time-series analysis can help researchers identify changes in environmental conditions and observations.</p>
+        </div>
+    </div>
+    <p>
+        AI can help researchers process large volumes of observations, but
+        ecological conclusions require appropriate sampling, domain expertise,
+        and independent scientific validation.
+    </p>
+</section>
+
+<section class="section" id="regulations">
+    <div class="section-heading">
+        <div class="number">14 / MARITIME GOVERNANCE</div>
+        <h2>Regulations, Standards & Safety Governance</h2>
+        <p>Ensuring AI supports established international maritime responsibilities.</p>
+    </div>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>SOLAS</h3>
+            <p>The International Convention for the Safety of Life at Sea establishes important minimum safety requirements for ships.</p>
+        </div>
+        <div class="info-card">
+            <h3>MARPOL</h3>
+            <p>The International Convention for the Prevention of Pollution from Ships addresses prevention of pollution from ships.</p>
+        </div>
+        <div class="info-card">
+            <h3>COLREGs</h3>
+            <p>The International Regulations for Preventing Collisions at Sea establish navigation and collision-avoidance rules.</p>
+        </div>
+        <div class="info-card">
+            <h3>ISM Code</h3>
+            <p>The International Safety Management Code provides a framework for safe ship management and pollution prevention.</p>
+        </div>
+    </div>
+    <p>
+        AI systems used in maritime environments should be evaluated against
+        the operational and regulatory context in which they are deployed.
+        The applicable requirements depend on the vessel, operation,
+        equipment, flag, class, and relevant authorities.
+    </p>
+    <div class="callout">
+        <strong>Governance principle:</strong>
+        A technically accurate model is not automatically an approved safety
+        system. Formal assessment, validation, documentation, and applicable
+        approvals may be required before operational deployment.
+    </div>
+</section>
+
+<section class="section" id="challenges">
+    <div class="section-heading">
+        <div class="number">15 / LIMITATIONS & RESPONSIBILITY</div>
+        <h2>Challenges & Limitations of AI in Maritime Safety</h2>
+        <p>Understanding why intelligent systems can fail and how to manage the consequences.</p>
+    </div>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Incomplete Data</h3>
+            <p>Sensor failures, delayed reports, missing observations, and limited incident records can reduce model reliability.</p>
+        </div>
+        <div class="info-card">
+            <h3>False Alarms</h3>
+            <p>Incorrect alerts can increase workload and cause alert fatigue among crews and operators.</p>
+        </div>
+        <div class="info-card">
+            <h3>Missed Detection</h3>
+            <p>A model may fail to identify an important hazard, especially in conditions that differ from its training data.</p>
+        </div>
+        <div class="info-card">
+            <h3>Environmental Complexity</h3>
+            <p>Weather, waves, visibility, and changing ocean conditions can make observations uncertain.</p>
+        </div>
+        <div class="info-card">
+            <h3>Cybersecurity Threats</h3>
+            <p>Manipulated or unavailable data can affect AI outputs and connected operational systems.</p>
+        </div>
+        <div class="info-card">
+            <h3>Human Over-Reliance</h3>
+            <p>Users may trust automated outputs too much or fail to recognize the system's limitations.</p>
+        </div>
+    </div>
+    <h3>Model Evaluation Metrics</h3>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Metric</th><th>Meaning</th><th>Safety Relevance</th></tr></thead>
+            <tbody>
+                <tr><td>Precision</td><td>How many positive alerts are correct</td><td>Helps assess false-alarm burden</td></tr>
+                <tr><td>Recall</td><td>How many actual positive cases are detected</td><td>Important when missed hazards have serious consequences</td></tr>
+                <tr><td>F1-score</td><td>Harmonic balance of precision and recall</td><td>Useful for comparing classification performance</td></tr>
+                <tr><td>False Negative Rate</td><td>Share of actual positive cases missed</td><td>Critical to analyze for hazard detection</td></tr>
+                <tr><td>Detection Latency</td><td>Time between an event and its detection</td><td>Important for timely response</td></tr>
+                <tr><td>Calibration</td><td>Agreement between predicted probabilities and observed frequencies</td><td>Supports interpretation of risk estimates</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="callout">
+        <strong>Safety-critical evaluation:</strong>
+        Overall accuracy alone can hide dangerous failures. Evaluation must
+        examine missed hazards, false alarms, operating conditions, uncertainty,
+        and the consequences of incorrect predictions.
+    </div>
+</section>
+
+<section class="section" id="future">
+    <div class="section-heading">
+        <div class="number">16 / FUTURE DIRECTIONS</div>
+        <h2>The Future of AI for Safer & Cleaner Seas</h2>
+        <p>Moving toward more connected, explainable, and environmentally responsible maritime systems.</p>
+    </div>
+    <div class="grid-2">
+        <div class="info-card">
+            <h3>Multimodal AI</h3>
+            <p>Combining images, sensor readings, navigation data, weather, and reports for richer situational awareness.</p>
+        </div>
+        <div class="info-card">
+            <h3>Edge Intelligence</h3>
+            <p>Processing selected data closer to shipboard sensors and equipment when connectivity or latency is a concern.</p>
+        </div>
+        <div class="info-card">
+            <h3>Explainable AI</h3>
+            <p>Making risk assessments easier to interpret by presenting relevant factors, uncertainty, and evidence.</p>
+        </div>
+        <div class="info-card">
+            <h3>Environmental Digital Twins</h3>
+            <p>Combining environmental observations and models to study scenarios and support ecosystem monitoring.</p>
+        </div>
+        <div class="info-card">
+            <h3>Collaborative Response Systems</h3>
+            <p>Improving information exchange between ships, ports, rescue organizations, and environmental authorities.</p>
+        </div>
+        <div class="info-card">
+            <h3>Trustworthy Maritime AI</h3>
+            <p>Developing systems with stronger validation, security, monitoring, governance, and human oversight.</p>
+        </div>
+    </div>
+    <p>
+        The most valuable future systems will not simply generate more alerts.
+        They will provide relevant evidence, communicate uncertainty,
+        support professional decisions, and operate within clearly defined
+        safety and environmental responsibilities.
+    </p>
+</section>
+
+<section class="section" id="lab">
+    <div class="section-heading">
+        <div class="number">INTERACTIVE ENGINEERING LAB</div>
+        <h2>Maritime Safety Risk Assessment Simulator</h2>
+        <p>Explore how several operational factors can influence an illustrative risk indicator.</p>
+    </div>
+    <div class="lab">
+        <p class="lab-intro">
+            Change the scenario values and analyze the result. The simulator uses
+            a transparent educational formula with synthetic inputs. It is not
+            a certified risk model, navigation system, or emergency decision tool.
+        </p>
+        <div class="control">
+            <label for="traffic">Traffic density <strong id="trafficValue">60%</strong></label>
+            <input id="traffic" type="range" min="0" max="100" value="60">
+        </div>
+        <div class="control">
+            <label for="weather">Adverse weather severity <strong id="weatherValue">35%</strong></label>
+            <input id="weather" type="range" min="0" max="100" value="35">
+        </div>
+        <div class="control">
+            <label for="equipment">Equipment abnormality indicator <strong id="equipmentValue">20%</strong></label>
+            <input id="equipment" type="range" min="0" max="100" value="20">
+        </div>
+        <div class="control">
+            <label for="visibility">Visibility limitation <strong id="visibilityValue">25%</strong></label>
+            <input id="visibility" type="range" min="0" max="100" value="25">
+        </div>
+        <div class="control">
+            <label for="dataQuality">Data uncertainty <strong id="dataQualityValue">15%</strong></label>
+            <input id="dataQuality" type="range" min="0" max="100" value="15">
+        </div>
+        <button class="primary-btn" id="analyzeBtn">Assess Scenario</button>
+        <div class="result-panel" aria-live="polite">
+            <div class="small-note">ILLUSTRATIVE COMBINED RISK INDICATOR</div>
+            <div class="result-number" id="riskScore">--</div>
+            <div class="result-bar"><span id="riskBar"></span></div>
+            <h3 id="riskLabel">Waiting for assessment</h3>
+            <p id="riskDescription">Adjust the scenario values and run the assessment.</p>
+            <div id="riskBreakdown"></div>
+        </div>
+        <p class="small-note">
+            The weights and thresholds are invented for this learning exercise.
+            They are not IMO, classification-society, manufacturer, or professional
+            safety limits. Real risk assessments require validated methods and
+            qualified personnel.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="quiz">
+    <div class="section-heading">
+        <div class="number">KNOWLEDGE ASSESSMENT</div>
+        <h2>Test Your Understanding</h2>
+        <p>20 questions covering maritime safety, AI risk analysis, pollution detection, and environmental protection.</p>
+    </div>
+    <div class="quiz-box" id="quizContainer">
+        <div class="small-note" id="questionCounter">QUESTION 1 OF 20</div>
+        <div class="quiz-progress"><span id="quizProgress"></span></div>
+        <div class="question" id="questionText"></div>
+        <div id="optionsContainer"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="quiz-controls">
+            <span class="small-note" id="answeredCount">Answered: 0 / 20</span>
+            <button class="primary-btn" id="nextBtn" disabled>Next Question →</button>
+        </div>
+    </div>
+    <div class="quiz-box score-panel" id="scorePanel" style="display:none">
+        <div class="eyebrow">ASSESSMENT COMPLETED</div>
+        <div class="result-number" id="finalScore">0/20</div>
+        <h2 id="scoreMessage">Your result</h2>
+        <p id="scoreDescription"></p>
+        <button class="primary-btn" id="retryBtn">Retry Assessment</button>
+    </div>
+</section>
+
+<section class="section" id="references">
+    <div class="section-heading">
+        <div class="number">LEARNING RESOURCES</div>
+        <h2>References & Further Reading</h2>
+        <p>International maritime organizations, safety frameworks, and scientific resources.</p>
+    </div>
+    <div class="references">
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/OurWork/Safety/Pages/Default.aspx" target="_blank" rel="noopener">IMO – Maritime Safety ↗</a>
+            <p>International maritime safety work, conventions, and regulatory information.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/OurWork/Environment/Pages/Default.aspx" target="_blank" rel="noopener">IMO – Marine Environment ↗</a>
+            <p>International work on marine environmental protection and pollution prevention.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Safety-of-Life-at-Sea-(SOLAS),-1974.aspx" target="_blank" rel="noopener">IMO – SOLAS Convention ↗</a>
+            <p>International Convention for the Safety of Life at Sea.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener">IMO – COLREG Convention ↗</a>
+            <p>International Regulations for Preventing Collisions at Sea.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/OurWork/Environment/Pages/OilPollution-Default.aspx" target="_blank" rel="noopener">IMO – Oil Pollution ↗</a>
+            <p>International work related to oil pollution prevention and response.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.itopf.org/" target="_blank" rel="noopener">ITOPF ↗</a>
+            <p>Technical information and expertise on oil spill response and environmental effects.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.noaa.gov/" target="_blank" rel="noopener">NOAA ↗</a>
+            <p>Ocean, atmosphere, weather, and environmental science information.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.iucn.org/" target="_blank" rel="noopener">IUCN ↗</a>
+            <p>Nature conservation, biodiversity, and ecosystem information.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST AI Risk Management Framework ↗</a>
+            <p>Guidance on identifying and managing AI system risks.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.dnv.com/maritime/" target="_blank" rel="noopener">DNV – Maritime ↗</a>
+            <p>Maritime safety, technology, risk, and industry knowledge.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.emsa.europa.eu/" target="_blank" rel="noopener">European Maritime Safety Agency ↗</a>
+            <p>Maritime safety, pollution prevention, and European maritime information.</p>
+        </div>
+        <div class="reference-card">
+            <a href="https://www.ipcc.ch/" target="_blank" rel="noopener">IPCC ↗</a>
+            <p>Scientific assessments of climate change and environmental impacts.</p>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Research note:</strong>
+        Always distinguish between regulatory requirements, scientific evidence,
+        model predictions, and commercial technology claims. They are different
+        types of information and should not be treated as interchangeable.
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+    <p>MARITERRA — Exploring the Future of Maritime Technology</p>
+</footer>
+
+<script>
+// MARITIME SAFETY RISK SIMULATOR
+const controlIds=["traffic","weather","equipment","visibility","dataQuality"];
+
+controlIds.forEach(id=>{
+    const input=document.getElementById(id);
+    const output=document.getElementById(id+"Value");
+    input.addEventListener("input",()=>{
+        output.textContent=input.value+"%";
+    });
+});
+
+document.getElementById("analyzeBtn").addEventListener("click",()=>{
+    const traffic=Number(document.getElementById("traffic").value);
+    const weather=Number(document.getElementById("weather").value);
+    const equipment=Number(document.getElementById("equipment").value);
+    const visibility=Number(document.getElementById("visibility").value);
+    const dataQuality=Number(document.getElementById("dataQuality").value);
+
+    const factors=[
+        ["Traffic density",traffic,.25],
+        ["Adverse weather",weather,.25],
+        ["Equipment abnormality",equipment,.20],
+        ["Visibility limitation",visibility,.20],
+        ["Data uncertainty",dataQuality,.10]
+    ];
+
+    const score=Math.round(factors.reduce((sum,item)=>sum+item[1]*item[2],0));
+
+    let label,description;
+    if(score<25){
+        label="LOW INDICATOR";
+        description="The selected values produce a relatively low illustrative indicator. Continue normal monitoring and follow established procedures.";
+    }else if(score<50){
+        label="MODERATE INDICATOR";
+        description="Some conditions may require additional attention. Review individual factors and verify the available information.";
+    }else if(score<75){
+        label="HIGH INDICATOR";
+        description="The scenario combines several elevated factors. Qualified personnel should review the conditions and relevant safety procedures.";
+    }else{
+        label="VERY HIGH INDICATOR";
+        description="The illustrative score is elevated. This is not an emergency declaration, but the scenario warrants careful professional assessment.";
+    }
+
+    document.getElementById("riskScore").textContent=score+"/100";
+    document.getElementById("riskBar").style.width=score+"%";
+    document.getElementById("riskLabel").textContent=label;
+    document.getElementById("riskDescription").textContent=description;
+
+    document.getElementById("riskBreakdown").innerHTML=
+        "<h3 style='margin-top:20px'>Factor Contributions</h3>"+
+        factors.map(([name,value,weight])=>
+            `<p style="font-size:.85rem;margin:8px 0">${name}: <strong>${Math.round(value*weight)} points</strong> <span class="small-note">(${value}% × ${(weight*100).toFixed(0)}%)</span></p>`
+        ).join("");
+});
+
+// QUIZ
+const questions=[
+{
+q:"1. What is a major objective of AI in maritime safety?",
+o:["To eliminate all maritime regulations","To support hazard detection, risk assessment, and safer decisions","To replace every crew member","To guarantee that accidents cannot occur"],
+a:1,e:"AI can analyze information and support safety decisions, but it cannot eliminate all hazards or guarantee accident prevention."
+},
+{
+q:"2. What is a maritime hazard?",
+o:["A condition or event with the potential to cause harm","A vessel's registration number","A routine cargo document","A type of navigation display"],
+a:0,e:"A hazard is a source or situation with the potential to cause injury, damage, environmental harm, or other adverse consequences."
+},
+{
+q:"3. What does risk assessment generally consider?",
+o:["Only the ship's age","The likelihood and consequences of harmful events","Only fuel price","Only vessel color"],
+a:1,e:"Risk assessment evaluates how likely an event may be and how serious its consequences could be."
+},
+{
+q:"4. What is CPA in collision assessment?",
+o:["Cargo Processing Area","Closest Point of Approach","Collision Prevention Authority","Course Planning Algorithm"],
+a:1,e:"CPA is the predicted closest distance between two vessels if their current relative motion continues."
+},
+{
+q:"5. What does TCPA estimate?",
+o:["Time until the predicted closest point of approach","Total cargo processing time","Engine cooling temperature","Time required to load a container"],
+a:0,e:"TCPA is the estimated time until vessels reach their predicted closest point of approach."
+},
+{
+q:"6. Which system provides reported vessel movement and identity information?",
+o:["AIS","A fuel purifier","A ballast pump","A cargo crane"],
+a:0,e:"AIS provides vessel identity and movement information, although the quality and availability of received data can vary."
+},
+{
+q:"7. Which international rules address collision prevention at sea?",
+o:["COLREGs","MARPOL Annex V only","ISO 9001 only","A port tariff"],
+a:0,e:"COLREGs establish international rules for preventing collisions at sea."
+},
+{
+q:"8. Which factor is especially relevant to grounding risk?",
+o:["Water depth and vessel draft","Crew uniform color","Cargo invoice font","Ship entertainment system"],
+a:0,e:"Water depth, vessel draft, position, tide, and chart information are important grounding-related considerations."
+},
+{
+q:"9. What may an unusual combination of machinery temperature and vibration indicate?",
+o:["A condition requiring further investigation","A confirmed failure mechanism in every case","A guaranteed safe operating condition","A change in vessel ownership"],
+a:0,e:"Abnormal readings may indicate a developing issue, but they do not independently prove a specific root cause."
+},
+{
+q:"10. Why should AI not override protective machinery trips?",
+o:["Because protective systems and safety procedures must remain effective","Because AI cannot calculate numbers","Because sensors are never useful","Because machinery does not need monitoring"],
+a:0,e:"AI recommendations must remain within approved engineering and safety boundaries and must not bypass protective safeguards."
+},
+{
+q:"11. Which is an example of a human-factor concern in maritime operations?",
+o:["Fatigue","Water salinity","Container length","Satellite orbit"],
+a:0,e:"Fatigue can affect alertness, workload management, and decision-making, making it an important safety consideration."
+},
+{
+q:"12. How can AI support search and rescue?",
+o:["By helping analyze available search-area and environmental information","By replacing all rescue authorities","By guaranteeing the location of every person","By cancelling distress communications"],
+a:0,e:"AI can help analyze information and support planning, but authorized rescue teams and established procedures remain responsible."
+},
+{
+q:"13. Which technology can help analyze satellite images for possible oil slicks?",
+o:["Computer vision and image analysis","A ship's fuel injector","A mechanical compass","A cargo manifest alone"],
+a:0,e:"Image analysis can help identify patterns consistent with possible slicks, but observations require verification."
+},
+{
+q:"14. Why is a suspected pollution detection not automatically proof of a spill?",
+o:["Because imagery and sensors can be affected by environmental conditions and measurement limitations","Because pollution cannot be detected","Because all satellite images are exact","Because AI never produces false positives"],
+a:0,e:"False positives and environmental effects can influence observations, so suspected incidents need appropriate confirmation."
+},
+{
+q:"15. What can help estimate possible oil-spill movement?",
+o:["Environmental observations and physical trajectory models","A crew attendance list","A vessel paint specification","A container barcode"],
+a:0,e:"Wind, currents, waves, and spill properties influence movement. Physical models and observations are important for trajectory assessment."
+},
+{
+q:"16. Which convention addresses pollution prevention from ships?",
+o:["MARPOL","COLREGs","SOLAS only","STCW only"],
+a:0,e:"MARPOL is the key international convention addressing prevention of pollution from ships."
+},
+{
+q:"17. Which pollutant can be estimated using fuel consumption and appropriate emission factors?",
+o:["CO₂","Underwater noise","Water depth","Visibility"],
+a:0,e:"Fuel consumption and suitable emission factors can be used to estimate carbon dioxide emissions."
+},
+{
+q:"18. What is model drift?",
+o:["A change in model performance as real-world data patterns change","A ship changing its course","An oil spill moving with currents","A sensor being physically relocated"],
+a:0,e:"Model drift occurs when operating conditions or data patterns change and a model becomes less representative of current conditions."
+},
+{
+q:"19. Why is recall important in hazard detection?",
+o:["It measures the proportion of actual positive cases that the model detects","It measures only the user interface color","It guarantees zero false alarms","It measures ship speed"],
+a:0,e:"Recall is important when missing a real hazard could have serious consequences."
+},
+{
+q:"20. What is the most responsible role for AI in maritime safety?",
+o:["Replacing professional responsibility","Supporting validated procedures, evidence-based decisions, and human oversight","Ignoring uncertainty","Bypassing international rules"],
+a:1,e:"Responsible AI supports people and established safety systems. It should be validated, monitored, and used within defined boundaries."
+}
+];
+
+let currentQuestion=0;
+let score=0;
+let answered=0;
+let selected=false;
+
+const questionText=document.getElementById("questionText");
+const optionsContainer=document.getElementById("optionsContainer");
+const feedback=document.getElementById("feedback");
+const nextBtn=document.getElementById("nextBtn");
+
+function renderQuestion(){
+    selected=false;
+    const q=questions[currentQuestion];
+
+    document.getElementById("questionCounter").textContent=
+        `QUESTION ${currentQuestion+1} OF ${questions.length}`;
+    document.getElementById("quizProgress").style.width=
+        `${(currentQuestion/questions.length)*100}%`;
+    document.getElementById("answeredCount").textContent=
+        `Answered: ${answered} / ${questions.length}`;
+
+    questionText.textContent=q.q;
+    optionsContainer.innerHTML="";
+    feedback.className="feedback";
+    feedback.textContent="";
+    nextBtn.disabled=true;
+    nextBtn.textContent=currentQuestion===questions.length-1?"Finish Assessment":"Next Question →";
+
+    q.o.forEach((option,index)=>{
+        const button=document.createElement("button");
+        button.className="option";
+        button.textContent=String.fromCharCode(65+index)+". "+option;
+        button.addEventListener("click",()=>selectAnswer(index));
+        optionsContainer.appendChild(button);
+    });
+}
+
+function selectAnswer(index){
+    if(selected)return;
+    selected=true;
+    answered++;
+
+    const q=questions[currentQuestion];
+    const buttons=[...optionsContainer.querySelectorAll(".option")];
+    const isCorrect=index===q.a;
+
+    if(isCorrect)score++;
+
+    buttons.forEach((button,i)=>{
+        button.disabled=true;
+        if(i===q.a)button.classList.add("correct");
+        if(i===index&&!isCorrect)button.classList.add("wrong");
+    });
+
+    feedback.className="feedback show";
+    feedback.style.border="1px solid "+(isCorrect?"rgba(74,222,128,.4)":"rgba(251,113,133,.4)");
+    feedback.style.background=isCorrect?"rgba(74,222,128,.08)":"rgba(251,113,133,.08)";
+    feedback.innerHTML=`<strong>${isCorrect?"Correct!":"Not quite."}</strong><br>${q.e}`;
+
+    document.getElementById("answeredCount").textContent=
+        `Answered: ${answered} / ${questions.length}`;
+    nextBtn.disabled=false;
+}
+
+function showResults(){
+    document.getElementById("quizContainer").style.display="none";
+    document.getElementById("scorePanel").style.display="block";
+    document.getElementById("finalScore").textContent=`${score}/20`;
+
+    const percentage=(score/questions.length)*100;
+    let message,description;
+
+    if(percentage>=90){
+        message="Excellent Performance!";
+        description="You demonstrate a strong understanding of AI applications in maritime safety and environmental protection.";
+    }else if(percentage>=75){
+        message="Very Good Work!";
+        description="You understand most of the main concepts. Review any missed questions and their explanations.";
+    }else if(percentage>=60){
+        message="Good Progress!";
+        description="You have a useful foundation. Revisit the technical sections and try again.";
+    }else{
+        message="Keep Learning!";
+        description="Review the topic carefully, especially collision prevention, risk assessment, pollution detection, and maritime regulations.";
+    }
+
+    document.getElementById("scoreMessage").textContent=message;
+    document.getElementById("scoreDescription").textContent=description;
+}
+
+nextBtn.addEventListener("click",()=>{
+    if(!selected)return;
+    if(currentQuestion<questions.length-1){
+        currentQuestion++;
+        renderQuestion();
+    }else{
+        showResults();
+    }
+});
+
+document.getElementById("retryBtn").addEventListener("click",()=>{
+    currentQuestion=0;
+    score=0;
+    answered=0;
+    document.getElementById("scorePanel").style.display="none";
+    document.getElementById("quizContainer").style.display="block";
+    renderQuestion();
+});
+
+renderQuestion();
+</script>
+</body>
+</html>

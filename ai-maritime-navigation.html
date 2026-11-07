@@ -1,0 +1,1544 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070816">
+<title>AI-Powered Maritime Navigation | MARITERRA</title>
+<meta name="description" content="Explore AI-powered maritime navigation, intelligent bridge systems, sensor fusion, situational awareness and navigation safety.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#070816;
+    --bg2:#0c0d20;
+    --panel:#11132a;
+    --panel2:#171936;
+    --purple:#9333ea;
+    --purple-light:#c4b5fd;
+    --blue:#38bdf8;
+    --text:#f4f1ff;
+    --muted:#a6a7c5;
+    --border:rgba(196,181,253,.15);
+    --success:#4ade80;
+    --warning:#fbbf24;
+    --danger:#fb7185;
+    --heading:'Orbitron',sans-serif;
+    --body:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.75;
+    overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+::selection{background:var(--purple);color:white}
+
+#particles{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+    radial-gradient(circle at 15% 15%,rgba(147,51,234,.12),transparent 30%),
+    radial-gradient(circle at 85% 60%,rgba(56,189,248,.07),transparent 32%);
+}
+.progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:linear-gradient(90deg,var(--purple),var(--blue));
+    z-index:9999;
+}
+.topbar{
+    position:sticky;top:0;z-index:1000;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:15px 5%;
+    background:rgba(7,8,22,.9);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
+}
+.logo{
+    font-family:var(--heading);font-size:19px;
+    font-weight:800;letter-spacing:3px;
+    color:var(--purple-light);
+}
+.logo span{color:var(--blue)}
+.back{
+    border:1px solid rgba(196,181,253,.35);
+    padding:9px 17px;border-radius:30px;
+    color:var(--purple-light);font-size:12px;
+    transition:.3s;
+}
+.back:hover{background:var(--purple);color:white;transform:translateY(-2px)}
+
+.hero{
+    min-height:570px;padding:90px 8% 75px;
+    display:grid;grid-template-columns:1.15fr .85fr;
+    align-items:center;gap:50px;
+    position:relative;overflow:hidden;
+}
+.eyebrow{
+    color:var(--blue);font-size:11px;
+    letter-spacing:4px;font-weight:700;
+    text-transform:uppercase;margin-bottom:20px;
+}
+.hero h1{
+    font-family:var(--heading);
+    font-size:clamp(32px,5vw,59px);
+    line-height:1.25;letter-spacing:-1px;
+    margin-bottom:23px;
+}
+.hero h1 span{
+    background:linear-gradient(100deg,var(--purple-light),var(--blue));
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+}
+.hero p{color:var(--muted);max-width:680px;font-size:15px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.btn{
+    border:0;border-radius:30px;padding:13px 22px;
+    cursor:pointer;font-weight:700;font-size:12px;
+    transition:.3s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{background:linear-gradient(110deg,var(--purple),#6d28d9);color:white}
+.btn-outline{border:1px solid var(--border);background:transparent;color:var(--purple-light)}
+.btn:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(147,51,234,.2)}
+
+.radar-wrap{
+    height:340px;display:grid;place-items:center;position:relative;
+}
+.radar{
+    width:min(300px,75vw);aspect-ratio:1;border-radius:50%;
+    border:1px solid rgba(196,181,253,.28);
+    position:relative;overflow:hidden;
+    background:
+    radial-gradient(circle,transparent 19%,rgba(147,51,234,.12) 20%,transparent 21%),
+    radial-gradient(circle,transparent 39%,rgba(147,51,234,.2) 40%,transparent 41%),
+    radial-gradient(circle,transparent 59%,rgba(147,51,234,.2) 60%,transparent 61%),
+    radial-gradient(circle,transparent 79%,rgba(147,51,234,.2) 80%,transparent 81%);
+    box-shadow:0 0 60px rgba(147,51,234,.15),inset 0 0 40px rgba(147,51,234,.1);
+}
+.radar:before{
+    content:"";position:absolute;inset:0;
+    background:conic-gradient(from 0deg,transparent 0deg,rgba(147,51,234,.35) 55deg,transparent 90deg);
+    animation:radarSpin 5s linear infinite;
+}
+.radar:after{
+    content:"";position:absolute;left:50%;top:0;bottom:0;
+    width:1px;background:rgba(196,181,253,.15);
+}
+.radar-center{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:13px;height:13px;background:var(--purple-light);
+    border-radius:50%;box-shadow:0 0 20px var(--purple);
+}
+.radar-dot{
+    position:absolute;width:8px;height:8px;border-radius:50%;
+    background:var(--blue);box-shadow:0 0 14px var(--blue);
+    animation:blink 2s infinite;
+}
+.dot1{top:27%;left:64%}
+.dot2{top:67%;left:30%;animation-delay:.7s}
+.dot3{top:45%;left:80%;animation-delay:1.2s}
+.radar-label{
+    position:absolute;font-family:var(--heading);font-size:10px;
+    letter-spacing:2px;color:var(--purple-light);
+}
+.radar-label.top{top:0}
+.radar-label.bottom{bottom:0}
+@keyframes radarSpin{to{transform:rotate(360deg)}}
+@keyframes blink{50%{opacity:.2;transform:scale(.6)}}
+
+.layout{
+    max-width:1450px;margin:auto;padding:30px 5%;
+    display:grid;grid-template-columns:245px minmax(0,1fr);gap:35px;
+}
+.sidebar{
+    position:sticky;top:95px;align-self:start;
+    background:rgba(17,19,42,.8);
+    border:1px solid var(--border);
+    border-radius:18px;padding:20px 15px;
+    max-height:calc(100vh - 120px);overflow:auto;
+}
+.sidebar h3{
+    font-family:var(--heading);font-size:12px;
+    color:var(--purple-light);margin:0 10px 15px;
+    letter-spacing:1px;
+}
+.sidebar a{
+    display:block;padding:10px 12px;margin:3px 0;
+    font-size:11px;color:var(--muted);
+    border-radius:9px;transition:.25s;
+}
+.sidebar a:hover,.sidebar a.active{
+    background:rgba(147,51,234,.16);
+    color:var(--purple-light);
+    border-left:3px solid var(--purple);
+}
+.content{min-width:0}
+.section{padding:30px 0 55px;scroll-margin-top:95px}
+.section-heading{margin-bottom:25px}
+.section-heading .number{
+    color:var(--blue);font-family:var(--heading);
+    font-size:11px;letter-spacing:3px;
+}
+.section-heading h2{
+    font-family:var(--heading);font-size:clamp(22px,3vw,32px);
+    margin:8px 0;color:var(--purple-light);
+}
+.section-heading p{color:var(--muted);font-size:13px;max-width:850px}
+.prose{color:#c2c3dc;font-size:13px}
+.prose p{margin:12px 0}
+.prose strong{color:#e8dfff}
+.grid-2,.grid-3{
+    display:grid;gap:17px;margin-top:23px;
+}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+    background:linear-gradient(145deg,rgba(23,25,54,.92),rgba(13,15,34,.95));
+    border:1px solid var(--border);border-radius:16px;
+    padding:22px;transition:.35s;position:relative;overflow:hidden;
+}
+.card:before{
+    content:"";position:absolute;top:0;left:-100%;width:70%;height:1px;
+    background:linear-gradient(90deg,transparent,var(--purple-light),transparent);
+    transition:.6s;
+}
+.card:hover:before{left:100%}
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(147,51,234,.55);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+.card .icon{font-size:25px;margin-bottom:12px}
+.card h3{font-size:14px;color:var(--purple-light);margin-bottom:9px}
+.card p{font-size:12px;color:var(--muted)}
+.tag{
+    display:inline-block;font-size:9px;letter-spacing:1px;
+    color:var(--blue);background:rgba(56,189,248,.09);
+    border:1px solid rgba(56,189,248,.2);
+    padding:4px 9px;border-radius:20px;margin-bottom:12px;
+}
+.callout{
+    border-left:3px solid var(--purple);
+    background:rgba(147,51,234,.09);
+    padding:17px 20px;border-radius:0 12px 12px 0;
+    margin:22px 0;color:#d4c8f7;font-size:12px;
+}
+.warning{
+    border-left-color:var(--warning);
+    background:rgba(251,191,36,.07);color:#fce7ad;
+}
+.flow{
+    display:flex;align-items:center;justify-content:center;
+    gap:10px;flex-wrap:wrap;margin:25px 0;
+}
+.flow-item{
+    background:var(--panel2);border:1px solid var(--border);
+    border-radius:10px;padding:14px 16px;text-align:center;
+    min-width:125px;font-size:11px;color:var(--purple-light);
+}
+.flow-arrow{color:var(--blue);font-size:20px}
+.table-wrap{overflow-x:auto;margin-top:20px}
+table{width:100%;border-collapse:collapse;min-width:550px;font-size:11px}
+th,td{padding:13px;text-align:left;border-bottom:1px solid var(--border)}
+th{color:var(--purple-light);font-family:var(--heading);font-size:10px}
+td{color:var(--muted)}
+tr:hover td{background:rgba(147,51,234,.05)}
+
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.metric{
+    padding:17px;border-radius:13px;text-align:center;
+    background:rgba(147,51,234,.08);border:1px solid var(--border);
+}
+.metric strong{display:block;font-family:var(--heading);font-size:23px;color:var(--purple-light)}
+.metric span{font-size:10px;color:var(--muted)}
+
+.lab{
+    background:linear-gradient(145deg,#14152e,#0c0d20);
+    border:1px solid rgba(147,51,234,.35);
+    border-radius:20px;padding:25px;margin-top:25px;
+}
+.lab h3{font-family:var(--heading);font-size:17px;color:var(--purple-light)}
+.lab-intro{font-size:12px;color:var(--muted);margin:8px 0 20px}
+.lab-controls{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;
+}
+.control label{display:flex;justify-content:space-between;font-size:11px;color:#d7d0ed;margin-bottom:8px}
+input[type=range]{width:100%;accent-color:var(--purple)}
+select{
+    width:100%;padding:11px;background:#0b0c20;color:white;
+    border:1px solid var(--border);border-radius:9px;
+}
+.sim-output{
+    display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:20px;
+}
+.sim-box{
+    padding:17px;border-radius:12px;background:rgba(7,8,22,.65);
+    border:1px solid var(--border);
+}
+.sim-box small{color:var(--muted);font-size:10px}
+.sim-box strong{display:block;font-family:var(--heading);font-size:20px;margin:8px 0;color:var(--blue)}
+.status{font-size:11px;font-weight:700}
+.status.safe{color:var(--success)}
+.status.caution{color:var(--warning)}
+.status.danger{color:var(--danger)}
+.disclaimer{font-size:10px;color:#9294b4;margin-top:17px;line-height:1.7}
+
+.quiz-box{
+    border:1px solid var(--border);border-radius:18px;
+    background:rgba(17,19,42,.8);padding:25px;margin-top:20px;
+}
+.quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.quiz-top span{font-size:11px;color:var(--blue)}
+.quiz-progress{height:5px;background:#252641;border-radius:10px;margin:15px 0 25px;overflow:hidden}
+.quiz-progress div{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--blue));transition:.3s}
+.question{font-size:15px;font-weight:700;margin-bottom:18px}
+.options{display:grid;gap:10px}
+.option{
+    display:block;text-align:left;width:100%;padding:13px 15px;
+    border:1px solid var(--border);border-radius:10px;
+    background:#101228;color:#c8c8df;cursor:pointer;
+    font-size:12px;transition:.2s;
+}
+.option:hover:not(:disabled){border-color:var(--purple);background:rgba(147,51,234,.1)}
+.option.correct{border-color:var(--success);background:rgba(74,222,128,.1);color:#bbf7d0}
+.option.wrong{border-color:var(--danger);background:rgba(251,113,133,.1);color:#fecdd3}
+.feedback{
+    display:none;margin-top:17px;padding:15px;border-radius:10px;
+    background:rgba(147,51,234,.1);font-size:12px;color:#d8d0ed;
+}
+.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
+.quiz-btn{
+    border:0;background:var(--purple);color:white;
+    border-radius:25px;padding:11px 22px;cursor:pointer;font-weight:700;
+}
+.quiz-btn:disabled{opacity:.4;cursor:not-allowed}
+.result{text-align:center;padding:25px;display:none}
+.result strong{font-family:var(--heading);font-size:45px;color:var(--purple-light)}
+.result p{color:var(--muted);font-size:13px;margin:12px 0}
+
+.references{display:grid;gap:12px}
+.reference{
+    padding:15px 18px;border:1px solid var(--border);
+    border-radius:12px;background:rgba(17,19,42,.65);
+    transition:.25s;
+}
+.reference:hover{border-color:var(--purple)}
+.reference a{color:var(--purple-light);font-size:12px;font-weight:700}
+.reference p{font-size:10px;color:var(--muted);margin-top:4px}
+
+footer{
+    text-align:center;padding:35px 20px;
+    border-top:1px solid var(--border);
+    color:var(--muted);font-size:10px;letter-spacing:2px;
+}
+footer strong{color:var(--purple-light);font-family:var(--heading)}
+
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:950px){
+    .layout{grid-template-columns:1fr}
+    .sidebar{position:relative;top:0;max-height:none;display:flex;flex-wrap:wrap;gap:3px}
+    .sidebar h3{width:100%}
+    .sidebar a{padding:8px}
+    .hero{grid-template-columns:1fr;text-align:center}
+    .hero p{margin:auto}
+    .hero-actions{justify-content:center}
+    .radar-wrap{height:280px}
+}
+@media(max-width:650px){
+    .hero{padding:65px 6% 35px}
+    .grid-2,.grid-3,.lab-controls,.sim-output{grid-template-columns:1fr}
+    .metric-row{grid-template-columns:1fr}
+    .topbar{padding:13px 5%}
+    .logo{font-size:15px}
+    .section{padding:20px 0 40px}
+    .quiz-box{padding:17px}
+}
+</style>
+</head>
+
+<body>
+<div id="particles"></div>
+<div class="progress" id="progress"></div>
+
+<header class="topbar">
+    <a class="logo" href="artificial-intelligence.html">MARITERRA<span>.</span></a>
+    <a class="back" href="artificial-intelligence.html">← BACK TO AI HUB</a>
+</header>
+
+<section class="hero">
+    <div>
+        <div class="eyebrow">TECHNOLOGY HUB / ARTIFICIAL INTELLIGENCE / 07</div>
+        <h1>AI-Powered <span>Maritime Navigation</span></h1>
+        <p>
+            Discover how artificial intelligence transforms maritime navigation
+            through intelligent sensor integration, situational awareness,
+            decision support, and advanced bridge technologies.
+        </p>
+        <div class="hero-actions">
+            <a href="#overview" class="btn btn-primary">EXPLORE THE TOPIC ↓</a>
+            <a href="#simulator" class="btn btn-outline">OPEN NAVIGATION LAB</a>
+        </div>
+    </div>
+
+    <div class="radar-wrap">
+        <span class="radar-label top">INTELLIGENT BRIDGE SYSTEM</span>
+        <div class="radar">
+            <div class="radar-center"></div>
+            <div class="radar-dot dot1"></div>
+            <div class="radar-dot dot2"></div>
+            <div class="radar-dot dot3"></div>
+        </div>
+        <span class="radar-label bottom">SENSOR FUSION • AWARENESS • SAFETY</span>
+    </div>
+</section>
+
+<div class="layout">
+<aside class="sidebar">
+    <h3>LEARNING MODULES</h3>
+    <a href="#overview">01. Overview</a>
+    <a href="#fundamentals">02. Navigation Fundamentals</a>
+    <a href="#architecture">03. Intelligent Architecture</a>
+    <a href="#sensors">04. Sensors & Data Fusion</a>
+    <a href="#awareness">05. Situational Awareness</a>
+    <a href="#electronic">06. Electronic Navigation</a>
+    <a href="#environment">07. Weather & Sea State</a>
+    <a href="#decision">08. Decision Support</a>
+    <a href="#human">09. Human–AI Interaction</a>
+    <a href="#safety">10. Navigation Safety</a>
+    <a href="#autonomy">11. Autonomous Navigation</a>
+    <a href="#workflow">12. Operational Workflow</a>
+    <a href="#challenges">13. Challenges</a>
+    <a href="#future">14. Future Directions</a>
+    <a href="#simulator">15. Interactive Lab</a>
+    <a href="#quiz">16. Knowledge Assessment</a>
+    <a href="#references">17. References</a>
+</aside>
+
+<main class="content">
+
+<section class="section reveal" id="overview">
+    <div class="section-heading">
+        <span class="number">01 / INTRODUCTION</span>
+        <h2>What Is AI-Powered Maritime Navigation?</h2>
+        <p>Understanding the connection between artificial intelligence and modern navigation systems.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Maritime navigation is the process of planning, monitoring, and controlling
+            a vessel's movement from one location to another while maintaining safety,
+            operational efficiency, and compliance with applicable maritime regulations.
+        </p>
+        <p>
+            Traditional navigation relies on professional human judgment and instruments
+            such as radar, GNSS, gyrocompasses, electronic charts, and Automatic
+            Identification Systems (AIS). These systems provide essential information,
+            but modern ships may generate more data than a bridge team can comfortably
+            interpret at every moment.
+        </p>
+        <p>
+            <strong>AI-powered maritime navigation</strong> uses machine learning,
+            computer vision, data fusion, and intelligent algorithms to analyze
+            navigation information, identify patterns, estimate risks, and support
+            the bridge team's decisions.
+        </p>
+        <p>
+            AI does not automatically make a vessel safe. Its value depends on the
+            quality of its inputs, the reliability of its outputs, the operating
+            environment, and the competence of the people supervising the system.
+        </p>
+    </div>
+
+    <div class="grid-3">
+        <div class="card">
+            <div class="icon">🧭</div>
+            <h3>Navigation Awareness</h3>
+            <p>Combines navigation information to help the bridge team understand the vessel's surroundings.</p>
+        </div>
+        <div class="card">
+            <div class="icon">📡</div>
+            <h3>Intelligent Analysis</h3>
+            <p>Processes sensor information to identify patterns, inconsistencies, and potential hazards.</p>
+        </div>
+        <div class="card">
+            <div class="icon">⚓</div>
+            <h3>Decision Support</h3>
+            <p>Provides useful information to support qualified human decision-making.</p>
+        </div>
+    </div>
+    <div class="callout">
+        <strong>Core principle:</strong> AI should improve the quality and timeliness of
+        navigational information, not replace the professional responsibility of the
+        master and bridge team.
+    </div>
+</section>
+
+<section class="section reveal" id="fundamentals">
+    <div class="section-heading">
+        <span class="number">02 / FOUNDATIONS</span>
+        <h2>Maritime Navigation Fundamentals</h2>
+        <p>AI navigation must be built on an accurate understanding of conventional navigation principles.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Before examining intelligent navigation, it is important to understand
+            the information that a vessel uses to determine its position, direction,
+            movement, and relationship with nearby traffic.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <span class="tag">POSITION</span>
+            <h3>Position Fixing</h3>
+            <p>Position fixing determines where a vessel is located using GNSS, terrestrial references, radar ranges, visual observations, and other available methods.</p>
+        </div>
+        <div class="card">
+            <span class="tag">DIRECTION</span>
+            <h3>Heading and Course</h3>
+            <p>Heading describes the direction the vessel's bow points. Course describes the direction of movement over the ground or through the water, depending on the reference used.</p>
+        </div>
+        <div class="card">
+            <span class="tag">MOVEMENT</span>
+            <h3>Speed and Motion</h3>
+            <p>Speed over ground, speed through water, rate of turn, and vessel motion help characterize how the ship is moving.</p>
+        </div>
+        <div class="card">
+            <span class="tag">SURROUNDINGS</span>
+            <h3>Traffic and Hazards</h3>
+            <p>Nearby vessels, navigational marks, shallow water, restricted areas, weather, and visibility influence navigational decisions.</p>
+        </div>
+    </div>
+    <div class="callout warning">
+        A heading is not always the same as a course over ground. Wind, current,
+        leeway, and vessel movement can create important differences. AI systems
+        must preserve these distinctions instead of treating navigation values as interchangeable.
+    </div>
+</section>
+
+<section class="section reveal" id="architecture">
+    <div class="section-heading">
+        <span class="number">03 / SYSTEM DESIGN</span>
+        <h2>Architecture of an Intelligent Navigation System</h2>
+        <p>How navigation data moves through an AI-supported bridge architecture.</p>
+    </div>
+    <div class="prose">
+        <p>
+            An intelligent navigation system can be understood as a series of connected
+            stages. Each stage has a different responsibility, and errors introduced
+            early in the process can affect later analysis.
+        </p>
+    </div>
+    <div class="flow">
+        <div class="flow-item">Navigation Sensors<br><small>Radar / AIS / GNSS</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Data Validation<br><small>Quality / Timing</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Sensor Fusion<br><small>Combined Picture</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">AI Analysis<br><small>Detection / Prediction</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Human Decision<br><small>Bridge Team</small></div>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Data Acquisition Layer</h3>
+            <p>Collects information from navigation equipment and external data sources. It must account for different update rates, formats, and measurement uncertainties.</p>
+        </div>
+        <div class="card">
+            <h3>Preprocessing Layer</h3>
+            <p>Checks timestamps, units, missing values, sensor status, coordinate references, and possible anomalies before analysis.</p>
+        </div>
+        <div class="card">
+            <h3>Intelligence Layer</h3>
+            <p>Applies algorithms for object detection, classification, tracking, anomaly detection, and prediction.</p>
+        </div>
+        <div class="card">
+            <h3>Interface and Oversight Layer</h3>
+            <p>Presents understandable information to operators and supports verification, alerts, and appropriate human intervention.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section reveal" id="sensors">
+    <div class="section-heading">
+        <span class="number">04 / DATA SOURCES</span>
+        <h2>Navigation Sensors and Data Fusion</h2>
+        <p>Intelligent navigation depends on multiple sources of information rather than a single sensor.</p>
+    </div>
+    <div class="grid-3">
+        <div class="card">
+            <div class="icon">📡</div>
+            <h3>Marine Radar</h3>
+            <p>Detects surrounding objects by transmitting radio waves and analyzing returned echoes. AI can help classify radar observations and track targets.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🛰️</div>
+            <h3>GNSS</h3>
+            <p>Provides satellite-based positioning and timing. GNSS data must be assessed for integrity, interference, and possible spoofing or jamming.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🚢</div>
+            <h3>AIS</h3>
+            <p>Exchanges vessel identity and movement information. AIS is useful but can be incomplete, delayed, incorrect, or unavailable.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🧭</div>
+            <h3>Gyrocompass</h3>
+            <p>Provides heading information. Its output can be compared with other references to detect inconsistencies.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🌊</div>
+            <h3>Echo Sounder</h3>
+            <p>Measures water depth beneath the vessel and contributes to awareness of under-keel clearance and shallow-water conditions.</p>
+        </div>
+        <div class="card">
+            <div class="icon">🌦️</div>
+            <h3>Weather Sensors</h3>
+            <p>Provide observations such as wind direction, wind speed, pressure, and temperature for environmental awareness.</p>
+        </div>
+    </div>
+    <div class="prose">
+        <h3 style="color:var(--purple-light);margin-top:25px">What Is Sensor Fusion?</h3>
+        <p>
+            Sensor fusion is the process of combining information from multiple sensors
+            to create a more useful representation of the environment. A radar target,
+            for example, may be associated with an AIS report when their positions,
+            motion estimates, and timestamps are sufficiently consistent.
+        </p>
+        <p>
+            Fusion can use probabilistic methods, Kalman filters, Bayesian approaches,
+            tracking algorithms, and machine learning. The appropriate method depends
+            on the application and the uncertainty of each source.
+        </p>
+    </div>
+    <div class="callout warning">
+        Sensor agreement does not automatically prove that information is correct.
+        Two systems may share the same upstream error, and AIS identity information
+        does not independently verify the physical identity of a radar target.
+    </div>
+</section>
+
+<section class="section reveal" id="awareness">
+    <div class="section-heading">
+        <span class="number">05 / INTELLIGENCE</span>
+        <h2>AI-Based Situational Awareness</h2>
+        <p>Building a meaningful understanding of the vessel's surroundings.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Situational awareness is the ability to perceive relevant elements in
+            the environment, understand what they mean, and anticipate how they may
+            develop. On a ship's bridge, this includes traffic, navigational hazards,
+            weather, vessel motion, and operational constraints.
+        </p>
+        <p>
+            AI can support this process by detecting objects, associating observations,
+            estimating movement, and highlighting unusual patterns. The bridge team
+            must still interpret the information in context.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Object Detection</h3>
+            <p>Identifies potential vessels, buoys, coastlines, and other objects in radar or camera data.</p>
+        </div>
+        <div class="card">
+            <h3>Object Tracking</h3>
+            <p>Maintains an estimate of an object's movement over time by associating observations across multiple measurements.</p>
+        </div>
+        <div class="card">
+            <h3>Classification</h3>
+            <p>Estimates an object's category, such as a vessel, navigational mark, or floating object, when the available data supports that classification.</p>
+        </div>
+        <div class="card">
+            <h3>Anomaly Detection</h3>
+            <p>Identifies unusual sensor behavior, unexpected movement patterns, or inconsistencies that may require operator attention.</p>
+        </div>
+    </div>
+    <div class="callout">
+        Situational awareness is not simply a list of detected objects. It requires
+        understanding uncertainty, movement, operational context, and the possible
+        consequences of each observation.
+    </div>
+</section>
+
+<section class="section reveal" id="electronic">
+    <div class="section-heading">
+        <span class="number">06 / DIGITAL NAVIGATION</span>
+        <h2>Electronic Navigation and Chart Interpretation</h2>
+        <p>Connecting AI with digital charts and navigation information systems.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Electronic Chart Display and Information Systems (ECDIS) display
+            electronic navigational charts and support route monitoring and
+            navigational awareness. They operate within defined equipment,
+            chart-data, and regulatory requirements.
+        </p>
+        <p>
+            AI may support the interpretation of chart-related information,
+            identify inconsistencies between chart features and sensor observations,
+            or help highlight relevant information. It must not silently alter
+            authoritative chart data or replace required navigational checks.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Electronic Navigational Charts</h3>
+            <p>ENC data provides structured information about coastlines, depths, aids to navigation, restrictions, and other charted features.</p>
+        </div>
+        <div class="card">
+            <h3>Chart and Sensor Comparison</h3>
+            <p>AI-assisted analysis may compare observed features with expected chart information and flag possible discrepancies for review.</p>
+        </div>
+        <div class="card">
+            <h3>Navigation Alerts</h3>
+            <p>Intelligent interfaces can help prioritize relevant alerts, while preserving the underlying alarm and safety requirements.</p>
+        </div>
+        <div class="card">
+            <h3>Data Standards</h3>
+            <p>Structured hydrographic data standards support interoperability and the exchange of marine information between systems.</p>
+        </div>
+    </div>
+    <div class="callout warning">
+        An AI-generated interpretation is not an official navigational chart.
+        The vessel must use appropriate official, up-to-date chart products and
+        equipment in accordance with applicable requirements.
+    </div>
+</section>
+
+<section class="section reveal" id="environment">
+    <div class="section-heading">
+        <span class="number">07 / ENVIRONMENTAL INTELLIGENCE</span>
+        <h2>Weather and Sea-State Awareness</h2>
+        <p>Using environmental information to improve navigational understanding.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Weather and sea conditions influence vessel motion, visibility,
+            maneuverability, safety, and operational performance. AI models can
+            analyze historical observations, forecasts, satellite information,
+            and onboard measurements to estimate patterns and identify changing conditions.
+        </p>
+    </div>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Wind Analysis</h3>
+            <p>Evaluates wind direction and speed as factors affecting vessel handling and exposed operations.</p>
+        </div>
+        <div class="card">
+            <h3>Wave Conditions</h3>
+            <p>Analyzes wave height, period, direction, and related conditions when suitable data is available.</p>
+        </div>
+        <div class="card">
+            <h3>Visibility Estimation</h3>
+            <p>Uses available observations to support awareness of fog, rain, and other visibility restrictions.</p>
+        </div>
+        <div class="card">
+            <h3>Current Analysis</h3>
+            <p>Considers ocean currents that can affect movement over ground and vessel maneuvering.</p>
+        </div>
+        <div class="card">
+            <h3>Forecast Interpretation</h3>
+            <p>Helps summarize forecast information while preserving its time range and uncertainty.</p>
+        </div>
+        <div class="card">
+            <h3>Environmental Alerts</h3>
+            <p>Highlights potentially important changes that may require the bridge team to reassess conditions.</p>
+        </div>
+    </div>
+    <div class="callout">
+        Forecasts are estimates, not observations of the future. Their uncertainty,
+        issue time, geographical coverage, and validity period must be considered.
+    </div>
+</section>
+
+<section class="section reveal" id="decision">
+    <div class="section-heading">
+        <span class="number">08 / DECISION INTELLIGENCE</span>
+        <h2>AI-Based Navigation Decision Support</h2>
+        <p>Turning complex information into useful operational insight.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Decision support systems organize information and provide analysis
+            that helps operators evaluate possible situations. In maritime navigation,
+            this may include target information, predicted movement, sensor quality,
+            environmental conditions, and navigational constraints.
+        </p>
+        <p>
+            An AI-based decision support system may generate alerts, rank observations
+            for attention, or present possible scenarios. It should explain the basis
+            of important outputs and clearly distinguish measured data from predictions.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Risk Indicators</h3>
+            <p>Combines relevant information to highlight situations that may require additional assessment.</p>
+        </div>
+        <div class="card">
+            <h3>Predictive Estimates</h3>
+            <p>Estimates how tracked objects or environmental conditions may develop over a defined time horizon.</p>
+        </div>
+        <div class="card">
+            <h3>Information Prioritization</h3>
+            <p>Helps distinguish important alerts from lower-priority information without hiding critical warnings.</p>
+        </div>
+        <div class="card">
+            <h3>Explainable Outputs</h3>
+            <p>Shows relevant inputs, uncertainty, assumptions, and reasons behind an AI-generated assessment.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section reveal" id="human">
+    <div class="section-heading">
+        <span class="number">09 / HUMAN FACTORS</span>
+        <h2>Human–AI Interaction on the Bridge</h2>
+        <p>Designing intelligent systems that support, rather than overwhelm, bridge personnel.</p>
+    </div>
+    <div class="prose">
+        <p>
+            A bridge interface is a safety-critical working environment. Information
+            must be presented clearly and at the right time. Too many notifications,
+            unclear recommendations, or poorly designed visualizations can increase
+            workload and contribute to human error.
+        </p>
+        <p>
+            Human-centered AI design considers how navigators understand system
+            behavior, recognize uncertainty, verify outputs, and intervene when
+            necessary. Training and operational procedures are essential parts
+            of successful adoption.
+        </p>
+    </div>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Clear Visualization</h3>
+            <p>Use consistent symbols, readable displays, and meaningful visual hierarchy.</p>
+        </div>
+        <div class="card">
+            <h3>Explainability</h3>
+            <p>Provide understandable reasons and relevant supporting information for important outputs.</p>
+        </div>
+        <div class="card">
+            <h3>Human Oversight</h3>
+            <p>Keep appropriate authority, verification, and intervention capabilities with qualified personnel.</p>
+        </div>
+    </div>
+    <div class="callout warning">
+        Automation bias occurs when people place excessive trust in automated
+        outputs. A navigator must not accept an AI recommendation merely because
+        it appears precise or is displayed confidently.
+    </div>
+</section>
+
+<section class="section reveal" id="safety">
+    <div class="section-heading">
+        <span class="number">10 / NAVIGATION SAFETY</span>
+        <h2>Navigation Safety and Collision Risks</h2>
+        <p>AI can support risk awareness, but safe navigation remains governed by professional judgment and maritime rules.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Collision risk assessment involves more than detecting another vessel.
+            Navigators consider relative movement, visibility, traffic density,
+            maneuvering characteristics, navigational constraints, and the applicable
+            International Regulations for Preventing Collisions at Sea (COLREGs).
+        </p>
+        <p>
+            AI may assist by tracking targets, estimating relative motion, identifying
+            developing situations, and presenting information such as Closest Point
+            of Approach (CPA) and Time to Closest Point of Approach (TCPA), when
+            the necessary data and assumptions are valid.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>CPA — Closest Point of Approach</h3>
+            <p>An estimate of the minimum separation between two moving objects if their current relative motion continues under the calculation assumptions.</p>
+        </div>
+        <div class="card">
+            <h3>TCPA — Time to CPA</h3>
+            <p>An estimate of the time remaining until the predicted closest point of approach under the same relative-motion assumptions.</p>
+        </div>
+        <div class="card">
+            <h3>COLREGs Awareness</h3>
+            <p>Supports awareness of the rules governing conduct in different visibility and encounter situations. An AI label does not determine legal compliance.</p>
+        </div>
+        <div class="card">
+            <h3>Risk Monitoring</h3>
+            <p>Highlights changing target movement, uncertainty, and potentially developing close-quarters situations.</p>
+        </div>
+    </div>
+    <div class="callout warning">
+        CPA and TCPA are not complete collision-avoidance decisions. They depend
+        on target tracking quality and assumptions about future movement.
+        COLREGs interpretation and safe maneuvering require the bridge team's
+        professional assessment.
+    </div>
+</section>
+
+<section class="section reveal" id="autonomy">
+    <div class="section-heading">
+        <span class="number">11 / AUTONOMOUS SYSTEMS</span>
+        <h2>Autonomous and Smart Navigation</h2>
+        <p>Understanding how intelligent navigation contributes to increasing levels of maritime automation.</p>
+    </div>
+    <div class="prose">
+        <p>
+            Autonomous navigation refers to systems that can perform some navigation
+            tasks with varying levels of human supervision. Capabilities may include
+            perception, localization, route monitoring, decision-making, and control.
+        </p>
+        <p>
+            Not every AI-assisted ship is autonomous. A vessel using intelligent
+            alerts or predictive analytics may still depend entirely on its crew
+            for navigation decisions and control.
+        </p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Perception</h3>
+            <p>Detecting and interpreting surrounding objects and environmental conditions using available sensors.</p>
+        </div>
+        <div class="card">
+            <h3>Localization</h3>
+            <p>Estimating the vessel's position and movement using navigation references and sensor information.</p>
+        </div>
+        <div class="card">
+            <h3>Planning and Decision-Making</h3>
+            <p>Evaluating possible actions under operational constraints and applicable maritime requirements.</p>
+        </div>
+        <div class="card">
+            <h3>Control and Monitoring</h3>
+            <p>Executing authorized control actions and continuously monitoring whether the system behaves as intended.</p>
+        </div>
+    </div>
+    <div class="callout">
+        Autonomous navigation introduces additional questions about remote supervision,
+        system assurance, cybersecurity, responsibility, communications loss,
+        emergency response, and safe fallback behavior.
+    </div>
+</section>
+
+<section class="section reveal" id="workflow">
+    <div class="section-heading">
+        <span class="number">12 / ENGINEERING WORKFLOW</span>
+        <h2>How an AI Navigation System Works</h2>
+        <p>A simplified operational workflow from data collection to human review.</p>
+    </div>
+    <div class="flow">
+        <div class="flow-item">Collect Data<br><small>Multiple sensors</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Validate Inputs<br><small>Quality checks</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Fuse Information<br><small>Track association</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Analyze Context<br><small>AI models</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-item">Present Results<br><small>Human review</small></div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr><th>STAGE</th><th>ENGINEERING TASK</th><th>IMPORTANT CHECK</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Acquisition</td><td>Receive radar, AIS, GNSS, and other data</td><td>Source availability and timestamps</td></tr>
+                <tr><td>Validation</td><td>Check ranges, formats, and sensor status</td><td>Missing or implausible values</td></tr>
+                <tr><td>Fusion</td><td>Associate observations and estimate tracks</td><td>Uncertainty and identity conflicts</td></tr>
+                <tr><td>Inference</td><td>Detect objects and estimate risks</td><td>Model performance and confidence</td></tr>
+                <tr><td>Presentation</td><td>Display results and alerts</td><td>Clarity and operator workload</td></tr>
+                <tr><td>Verification</td><td>Review outputs and system behavior</td><td>Human oversight and fallback</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="section reveal" id="challenges">
+    <div class="section-heading">
+        <span class="number">13 / ENGINEERING LIMITATIONS</span>
+        <h2>Challenges and Technical Limitations</h2>
+        <p>Understanding why AI navigation requires rigorous testing and operational safeguards.</p>
+    </div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Sensor Errors</h3>
+            <p>Faulty, misaligned, obstructed, or degraded sensors can produce misleading information.</p>
+        </div>
+        <div class="card">
+            <h3>Harsh Maritime Conditions</h3>
+            <p>Rain, fog, spray, glare, waves, and poor lighting can reduce sensor performance.</p>
+        </div>
+        <div class="card">
+            <h3>Data Quality and Integrity</h3>
+            <p>Incorrect timestamps, missing messages, spoofed signals, and inconsistent references can affect the system's conclusions.</p>
+        </div>
+        <div class="card">
+            <h3>Model Generalization</h3>
+            <p>A model trained in one geographical area or traffic pattern may perform poorly in a different environment.</p>
+        </div>
+        <div class="card">
+            <h3>Cybersecurity</h3>
+            <p>Connected navigation equipment can face cyber threats, unauthorized access, and data manipulation.</p>
+        </div>
+        <div class="card">
+            <h3>Human Factors</h3>
+            <p>Automation bias, alert fatigue, and unclear system behavior can undermine safe operations.</p>
+        </div>
+    </div>
+    <div class="callout warning">
+        A high model accuracy score in a laboratory does not prove that a navigation
+        system is safe at sea. Validation must reflect realistic operating conditions,
+        failure cases, and the consequences of incorrect outputs.
+    </div>
+</section>
+
+<section class="section reveal" id="future">
+    <div class="section-heading">
+        <span class="number">14 / THE FUTURE</span>
+        <h2>The Future of Intelligent Maritime Navigation</h2>
+        <p>Emerging technologies and engineering directions shaping the next generation of navigation.</p>
+    </div>
+    <div class="grid-3">
+        <div class="card">
+            <h3>Advanced Sensor Fusion</h3>
+            <p>More reliable integration of radar, cameras, GNSS, inertial systems, and environmental data.</p>
+        </div>
+        <div class="card">
+            <h3>Edge AI</h3>
+            <p>Running selected AI models onboard to reduce dependence on continuous internet connectivity.</p>
+        </div>
+        <div class="card">
+            <h3>Digital Twins</h3>
+            <p>Using digital representations of vessels and operational environments for simulation and system evaluation.</p>
+        </div>
+        <div class="card">
+            <h3>Improved Explainability</h3>
+            <p>Making model outputs easier to understand, audit, and verify by maritime professionals.</p>
+        </div>
+        <div class="card">
+            <h3>Resilient Navigation</h3>
+            <p>Combining independent navigation references and robust fallback methods when individual systems fail.</p>
+        </div>
+        <div class="card">
+            <h3>Connected Maritime Systems</h3>
+            <p>Improving information exchange between ships, ports, coastal services, and maritime traffic systems.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section reveal" id="simulator">
+    <div class="section-heading">
+        <span class="number">15 / INTERACTIVE ENGINEERING LAB</span>
+        <h2>Intelligent Navigation Scenario Lab</h2>
+        <p>Explore how visibility, sensor reliability, and traffic density can influence a simplified navigation-awareness assessment.</p>
+    </div>
+
+    <div class="lab">
+        <h3>BRIDGE SITUATION SIMULATOR</h3>
+        <p class="lab-intro">
+            Adjust the simulated conditions and observe how the illustrative
+            assessment changes. This is an educational model, not a real navigation system.
+        </p>
+
+        <div class="lab-controls">
+            <div class="control">
+                <label for="visibility">Visibility <strong id="visibilityValue">80%</strong></label>
+                <input id="visibility" type="range" min="10" max="100" value="80">
+            </div>
+            <div class="control">
+                <label for="sensor">Sensor reliability <strong id="sensorValue">90%</strong></label>
+                <input id="sensor" type="range" min="10" max="100" value="90">
+            </div>
+            <div class="control">
+                <label for="traffic">Traffic density</label>
+                <select id="traffic">
+                    <option value="1">Low traffic</option>
+                    <option value="2" selected>Moderate traffic</option>
+                    <option value="3">High traffic</option>
+                </select>
+            </div>
+            <div class="control">
+                <label for="weather">Weather conditions</label>
+                <select id="weather">
+                    <option value="1">Calm conditions</option>
+                    <option value="2" selected>Moderate conditions</option>
+                    <option value="3">Severe conditions</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="sim-output">
+            <div class="sim-box">
+                <small>ILLUSTRATIVE DATA QUALITY INDEX</small>
+                <strong id="quality">84 / 100</strong>
+                <span class="status safe" id="qualityStatus">GOOD INPUT QUALITY</span>
+            </div>
+            <div class="sim-box">
+                <small>ILLUSTRATIVE AWARENESS PRESSURE</small>
+                <strong id="pressure">42 / 100</strong>
+                <span class="status caution" id="pressureStatus">MODERATE COMPLEXITY</span>
+            </div>
+        </div>
+
+        <div class="callout" id="simAdvice">
+            The simulated inputs indicate a reasonably clear picture, but the bridge team must continue independent verification.
+        </div>
+
+        <p class="disclaimer">
+            Educational simulation only. All values are synthetic and generated by
+            a simplified formula. They are not derived from real vessel sensors,
+            live AIS, radar, weather services, or maritime databases. Do not use
+            this lab for navigation, collision avoidance, or operational decisions.
+        </p>
+    </div>
+</section>
+
+<section class="section reveal" id="quiz">
+    <div class="section-heading">
+        <span class="number">16 / KNOWLEDGE ASSESSMENT</span>
+        <h2>Test Your Understanding</h2>
+        <p>Twenty questions covering intelligent navigation, sensor integration, safety, and system engineering.</p>
+    </div>
+
+    <div class="quiz-box" id="quizBox">
+        <div class="quiz-top">
+            <span id="questionCount">QUESTION 1 / 20</span>
+            <span id="scoreLabel">SCORE: 0</span>
+        </div>
+        <div class="quiz-progress"><div id="quizProgress"></div></div>
+        <div id="questionArea">
+            <div class="question" id="questionText"></div>
+            <div class="options" id="options"></div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+        <div class="quiz-actions">
+            <span style="font-size:10px;color:var(--muted)" id="answeredLabel">Choose one answer</span>
+            <button class="quiz-btn" id="nextButton" disabled>Next Question →</button>
+        </div>
+        <div class="result" id="result">
+            <div style="color:var(--blue);letter-spacing:3px;font-size:11px">ASSESSMENT COMPLETED</div>
+            <strong id="finalScore">0/20</strong>
+            <p id="resultMessage"></p>
+            <button class="quiz-btn" onclick="restartQuiz()">RETAKE ASSESSMENT</button>
+        </div>
+    </div>
+</section>
+
+<section class="section reveal" id="references">
+    <div class="section-heading">
+        <span class="number">17 / FURTHER READING</span>
+        <h2>References and Learning Resources</h2>
+        <p>Official maritime organizations, technical standards, and foundational research resources.</p>
+    </div>
+    <div class="references">
+        <div class="reference">
+            <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener">International Maritime Organization — COLREG</a>
+            <p>International regulations for preventing collisions at sea.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.imo.org/" target="_blank" rel="noopener">International Maritime Organization (IMO)</a>
+            <p>International maritime safety, security, and environmental regulatory framework.</p>
+        </div>
+        <div class="reference">
+            <a href="https://iho.int/" target="_blank" rel="noopener">International Hydrographic Organization (IHO)</a>
+            <p>Hydrographic standards and marine geospatial information.</p>
+        </div>
+        <div class="reference">
+            <a href="https://iho.int/en/s-100-universal-hydrographic-data-model" target="_blank" rel="noopener">IHO S-100 Universal Hydrographic Data Model</a>
+            <p>Framework for modern digital hydrographic data products.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.iala.int/" target="_blank" rel="noopener">International Organization for Marine Aids to Navigation (IALA)</a>
+            <p>Marine aids to navigation and related technical guidance.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.imo.org/en/OurWork/Safety/Pages/eNavigation.aspx" target="_blank" rel="noopener">IMO — e-Navigation</a>
+            <p>IMO information on e-navigation and improved maritime information exchange.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">NIST — AI Risk Management Framework</a>
+            <p>Guidance for managing risks associated with AI systems.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework/ai-rmf-playbook" target="_blank" rel="noopener">NIST — AI RMF Playbook</a>
+            <p>Practical guidance for AI governance, mapping, measurement, and management.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.gps.gov/" target="_blank" rel="noopener">GPS.gov</a>
+            <p>Official information about GPS positioning, timing, and system performance.</p>
+        </div>
+        <div class="reference">
+            <a href="https://www.noaa.gov/" target="_blank" rel="noopener">National Oceanic and Atmospheric Administration (NOAA)</a>
+            <p>Ocean, weather, and environmental information resources.</p>
+        </div>
+        <div class="reference">
+            <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener">Scikit-learn Documentation</a>
+            <p>Machine learning concepts and practical algorithms.</p>
+        </div>
+        <div class="reference">
+            <a href="https://pytorch.org/docs/stable/index.html" target="_blank" rel="noopener">PyTorch Documentation</a>
+            <p>Deep learning models and implementation resources.</p>
+        </div>
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    <strong>MARITERRA</strong>
+    <p style="margin-top:9px">ENGINEERING KNOWLEDGE. INTELLIGENT NAVIGATION. SAFER MARITIME FUTURES.</p>
+    <p style="margin-top:13px">DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED</p>
+</footer>
+
+<script>
+/* Reading progress */
+window.addEventListener("scroll",()=>{
+    const total=document.documentElement.scrollHeight-window.innerHeight;
+    const progress=total>0?(window.scrollY/total)*100:0;
+    document.getElementById("progress").style.width=progress+"%";
+});
+
+/* Reveal animations */
+const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+        }
+    });
+},{threshold:.08});
+
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+/* Active sidebar item */
+const sections=document.querySelectorAll("main section[id]");
+const sideLinks=document.querySelectorAll(".sidebar a");
+
+const sectionObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting){
+            sideLinks.forEach(link=>{
+                link.classList.toggle(
+                    "active",
+                    link.getAttribute("href")==="#"+entry.target.id
+                );
+            });
+        }
+    });
+},{rootMargin:"-25% 0px -60% 0px"});
+
+sections.forEach(section=>sectionObserver.observe(section));
+
+/* Educational navigation simulator */
+const visibility=document.getElementById("visibility");
+const sensor=document.getElementById("sensor");
+const traffic=document.getElementById("traffic");
+const weather=document.getElementById("weather");
+
+function updateSimulator(){
+    const v=Number(visibility.value);
+    const s=Number(sensor.value);
+    const t=Number(traffic.value);
+    const w=Number(weather.value);
+
+    const quality=Math.round((v*.35)+(s*.65));
+    const pressure=Math.min(100,Math.round(
+        (100-v)*.25+(100-s)*.25+(t-1)*17+(w-1)*14
+    ));
+
+    document.getElementById("visibilityValue").textContent=v+"%";
+    document.getElementById("sensorValue").textContent=s+"%";
+    document.getElementById("quality").textContent=quality+" / 100";
+    document.getElementById("pressure").textContent=pressure+" / 100";
+
+    const qualityStatus=document.getElementById("qualityStatus");
+    const pressureStatus=document.getElementById("pressureStatus");
+    const advice=document.getElementById("simAdvice");
+
+    qualityStatus.className="status";
+    pressureStatus.className="status";
+
+    if(quality>=75){
+        qualityStatus.classList.add("safe");
+        qualityStatus.textContent="GOOD INPUT QUALITY";
+    }else if(quality>=45){
+        qualityStatus.classList.add("caution");
+        qualityStatus.textContent="MODERATE INPUT QUALITY";
+    }else{
+        qualityStatus.classList.add("danger");
+        qualityStatus.textContent="LOW INPUT QUALITY";
+    }
+
+    if(pressure<30){
+        pressureStatus.classList.add("safe");
+        pressureStatus.textContent="LOW COMPLEXITY";
+        advice.textContent="The simplified scenario indicates relatively low environmental and traffic pressure. Continue normal monitoring and independent verification.";
+    }else if(pressure<65){
+        pressureStatus.classList.add("caution");
+        pressureStatus.textContent="MODERATE COMPLEXITY";
+        advice.textContent="The scenario contains conditions that may require increased attention. Review sensor consistency, nearby traffic, and environmental information.";
+    }else{
+        pressureStatus.classList.add("danger");
+        pressureStatus.textContent="HIGH COMPLEXITY";
+        advice.textContent="The simulated conditions are demanding. The bridge team should rely on established procedures, verify available information, and maintain appropriate situational awareness.";
+    }
+
+    if(quality<45){
+        advice.textContent+=" Input reliability is also low, so the simulated AI assessment should be treated with additional caution.";
+    }
+}
+
+[visibility,sensor,traffic,weather].forEach(el=>{
+    el.addEventListener("input",updateSimulator);
+    el.addEventListener("change",updateSimulator);
+});
+updateSimulator();
+
+/* 20-question assessment */
+const questions=[
+{
+q:"What is the primary purpose of AI-powered maritime navigation?",
+o:["To eliminate all bridge personnel","To support navigation awareness and decision-making","To replace official nautical charts","To remove the need for radar"],
+a:1,
+e:"AI can analyze navigation information and support the bridge team. It does not remove the need for qualified personnel or established navigation equipment."
+},
+{
+q:"Which system primarily provides satellite-based positioning?",
+o:["Echo sounder","Gyrocompass","GNSS","Marine radar"],
+a:2,
+e:"GNSS uses satellite signals to estimate position and provide timing information."
+},
+{
+q:"What is the main purpose of AIS?",
+o:["To measure water depth","To exchange vessel identity and movement information","To detect underwater obstacles","To measure wind speed"],
+a:1,
+e:"AIS exchanges vessel-related information, but its reports may be incomplete, delayed, incorrect, or unavailable."
+},
+{
+q:"What does sensor fusion mean?",
+o:["Deleting data from older sensors","Combining information from multiple sources","Using only the strongest sensor","Replacing radar with cameras"],
+a:1,
+e:"Sensor fusion combines multiple observations to build a more useful representation of the environment."
+},
+{
+q:"Why is data validation important before AI analysis?",
+o:["It increases the display brightness","It guarantees perfect predictions","It identifies missing, inconsistent, or implausible inputs","It removes the need for testing"],
+a:2,
+e:"Invalid timestamps, missing values, and inconsistent units can lead to misleading AI outputs."
+},
+{
+q:"What is situational awareness in maritime navigation?",
+o:["Knowing only the vessel's GPS position","Perceiving, understanding, and anticipating relevant conditions","Monitoring engine temperature only","Displaying every sensor value without interpretation"],
+a:1,
+e:"Situational awareness includes perceiving the environment, understanding its meaning, and anticipating how it may develop."
+},
+{
+q:"What does a marine radar primarily detect?",
+o:["Radio echoes from surrounding objects","Only AIS identities","Only underwater terrain","Satellite weather forecasts"],
+a:0,
+e:"Marine radar transmits radio waves and analyzes returned echoes to detect objects."
+},
+{
+q:"What is an important limitation of AIS information?",
+o:["It always provides exact physical identity","It cannot contain vessel information","It may be incorrect or unavailable","It measures the actual distance to the seabed"],
+a:2,
+e:"AIS data is useful but should be checked against other available sources and observations."
+},
+{
+q:"What is ECDIS?",
+o:["An engine cooling system","An electronic chart display and information system","An underwater camera","A satellite communication protocol"],
+a:1,
+e:"ECDIS displays electronic navigational chart information and supports navigation monitoring within its applicable requirements."
+},
+{
+q:"What is the purpose of an Electronic Navigational Chart (ENC)?",
+o:["To provide structured official chart information","To replace all bridge procedures","To calculate engine fuel injection","To identify crew members"],
+a:0,
+e:"ENCs contain structured hydrographic information such as depths, coastline features, and navigational information."
+},
+{
+q:"What does CPA represent?",
+o:["Course Planning Algorithm","Closest Point of Approach","Current Position Accuracy","Collision Prevention Authority"],
+a:1,
+e:"CPA estimates the minimum separation between two moving objects if the assumed relative motion continues."
+},
+{
+q:"What does TCPA estimate?",
+o:["The time to the predicted closest point of approach","The vessel's total voyage duration","The time until the next port arrival","The time needed to update an ENC"],
+a:0,
+e:"TCPA estimates how long remains until the predicted CPA under the calculation assumptions."
+},
+{
+q:"Why should AI outputs be explainable on a ship's bridge?",
+o:["To make screens more decorative","To help operators understand and verify system assessments","To eliminate all uncertainty","To prevent the use of radar"],
+a:1,
+e:"Explainability helps bridge personnel assess why a system produced an output and whether it is trustworthy."
+},
+{
+q:"What is automation bias?",
+o:["A sensor calibration method","Excessive trust in automated recommendations","A type of marine radar","A chart update procedure"],
+a:1,
+e:"Automation bias occurs when users rely too heavily on automated outputs instead of exercising independent judgment."
+},
+{
+q:"What is one possible effect of severe weather on navigation sensors?",
+o:["It guarantees better detection","It can reduce sensor performance","It removes all navigation uncertainty","It makes AIS unnecessary"],
+a:1,
+e:"Rain, spray, fog, and other conditions can affect the performance of certain sensors and observation systems."
+},
+{
+q:"Why is model generalization important?",
+o:["A model should only work in its training dataset","A model should be evaluated in different relevant operating environments","A model should ignore environmental changes","A model should never be updated"],
+a:1,
+e:"A model may perform poorly in environments that differ from its training data, so testing must cover relevant operating conditions."
+},
+{
+q:"Which statement about COLREGs is correct?",
+o:["AI systems replace COLREGs","COLREGs apply only to autonomous ships","COLREGs establish international collision-prevention rules","COLREGs are electronic chart formats"],
+a:2,
+e:"COLREGs establish international rules for preventing collisions at sea. AI does not replace these rules or the responsibilities of navigators."
+},
+{
+q:"Which task is commonly associated with autonomous navigation?",
+o:["Perception and localization","Removing all safety procedures","Ignoring sensor uncertainty","Disabling human oversight in every situation"],
+a:0,
+e:"Autonomous navigation systems may perform perception, localization, planning, decision-making, and control tasks."
+},
+{
+q:"Why is cybersecurity important for intelligent navigation systems?",
+o:["Because connected systems can face unauthorized access and data manipulation","Because it increases wave height","Because it replaces navigation charts","Because it eliminates sensor errors"],
+a:0,
+e:"Connected navigation systems may be exposed to cyber threats that affect data integrity, availability, or system operation."
+},
+{
+q:"What is the safest interpretation of an AI-generated navigation recommendation?",
+o:["It is always correct if confidence is high","It automatically overrides the master","It is information that requires appropriate professional evaluation","It can replace official navigational information"],
+a:2,
+e:"AI recommendations should be evaluated using valid information, operational context, applicable rules, and qualified human judgment."
+}
+];
+
+let currentQuestion=0;
+let score=0;
+let answered=false;
+
+const questionText=document.getElementById("questionText");
+const optionsContainer=document.getElementById("options");
+const feedback=document.getElementById("feedback");
+const nextButton=document.getElementById("nextButton");
+
+function renderQuestion(){
+    answered=false;
+    const item=questions[currentQuestion];
+
+    document.getElementById("questionCount").textContent=
+        "QUESTION "+(currentQuestion+1)+" / "+questions.length;
+    document.getElementById("scoreLabel").textContent="SCORE: "+score;
+    document.getElementById("quizProgress").style.width=
+        (currentQuestion/questions.length*100)+"%";
+
+    questionText.textContent=item.q;
+    optionsContainer.innerHTML="";
+    feedback.style.display="none";
+    feedback.textContent="";
+    nextButton.disabled=true;
+    nextButton.textContent=currentQuestion===questions.length-1
+        ?"View Results →":"Next Question →";
+    document.getElementById("answeredLabel").textContent="Choose one answer";
+
+    item.o.forEach((option,index)=>{
+        const button=document.createElement("button");
+        button.className="option";
+        button.textContent=String.fromCharCode(65+index)+". "+option;
+        button.addEventListener("click",()=>selectAnswer(index));
+        optionsContainer.appendChild(button);
+    });
+}
+
+function selectAnswer(selected){
+    if(answered)return;
+    answered=true;
+
+    const item=questions[currentQuestion];
+    const buttons=optionsContainer.querySelectorAll(".option");
+
+    buttons.forEach((button,index)=>{
+        button.disabled=true;
+        if(index===item.a)button.classList.add("correct");
+        if(index===selected && selected!==item.a)button.classList.add("wrong");
+    });
+
+    if(selected===item.a){
+        score++;
+        feedback.innerHTML="<strong style='color:var(--success)'>Correct answer.</strong><br>"+item.e;
+    }else{
+        feedback.innerHTML="<strong style='color:var(--danger)'>Not quite.</strong><br>"+item.e;
+    }
+
+    feedback.style.display="block";
+    document.getElementById("scoreLabel").textContent="SCORE: "+score;
+    document.getElementById("answeredLabel").textContent="Answer submitted";
+    nextButton.disabled=false;
+}
+
+nextButton.addEventListener("click",()=>{
+    if(!answered)return;
+
+    currentQuestion++;
+
+    if(currentQuestion<questions.length){
+        renderQuestion();
+    }else{
+        showResults();
+    }
+});
+
+function showResults(){
+    document.getElementById("questionArea").style.display="none";
+    document.querySelector(".quiz-actions").style.display="none";
+    document.getElementById("quizProgress").style.width="100%";
+
+    const result=document.getElementById("result");
+    result.style.display="block";
+    document.getElementById("finalScore").textContent=score+"/20";
+
+    let message;
+    if(score>=18){
+        message="Excellent work. You demonstrate a strong understanding of intelligent maritime navigation concepts.";
+    }else if(score>=15){
+        message="Very good. Review the explanations to strengthen your technical understanding.";
+    }else if(score>=10){
+        message="Good progress. Revisit sensor integration, navigation safety, and human oversight.";
+    }else{
+        message="Keep learning. Review the modules and try the assessment again to improve your understanding.";
+    }
+    document.getElementById("resultMessage").textContent=message;
+    document.getElementById("questionCount").textContent="COMPLETED";
+}
+
+function restartQuiz(){
+    currentQuestion=0;
+    score=0;
+    answered=false;
+    document.getElementById("questionArea").style.display="block";
+    document.querySelector(".quiz-actions").style.display="flex";
+    document.getElementById("result").style.display="none";
+    renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>

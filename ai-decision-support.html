@@ -1,0 +1,2104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligent Decision Support Systems | MARITERRA</title>
+<meta name="description" content="Explore AI-powered maritime decision support systems, predictive analytics, risk assessment, explainable AI, and human-AI collaboration.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #070816;
+    --panel: #11132a;
+    --panel2: #171936;
+    --purple: #9333ea;
+    --purple-light: #c4b5fd;
+    --blue: #38bdf8;
+    --text: #f4f2ff;
+    --muted: #a6a6c5;
+    --border: rgba(196,181,253,.16);
+    --gradient: linear-gradient(120deg,#9333ea,#38bdf8);
+    --glow: 0 0 35px rgba(147,51,234,.2);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.75;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(147,51,234,.12),transparent 35%),
+        radial-gradient(circle at 85% 65%,rgba(56,189,248,.08),transparent 35%);
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 72px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(7,8,22,.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.logo span { color: var(--purple-light); }
+
+.back-link {
+    padding: 9px 18px;
+    border: 1px solid rgba(196,181,253,.3);
+    border-radius: 30px;
+    color: var(--purple-light);
+    font-size: 12px;
+    transition: .3s;
+}
+
+.back-link:hover {
+    background: var(--purple);
+    color: white;
+    box-shadow: var(--glow);
+}
+
+.hero {
+    min-height: 560px;
+    padding: 100px 8% 90px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 850px;
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    color: var(--blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    margin-bottom: 22px;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(32px,5.2vw,64px);
+    line-height: 1.22;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 680px;
+    font-size: 15px;
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.primary-btn, .secondary-btn {
+    display: inline-block;
+    padding: 13px 23px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.primary-btn {
+    background: var(--gradient);
+    color: white;
+}
+
+.secondary-btn {
+    border: 1px solid var(--border);
+    color: var(--purple-light);
+}
+
+.primary-btn:hover, .secondary-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow);
+}
+
+.hero-visual {
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    right: 7%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(147,51,234,.22);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    opacity: .85;
+}
+
+.orbit {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    border: 1px dashed rgba(56,189,248,.5);
+    border-radius: 50%;
+    animation: rotate 24s linear infinite;
+}
+
+.orbit::before, .orbit::after {
+    content: "";
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 20px var(--blue);
+}
+
+.orbit::before { top: 8%; left: 20%; }
+.orbit::after { bottom: 10%; right: 18%; background: var(--purple-light); }
+
+.orbit.two {
+    width: 59%;
+    height: 59%;
+    border-color: rgba(147,51,234,.5);
+    animation-direction: reverse;
+    animation-duration: 17s;
+}
+
+.core {
+    width: 125px;
+    height: 125px;
+    border-radius: 30px;
+    display: grid;
+    place-items: center;
+    font-size: 56px;
+    background: linear-gradient(145deg,rgba(147,51,234,.25),rgba(56,189,248,.12));
+    border: 1px solid rgba(196,181,253,.35);
+    box-shadow: 0 0 55px rgba(147,51,234,.25);
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes rotate { to { transform: rotate(360deg); } }
+@keyframes float { 50% { transform: translateY(-13px); } }
+
+.page-layout {
+    display: grid;
+    grid-template-columns: 245px minmax(0,1fr);
+    gap: 35px;
+    padding: 45px 6%;
+    max-width: 1600px;
+    margin: auto;
+}
+
+.sidebar {
+    position: sticky;
+    top: 95px;
+    align-self: start;
+    max-height: calc(100vh - 115px);
+    overflow-y: auto;
+    padding: 23px 17px;
+    background: rgba(17,19,42,.8);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+}
+
+.sidebar h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: var(--purple-light);
+    letter-spacing: 2px;
+    margin-bottom: 17px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 9px 11px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    color: var(--muted);
+    font-size: 12px;
+    transition: .25s;
+}
+
+.sidebar a:hover {
+    background: rgba(147,51,234,.16);
+    color: white;
+    transform: translateX(4px);
+}
+
+.content { min-width: 0; }
+
+.section {
+    margin-bottom: 65px;
+    scroll-margin-top: 100px;
+    animation: appear .7s ease both;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.section-label {
+    color: var(--blue);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.section h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(22px,3vw,32px);
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+.section h2 span { color: var(--purple-light); }
+
+.section p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.section h3 {
+    color: var(--purple-light);
+    font-size: 16px;
+    margin: 23px 0 10px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+    gap: 17px;
+    margin: 25px 0;
+}
+
+.info-card {
+    background: linear-gradient(145deg,rgba(23,25,54,.95),rgba(13,15,35,.95));
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 23px;
+    transition: .35s;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-card::before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: -45px;
+    top: -45px;
+    background: rgba(147,51,234,.12);
+    filter: blur(25px);
+}
+
+.info-card:hover {
+    transform: translateY(-7px);
+    border-color: rgba(196,181,253,.55);
+    box-shadow: var(--glow);
+}
+
+.info-card .icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.info-card h3 { margin: 0 0 10px; font-size: 15px; }
+.info-card p { font-size: 12px; margin: 0; }
+
+.callout {
+    padding: 22px 25px;
+    margin: 24px 0;
+    border-left: 3px solid var(--purple);
+    background: rgba(147,51,234,.09);
+    border-radius: 0 12px 12px 0;
+}
+
+.callout p { margin: 0; }
+
+.number-list {
+    counter-reset: item;
+    list-style: none;
+    margin: 20px 0;
+}
+
+.number-list li {
+    counter-increment: item;
+    padding: 13px 15px 13px 48px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.number-list li::before {
+    content: counter(item,decimal-leading-zero);
+    position: absolute;
+    left: 7px;
+    color: var(--blue);
+    font-family: 'Orbitron',sans-serif;
+    font-size: 11px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 22px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    min-width: 550px;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+th,td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: rgba(147,51,234,.17);
+    color: var(--purple-light);
+    font-family: 'Orbitron',sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+td { color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+
+.lab {
+    padding: 28px;
+    background: linear-gradient(145deg,#141632,#0b0d20);
+    border: 1px solid rgba(147,51,234,.35);
+    border-radius: 19px;
+    box-shadow: var(--glow);
+}
+
+.lab h3 {
+    margin-top: 0;
+    font-family: 'Orbitron',sans-serif;
+    font-size: 17px;
+}
+
+.lab-intro { font-size: 12px !important; }
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+    gap: 20px;
+    margin: 25px 0;
+}
+
+.control label {
+    display: flex;
+    justify-content: space-between;
+    color: var(--purple-light);
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.control input[type="range"] {
+    width: 100%;
+    accent-color: var(--purple);
+    cursor: pointer;
+}
+
+.control select {
+    width: 100%;
+    padding: 10px;
+    background: #0a0c20;
+    color: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.lab-button, .quiz-button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    background: var(--gradient);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.lab-button:hover, .quiz-button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--glow);
+}
+
+.lab-result {
+    display: none;
+    margin-top: 23px;
+    padding: 22px;
+    background: rgba(56,189,248,.07);
+    border: 1px solid rgba(56,189,248,.3);
+    border-radius: 12px;
+}
+
+.lab-result h4 {
+    font-family: 'Orbitron',sans-serif;
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.result-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(130px,1fr));
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.metric {
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.04);
+}
+
+.metric small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.metric strong {
+    display: block;
+    color: var(--purple-light);
+    font-size: 22px;
+    font-family: 'Orbitron',sans-serif;
+}
+
+.disclaimer {
+    font-size: 11px !important;
+    color: #f0c9a6 !important;
+    margin-top: 15px !important;
+}
+
+.quiz-container {
+    padding: 28px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.quiz-progress {
+    height: 6px;
+    background: #252644;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 14px 0 25px;
+}
+
+.quiz-progress div {
+    height: 100%;
+    width: 0;
+    background: var(--gradient);
+    transition: .3s;
+}
+
+.question {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.question h3 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    color: white;
+}
+
+.option {
+    display: block;
+    padding: 11px 14px;
+    margin: 8px 0;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.option:hover {
+    border-color: var(--purple);
+    background: rgba(147,51,234,.08);
+}
+
+.option input {
+    margin-right: 9px;
+    accent-color: var(--purple);
+}
+
+.option.correct {
+    border-color: #22c55e;
+    background: rgba(34,197,94,.1);
+    color: #86efac;
+}
+
+.option.wrong {
+    border-color: #ef4444;
+    background: rgba(239,68,68,.1);
+    color: #fca5a5;
+}
+
+.explanation {
+    display: none;
+    color: var(--blue);
+    font-size: 11px;
+    padding: 8px 3px;
+}
+
+.quiz-result {
+    display: none;
+    padding: 25px;
+    margin-top: 20px;
+    text-align: center;
+    background: rgba(147,51,234,.1);
+    border-radius: 13px;
+}
+
+.quiz-result strong {
+    display: block;
+    font-family: 'Orbitron',sans-serif;
+    font-size: 38px;
+    color: var(--purple-light);
+}
+
+.references {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.reference {
+    padding: 15px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: .25s;
+}
+
+.reference:hover {
+    border-color: var(--purple);
+    transform: translateY(-3px);
+}
+
+.reference strong {
+    display: block;
+    color: var(--purple-light);
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.reference span {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+footer {
+    padding: 35px 6%;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+footer strong {
+    color: var(--purple-light);
+    font-family: 'Orbitron',sans-serif;
+}
+
+@media(max-width:1000px) {
+    .hero-visual { opacity: .2; right: -100px; }
+    .page-layout { grid-template-columns: 1fr; }
+    .sidebar {
+        position: relative;
+        top: 0;
+        max-height: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    .sidebar h3 { width: 100%; }
+    .sidebar a { display: inline-block; }
+}
+
+@media(max-width:600px) {
+    .hero { padding: 75px 7%; min-height: 500px; }
+    .hero-visual { width: 280px; height: 280px; right: -120px; }
+    .core { width: 95px; height: 95px; font-size: 42px; }
+    .page-layout { padding: 25px 5%; }
+    .lab, .quiz-container { padding: 18px; }
+    .topbar { padding: 0 5%; }
+    .logo { font-size: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="artificial-intelligence.html" class="logo">MARITERRA<span>.</span></a>
+    <a href="artificial-intelligence.html" class="back-link">← BACK TO AI HUB</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">ARTIFICIAL INTELLIGENCE / TOPIC 11</div>
+        <h1>Intelligent <span>Decision Support Systems</span></h1>
+        <p>
+            Explore how artificial intelligence transforms maritime decision-making
+            through real-time data analysis, predictive models, risk assessment,
+            explainable recommendations, and human-AI collaboration.
+        </p>
+        <div class="hero-actions">
+            <a href="#overview" class="primary-btn">Explore the Technology</a>
+            <a href="#simulation" class="secondary-btn">Launch Decision Lab</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="orbit"></div>
+        <div class="orbit two"></div>
+        <div class="core">🧠</div>
+    </div>
+</section>
+
+<div class="page-layout">
+
+<aside class="sidebar">
+    <h3>TOPIC CONTENTS</h3>
+    <a href="#overview">01. Overview</a>
+    <a href="#architecture">02. DSS Architecture</a>
+    <a href="#data">03. Data Collection</a>
+    <a href="#analytics">04. Real-Time Analytics</a>
+    <a href="#predictive">05. Predictive Models</a>
+    <a href="#risk">06. Risk Assessment</a>
+    <a href="#human">07. Human-AI Collaboration</a>
+    <a href="#explainable">08. Explainable AI</a>
+    <a href="#bridge">09. Bridge DSS</a>
+    <a href="#engineering">10. Marine Engineering DSS</a>
+    <a href="#emergency">11. Emergency Response</a>
+    <a href="#energy">12. Energy Decisions</a>
+    <a href="#monitoring">13. Performance Monitoring</a>
+    <a href="#challenges">14. Challenges</a>
+    <a href="#future">15. Future Directions</a>
+    <a href="#simulation">16. Interactive Lab</a>
+    <a href="#quiz">17. Knowledge Assessment</a>
+    <a href="#references">18. References</a>
+</aside>
+
+<main class="content">
+
+<section class="section" id="overview">
+    <div class="section-label">01 / INTRODUCTION</div>
+    <h2>Understanding <span>Intelligent Decision Support Systems</span></h2>
+
+    <p>
+        A Decision Support System (DSS) is a computer-based system designed
+        to help people analyze information, evaluate alternatives, and make
+        better-informed decisions. In maritime operations, decision support
+        can assist ship officers, marine engineers, fleet managers, and
+        shore-based operators.
+    </p>
+
+    <p>
+        An Intelligent Decision Support System extends traditional DSS
+        capabilities by incorporating methods such as machine learning,
+        predictive analytics, optimization, knowledge-based reasoning,
+        and natural language interfaces.
+    </p>
+
+    <p>
+        These systems do not simply display information. They can identify
+        patterns, estimate possible future conditions, highlight risks,
+        compare alternatives, and explain why a particular option may
+        deserve attention.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">📊</div>
+            <h3>Data Analysis</h3>
+            <p>Transforms operational data into structured information that supports maritime decisions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🔮</div>
+            <h3>Prediction</h3>
+            <p>Estimates future conditions, possible equipment failures, and operational outcomes.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">⚖️</div>
+            <h3>Alternative Evaluation</h3>
+            <p>Compares different options according to safety, cost, time, and operational constraints.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🧑‍✈️</div>
+            <h3>Human Decision Support</h3>
+            <p>Provides recommendations and explanations while keeping authorized personnel involved.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <p>
+            <strong>Core distinction:</strong> A decision support system
+            helps a person make a decision. It is not necessarily an
+            autonomous control system, and a recommendation should not
+            automatically become an operational command.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="architecture">
+    <div class="section-label">02 / SYSTEM DESIGN</div>
+    <h2>Intelligent DSS <span>Architecture</span></h2>
+
+    <p>
+        A maritime decision support platform normally consists of several
+        connected layers. Each layer has a specific responsibility, from
+        collecting information to presenting recommendations.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>01. Data Sources</h3>
+            <p>Collects information from sensors, vessel systems, databases, weather services, and operational records.</p>
+        </div>
+        <div class="info-card">
+            <h3>02. Data Integration</h3>
+            <p>Synchronizes, validates, cleans, and combines information from different sources.</p>
+        </div>
+        <div class="info-card">
+            <h3>03. Knowledge Base</h3>
+            <p>Stores domain knowledge, procedures, constraints, rules, and relevant historical information.</p>
+        </div>
+        <div class="info-card">
+            <h3>04. Intelligence Engine</h3>
+            <p>Uses analytics, machine learning, optimization, and reasoning to evaluate the current situation.</p>
+        </div>
+        <div class="info-card">
+            <h3>05. Recommendation Layer</h3>
+            <p>Generates possible alternatives, predicted outcomes, risk indicators, and supporting explanations.</p>
+        </div>
+        <div class="info-card">
+            <h3>06. User Interface</h3>
+            <p>Presents relevant information to authorized users and supports feedback and decision recording.</p>
+        </div>
+    </div>
+
+    <h3>How the system operates</h3>
+    <ol class="number-list">
+        <li>Operational data is collected from relevant sources.</li>
+        <li>The system checks data quality, timing, and consistency.</li>
+        <li>Analytical models interpret the available information.</li>
+        <li>Possible future states and operational risks are estimated.</li>
+        <li>Alternative decisions are compared against defined criteria.</li>
+        <li>Recommendations and their supporting evidence are presented.</li>
+        <li>An authorized person reviews the information and takes responsibility for the decision.</li>
+        <li>The outcome is recorded for monitoring and future improvement.</li>
+    </ol>
+
+    <div class="callout">
+        <p>
+            A sophisticated model cannot compensate for a poorly designed
+            data pipeline. If the system receives inaccurate, delayed,
+            or incomplete information, its recommendations may be unreliable.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="data">
+    <div class="section-label">03 / DATA FOUNDATION</div>
+    <h2>Data Collection & <span>Processing</span></h2>
+
+    <p>
+        Decision support quality depends heavily on the information
+        available to the system. Maritime data comes from different
+        equipment, databases, organizations, and external services.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">📡</div>
+            <h3>Navigation Sensors</h3>
+            <p>Radar, AIS, GNSS, gyrocompass, speed logs, and other navigation-related measurements.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">⚙️</div>
+            <h3>Machinery Data</h3>
+            <p>Engine temperature, pressure, vibration, fuel consumption, and equipment operating states.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🌦️</div>
+            <h3>Environmental Data</h3>
+            <p>Weather forecasts, wind, waves, visibility, ocean currents, and sea conditions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">📚</div>
+            <h3>Historical Records</h3>
+            <p>Maintenance history, incident reports, voyage records, and previous operational decisions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🏗️</div>
+            <h3>Port & Logistics Data</h3>
+            <p>Berth availability, cargo information, port schedules, and operational restrictions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🗂️</div>
+            <h3>Technical Documentation</h3>
+            <p>Equipment manuals, maintenance procedures, safety instructions, and engineering specifications.</p>
+        </div>
+    </div>
+
+    <h3>Data preprocessing operations</h3>
+    <ol class="number-list">
+        <li><strong>Validation:</strong> Identify missing, impossible, or inconsistent values.</li>
+        <li><strong>Cleaning:</strong> Handle duplicate records, noise, and data-quality problems.</li>
+        <li><strong>Normalization:</strong> Convert measurements into consistent units and representations.</li>
+        <li><strong>Time alignment:</strong> Account for differences in timestamps and sampling frequencies.</li>
+        <li><strong>Integration:</strong> Combine related records from multiple sources.</li>
+        <li><strong>Provenance:</strong> Record where information came from and when it was collected.</li>
+    </ol>
+
+    <div class="callout">
+        <p>
+            Data freshness matters. A correct measurement from several
+            minutes ago may be unsuitable for a decision that depends
+            on rapidly changing maritime conditions.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="analytics">
+    <div class="section-label">04 / OPERATIONAL INTELLIGENCE</div>
+    <h2>Real-Time Maritime <span>Data Analytics</span></h2>
+
+    <p>
+        Real-time analytics evaluates incoming information as it becomes
+        available. This allows decision support systems to identify
+        significant changes, detect unusual patterns, and update
+        operational assessments.
+    </p>
+
+    <h3>Types of analytics</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Descriptive Analytics</h3>
+            <p>Explains what has happened using reports, dashboards, and historical summaries.</p>
+        </div>
+        <div class="info-card">
+            <h3>Diagnostic Analytics</h3>
+            <p>Investigates why a particular event or operational change may have occurred.</p>
+        </div>
+        <div class="info-card">
+            <h3>Predictive Analytics</h3>
+            <p>Estimates what may happen next using statistical and machine learning models.</p>
+        </div>
+        <div class="info-card">
+            <h3>Prescriptive Analytics</h3>
+            <p>Compares possible actions and evaluates which options may best satisfy defined objectives and constraints.</p>
+        </div>
+    </div>
+
+    <h3>Example: Machinery monitoring</h3>
+    <p>
+        Imagine that a vessel's engine monitoring system reports a gradual
+        increase in vibration and temperature. A real-time analytics
+        component can compare these measurements with historical operating
+        patterns and identify whether the change deserves investigation.
+    </p>
+
+    <p>
+        A decision support system may then display the affected equipment,
+        relevant measurements, historical trends, and possible explanations.
+        It should not automatically declare a mechanical failure without
+        sufficient evidence.
+    </p>
+
+    <div class="callout">
+        <p>
+            Real-time does not mean instantaneous or perfectly current.
+            Processing delays, network latency, sensor update rates,
+            and system workload all influence how quickly information
+            reaches the decision-maker.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="predictive">
+    <div class="section-label">05 / FUTURE ESTIMATION</div>
+    <h2>Predictive Models & <span>Decision Forecasting</span></h2>
+
+    <p>
+        Predictive models estimate future conditions from historical
+        and current information. Their outputs can help maritime
+        professionals prepare for possible problems before they become
+        operational incidents.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">🔧</div>
+            <h3>Failure Prediction</h3>
+            <p>Estimates the likelihood of equipment degradation or failure using sensor patterns and maintenance records.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🌊</div>
+            <h3>Weather Forecasting</h3>
+            <p>Uses forecast information and analytical models to support preparation for changing environmental conditions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">⏱️</div>
+            <h3>Arrival-Time Estimation</h3>
+            <p>Estimates arrival times using voyage progress, operational constraints, and available environmental information.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">📉</div>
+            <h3>Demand Forecasting</h3>
+            <p>Estimates fuel, energy, or resource requirements under different operating scenarios.</p>
+        </div>
+    </div>
+
+    <h3>Common modeling approaches</h3>
+    <ul class="number-list">
+        <li><strong>Regression:</strong> Estimates continuous values such as expected fuel consumption.</li>
+        <li><strong>Classification:</strong> Assigns observations to categories such as normal, warning, or critical.</li>
+        <li><strong>Time-series models:</strong> Analyze measurements collected over time.</li>
+        <li><strong>Anomaly detection:</strong> Identifies observations that differ from expected behavior.</li>
+        <li><strong>Ensemble learning:</strong> Combines multiple models to improve predictive performance in suitable applications.</li>
+    </ul>
+
+    <h3>Prediction uncertainty</h3>
+    <p>
+        A prediction is not a guarantee. Models can be affected by
+        limited training data, changing operating conditions, measurement
+        errors, and unexpected events.
+    </p>
+
+    <p>
+        A useful decision support system should communicate uncertainty,
+        identify important assumptions, and avoid presenting estimates
+        as certain facts.
+    </p>
+</section>
+
+<section class="section" id="risk">
+    <div class="section-label">06 / OPERATIONAL RISK</div>
+    <h2>Risk Assessment & <span>Prioritization</span></h2>
+
+    <p>
+        Maritime professionals often face multiple alerts and competing
+        operational demands. Risk assessment helps organize these issues
+        according to their potential consequences and urgency.
+    </p>
+
+    <h3>Risk assessment dimensions</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Likelihood</h3>
+            <p>Estimates how likely a particular event or failure may be under the evaluated conditions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Severity</h3>
+            <p>Considers the potential consequences for people, vessels, assets, and the environment.</p>
+        </div>
+        <div class="info-card">
+            <h3>Exposure</h3>
+            <p>Considers how long or how frequently an operation is exposed to a particular hazard.</p>
+        </div>
+        <div class="info-card">
+            <h3>Uncertainty</h3>
+            <p>Evaluates the reliability and completeness of the available information.</p>
+        </div>
+    </div>
+
+    <h3>Illustrative risk matrix</h3>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Likelihood</th>
+                    <th>Minor Impact</th>
+                    <th>Moderate Impact</th>
+                    <th>Severe Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Low</td>
+                    <td>Low Risk</td>
+                    <td>Low / Medium</td>
+                    <td>Medium Risk</td>
+                </tr>
+                <tr>
+                    <td>Medium</td>
+                    <td>Low / Medium</td>
+                    <td>Medium Risk</td>
+                    <td>High Risk</td>
+                </tr>
+                <tr>
+                    <td>High</td>
+                    <td>Medium Risk</td>
+                    <td>High Risk</td>
+                    <td>Critical Risk</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p>
+        This matrix is an educational illustration. Real maritime risk
+        assessments require defined scales, context-specific assumptions,
+        and appropriate professional methods.
+    </p>
+
+    <div class="callout">
+        <p>
+            Risk scores should not hide uncertainty. Two situations with
+            the same numerical score may require different responses
+            because their consequences, evidence, and time constraints
+            are different.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="human">
+    <div class="section-label">07 / HUMAN-AI COLLABORATION</div>
+    <h2>Human & AI <span>Decision Collaboration</span></h2>
+
+    <p>
+        Intelligent decision support is most useful when it combines
+        computational capabilities with human experience, professional
+        judgment, and operational responsibility.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">🤖</div>
+            <h3>AI Responsibilities</h3>
+            <p>Analyze large datasets, identify patterns, estimate outcomes, and present relevant alternatives.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">👨‍✈️</div>
+            <h3>Human Responsibilities</h3>
+            <p>Interpret context, verify recommendations, apply professional judgment, and take authorized decisions.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🤝</div>
+            <h3>Shared Workflow</h3>
+            <p>Combines system analysis with human review, feedback, and operational oversight.</p>
+        </div>
+    </div>
+
+    <h3>Human-in-the-loop approach</h3>
+    <ol class="number-list">
+        <li>The system receives operational information.</li>
+        <li>AI analyzes the situation and identifies relevant patterns.</li>
+        <li>The system presents recommendations and supporting evidence.</li>
+        <li>An authorized person reviews the information.</li>
+        <li>The person accepts, rejects, or modifies the recommendation as appropriate.</li>
+        <li>The decision and its outcome are recorded for accountability and learning.</li>
+    </ol>
+
+    <div class="callout">
+        <p>
+            A critical human-factor risk is automation bias: a person
+            may accept a system recommendation simply because it was
+            generated by a computer. Good design must encourage
+            verification rather than blind trust.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="explainable">
+    <div class="section-label">08 / TRUST & TRANSPARENCY</div>
+    <h2>Explainable AI & <span>Decision Transparency</span></h2>
+
+    <p>
+        Some AI models produce complex outputs that are difficult to
+        interpret. In maritime environments, this creates an important
+        challenge: professionals need to understand the evidence behind
+        recommendations, especially when safety is involved.
+    </p>
+
+    <h3>What should an explanation communicate?</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Relevant Inputs</h3>
+            <p>Which measurements, events, or data sources influenced the output?</p>
+        </div>
+        <div class="info-card">
+            <h3>Key Factors</h3>
+            <p>Which variables contributed most to the model's assessment?</p>
+        </div>
+        <div class="info-card">
+            <h3>Uncertainty</h3>
+            <p>How reliable is the estimate, and what information is missing?</p>
+        </div>
+        <div class="info-card">
+            <h3>Model Limitations</h3>
+            <p>Under which conditions may the model perform poorly or become unreliable?</p>
+        </div>
+    </div>
+
+    <h3>Explainability techniques</h3>
+    <ul class="number-list">
+        <li><strong>Feature importance:</strong> Shows which input variables influence a model's output.</li>
+        <li><strong>SHAP:</strong> Estimates feature contributions to individual predictions using a game-theoretic framework.</li>
+        <li><strong>LIME:</strong> Builds local approximations to help explain individual model predictions.</li>
+        <li><strong>Rule-based explanations:</strong> Presents explicit conditions and reasoning steps.</li>
+        <li><strong>Confidence and uncertainty reporting:</strong> Communicates how much trust should be placed in a particular estimate.</li>
+    </ul>
+
+    <div class="callout">
+        <p>
+            An explanation is not automatically proof that a model is
+            correct. Explainability must be combined with testing,
+            validation, monitoring, and clear operational boundaries.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="bridge">
+    <div class="section-label">09 / NAVIGATION OPERATIONS</div>
+    <h2>Bridge-Based <span>Decision Support Systems</span></h2>
+
+    <p>
+        The ship bridge is a central environment for navigation and
+        operational coordination. Decision support tools can help
+        officers interpret information from multiple bridge systems
+        and maintain awareness of relevant conditions.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">🧭</div>
+            <h3>Navigation Awareness</h3>
+            <p>Organizes relevant position, heading, route, and navigational information.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🚢</div>
+            <h3>Traffic Awareness</h3>
+            <p>Helps officers review available target information and identify situations requiring attention.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🌦️</div>
+            <h3>Weather Awareness</h3>
+            <p>Combines weather information with voyage context to support operational preparation.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🔔</div>
+            <h3>Alert Management</h3>
+            <p>Organizes alerts by relevance and urgency to reduce unnecessary distraction.</p>
+        </div>
+    </div>
+
+    <p>
+        Bridge decision support must complement established navigational
+        equipment, watchkeeping practices, and applicable regulations.
+        It must not create confusion about which information is authoritative
+        or who is responsible for the vessel's safe navigation.
+    </p>
+</section>
+
+<section class="section" id="engineering">
+    <div class="section-label">10 / MARINE ENGINEERING</div>
+    <h2>Marine Engineering <span>Decision Support</span></h2>
+
+    <p>
+        Marine engineering decision support focuses on equipment
+        condition, machinery performance, maintenance planning,
+        and operational efficiency.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">🔩</div>
+            <h3>Maintenance Planning</h3>
+            <p>Helps prioritize inspections and maintenance activities using equipment condition and historical records.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🌡️</div>
+            <h3>Condition Monitoring</h3>
+            <p>Analyzes temperature, pressure, vibration, and other measurements to identify unusual behavior.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">⚙️</div>
+            <h3>Machinery Performance</h3>
+            <p>Compares operating conditions with expected performance and relevant engineering limits.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">📋</div>
+            <h3>Technical Troubleshooting</h3>
+            <p>Organizes fault information, technical documentation, and possible diagnostic paths for engineering teams.</p>
+        </div>
+    </div>
+
+    <h3>Example: Main engine condition assessment</h3>
+    <p>
+        A decision support platform may combine engine temperature,
+        lubrication pressure, vibration measurements, operating load,
+        and maintenance history. If a pattern differs significantly
+        from expected behavior, the system may flag the equipment
+        for engineering review.
+    </p>
+
+    <p>
+        The recommendation should include the measurements and trends
+        that triggered the alert. The responsible engineer must verify
+        the condition using appropriate procedures and instruments.
+    </p>
+</section>
+
+<section class="section" id="emergency">
+    <div class="section-label">11 / EMERGENCY MANAGEMENT</div>
+    <h2>Emergency Response & <span>Crisis Management</span></h2>
+
+    <p>
+        Emergencies require fast, coordinated, and reliable decisions.
+        Intelligent systems may help organize information, identify
+        relevant procedures, and support situational awareness.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Incident Detection</h3>
+            <p>Identifies unusual sensor patterns or events that may require investigation.</p>
+        </div>
+        <div class="info-card">
+            <h3>Situation Assessment</h3>
+            <p>Combines relevant operational information to help establish an overall picture of the event.</p>
+        </div>
+        <div class="info-card">
+            <h3>Procedure Retrieval</h3>
+            <p>Helps personnel locate relevant emergency instructions and technical documentation.</p>
+        </div>
+        <div class="info-card">
+            <h3>Resource Coordination</h3>
+            <p>Supports organizing communication, available resources, and incident information.</p>
+        </div>
+    </div>
+
+    <h3>Example emergency support workflow</h3>
+    <ol class="number-list">
+        <li>Receive an alarm or incident report.</li>
+        <li>Collect relevant equipment and environmental information.</li>
+        <li>Identify the affected systems and potential consequences.</li>
+        <li>Present applicable procedures and supporting information.</li>
+        <li>Support communication and coordination among authorized personnel.</li>
+        <li>Record the incident and subsequent actions.</li>
+    </ol>
+
+    <div class="callout">
+        <p>
+            Emergency response systems must not delay established
+            emergency procedures. AI-generated recommendations are
+            supplementary and must not replace approved instructions,
+            professional judgment, or the chain of command.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="energy">
+    <div class="section-label">12 / ENERGY & EFFICIENCY</div>
+    <h2>Fuel & Energy <span>Decision Support</span></h2>
+
+    <p>
+        Energy-related decision support evaluates operational information
+        to help maritime professionals understand fuel consumption,
+        machinery efficiency, and energy demand.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Fuel Performance</h3>
+            <p>Analyzes consumption patterns in relation to operating conditions and vessel performance.</p>
+        </div>
+        <div class="info-card">
+            <h3>Energy Forecasting</h3>
+            <p>Estimates energy requirements using operational data and relevant environmental conditions.</p>
+        </div>
+        <div class="info-card">
+            <h3>Efficiency Comparison</h3>
+            <p>Compares historical performance and alternative operating scenarios.</p>
+        </div>
+        <div class="info-card">
+            <h3>Emissions Monitoring</h3>
+            <p>Supports tracking and analysis of relevant emissions indicators and reporting data.</p>
+        </div>
+    </div>
+
+    <p>
+        A useful system must consider the trade-offs between energy
+        efficiency, voyage requirements, equipment limits, safety,
+        weather, and contractual obligations. The lowest predicted
+        fuel consumption is not necessarily the best operational choice.
+    </p>
+</section>
+
+<section class="section" id="monitoring">
+    <div class="section-label">13 / SYSTEM ASSURANCE</div>
+    <h2>Performance Monitoring & <span>Model Evaluation</span></h2>
+
+    <p>
+        Decision support systems require continuous evaluation.
+        A model that performs well during development may become
+        less reliable when equipment, operating conditions, or
+        data patterns change.
+    </p>
+
+    <h3>Important evaluation dimensions</h3>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Accuracy</h3>
+            <p>Measures how often predictions or classifications are correct within the evaluation dataset.</p>
+        </div>
+        <div class="info-card">
+            <h3>Precision & Recall</h3>
+            <p>Evaluate the quality of positive predictions and the ability to identify relevant cases.</p>
+        </div>
+        <div class="info-card">
+            <h3>Calibration</h3>
+            <p>Checks whether predicted probabilities correspond to observed event frequencies.</p>
+        </div>
+        <div class="info-card">
+            <h3>Latency</h3>
+            <p>Measures how long the system takes to process information and produce results.</p>
+        </div>
+        <div class="info-card">
+            <h3>Availability</h3>
+            <p>Measures whether the system is accessible and operational when required.</p>
+        </div>
+        <div class="info-card">
+            <h3>Human Feedback</h3>
+            <p>Collects feedback about recommendation usefulness, errors, and operational suitability.</p>
+        </div>
+    </div>
+
+    <h3>Model drift</h3>
+    <p>
+        Model drift occurs when the statistical characteristics of
+        incoming data or the relationship between inputs and outcomes
+        changes over time. For example, a model trained on one vessel
+        type or operating environment may not perform equally well
+        on another.
+    </p>
+
+    <p>
+        Monitoring should include data quality, model behavior,
+        operational outcomes, and documented procedures for review,
+        retraining, or rollback when necessary.
+    </p>
+</section>
+
+<section class="section" id="challenges">
+    <div class="section-label">14 / LIMITATIONS & RELIABILITY</div>
+    <h2>Challenges of <span>Intelligent Maritime DSS</span></h2>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <h3>Data Quality</h3>
+            <p>Missing, inconsistent, delayed, or incorrect information can weaken recommendations.</p>
+        </div>
+        <div class="info-card">
+            <h3>Model Uncertainty</h3>
+            <p>Predictions may be unreliable when conditions differ from the model's training data.</p>
+        </div>
+        <div class="info-card">
+            <h3>Cybersecurity</h3>
+            <p>Unauthorized access, data manipulation, and system compromise can affect decision integrity.</p>
+        </div>
+        <div class="info-card">
+            <h3>Explainability</h3>
+            <p>Complex algorithms may produce recommendations that are difficult to interpret.</p>
+        </div>
+        <div class="info-card">
+            <h3>Alert Fatigue</h3>
+            <p>Too many low-value notifications can distract users and reduce attention to important warnings.</p>
+        </div>
+        <div class="info-card">
+            <h3>Integration</h3>
+            <p>Different equipment standards, interfaces, and data formats can complicate system integration.</p>
+        </div>
+        <div class="info-card">
+            <h3>Human Factors</h3>
+            <p>Overreliance, workload, training, and unclear responsibilities can undermine effective use.</p>
+        </div>
+        <div class="info-card">
+            <h3>Legal & Regulatory Issues</h3>
+            <p>Data governance, responsibility, compliance, and operational approval require careful consideration.</p>
+        </div>
+    </div>
+
+    <div class="callout">
+        <p>
+            A decision support platform should be evaluated by the
+            quality of the decisions it helps people make—not merely
+            by the complexity of its AI model or the number of features
+            displayed on its dashboard.
+        </p>
+    </div>
+</section>
+
+<section class="section" id="future">
+    <div class="section-label">15 / NEXT-GENERATION SYSTEMS</div>
+    <h2>The Future of <span>Intelligent Maritime DSS</span></h2>
+
+    <p>
+        Future maritime decision support systems may become more
+        integrated, context-aware, and capable of interpreting
+        complex operational information.
+    </p>
+
+    <div class="info-grid">
+        <div class="info-card">
+            <div class="icon">🧠</div>
+            <h3>Advanced AI Assistants</h3>
+            <p>Natural language interfaces may help professionals search technical information and summarize operational data.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🧬</div>
+            <h3>Digital Twins</h3>
+            <p>Virtual vessel models can support scenario analysis, engineering assessment, and predictive maintenance.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🌐</div>
+            <h3>Connected Maritime Data</h3>
+            <p>Improved integration may connect vessel, port, fleet, and environmental information.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">⚡</div>
+            <h3>Edge AI</h3>
+            <p>Onboard processing can support low-latency analysis when cloud connectivity is limited.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">🔐</div>
+            <h3>Trustworthy AI</h3>
+            <p>Greater attention to robustness, fairness, transparency, security, and accountability.</p>
+        </div>
+        <div class="info-card">
+            <div class="icon">📈</div>
+            <h3>Adaptive Decision Support</h3>
+            <p>Systems may improve their assessments through monitored feedback and carefully governed model updates.</p>
+        </div>
+    </div>
+
+    <p>
+        The future of maritime decision support will depend on
+        trustworthy data, engineering validation, human-centered
+        design, cybersecurity, and clear operational responsibility.
+    </p>
+</section>
+
+<section class="section" id="simulation">
+    <div class="section-label">16 / INTERACTIVE ENGINEERING LAB</div>
+    <h2>Maritime Decision <span>Support Simulator</span></h2>
+
+    <p>
+        Experiment with a simplified maritime decision scenario.
+        Change the operational conditions and see how the educational
+        decision model prioritizes risk and evaluates the available
+        information.
+    </p>
+
+    <div class="lab">
+        <h3>OPERATIONAL DECISION ANALYZER</h3>
+        <p class="lab-intro">
+            Configure the hypothetical situation and run the decision analysis.
+        </p>
+
+        <div class="controls">
+            <div class="control">
+                <label>Operational Risk <span id="riskValue">45%</span></label>
+                <input type="range" id="riskInput" min="0" max="100" value="45">
+            </div>
+
+            <div class="control">
+                <label>Data Reliability <span id="dataValue">85%</span></label>
+                <input type="range" id="dataInput" min="0" max="100" value="85">
+            </div>
+
+            <div class="control">
+                <label>Time Pressure <span id="timeValue">40%</span></label>
+                <input type="range" id="timeInput" min="0" max="100" value="40">
+            </div>
+
+            <div class="control">
+                <label>Operational Scenario</label>
+                <select id="scenario">
+                    <option value="navigation">Navigation Assessment</option>
+                    <option value="machinery">Machinery Condition</option>
+                    <option value="weather">Severe Weather Preparation</option>
+                    <option value="energy">Energy Efficiency</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="lab-button" onclick="runDecision()">ANALYZE SCENARIO</button>
+
+        <div class="lab-result" id="decisionResult">
+            <h4>DECISION SUPPORT REPORT</h4>
+
+            <div class="result-metrics">
+                <div class="metric">
+                    <small>Priority Level</small>
+                    <strong id="priorityScore">--</strong>
+                </div>
+                <div class="metric">
+                    <small>Data Confidence</small>
+                    <strong id="dataConfidence">--</strong>
+                </div>
+                <div class="metric">
+                    <small>Review Urgency</small>
+                    <strong id="reviewUrgency">--</strong>
+                </div>
+            </div>
+
+            <p id="decisionExplanation"></p>
+            <p id="decisionSuggestion"></p>
+
+            <p class="disclaimer">
+                This is a synthetic educational model, not a validated
+                maritime risk model. It does not access live vessel data,
+                replace professional judgment, or provide operational
+                navigation, maintenance, or emergency instructions.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="quiz">
+    <div class="section-label">17 / KNOWLEDGE ASSESSMENT</div>
+    <h2>Test Your <span>Understanding</span></h2>
+
+    <p>
+        Answer all 20 questions to evaluate your understanding of
+        intelligent decision support systems and their maritime
+        engineering applications.
+    </p>
+
+    <div class="quiz-container">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+            <strong style="color:var(--purple-light);font-size:13px;">INTELLIGENT DSS QUIZ</strong>
+            <span id="quizCount" style="color:var(--blue);font-size:12px;">0 / 20 Answered</span>
+        </div>
+
+        <div class="quiz-progress"><div id="progressBar"></div></div>
+
+        <div id="quizQuestions"></div>
+
+        <button class="quiz-button" id="submitQuiz" onclick="submitQuiz()">SUBMIT ANSWERS</button>
+        <button class="quiz-button" id="retryQuiz" onclick="buildQuiz()" style="display:none;">RETRY QUIZ</button>
+
+        <div class="quiz-result" id="quizResult">
+            <strong id="quizScore">0 / 20</strong>
+            <p id="quizMessage"></p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="references">
+    <div class="section-label">18 / FURTHER READING</div>
+    <h2>Technical <span>References & Resources</span></h2>
+
+    <p>
+        These resources provide foundations for AI risk management,
+        maritime operations, decision support, and technical research.
+    </p>
+
+    <div class="references">
+        <a class="reference" href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+            <strong>International Maritime Organization</strong>
+            <span>Maritime regulations, safety, and operational guidance</span>
+        </a>
+
+        <a class="reference" href="https://www.iala-aism.org/" target="_blank" rel="noopener noreferrer">
+            <strong>IALA</strong>
+            <span>Marine navigation and maritime safety resources</span>
+        </a>
+
+        <a class="reference" href="https://www.dnv.com/maritime/" target="_blank" rel="noopener noreferrer">
+            <strong>DNV Maritime</strong>
+            <span>Maritime engineering, safety, and digitalization</span>
+        </a>
+
+        <a class="reference" href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener noreferrer">
+            <strong>NIST AI Risk Management Framework</strong>
+            <span>AI risk, trustworthiness, and governance</span>
+        </a>
+
+        <a class="reference" href="https://scikit-learn.org/stable/" target="_blank" rel="noopener noreferrer">
+            <strong>Scikit-learn</strong>
+            <span>Machine learning algorithms and model evaluation</span>
+        </a>
+
+        <a class="reference" href="https://pytorch.org/docs/stable/index.html" target="_blank" rel="noopener noreferrer">
+            <strong>PyTorch Documentation</strong>
+            <span>Machine learning and deep learning implementation</span>
+        </a>
+
+        <a class="reference" href="https://shap.readthedocs.io/en/latest/" target="_blank" rel="noopener noreferrer">
+            <strong>SHAP Documentation</strong>
+            <span>Model explanation and feature contribution analysis</span>
+        </a>
+
+        <a class="reference" href="https://arxiv.org/abs/1602.04938" target="_blank" rel="noopener noreferrer">
+            <strong>SHAP Research Paper</strong>
+            <span>A Unified Approach to Interpreting Model Predictions</span>
+        </a>
+
+        <a class="reference" href="https://arxiv.org/abs/1602.04938" target="_blank" rel="noopener noreferrer">
+            <strong>Explainable AI Research</strong>
+            <span>Research foundation for interpreting model predictions</span>
+        </a>
+
+        <a class="reference" href="https://www.sciencedirect.com/topics/engineering/decision-support-system" target="_blank" rel="noopener noreferrer">
+            <strong>ScienceDirect</strong>
+            <span>Decision support system research and engineering concepts</span>
+        </a>
+    </div>
+
+    <div class="callout">
+        <p>
+            For academic work, consult the original research papers,
+            official standards, and current regulatory publications.
+            General resource pages are starting points rather than
+            substitutes for complete technical documents.
+        </p>
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    <strong>MARITERRA</strong>
+    <p>DESIGNED & DEVELOPED BY ENGINEER ZEINAB MOHAMED</p>
+    <p style="margin-top:8px;">ADVANCING MARITIME KNOWLEDGE THROUGH TECHNOLOGY</p>
+</footer>
+
+<script>
+/* --------------------------------
+   DECISION SUPPORT SIMULATOR
+-------------------------------- */
+
+const rangeControls = [
+    ["riskInput","riskValue"],
+    ["dataInput","dataValue"],
+    ["timeInput","timeValue"]
+];
+
+rangeControls.forEach(([inputId,valueId]) => {
+    const input = document.getElementById(inputId);
+    const output = document.getElementById(valueId);
+
+    input.addEventListener("input", () => {
+        output.textContent = input.value + "%";
+    });
+});
+
+function runDecision() {
+    const risk = Number(document.getElementById("riskInput").value);
+    const reliability = Number(document.getElementById("dataInput").value);
+    const timePressure = Number(document.getElementById("timeInput").value);
+    const scenario = document.getElementById("scenario").value;
+
+    const priority = Math.round(
+        risk * 0.55 +
+        timePressure * 0.25 +
+        (100 - reliability) * 0.20
+    );
+
+    const confidence = Math.round(reliability);
+
+    let priorityLabel = "";
+    let urgencyLabel = "";
+    let explanation = "";
+    let suggestion = "";
+
+    if (priority >= 70) {
+        priorityLabel = "HIGH";
+        urgencyLabel = "URGENT";
+    } else if (priority >= 40) {
+        priorityLabel = "MEDIUM";
+        urgencyLabel = "REVIEW";
+    } else {
+        priorityLabel = "LOW";
+        urgencyLabel = "NORMAL";
+    }
+
+    const scenarioNames = {
+        navigation: "Navigation Assessment",
+        machinery: "Machinery Condition",
+        weather: "Severe Weather Preparation",
+        energy: "Energy Efficiency"
+    };
+
+    explanation =
+        `Scenario: ${scenarioNames[scenario]}. The illustrative priority score is ${priority}/100. `;
+
+    if (reliability < 50) {
+        explanation +=
+            "Data reliability is low, so the system should communicate substantial uncertainty and request verification of the available information.";
+    } else if (priority >= 70) {
+        explanation +=
+            "The combined risk and time-pressure inputs indicate that this scenario deserves high-priority professional review.";
+    } else if (priority >= 40) {
+        explanation +=
+            "The inputs indicate a situation requiring review, but the urgency is lower than the high-priority category.";
+    } else {
+        explanation +=
+            "The selected inputs indicate a relatively low priority within this simplified model.";
+    }
+
+    if (scenario === "navigation") {
+        suggestion = "Review relevant navigational information, source reliability, and applicable procedures with the responsible officer.";
+    } else if (scenario === "machinery") {
+        suggestion = "Review equipment measurements, operating limits, and maintenance history with qualified engineering personnel.";
+    } else if (scenario === "weather") {
+        suggestion = "Verify current forecasts and approved operational limits before making weather-related decisions.";
+    } else {
+        suggestion = "Compare energy performance with operational requirements, safety constraints, and relevant environmental conditions.";
+    }
+
+    if (reliability < 50) {
+        suggestion += " Verify the input data before relying on any recommendation.";
+    }
+
+    document.getElementById("priorityScore").textContent =
+        priorityLabel + " " + priority;
+
+    document.getElementById("dataConfidence").textContent =
+        confidence + "%";
+
+    document.getElementById("reviewUrgency").textContent =
+        urgencyLabel;
+
+    document.getElementById("decisionExplanation").textContent =
+        explanation;
+
+    document.getElementById("decisionSuggestion").textContent =
+        suggestion;
+
+    document.getElementById("decisionResult").style.display = "block";
+}
+
+/* --------------------------------
+   KNOWLEDGE QUIZ - 20 QUESTIONS
+-------------------------------- */
+
+const questions = [
+{
+q:"What is the main purpose of a Decision Support System?",
+o:["To replace every maritime professional","To help people analyze information and make better-informed decisions","To control all ship engines automatically","To eliminate operational procedures"],
+a:1,
+e:"A DSS helps people analyze information, compare alternatives, and make informed decisions."
+},
+{
+q:"What makes an intelligent DSS different from a traditional DSS?",
+o:["It never uses data","It can incorporate AI, predictive analytics, and intelligent reasoning","It only displays static reports","It works without software"],
+a:1,
+e:"An intelligent DSS can use machine learning, prediction, optimization, and knowledge-based methods."
+},
+{
+q:"Which layer collects information from sensors and databases?",
+o:["Data sources layer","Recommendation layer","User interface only","Control actuator layer"],
+a:0,
+e:"The data source layer provides information from sensors, databases, and external services."
+},
+{
+q:"Why is data preprocessing important?",
+o:["It removes the need for validation","It improves consistency and prepares information for analysis","It guarantees every prediction is correct","It replaces all AI models"],
+a:1,
+e:"Preprocessing handles missing values, inconsistent units, noise, and other data-quality problems."
+},
+{
+q:"What is descriptive analytics mainly concerned with?",
+o:["What has happened","What will happen with certainty","Which action is always best","How to build a ship"],
+a:0,
+e:"Descriptive analytics summarizes historical and current information to explain what has happened."
+},
+{
+q:"Which type of analytics estimates future outcomes?",
+o:["Descriptive analytics","Predictive analytics","Manual reporting","Data deletion"],
+a:1,
+e:"Predictive analytics uses historical and current information to estimate future conditions."
+},
+{
+q:"What does prescriptive analytics help evaluate?",
+o:["Only past events","Possible actions and alternatives under defined objectives and constraints","Only sensor hardware","Only user passwords"],
+a:1,
+e:"Prescriptive analytics evaluates possible actions and their expected outcomes."
+},
+{
+q:"Which model type is suitable for estimating a continuous value such as fuel consumption?",
+o:["Regression","Classification only","Image segmentation","Text formatting"],
+a:0,
+e:"Regression models estimate continuous numerical outputs."
+},
+{
+q:"What is anomaly detection used for?",
+o:["Identifying unusual patterns or observations","Increasing vessel speed automatically","Replacing technical manuals","Generating random measurements"],
+a:0,
+e:"Anomaly detection identifies observations that differ from expected behavior."
+},
+{
+q:"What is an important limitation of predictive models?",
+o:["They are always certain","Their performance can change when operating conditions differ from training data","They never need monitoring","They do not use information"],
+a:1,
+e:"Changing data patterns and unfamiliar conditions can reduce model reliability."
+},
+{
+q:"Which factors are commonly considered in risk assessment?",
+o:["Likelihood and severity","Screen size and font","Internet speed only","Ship color and logo"],
+a:0,
+e:"Risk assessment commonly considers event likelihood and potential consequences, along with exposure and uncertainty where relevant."
+},
+{
+q:"Why should uncertainty be communicated?",
+o:["To make reports longer","To prevent estimates from being mistaken for guaranteed outcomes","To hide model limitations","To avoid data validation"],
+a:1,
+e:"Communicating uncertainty helps users understand how much confidence to place in a prediction."
+},
+{
+q:"What is automation bias?",
+o:["Excessive reliance on automated recommendations","A type of marine engine","A data normalization method","A ship construction technique"],
+a:0,
+e:"Automation bias occurs when people place excessive trust in automated outputs without sufficient verification."
+},
+{
+q:"What does Explainable AI aim to improve?",
+o:["Understanding how models produce outputs","The physical size of a vessel","Satellite signal strength only","Fuel tank capacity"],
+a:0,
+e:"Explainable AI helps people understand the factors and processes influencing model predictions."
+},
+{
+q:"What does SHAP help explain?",
+o:["Feature contributions to model predictions","Ship hull thickness","Satellite orbital speed","Port construction costs"],
+a:0,
+e:"SHAP estimates how features contribute to individual model predictions."
+},
+{
+q:"How can a bridge-based DSS help officers?",
+o:["By organizing relevant navigation and operational information","By replacing all navigational rules","By guaranteeing safe navigation","By removing the need for watchkeeping"],
+a:0,
+e:"Bridge decision support can help organize navigation, traffic, weather, and alert information."
+},
+{
+q:"How can DSS support marine engineers?",
+o:["By monitoring equipment data and supporting maintenance assessment","By replacing all inspections","By disabling engine alarms","By guaranteeing equipment never fails"],
+a:0,
+e:"Engineering DSS can analyze condition data, maintenance history, and equipment performance."
+},
+{
+q:"What is model drift?",
+o:["A change in data patterns or relationships that can reduce model performance","A vessel turning maneuver","A type of fuel system","A method of cleaning a ship"],
+a:0,
+e:"Model drift occurs when incoming data or relationships change over time, potentially weakening model performance."
+},
+{
+q:"Why is cybersecurity important for maritime DSS?",
+o:["Because manipulated or unauthorized data can affect decisions","Because it increases wave height","Because it replaces navigation sensors","Because it eliminates all equipment failures"],
+a:0,
+e:"Cybersecurity protects system availability, information integrity, and authorized access."
+},
+{
+q:"What is the appropriate role of AI recommendations in safety-critical maritime operations?",
+o:["They should automatically override every human decision","They should support authorized personnel within validated operational boundaries","They should replace regulations","They should be accepted without review"],
+a:1,
+e:"AI recommendations should support professional judgment and applicable procedures, not bypass responsibility or safety requirements."
+}
+];
+
+function buildQuiz() {
+    const container = document.getElementById("quizQuestions");
+    container.innerHTML = "";
+
+    document.getElementById("quizResult").style.display = "none";
+    document.getElementById("submitQuiz").style.display = "inline-block";
+    document.getElementById("retryQuiz").style.display = "none";
+
+    questions.forEach((question,index) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "question";
+
+        const title = document.createElement("h3");
+        title.textContent = `${index + 1}. ${question.q}`;
+        wrapper.appendChild(title);
+
+        question.o.forEach((option,optionIndex) => {
+            const label = document.createElement("label");
+            label.className = "option";
+
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = `question-${index}`;
+            radio.value = optionIndex;
+
+            radio.addEventListener("change",updateProgress);
+
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(option));
+            wrapper.appendChild(label);
+        });
+
+        const explanation = document.createElement("div");
+        explanation.className = "explanation";
+        explanation.id = `explanation-${index}`;
+        wrapper.appendChild(explanation);
+
+        container.appendChild(wrapper);
+    });
+
+    updateProgress();
+}
+
+function updateProgress() {
+    let answered = 0;
+
+    questions.forEach((_,index) => {
+        if (document.querySelector(`input[name="question-${index}"]:checked`)) {
+            answered++;
+        }
+    });
+
+    document.getElementById("quizCount").textContent =
+        `${answered} / 20 Answered`;
+
+    document.getElementById("progressBar").style.width =
+        (answered / 20 * 100) + "%";
+}
+
+function submitQuiz() {
+    let score = 0;
+    let unanswered = 0;
+
+    questions.forEach((question,index) => {
+        const selected = document.querySelector(
+            `input[name="question-${index}"]:checked`
+        );
+
+        const labels = document.querySelectorAll(
+            `#quizQuestions .question:nth-child(${index + 1}) .option`
+        );
+
+        const explanation = document.getElementById(`explanation-${index}`);
+
+        if (!selected) unanswered++;
+
+        labels.forEach((label,optionIndex) => {
+            label.querySelector("input").disabled = true;
+
+            if (optionIndex === question.a) {
+                label.classList.add("correct");
+            }
+
+            if (
+                selected &&
+                Number(selected.value) === optionIndex &&
+                optionIndex !== question.a
+            ) {
+                label.classList.add("wrong");
+            }
+        });
+
+        if (selected && Number(selected.value) === question.a) {
+            score++;
+        }
+
+        explanation.textContent = "Explanation: " + question.e;
+        explanation.style.display = "block";
+    });
+
+    document.getElementById("quizScore").textContent = `${score} / 20`;
+
+    if (unanswered > 0) {
+        document.getElementById("quizMessage").textContent =
+            `${unanswered} question(s) were left unanswered. Unanswered questions count as incorrect.`;
+    } else if (score >= 16) {
+        document.getElementById("quizMessage").textContent =
+            "Excellent work! You demonstrate a strong understanding of intelligent maritime decision support.";
+    } else if (score >= 12) {
+        document.getElementById("quizMessage").textContent =
+            "Good effort! Review the explanations to strengthen your technical knowledge.";
+    } else {
+        document.getElementById("quizMessage").textContent =
+            "Keep learning. Review the topic sections and try the assessment again.";
+    }
+
+    document.getElementById("quizResult").style.display = "block";
+    document.getElementById("submitQuiz").style.display = "none";
+    document.getElementById("retryQuiz").style.display = "inline-block";
+
+    document.getElementById("quizResult").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+buildQuiz();
+</script>
+
+</body>
+</html>

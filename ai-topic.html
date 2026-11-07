@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070816">
+    <title>MARITERRA | AI Topic Redirect</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            background: #070816;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .loader {
+            width: min(100%, 520px);
+            padding: 45px 30px;
+            text-align: center;
+            border: 1px solid rgba(147, 51, 234, .35);
+            border-radius: 24px;
+            background: rgba(18, 15, 43, .85);
+            box-shadow: 0 0 70px rgba(147, 51, 234, .15);
+        }
+
+        .symbol {
+            font-size: 38px;
+            color: #c4b5fd;
+            animation: rotate 3s linear infinite;
+        }
+
+        h1 {
+            margin: 18px 0 12px;
+            letter-spacing: 5px;
+            color: #c4b5fd;
+        }
+
+        p {
+            color: #b9b6d1;
+            line-height: 1.7;
+        }
+
+        .bar {
+            height: 4px;
+            margin-top: 28px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.1);
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #9333ea, #38bdf8);
+            animation: loading 1.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes loading {
+            to { width: 100%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="loader">
+        <div class="symbol">✦</div>
+        <h1>MARITERRA</h1>
+        <p id="message">Preparing your learning experience...</p>
+        <div class="bar"><span></span></div>
+    </main>
+
+    <script>
+        const topics = {
+            "introduction-to-ai": "ai-introduction-maritime.html",
+            "ai-introduction": "ai-introduction-maritime.html",
+
+            "machine-learning": "ai-machine-learning-fundamentals.html",
+            "machine-learning-fundamentals": "ai-machine-learning-fundamentals.html",
+
+            "deep-learning": "ai-deep-learning-neural-networks.html",
+            "deep-learning-neural-networks": "ai-deep-learning-neural-networks.html",
+
+            "predictive-analytics": "ai-predictive-analytics.html",
+            "predictive-maintenance": "ai-predictive-maintenance.html",
+
+            "computer-vision": "ai-computer-vision.html",
+            "maritime-navigation": "ai-maritime-navigation.html",
+
+            "route-optimization": "ai-route-optimization.html",
+            "collision-avoidance": "ai-collision-avoidance.html",
+
+            "autonomous-ships": "ai-autonomous-ships.html",
+            "decision-support": "ai-decision-support.html",
+
+            "marine-engineering": "ai-marine-engineering.html",
+            "smart-ports": "ai-smart-ports.html",
+
+            "maritime-safety": "ai-maritime-safety.html",
+
+            "cybersecurity-ethics": "ai-cybersecurity-ethics.html",
+            "cybersecurity-ethics-future-challenges": "ai-cybersecurity-ethics.html"
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const topic = params.get("topic");
+
+        const target = topics[topic];
+
+        if (target) {
+            document.getElementById("message").textContent =
+                "Topic identified. Redirecting...";
+            window.location.replace(target);
+        } else {
+            document.getElementById("message").textContent =
+                "The requested topic could not be identified. Please return to the Artificial Intelligence section.";
+        }
+    </script>
+
+</body>
+</html>

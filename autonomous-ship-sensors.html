@@ -1,0 +1,1645 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how autonomous ships use maritime sensors and environmental perception systems to detect, identify, locate, and track objects at sea.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Sensors and Environmental Perception</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101226;
+            --surface-light: #171a35;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #aaaac2;
+            --border: rgba(196, 181, 253, 0.16);
+            --success: #4ade80;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 12% 8%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 88% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--blue);
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            font-size: 13px;
+            color: var(--muted);
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--blue);
+        }
+
+        .hero {
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            padding: 85px 10%;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 430px;
+            height: 430px;
+            right: -100px;
+            top: -120px;
+            border-radius: 50%;
+            background: rgba(147, 51, 234, 0.12);
+            filter: blur(85px);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 17px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 53px);
+            margin-bottom: 22px;
+            max-width: 850px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 27px;
+        }
+
+        .meta-tag {
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 7px 15px;
+            color: var(--purple-light);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        main {
+            width: min(1100px, 88%);
+            margin: auto;
+        }
+
+        section {
+            padding: 65px 0;
+            border-bottom: 1px solid var(--border);
+            scroll-margin-top: 85px;
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: clamp(22px, 3vw, 30px);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--purple-light);
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .intro-box {
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.13), rgba(56, 189, 248, 0.05));
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 13px;
+            padding: 23px;
+            margin-top: 25px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+            margin-top: 25px;
+        }
+
+        .sensor-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 23px;
+            transition: 0.3s ease;
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(147, 51, 234, 0.65);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+        }
+
+        .sensor-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 9px;
+        }
+
+        .sensor-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bullet-list {
+            padding-left: 22px;
+            margin: 15px 0;
+            color: var(--muted);
+        }
+
+        .bullet-list li {
+            padding: 5px 0;
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 28px 0;
+        }
+
+        .process-step {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            padding: 18px 12px;
+            position: relative;
+        }
+
+        .process-step span {
+            display: block;
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .process-step strong {
+            font-size: 13px;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+            background: var(--surface);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: var(--surface-light);
+            font-weight: 700;
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .note {
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: rgba(56, 189, 248, 0.06);
+            border-radius: 12px;
+            padding: 19px;
+            margin-top: 20px;
+        }
+
+        .note.warning {
+            border-color: rgba(251, 191, 36, 0.28);
+            background: rgba(251, 191, 36, 0.05);
+        }
+
+        .note p:last-child {
+            margin-bottom: 0;
+        }
+
+        .scenario {
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.11), rgba(16, 18, 38, 0.9));
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .scenario ol {
+            padding-left: 22px;
+            color: var(--muted);
+        }
+
+        .scenario li {
+            padding: 6px 0;
+        }
+
+        .takeaways {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .takeaway {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(16, 18, 38, 0.75);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 17px;
+        }
+
+        .question h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .question-number {
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .option input {
+            margin-top: 5px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.65);
+            background: rgba(74, 222, 128, 0.08);
+            color: var(--success);
+        }
+
+        .option.incorrect {
+            border-color: rgba(251, 113, 133, 0.65);
+            background: rgba(251, 113, 133, 0.08);
+            color: var(--danger);
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 14px;
+            margin-top: 12px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.06);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(100deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface-light);
+        }
+
+        #result h3 {
+            font-size: 21px;
+        }
+
+        #result p {
+            margin-bottom: 5px;
+        }
+
+        .references {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .references li {
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .references li:last-child {
+            border-bottom: none;
+        }
+
+        .references a {
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .takeaways {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 65px 7%;
+                min-height: 390px;
+            }
+
+            main {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .topbar {
+                padding: 15px 5%;
+            }
+
+            .brand {
+                font-size: 15px;
+            }
+
+            .back-link {
+                font-size: 11px;
+            }
+
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="brand">MARITERRA</a>
+    <a href="autonomous-ships.html" class="back-link">← Back to Autonomous Ships</a>
+</header>
+
+<div class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Autonomous Ships / Topic 04</div>
+        <h1>Sensors and <span class="gradient">Environmental Perception</span></h1>
+        <p>
+            Discover how autonomous ships observe the maritime environment,
+            collect sensor data, detect surrounding objects, and transform
+            raw measurements into reliable situational awareness.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-tag">MARITIME SENSING</span>
+            <span class="meta-tag">SENSOR FUSION</span>
+            <span class="meta-tag">ENVIRONMENTAL PERCEPTION</span>
+        </div>
+    </div>
+</div>
+
+<main>
+
+    <section id="introduction">
+        <div class="section-label">01 / Introduction</div>
+        <h2>What Is Environmental Perception?</h2>
+
+        <p>
+            Environmental perception is the process through which an autonomous
+            ship gathers and interprets information about its surroundings.
+            It allows the vessel to understand what is happening around it
+            rather than simply knowing its own position.
+        </p>
+
+        <p>
+            An autonomous ship must detect nearby vessels, floating objects,
+            navigation buoys, coastlines, port structures, weather conditions,
+            and other potential hazards. It must also estimate where these
+            objects are, how they are moving, and whether they may create a risk.
+        </p>
+
+        <p>
+            Unlike a human lookout, an electronic perception system does not
+            rely on a single sense. It combines several technologies, including
+            radar, cameras, LiDAR, GNSS, inertial sensors, and supporting
+            information systems.
+        </p>
+
+        <div class="intro-box">
+            <h3>The Main Objective</h3>
+            <p>
+                The objective is to create a consistent and continuously updated
+                representation of the vessel's surrounding environment. This
+                representation supports navigation, collision-risk assessment,
+                route planning, and safe autonomous operation.
+            </p>
+        </div>
+    </section>
+
+    <section id="perception-process">
+        <div class="section-label">02 / Core Process</div>
+        <h2>How Does Environmental Perception Work?</h2>
+
+        <p>
+            Environmental perception is not simply the act of collecting sensor
+            measurements. The system must process those measurements, recognize
+            meaningful objects, estimate their positions, and maintain updated
+            information about them.
+        </p>
+
+        <div class="process">
+            <div class="process-step">
+                <span>STEP 01</span>
+                <strong>Data Acquisition</strong>
+            </div>
+            <div class="process-step">
+                <span>STEP 02</span>
+                <strong>Data Processing</strong>
+            </div>
+            <div class="process-step">
+                <span>STEP 03</span>
+                <strong>Object Detection</strong>
+            </div>
+            <div class="process-step">
+                <span>STEP 04</span>
+                <strong>Tracking and Awareness</strong>
+            </div>
+        </div>
+
+        <h3>1. Data Acquisition</h3>
+        <p>
+            Sensors collect measurements from the physical environment.
+            A radar may return information about the distance and direction
+            of a target, while a camera captures visual information.
+        </p>
+
+        <h3>2. Data Processing</h3>
+        <p>
+            Raw measurements may contain noise, interference, missing values,
+            or irrelevant information. Processing techniques help filter,
+            organize, synchronize, and prepare the data for further analysis.
+        </p>
+
+        <h3>3. Object Detection and Recognition</h3>
+        <p>
+            Detection identifies the presence of an object. Recognition or
+            classification attempts to determine what kind of object it is,
+            such as a vessel, buoy, floating debris, or navigation structure.
+        </p>
+
+        <h3>4. Tracking and Situational Awareness</h3>
+        <p>
+            Tracking estimates how an object moves over time. The system can
+            combine successive observations to estimate its position, speed,
+            and direction of movement.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Important distinction:</strong> Detection answers
+                "Is something there?", classification asks "What might it be?",
+                and tracking asks "Where is it moving over time?"
+                These are related but different engineering tasks.
+            </p>
+        </div>
+    </section>
+
+    <section id="sensors">
+        <div class="section-label">03 / Sensor Technologies</div>
+        <h2>Main Sensors Used in Autonomous Ships</h2>
+
+        <p>
+            Different sensors observe different aspects of the maritime
+            environment. Their strengths and weaknesses are complementary,
+            which is why autonomous vessels generally require multiple
+            sensing technologies.
+        </p>
+
+        <div class="grid">
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 01</div>
+                <h3>Marine Radar</h3>
+                <p>
+                    Marine radar transmits electromagnetic waves and analyzes
+                    the signals reflected by objects. It can provide information
+                    about target range, bearing, and movement.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Detecting surrounding vessels.</li>
+                    <li>Monitoring navigation hazards.</li>
+                    <li>Supporting collision-risk assessment.</li>
+                    <li>Operating in darkness and many low-visibility conditions.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Sea clutter, rain clutter,
+                    interference, blind sectors, and difficulties identifying
+                    the exact type of some targets.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 02</div>
+                <h3>LiDAR</h3>
+                <p>
+                    Light Detection and Ranging (LiDAR) uses laser pulses to
+                    measure distances. It produces spatial measurements that
+                    can be organized into a three-dimensional point cloud.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Measuring distances to nearby objects.</li>
+                    <li>Mapping port structures and coastlines.</li>
+                    <li>Detecting obstacles in close-range navigation.</li>
+                    <li>Supporting three-dimensional environmental mapping.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Performance can be reduced by
+                    fog, heavy rain, spray, water droplets, and other atmospheric
+                    or environmental conditions.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 03</div>
+                <h3>Visual Cameras</h3>
+                <p>
+                    Cameras capture images and video of the surrounding
+                    environment. Computer vision algorithms can analyze these
+                    images to identify objects and visual patterns.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Recognizing vessels and navigation buoys.</li>
+                    <li>Identifying visual characteristics of objects.</li>
+                    <li>Detecting floating debris and obstacles.</li>
+                    <li>Reading visual navigation information where applicable.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Lighting conditions, darkness,
+                    glare, fog, rain, image quality, and camera field of view.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 04</div>
+                <h3>Thermal and Infrared Cameras</h3>
+                <p>
+                    Thermal cameras detect infrared radiation and represent
+                    differences in thermal energy as an image. They can help
+                    identify objects based on their thermal contrast.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Supporting night-time observation.</li>
+                    <li>Detecting some objects with low visible-light contrast.</li>
+                    <li>Providing an additional observation channel.</li>
+                    <li>Supporting search and monitoring operations.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Thermal contrast varies with
+                    weather, object temperature, distance, and environmental
+                    conditions. Thermal imaging does not replace radar or
+                    visible-light cameras.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 05</div>
+                <h3>GNSS Receivers</h3>
+                <p>
+                    Global Navigation Satellite Systems (GNSS) provide
+                    position and timing information using signals from
+                    satellite constellations such as GPS, Galileo, GLONASS,
+                    and BeiDou.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Estimating the ship's geographic position.</li>
+                    <li>Supporting route navigation.</li>
+                    <li>Providing timing information for system synchronization.</li>
+                    <li>Supporting the position estimation of other sensors.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Signal blockage, multipath,
+                    interference, jamming, and spoofing can affect GNSS
+                    reliability.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 06</div>
+                <h3>Inertial Measurement Units (IMU)</h3>
+                <p>
+                    An IMU typically contains accelerometers and gyroscopes.
+                    It measures linear acceleration and angular velocity,
+                    helping estimate how the vessel moves and rotates.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Measuring roll, pitch, and yaw motion.</li>
+                    <li>Supporting vessel attitude estimation.</li>
+                    <li>Providing motion information during GNSS interruptions.</li>
+                    <li>Helping compensate for sensor movement.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Measurement errors accumulate
+                    over time, and inertial estimates can drift without
+                    correction from other information sources.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 07</div>
+                <h3>Automatic Identification System (AIS)</h3>
+                <p>
+                    AIS is a cooperative maritime communication system.
+                    Participating vessels transmit information such as
+                    identity, position, course, and speed through radio
+                    communication.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Receiving identification information from equipped vessels.</li>
+                    <li>Supporting vessel traffic monitoring.</li>
+                    <li>Comparing reported vessel movement with other observations.</li>
+                    <li>Supporting maritime situational awareness.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> AIS depends on transmitted
+                    information. Some targets may not transmit AIS, and
+                    received information may be missing, delayed, incorrect,
+                    or inconsistent.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 08</div>
+                <h3>Echo Sounders and Sonar</h3>
+                <p>
+                    Echo sounders use acoustic signals to measure water depth
+                    beneath the vessel. Sonar systems can use sound waves to
+                    detect or investigate underwater objects and features.
+                </p>
+                <p><strong>Main applications:</strong></p>
+                <ul class="bullet-list">
+                    <li>Measuring water depth.</li>
+                    <li>Supporting under-keel clearance awareness.</li>
+                    <li>Detecting underwater obstacles with suitable sonar systems.</li>
+                    <li>Supporting seabed and underwater mapping.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Acoustic performance depends
+                    on water conditions, equipment configuration, noise,
+                    seabed characteristics, and the sonar system's operating range.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 09</div>
+                <h3>Weather and Environmental Sensors</h3>
+                <p>
+                    Environmental instruments measure conditions that may
+                    affect ship operation and sensor performance.
+                </p>
+                <p><strong>Examples include:</strong></p>
+                <ul class="bullet-list">
+                    <li>Wind speed and direction sensors.</li>
+                    <li>Air temperature and pressure sensors.</li>
+                    <li>Humidity sensors.</li>
+                    <li>Wave and sea-state monitoring instruments.</li>
+                </ul>
+                <p>
+                    <strong>Limitations:</strong> Measurements are local and
+                    may not fully represent conditions across the entire
+                    surrounding area.
+                </p>
+            </article>
+
+            <article class="sensor-card">
+                <div class="sensor-number">SENSOR 10</div>
+                <h3>Machinery and Vessel-State Sensors</h3>
+                <p>
+                    These sensors monitor the ship itself rather than
+                    external obstacles. They provide information about
+                    the vessel's operational condition.
+                </p>
+                <p><strong>Examples include:</strong></p>
+                <ul class="bullet-list">
+                    <li>Engine temperature and pressure sensors.</li>
+                    <li>Propulsion and steering feedback sensors.</li>
+                    <li>Fuel and power monitoring instruments.</li>
+                    <li>Vibration and equipment condition sensors.</li>
+                </ul>
+                <p>
+                    <strong>Importance:</strong> Environmental awareness alone
+                    is insufficient. An autonomous vessel must also understand
+                    whether its own systems are operating correctly.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section id="sensor-comparison">
+        <div class="section-label">04 / Technical Comparison</div>
+        <h2>Comparing Maritime Sensors</h2>
+
+        <p>
+            No sensor is universally superior. The appropriate technology
+            depends on the task, operating environment, required accuracy,
+            detection range, cost, and integration requirements.
+        </p>
+
+        <div class="comparison-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sensor</th>
+                        <th>Primary Information</th>
+                        <th>Key Strength</th>
+                        <th>Important Limitation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Radar</td>
+                        <td>Range, bearing, target motion</td>
+                        <td>Long-range detection and low-light operation</td>
+                        <td>Clutter and target identification</td>
+                    </tr>
+                    <tr>
+                        <td>LiDAR</td>
+                        <td>Distance and 3D spatial structure</td>
+                        <td>Detailed spatial measurements</td>
+                        <td>Weather and visibility sensitivity</td>
+                    </tr>
+                    <tr>
+                        <td>Visual Camera</td>
+                        <td>Images and visual features</td>
+                        <td>Rich object information</td>
+                        <td>Lighting and visibility</td>
+                    </tr>
+                    <tr>
+                        <td>Thermal Camera</td>
+                        <td>Infrared thermal contrast</td>
+                        <td>Additional night-time observation</td>
+                        <td>Variable thermal contrast</td>
+                    </tr>
+                    <tr>
+                        <td>GNSS</td>
+                        <td>Geographic position and time</td>
+                        <td>Global positioning reference</td>
+                        <td>Signal interference and blockage</td>
+                    </tr>
+                    <tr>
+                        <td>IMU</td>
+                        <td>Acceleration and angular velocity</td>
+                        <td>High-rate motion measurements</td>
+                        <td>Accumulating drift</td>
+                    </tr>
+                    <tr>
+                        <td>AIS</td>
+                        <td>Transmitted vessel identity and movement data</td>
+                        <td>Cooperative vessel information</td>
+                        <td>Missing or unreliable transmissions</td>
+                    </tr>
+                    <tr>
+                        <td>Echo Sounder</td>
+                        <td>Water depth</td>
+                        <td>Under-keel awareness</td>
+                        <td>Limited coverage and acoustic conditions</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note warning">
+            <p>
+                <strong>Engineering principle:</strong> A sensor's presence
+                does not guarantee reliable information. Engineers must
+                consider calibration, installation location, field of view,
+                measurement uncertainty, data quality, and failure detection.
+            </p>
+        </div>
+    </section>
+
+    <section id="sensor-fusion">
+        <div class="section-label">05 / Data Integration</div>
+        <h2>Multi-Sensor Fusion</h2>
+
+        <p>
+            Sensor fusion is the process of combining information from
+            different sensors to produce a more complete and reliable
+            estimate of the environment or vessel state.
+        </p>
+
+        <p>
+            Each sensor provides only part of the overall picture. Radar
+            may detect a target's range and bearing, a camera may provide
+            visual characteristics, and AIS may provide transmitted
+            identification and movement information.
+        </p>
+
+        <p>
+            A fusion system attempts to associate relevant observations,
+            account for their uncertainty, and estimate which observations
+            refer to the same real-world object.
+        </p>
+
+        <h3>Why Is Sensor Fusion Necessary?</h3>
+        <ul class="bullet-list">
+            <li>Different sensors have different strengths and weaknesses.</li>
+            <li>One sensor may detect an object that another sensor cannot clearly observe.</li>
+            <li>Combining independent measurements can improve estimation.</li>
+            <li>Cross-checking can help identify inconsistent or faulty data.</li>
+            <li>Multiple observations can support more stable object tracking.</li>
+        </ul>
+
+        <h3>Example of Sensor Fusion</h3>
+        <p>
+            Imagine an autonomous vessel approaching a busy port. Its radar
+            detects a target ahead. A camera captures an image of the target,
+            while AIS receives information from a nearby transmitting vessel.
+            The system can compare these observations to determine whether
+            they may represent the same object.
+        </p>
+
+        <div class="process">
+            <div class="process-step">
+                <span>INPUT A</span>
+                <strong>Radar Measurements</strong>
+            </div>
+            <div class="process-step">
+                <span>INPUT B</span>
+                <strong>Camera Images</strong>
+            </div>
+            <div class="process-step">
+                <span>INPUT C</span>
+                <strong>AIS Information</strong>
+            </div>
+            <div class="process-step">
+                <span>OUTPUT</span>
+                <strong>Fused Target Estimate</strong>
+            </div>
+        </div>
+
+        <h3>Important Fusion Techniques</h3>
+
+        <p>
+            <strong>1. Data-Level Fusion:</strong> Combines measurements
+            at an early stage. It may preserve detailed information but
+            requires careful calibration, synchronization, and compatible
+            measurement representations.
+        </p>
+
+        <p>
+            <strong>2. Feature-Level Fusion:</strong> Combines extracted
+            features from different sensors. For example, image features
+            can be combined with spatial measurements from LiDAR.
+        </p>
+
+        <p>
+            <strong>3. Decision-Level Fusion:</strong> Combines the outputs
+            of separate detection or classification systems. It can be useful
+            when sensors or algorithms operate independently.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Important:</strong> Sensor fusion does not automatically
+                make a system correct. Poor calibration, incorrect object
+                association, timing errors, and unreliable input data can
+                produce misleading fused results.
+            </p>
+        </div>
+    </section>
+
+    <section id="ai-perception">
+        <div class="section-label">06 / Intelligent Perception</div>
+        <h2>Artificial Intelligence in Environmental Perception</h2>
+
+        <p>
+            Artificial Intelligence can help autonomous ships interpret
+            complex sensor data. Machine learning and computer vision
+            algorithms can analyze images, point clouds, radar information,
+            and other measurements.
+        </p>
+
+        <h3>Object Detection</h3>
+        <p>
+            Object detection algorithms identify potential objects within
+            sensor data and estimate their locations. A camera-based model,
+            for example, may identify a vessel or buoy in an image.
+        </p>
+
+        <h3>Object Classification</h3>
+        <p>
+            Classification assigns an object to a category based on its
+            observed characteristics. Possible categories include vessels,
+            buoys, land structures, floating debris, and other obstacles.
+        </p>
+
+        <h3>Object Tracking</h3>
+        <p>
+            Tracking algorithms associate observations across multiple
+            time steps. They estimate how an object moves and help maintain
+            a continuous representation even when measurements temporarily
+            become uncertain.
+        </p>
+
+        <h3>Semantic Segmentation</h3>
+        <p>
+            Semantic segmentation classifies individual pixels in an image
+            into categories. It may distinguish water, sky, vessels,
+            coastlines, and port structures.
+        </p>
+
+        <h3>Anomaly Detection</h3>
+        <p>
+            Anomaly detection identifies patterns that differ from expected
+            behavior. For example, the system may flag unusual movement,
+            inconsistent sensor readings, or unexpected changes in a
+            monitored area.
+        </p>
+
+        <div class="note warning">
+            <p>
+                <strong>Critical limitation:</strong> AI predictions are
+                estimates, not guaranteed facts. Models can fail when they
+                encounter unfamiliar objects, unusual weather, poor-quality
+                data, or conditions that differ from their training data.
+                Safety-critical systems need validation, monitoring,
+                uncertainty handling, and appropriate fallback procedures.
+            </p>
+        </div>
+    </section>
+
+    <section id="challenges">
+        <div class="section-label">07 / Engineering Challenges</div>
+        <h2>Challenges in Maritime Environmental Perception</h2>
+
+        <h3>1. Harsh Weather Conditions</h3>
+        <p>
+            Fog, heavy rain, sea spray, waves, and strong sunlight can
+            reduce the quality of sensor measurements. Different sensor
+            types respond differently to these conditions.
+        </p>
+
+        <h3>2. Sea Clutter and Reflections</h3>
+        <p>
+            Waves and reflections may produce unwanted radar returns or
+            confusing visual patterns. These effects can make it harder
+            to distinguish real targets from environmental interference.
+        </p>
+
+        <h3>3. Sensor Calibration</h3>
+        <p>
+            Sensors must be accurately calibrated and aligned. Incorrect
+            calibration can cause measurements from different sensors
+            to appear inconsistent or refer to different locations.
+        </p>
+
+        <h3>4. Time Synchronization</h3>
+        <p>
+            Sensors may operate at different update rates. Their data
+            must be time-aligned so the system does not combine observations
+            that describe different moments as if they were simultaneous.
+        </p>
+
+        <h3>5. Sensor Failure and Degradation</h3>
+        <p>
+            Sensors may become damaged, blocked, disconnected, or gradually
+            less accurate. Autonomous systems need ways to monitor sensor
+            health and recognize when measurements should not be trusted.
+        </p>
+
+        <h3>6. GNSS Interference</h3>
+        <p>
+            Jamming, spoofing, and signal blockage can affect satellite-based
+            positioning. A resilient navigation solution should use additional
+            information sources and detect suspicious inconsistencies.
+        </p>
+
+        <h3>7. Processing and Communication Requirements</h3>
+        <p>
+            High-resolution cameras and LiDAR can generate large data volumes.
+            Processing must be fast enough for the operational task, while
+            communication links must support the information that needs
+            to be shared with remote operators or other systems.
+        </p>
+
+        <h3>8. Uncertainty and False Detection</h3>
+        <p>
+            A system may mistake waves, birds, floating debris, or reflections
+            for relevant targets. It may also fail to detect a real obstacle.
+            Perception systems therefore need to estimate confidence and
+            handle uncertain observations carefully.
+        </p>
+    </section>
+
+    <section id="practical-example">
+        <div class="section-label">08 / Practical Application</div>
+        <h2>Practical Scenario: Detecting a Vessel Near a Port</h2>
+
+        <p>
+            Consider an autonomous ship approaching a port where other
+            vessels, buoys, small craft, and port structures are present.
+            Its perception system must maintain an updated picture of the
+            surrounding area.
+        </p>
+
+        <div class="scenario">
+            <h3>How the System Responds</h3>
+            <ol>
+                <li>
+                    Marine radar detects a possible vessel and estimates
+                    its range and bearing.
+                </li>
+                <li>
+                    A camera captures visual information that may help
+                    classify the detected object.
+                </li>
+                <li>
+                    AIS information is checked for a matching transmitting
+                    vessel, if available.
+                </li>
+                <li>
+                    GNSS and IMU measurements help estimate the autonomous
+                    ship's own position and movement.
+                </li>
+                <li>
+                    Sensor fusion attempts to associate the observations
+                    and estimate the target's position and movement.
+                </li>
+                <li>
+                    The tracking system updates the target's estimated
+                    motion as new measurements arrive.
+                </li>
+                <li>
+                    The perception output is passed to navigation and
+                    decision-making systems for further assessment.
+                </li>
+            </ol>
+        </div>
+
+        <p>
+            The perception system does not independently decide every
+            navigation action. It supplies information to other systems,
+            which assess the situation and determine suitable responses
+            under the vessel's safety and operational requirements.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>What if AIS is unavailable?</strong> The system
+                should not automatically conclude that no vessel exists.
+                Radar, cameras, and other suitable sensors must continue
+                supporting target detection and tracking.
+            </p>
+        </div>
+    </section>
+
+    <section id="future">
+        <div class="section-label">09 / Future Developments</div>
+        <h2>The Future of Maritime Perception</h2>
+
+        <h3>Advanced Multi-Modal Perception</h3>
+        <p>
+            Research continues to combine radar, LiDAR, visible-light
+            cameras, thermal cameras, GNSS, and inertial measurements
+            to improve environmental awareness.
+        </p>
+
+        <h3>Edge AI Processing</h3>
+        <p>
+            Edge computing allows some perception algorithms to operate
+            directly on onboard computers. This can reduce dependence
+            on continuous communication with remote systems.
+        </p>
+
+        <h3>Cooperative Perception</h3>
+        <p>
+            Ships may exchange selected information with other vessels,
+            shore infrastructure, or maritime traffic services. Such
+            cooperation can extend awareness beyond an individual
+            vessel's direct sensor coverage.
+        </p>
+
+        <h3>Resilient and Self-Monitoring Sensors</h3>
+        <p>
+            Future systems are expected to improve their ability to detect
+            sensor degradation, identify inconsistent measurements, and
+            adapt when individual sensing channels become unavailable.
+        </p>
+
+        <h3>Improved Maritime Datasets</h3>
+        <p>
+            More diverse and carefully validated datasets can help develop
+            and evaluate perception algorithms under different weather,
+            lighting, traffic, and geographic conditions.
+        </p>
+    </section>
+
+    <section id="takeaways">
+        <div class="section-label">10 / Key Takeaways</div>
+        <h2>What You Should Remember</h2>
+
+        <div class="takeaways">
+            <div class="takeaway">Environmental perception helps autonomous ships understand their surroundings.</div>
+            <div class="takeaway">Radar, LiDAR, cameras, GNSS, and IMUs provide different types of information.</div>
+            <div class="takeaway">AIS is a cooperative information system, not a universal object-detection sensor.</div>
+            <div class="takeaway">Detection, classification, and tracking are separate technical tasks.</div>
+            <div class="takeaway">Sensor fusion combines complementary measurements to improve the overall estimate.</div>
+            <div class="takeaway">AI can support perception, but its outputs must be validated and monitored.</div>
+            <div class="takeaway">Calibration, synchronization, and sensor health are essential engineering requirements.</div>
+            <div class="takeaway">Perception provides information to navigation and decision-making systems; it is not the entire autonomous control system.</div>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <div class="section-label">Knowledge Assessment</div>
+        <h2>Test Your Understanding</h2>
+        <p class="quiz-intro">
+            Answer the following 10 questions based on the complete topic.
+            Submit your answers to receive your score, corrections, and
+            explanations.
+        </p>
+
+        <form id="quizForm">
+
+            <div class="question" data-answer="b" data-explanation="Environmental perception gathers and interprets information about the vessel's surroundings, supporting situational awareness.">
+                <div class="question-number">QUESTION 01</div>
+                <h3>What is the primary purpose of environmental perception in an autonomous ship?</h3>
+                <label class="option"><input type="radio" name="q1" value="a"> To control engine temperature only</label>
+                <label class="option"><input type="radio" name="q1" value="b"> To understand and interpret the surrounding environment</label>
+                <label class="option"><input type="radio" name="q1" value="c"> To replace all communication systems</label>
+                <label class="option"><input type="radio" name="q1" value="d"> To calculate fuel prices</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="Marine radar uses electromagnetic waves and their reflections to estimate target range and bearing, among other information.">
+                <div class="question-number">QUESTION 02</div>
+                <h3>Which sensor uses reflected electromagnetic waves to detect surrounding targets?</h3>
+                <label class="option"><input type="radio" name="q2" value="a"> GNSS</label>
+                <label class="option"><input type="radio" name="q2" value="b"> Echo sounder</label>
+                <label class="option"><input type="radio" name="q2" value="c"> Marine radar</label>
+                <label class="option"><input type="radio" name="q2" value="d"> Temperature sensor</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="a" data-explanation="LiDAR measures distances using laser pulses and can generate three-dimensional point-cloud data.">
+                <div class="question-number">QUESTION 03</div>
+                <h3>What is a major capability of LiDAR?</h3>
+                <label class="option"><input type="radio" name="q3" value="a"> Producing detailed spatial measurements and 3D point clouds</label>
+                <label class="option"><input type="radio" name="q3" value="b"> Transmitting vessel identity through AIS messages</label>
+                <label class="option"><input type="radio" name="q3" value="c"> Measuring engine fuel consumption only</label>
+                <label class="option"><input type="radio" name="q3" value="d"> Measuring water salinity only</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="d" data-explanation="AIS is a cooperative communication system. It provides transmitted information from participating vessels, but it does not guarantee detection of every object.">
+                <div class="question-number">QUESTION 04</div>
+                <h3>Which statement about AIS is correct?</h3>
+                <label class="option"><input type="radio" name="q4" value="a"> It detects every floating object automatically</label>
+                <label class="option"><input type="radio" name="q4" value="b"> It replaces marine radar in all conditions</label>
+                <label class="option"><input type="radio" name="q4" value="c"> It measures underwater depth</label>
+                <label class="option"><input type="radio" name="q4" value="d"> It receives transmitted information from participating vessels</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="b" data-explanation="An IMU uses accelerometers and gyroscopes to measure acceleration and angular velocity, supporting motion and attitude estimation.">
+                <div class="question-number">QUESTION 05</div>
+                <h3>What does an IMU typically measure?</h3>
+                <label class="option"><input type="radio" name="q5" value="a"> Vessel identity and destination</label>
+                <label class="option"><input type="radio" name="q5" value="b"> Linear acceleration and angular velocity</label>
+                <label class="option"><input type="radio" name="q5" value="c"> Water depth only</label>
+                <label class="option"><input type="radio" name="q5" value="d"> Visual object categories only</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="Detection identifies the presence of an object, classification estimates its category, and tracking estimates its movement over time.">
+                <div class="question-number">QUESTION 06</div>
+                <h3>Which task estimates an object's movement across successive observations?</h3>
+                <label class="option"><input type="radio" name="q6" value="a"> Calibration</label>
+                <label class="option"><input type="radio" name="q6" value="b"> Segmentation</label>
+                <label class="option"><input type="radio" name="q6" value="c"> Object tracking</label>
+                <label class="option"><input type="radio" name="q6" value="d"> Data acquisition</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="a" data-explanation="Sensor fusion combines information from different sensing sources to create a more complete or reliable estimate.">
+                <div class="question-number">QUESTION 07</div>
+                <h3>What is the main purpose of multi-sensor fusion?</h3>
+                <label class="option"><input type="radio" name="q7" value="a"> To combine complementary sensor information</label>
+                <label class="option"><input type="radio" name="q7" value="b"> To remove the need for all sensors</label>
+                <label class="option"><input type="radio" name="q7" value="c"> To stop the ship's propulsion system</label>
+                <label class="option"><input type="radio" name="q7" value="d"> To transmit AIS messages only</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="d" data-explanation="Time synchronization helps ensure that measurements from different sensors refer to compatible moments in time.">
+                <div class="question-number">QUESTION 08</div>
+                <h3>Why is time synchronization important in sensor fusion?</h3>
+                <label class="option"><input type="radio" name="q8" value="a"> It increases the ship's physical speed</label>
+                <label class="option"><input type="radio" name="q8" value="b"> It eliminates all environmental interference</label>
+                <label class="option"><input type="radio" name="q8" value="c"> It replaces sensor calibration</label>
+                <label class="option"><input type="radio" name="q8" value="d"> It aligns measurements from different sensors in time</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="b" data-explanation="Fog, rain, sea spray, lighting changes, and sea clutter can reduce the quality of sensor measurements.">
+                <div class="question-number">QUESTION 09</div>
+                <h3>Which of the following can negatively affect maritime perception?</h3>
+                <label class="option"><input type="radio" name="q9" value="a"> Accurate calibration</label>
+                <label class="option"><input type="radio" name="q9" value="b"> Fog, sea clutter, and poor visibility</label>
+                <label class="option"><input type="radio" name="q9" value="c"> Proper sensor synchronization</label>
+                <label class="option"><input type="radio" name="q9" value="d"> Reliable data validation</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="AI supports detection, classification, tracking, and other perception tasks, but its outputs can be uncertain and require validation and monitoring.">
+                <div class="question-number">QUESTION 10</div>
+                <h3>Which statement best describes the role of AI in maritime perception?</h3>
+                <label class="option"><input type="radio" name="q10" value="a"> AI guarantees that every object will be detected correctly</label>
+                <label class="option"><input type="radio" name="q10" value="b"> AI makes sensor calibration unnecessary</label>
+                <label class="option"><input type="radio" name="q10" value="c"> AI helps interpret sensor data, but its outputs require validation</label>
+                <label class="option"><input type="radio" name="q10" value="d"> AI replaces every navigation sensor</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="quiz-actions">
+                <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                <button type="button" class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+            </div>
+
+        </form>
+
+        <div id="result" aria-live="polite">
+            <h3 id="scoreTitle"></h3>
+            <p id="scoreText"></p>
+            <p id="scoreFeedback"></p>
+        </div>
+    </section>
+
+    <section id="references">
+        <div class="section-label">Technical Resources</div>
+        <h2>References and Further Reading</h2>
+
+        <p>
+            The following academic and technical resources provide further
+            information about maritime sensing, perception algorithms,
+            sensor fusion, and autonomous vessel research.
+        </p>
+
+        <ul class="references">
+            <li>
+                <strong>1. Sensors and AI Techniques for Situational Awareness in Autonomous Ships: A Review</strong><br>
+                IEEE Transactions on Intelligent Transportation Systems, 2022.
+                <br>
+                <a href="https://doi.org/10.1109/TITS.2020.3023957" target="_blank" rel="noopener noreferrer">Read the research paper →</a>
+            </li>
+
+            <li>
+                <strong>2. A Survey on Maritime Perception Datasets and Technologies for Autonomous Surface Vessels</strong><br>
+                Journal of Intelligent and Robotic Systems.
+                <br>
+                <a href="https://doi.org/10.1007/s11370-025-00689-9" target="_blank" rel="noopener noreferrer">Read the research paper →</a>
+            </li>
+
+            <li>
+                <strong>3. Seeing Above the Waves: A Modular Sensing Framework for Data Acquisition at Sea</strong><br>
+                Maritime sensing framework research, 2026.
+                <br>
+                <a href="https://arxiv.org/abs/2608.10997" target="_blank" rel="noopener noreferrer">Read the research paper →</a>
+            </li>
+
+            <li>
+                <strong>4. Resilient Sensing and Multi-Sensor Fusion for Autonomous Maritime Systems</strong><br>
+                Autonomous Sea Navigation research, 2026.
+                <br>
+                <a href="https://doi.org/10.3233/NICSP260008" target="_blank" rel="noopener noreferrer">Read the research paper →</a>
+            </li>
+
+            <li>
+                <strong>5. International Maritime Organization (IMO)</strong><br>
+                Maritime safety and navigation information.
+                <br>
+                <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">Visit the IMO website →</a>
+            </li>
+        </ul>
+
+        <div class="note">
+            <p>
+                <strong>Study recommendation:</strong> Compare radar, LiDAR,
+                cameras, GNSS, and AIS in terms of the information each
+                provides, its limitations, and the role it plays in a
+                multi-sensor perception system.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    DESIGNED &amp; DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+    <p style="margin-top: 9px; font-size: 10px; letter-spacing: 1px;">
+        MARITERRA — MARITIME KNOWLEDGE &amp; TECHNOLOGY
+    </p>
+</footer>
+
+<script>
+    function submitQuiz() {
+        const questions = document.querySelectorAll(".question");
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question, index) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector(
+                `input[name="q${index + 1}"]:checked`
+            );
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach(option => {
+                option.classList.remove("correct", "incorrect");
+            });
+
+            const correctOption = question.querySelector(
+                `input[value="${correctAnswer}"]`
+            ).closest(".option");
+
+            correctOption.classList.add("correct");
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === correctAnswer) {
+                score++;
+            } else {
+                selected.closest(".option").classList.add("incorrect");
+            }
+
+            explanation.textContent =
+                "Correct answer: " +
+                correctOption.textContent.trim() +
+                ". " +
+                question.dataset.explanation;
+
+            explanation.classList.add("show");
+        });
+
+        const percentage = Math.round((score / questions.length) * 100);
+        const result = document.getElementById("result");
+
+        document.getElementById("scoreTitle").textContent =
+            `Your Score: ${score} / ${questions.length}`;
+
+        document.getElementById("scoreText").textContent =
+            `Final Result: ${percentage}%`;
+
+        let feedback = "";
+
+        if (percentage >= 90) {
+            feedback = "Excellent! You have a strong understanding of this topic.";
+        } else if (percentage >= 70) {
+            feedback = "Good work! Review the explanations to strengthen your knowledge.";
+        } else if (percentage >= 50) {
+            feedback = "Fair attempt. Revisit the technical sections and try again.";
+        } else {
+            feedback = "You need more revision. Study the topic again before retaking the quiz.";
+        }
+
+        if (unanswered > 0) {
+            feedback += ` You left ${unanswered} question(s) unanswered; unanswered questions count as incorrect.`;
+        }
+
+        document.getElementById("scoreFeedback").textContent = feedback;
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetQuiz() {
+        document.getElementById("quizForm").reset();
+
+        document.querySelectorAll(".option").forEach(option => {
+            option.classList.remove("correct", "incorrect");
+        });
+
+        document.querySelectorAll(".explanation").forEach(explanation => {
+            explanation.textContent = "";
+            explanation.classList.remove("show");
+        });
+
+        document.getElementById("result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

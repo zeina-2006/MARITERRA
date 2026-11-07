@@ -1,0 +1,2586 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore Autonomous Underwater Vehicle (AUV) engineering, vehicle architecture, navigation, propulsion, sensors, mission planning, and underwater operations.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | AUV Systems</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .background-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-one {
+            top: 5%;
+            left: -180px;
+            background: var(--purple);
+        }
+
+        .glow-two {
+            right: -180px;
+            top: 55%;
+            background: var(--blue);
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 7%;
+            background: rgba(7, 8, 22, 0.93);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .brand span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            padding: 9px 16px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--purple-light) !important;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 570px;
+            padding: 110px 8% 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, rgba(7,8,22,0.98), rgba(7,8,22,0.76)),
+                radial-gradient(ellipse at 75% 45%, rgba(147,51,234,0.2), transparent 55%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            right: -150px;
+            top: 20px;
+            border: 1px solid rgba(192,132,252,0.12);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 45px rgba(192,132,252,0.025),
+                0 0 0 90px rgba(192,132,252,0.02);
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            max-width: 850px;
+            font-size: clamp(2.8rem, 7vw, 5.6rem);
+            line-height: 1.08;
+            margin-bottom: 25px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            max-width: 760px;
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            margin-bottom: 32px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meta-item {
+            padding: 9px 16px;
+            background: rgba(147,51,234,0.1);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: #d8b4fe;
+            font-size: 0.8rem;
+        }
+
+        /* GENERAL SECTIONS */
+
+        .section {
+            padding: 85px 8%;
+        }
+
+        .section-header {
+            max-width: 800px;
+            margin-bottom: 45px;
+        }
+
+        .section-label {
+            color: var(--purple-light);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.2;
+            margin-bottom: 17px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 22px;
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            border-color: rgba(192,132,252,0.45);
+            transform: translateY(-3px);
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            margin-bottom: 13px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card strong {
+            color: var(--text);
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 22px;
+            color: var(--text-muted);
+            margin: 13px 0;
+        }
+
+        .content-card li {
+            margin-bottom: 9px;
+            padding-left: 4px;
+        }
+
+        .content-card li strong {
+            color: #e9d5ff;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background: rgba(147,51,234,0.15);
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-weight: 800;
+            margin-bottom: 17px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.72rem;
+            padding: 5px 10px;
+            margin: 5px 5px 0 0;
+            border-radius: 20px;
+            color: #d8b4fe;
+            background: rgba(147,51,234,0.12);
+            border: 1px solid var(--border);
+        }
+
+        .highlight {
+            border-left: 3px solid var(--purple);
+            background: rgba(147,51,234,0.07);
+            padding: 20px 24px;
+            border-radius: 0 10px 10px 0;
+            margin: 22px 0;
+            color: var(--text-muted);
+        }
+
+        .highlight strong {
+            color: var(--purple-light);
+        }
+
+        /* COMPARISON */
+
+        .comparison-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+        }
+
+        .comparison-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 17px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            color: var(--purple-light);
+            background: rgba(147,51,234,0.1);
+        }
+
+        .comparison-table td {
+            color: var(--text-muted);
+        }
+
+        .comparison-table td:first-child {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PROCESS */
+
+        .process-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .process-step {
+            padding: 24px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(13,16,38,0.75);
+        }
+
+        .process-step span {
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .process-step h3 {
+            margin: 9px 0;
+            font-size: 1.1rem;
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.91rem;
+        }
+
+        /* CASE STUDY */
+
+        .case-study {
+            border: 1px solid rgba(147,51,234,0.4);
+            background:
+                linear-gradient(135deg, rgba(147,51,234,0.12), rgba(12,16,36,0.95) 65%);
+            border-radius: 16px;
+            padding: 35px;
+        }
+
+        .case-study h3 {
+            font-size: 1.7rem;
+            color: var(--purple-light);
+            margin-bottom: 15px;
+        }
+
+        .case-study p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            background: linear-gradient(180deg, rgba(147,51,234,0.055), transparent);
+        }
+
+        .quiz-container {
+            max-width: 950px;
+        }
+
+        .quiz-intro {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .quiz-question {
+            padding: 25px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-question h3 {
+            font-size: 1.03rem;
+            margin-bottom: 17px;
+            line-height: 1.5;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-top: 9px;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147,51,234,0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: #16a34a;
+            background: rgba(22,163,74,0.1);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: #dc2626;
+            background: rgba(220,38,38,0.1);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 14px;
+            padding: 13px 16px;
+            background: rgba(147,51,234,0.08);
+            border-radius: 8px;
+            color: #d8b4fe;
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 24px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            color: white;
+        }
+
+        .reset-btn {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        .quiz-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147,51,234,0.1);
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .quiz-result p {
+            color: var(--text-muted);
+        }
+
+        /* REFERENCES */
+
+        .reference-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .reference-item {
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(13,16,38,0.7);
+        }
+
+        .reference-item h3 {
+            color: var(--text);
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .reference-item p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+        }
+
+        .reference-item a {
+            color: var(--purple-light);
+            font-size: 0.87rem;
+            overflow-wrap: anywhere;
+        }
+
+        .reference-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 35px 8%;
+            border-top: 1px solid var(--border);
+            background: #050611;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-light);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .three-column,
+            .process-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 13px 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a:not(.back-link) {
+                display: none;
+            }
+
+            .hero {
+                min-height: 500px;
+                padding: 85px 6%;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .section {
+                padding: 65px 6%;
+            }
+
+            .two-column,
+            .three-column,
+            .process-list {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card,
+            .case-study {
+                padding: 23px;
+            }
+
+            .quiz-question {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+        <a href="index.html" class="brand">MARI<span>TERRA</span></a>
+
+        <div class="nav-links">
+            <a href="#overview">Overview</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#navigation">Navigation</a>
+            <a href="#applications">Applications</a>
+            <a href="#quiz">Assessment</a>
+            <a href="marine-robotics.html" class="back-link">← Marine Robotics</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+
+    <header class="hero">
+        <div class="eyebrow">Marine Robotics / Core Topic 02</div>
+
+        <h1>
+            Autonomous<br>
+            <span>Underwater Vehicles</span>
+        </h1>
+
+        <p>
+            Discover the engineering systems behind AUVs: autonomous
+            mission execution, underwater navigation, onboard computing,
+            propulsion, energy management, scientific payloads, and
+            deep-sea exploration.
+        </p>
+
+        <div class="hero-meta">
+            <span class="meta-item">AUV Engineering</span>
+            <span class="meta-item">Autonomous Navigation</span>
+            <span class="meta-item">Underwater Exploration</span>
+            <span class="meta-item">Mission Systems</span>
+        </div>
+    </header>
+
+    <!-- OVERVIEW -->
+
+    <section class="section" id="overview">
+        <div class="section-header">
+            <div class="section-label">01 / Foundations</div>
+            <h2>Understanding AUV Systems</h2>
+            <p>
+                An Autonomous Underwater Vehicle is an uncrewed robotic
+                platform designed to travel underwater using its own
+                onboard energy, computing, sensors, and navigation systems.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <h3>What Is an Autonomous Underwater Vehicle?</h3>
+
+            <p>
+                An <strong>Autonomous Underwater Vehicle (AUV)</strong>
+                is a self-propelled underwater robot that performs a
+                planned mission without requiring continuous, real-time
+                piloting through a physical cable.
+            </p>
+
+            <p>
+                Before deployment, operators define the mission:
+                navigation routes, waypoints, operating depth, speed,
+                sensor configuration, survey patterns, and safety limits.
+                The vehicle receives this mission information and uses
+                its onboard control system to execute the task.
+            </p>
+
+            <p>
+                During the mission, the AUV collects information through
+                its sensors and usually stores the recorded data in
+                onboard storage. Depending on its communication equipment,
+                it may exchange limited information with a support vessel
+                through underwater acoustic communication.
+            </p>
+
+            <p>
+                When the mission ends, the vehicle normally follows a
+                programmed recovery procedure, which may involve
+                returning to a designated location and surfacing.
+                The collected data can then be downloaded and processed.
+            </p>
+        </div>
+
+        <div class="highlight">
+            <strong>Important engineering distinction:</strong>
+            Autonomous operation does not mean the vehicle has no human
+            involvement. Humans still plan missions, configure systems,
+            establish safety limits, supervise operations where possible,
+            and analyze the collected information.
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <h3>Why Are AUVs Important?</h3>
+                <ul>
+                    <li>They can survey large underwater areas systematically.</li>
+                    <li>They can operate in environments that are difficult or dangerous for divers.</li>
+                    <li>They can collect data at depths beyond the practical reach of many human-operated systems.</li>
+                    <li>They reduce the need for continuous direct piloting during a survey.</li>
+                    <li>They support repeatable scientific and industrial measurements.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>What Makes an AUV Autonomous?</h3>
+                <ul>
+                    <li>An onboard mission computer.</li>
+                    <li>Predefined mission plans and navigation objectives.</li>
+                    <li>Sensor feedback about vehicle condition and surroundings.</li>
+                    <li>Control algorithms that adjust vehicle movement.</li>
+                    <li>Safety procedures for abnormal conditions.</li>
+                    <li>Stored mission data and recovery logic.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- AUV VS ROV VS GLIDER -->
+
+    <section class="section" id="comparison">
+        <div class="section-header">
+            <div class="section-label">02 / Vehicle Classification</div>
+            <h2>AUV vs ROV vs Underwater Glider</h2>
+            <p>
+                These underwater robotic platforms can share some sensors
+                and scientific objectives, but their operating principles
+                and engineering priorities are different.
+            </p>
+        </div>
+
+        <div class="comparison-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Characteristic</th>
+                        <th>AUV</th>
+                        <th>ROV</th>
+                        <th>Underwater Glider</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Connection</td>
+                        <td>Normally untethered</td>
+                        <td>Connected by a tether</td>
+                        <td>Normally untethered</td>
+                    </tr>
+
+                    <tr>
+                        <td>Control</td>
+                        <td>Onboard autonomous mission logic</td>
+                        <td>Remote human piloting</td>
+                        <td>Programmed buoyancy and navigation logic</td>
+                    </tr>
+
+                    <tr>
+                        <td>Movement</td>
+                        <td>Usually powered propulsion</td>
+                        <td>Powered thrusters</td>
+                        <td>Buoyancy changes and hydrodynamic lift</td>
+                    </tr>
+
+                    <tr>
+                        <td>Energy</td>
+                        <td>Onboard batteries or other configured power systems</td>
+                        <td>May receive power through tether or use other architectures</td>
+                        <td>Designed for very low energy consumption</td>
+                    </tr>
+
+                    <tr>
+                        <td>Typical tasks</td>
+                        <td>Mapping, survey, inspection, data collection</td>
+                        <td>Intervention, manipulation, close inspection</td>
+                        <td>Long-duration ocean measurements</td>
+                    </tr>
+
+                    <tr>
+                        <td>Communication</td>
+                        <td>Limited underwater communication or communication at the surface</td>
+                        <td>Continuous communication through tether</td>
+                        <td>Often communicates at the surface</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="two-column" style="margin-top:25px;">
+            <div class="content-card">
+                <h3>AUV and ROV</h3>
+                <p>
+                    An ROV is generally operated by a human pilot using
+                    a tethered connection. An AUV executes its mission
+                    using onboard computing and control logic.
+                </p>
+                <p>
+                    This difference affects communication, power
+                    architecture, mission planning, recovery procedures,
+                    and the level of direct human control.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>AUV and Underwater Glider</h3>
+                <p>
+                    Many conventional AUVs use propellers or other
+                    propulsion mechanisms to move through the water.
+                    Underwater gliders primarily change buoyancy and use
+                    hydrodynamic lift from their wings to travel.
+                </p>
+                <p>
+                    Some technical classifications overlap, so a glider
+                    can be considered an autonomous underwater platform
+                    in a broad sense. Its propulsion principle is what
+                    makes it a distinct engineering topic.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+
+    <section class="section" id="architecture">
+        <div class="section-header">
+            <div class="section-label">03 / Engineering Architecture</div>
+            <h2>Main AUV Components and Subsystems</h2>
+            <p>
+                An AUV is not a single mechanical body. It is an integrated
+                engineering system in which mechanical, electrical,
+                electronic, software, and sensing components must work
+                together under underwater conditions.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <div class="number">01</div>
+                <h3>Hull and Structural Design</h3>
+
+                <p>
+                    The hull is the external structure that protects the
+                    vehicle's internal components and provides the
+                    required hydrodynamic shape.
+                </p>
+
+                <p>
+                    Many survey AUVs use streamlined, torpedo-like bodies
+                    to reduce drag and support efficient forward movement.
+                    However, not every AUV has this shape. Some platforms
+                    use modular, multi-body, or specialized configurations.
+                </p>
+
+                <ul>
+                    <li><strong>Pressure-resistant housings:</strong> protect electronics and batteries from external water pressure.</li>
+                    <li><strong>External fairings:</strong> provide a smoother hydrodynamic surface.</li>
+                    <li><strong>Structural frames:</strong> support payloads and internal assemblies.</li>
+                    <li><strong>Seals and connectors:</strong> help prevent water ingress.</li>
+                    <li><strong>Corrosion protection:</strong> reduces degradation in seawater environments.</li>
+                </ul>
+
+                <p>
+                    Engineers must consider pressure rating, structural
+                    strength, material compatibility, maintenance,
+                    accessibility, and the effect of the external shape
+                    on hydrodynamic drag.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">02</div>
+                <h3>Buoyancy and Trim</h3>
+
+                <p>
+                    Buoyancy determines how the vehicle behaves vertically
+                    in water. AUVs are commonly designed to operate close
+                    to neutral buoyancy, allowing propulsion and control
+                    surfaces to manage their movement efficiently.
+                </p>
+
+                <p>
+                    <strong>Positive buoyancy</strong> means the vehicle
+                    tends to rise, while <strong>negative buoyancy</strong>
+                    means it tends to sink.
+                </p>
+
+                <p>
+                    <strong>Neutral buoyancy</strong> occurs when the
+                    upward buoyant force approximately balances the
+                    vehicle's weight.
+                </p>
+
+                <ul>
+                    <li>Buoyancy material may be used to compensate for vehicle weight.</li>
+                    <li>Internal ballast or trim adjustments help control balance.</li>
+                    <li>Mass distribution affects pitch and stability.</li>
+                    <li>Emergency buoyancy or weight-release mechanisms may support recovery in certain designs.</li>
+                </ul>
+
+                <p>
+                    Trim is important because an incorrectly balanced
+                    vehicle may require additional control effort and
+                    consume more energy to maintain its intended path.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">03</div>
+                <h3>Propulsion and Steering</h3>
+
+                <p>
+                    Propulsion provides the force needed to move the AUV
+                    through water. Many conventional survey vehicles use
+                    an electric motor connected to a propeller.
+                </p>
+
+                <ul>
+                    <li><strong>Electric motor:</strong> converts electrical energy into mechanical rotation.</li>
+                    <li><strong>Propeller:</strong> produces thrust by accelerating water.</li>
+                    <li><strong>Control fins:</strong> change hydrodynamic forces to control direction and attitude.</li>
+                    <li><strong>Motor controller:</strong> regulates motor operation and speed.</li>
+                </ul>
+
+                <p>
+                    Other designs may use ducted propellers, multiple
+                    thrusters, or specialized propulsion arrangements.
+                    The choice depends on mission requirements,
+                    maneuverability, efficiency, and vehicle geometry.
+                </p>
+
+                <p>
+                    Unlike a hovering ROV, many torpedo-shaped survey
+                    AUVs are optimized for forward motion rather than
+                    stationary close-up intervention.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">04</div>
+                <h3>Battery and Energy Storage</h3>
+
+                <p>
+                    Since a conventional AUV cannot rely on a continuous
+                    surface power cable, it carries onboard energy storage.
+                    Rechargeable battery systems are widely used.
+                </p>
+
+                <ul>
+                    <li><strong>Battery modules:</strong> store the electrical energy required by the vehicle.</li>
+                    <li><strong>Battery management system (BMS):</strong> monitors battery conditions and helps protect against unsafe operation.</li>
+                    <li><strong>Power distribution:</strong> supplies different subsystems with suitable electrical power.</li>
+                    <li><strong>Monitoring circuits:</strong> track voltage, current, temperature, and other operating parameters.</li>
+                </ul>
+
+                <p>
+                    Energy is consumed by propulsion, computers, navigation
+                    equipment, sensors, communication devices, and
+                    environmental control systems where fitted.
+                </p>
+
+                <p>
+                    Mission endurance depends on battery capacity,
+                    propulsion demand, speed, payload power consumption,
+                    water conditions, and operating strategy.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">05</div>
+                <h3>Onboard Computing System</h3>
+
+                <p>
+                    The onboard computer is the central processing unit
+                    responsible for executing mission software and
+                    coordinating vehicle subsystems.
+                </p>
+
+                <ul>
+                    <li>Reads information from navigation and environmental sensors.</li>
+                    <li>Processes mission waypoints and operating instructions.</li>
+                    <li>Monitors vehicle status and subsystem health.</li>
+                    <li>Calculates control commands for propulsion and steering.</li>
+                    <li>Records mission information and sensor measurements.</li>
+                    <li>Executes programmed responses to selected fault conditions.</li>
+                </ul>
+
+                <p>
+                    Some vehicles use multiple processors or distributed
+                    controllers so that navigation, payload management,
+                    propulsion, and safety functions can operate as
+                    separate but coordinated subsystems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">06</div>
+                <h3>Payload and Scientific Equipment</h3>
+
+                <p>
+                    A payload is the equipment installed to perform the
+                    mission's scientific, industrial, or survey task.
+                    Payload configuration varies according to the
+                    information required.
+                </p>
+
+                <ul>
+                    <li><strong>Multibeam sonar:</strong> measures seafloor depth across a wide swath.</li>
+                    <li><strong>Side-scan sonar:</strong> produces acoustic images of objects and seabed features.</li>
+                    <li><strong>Sub-bottom profiler:</strong> investigates sediment layers beneath the seabed.</li>
+                    <li><strong>Camera systems:</strong> capture visual information when lighting and visibility permit.</li>
+                    <li><strong>CTD instruments:</strong> measure conductivity, temperature, and pressure, from which salinity and depth-related information can be derived.</li>
+                    <li><strong>Magnetometers:</strong> measure magnetic-field variations.</li>
+                </ul>
+
+                <p>
+                    Payload selection affects vehicle mass, energy
+                    consumption, available storage, data processing,
+                    and mission duration.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAVIGATION -->
+
+    <section class="section" id="navigation">
+        <div class="section-header">
+            <div class="section-label">04 / Underwater Navigation</div>
+            <h2>How Does an AUV Know Where It Is?</h2>
+            <p>
+                Underwater navigation is one of the most challenging
+                parts of AUV engineering because satellite navigation
+                signals such as GPS do not normally provide a position
+                fix to a deeply submerged vehicle.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <h3>The Underwater Positioning Problem</h3>
+
+            <p>
+                GPS works by receiving radio signals from satellites.
+                These signals do not travel effectively through seawater
+                to a submerged AUV.
+            </p>
+
+            <p>
+                An AUV therefore needs alternative navigation methods.
+                These may combine inertial measurements, water-relative
+                or bottom-relative velocity measurements, depth data,
+                and acoustic positioning.
+            </p>
+
+            <div class="highlight">
+                <strong>Key principle:</strong>
+                GPS can be used when the vehicle is at the surface and
+                has a suitable GPS antenna with a clear satellite view.
+                It is not the normal positioning method while the AUV
+                is submerged.
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <h3>Inertial Navigation System (INS)</h3>
+
+                <p>
+                    An INS estimates the vehicle's movement and orientation
+                    using inertial measurement devices, typically
+                    accelerometers and gyroscopes.
+                </p>
+
+                <ul>
+                    <li>Gyroscopes measure angular motion.</li>
+                    <li>Accelerometers measure specific force along their axes.</li>
+                    <li>Navigation algorithms estimate orientation, velocity, and position.</li>
+                    <li>Errors can accumulate over time, producing navigation drift.</li>
+                </ul>
+
+                <p>
+                    INS is valuable because it can provide continuous
+                    navigation estimates without requiring an external
+                    signal, but its accuracy generally improves when
+                    supported by other measurements.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Doppler Velocity Log (DVL)</h3>
+
+                <p>
+                    A DVL uses the Doppler effect to estimate the
+                    vehicle's velocity relative to the seabed or,
+                    in some operating modes, relative to the surrounding
+                    water.
+                </p>
+
+                <ul>
+                    <li>It transmits acoustic signals.</li>
+                    <li>It receives echoes from the seabed or scattering particles.</li>
+                    <li>It measures frequency shifts in the returned signals.</li>
+                    <li>It calculates velocity estimates along its measurement axes.</li>
+                </ul>
+
+                <p>
+                    When bottom tracking is available, DVL measurements
+                    can significantly improve navigation when integrated
+                    with INS data.
+                </p>
+
+                <p>
+                    Bottom lock is not guaranteed at every altitude or
+                    in every environment. Water tracking and bottom
+                    tracking are different operating modes.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Pressure and Depth Sensors</h3>
+
+                <p>
+                    Pressure sensors measure the surrounding water
+                    pressure. Since pressure increases with depth,
+                    measurements can be used to estimate the vehicle's
+                    depth.
+                </p>
+
+                <p>
+                    Accurate depth information is important for maintaining
+                    a planned operating level, following terrain,
+                    collecting measurements at specific depths, and
+                    supporting safe vehicle control.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Acoustic Positioning Systems</h3>
+
+                <p>
+                    Acoustic positioning systems use sound signals
+                    exchanged between underwater equipment and reference
+                    transponders or a support vessel.
+                </p>
+
+                <ul>
+                    <li><strong>LBL — Long Baseline:</strong> uses an array of acoustic reference transponders whose positions are known.</li>
+                    <li><strong>USBL — Ultra-Short Baseline:</strong> uses a compact transducer arrangement, often installed on a support vessel, to estimate the direction and range of an underwater target.</li>
+                    <li><strong>SBL — Short Baseline:</strong> uses separated acoustic transducers on a support platform.</li>
+                </ul>
+
+                <p>
+                    Acoustic positioning can support navigation and
+                    tracking, but its performance depends on geometry,
+                    sound propagation, equipment calibration, and
+                    environmental conditions.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>Sensor Fusion: Combining Navigation Measurements</h3>
+
+            <p>
+                A single navigation sensor rarely provides every piece
+                of information required for reliable underwater
+                positioning.
+            </p>
+
+            <p>
+                Sensor fusion combines measurements from multiple sources.
+                For example, an INS may provide continuous motion estimates,
+                while a DVL supplies velocity updates and a pressure sensor
+                provides depth information. Acoustic positioning may
+                provide additional external corrections.
+            </p>
+
+            <p>
+                Depending on the system, estimation algorithms such as
+                Kalman filters or related methods can combine these
+                measurements and account for their uncertainties.
+            </p>
+
+            <div class="highlight">
+                <strong>Engineering challenge:</strong>
+                Navigation systems must manage uncertainty. If external
+                corrections are unavailable for a long period, estimated
+                position error may increase even when the vehicle is
+                operating normally.
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTROL AND AUTONOMY -->
+
+    <section class="section" id="control">
+        <div class="section-header">
+            <div class="section-label">05 / Control and Mission Software</div>
+            <h2>Autonomous Control and Mission Execution</h2>
+            <p>
+                The control architecture transforms mission objectives
+                into vehicle actions and continuously checks whether
+                the AUV is operating within its defined limits.
+            </p>
+        </div>
+
+        <div class="three-column">
+            <div class="content-card">
+                <div class="number">01</div>
+                <h3>Mission Planning</h3>
+                <p>
+                    Operators define the mission area, route, waypoints,
+                    depth, speed, survey pattern, payload settings,
+                    and recovery location.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">02</div>
+                <h3>Navigation and Estimation</h3>
+                <p>
+                    The vehicle estimates its position, orientation,
+                    velocity, and depth using available navigation
+                    sensors and estimation algorithms.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">03</div>
+                <h3>Guidance</h3>
+                <p>
+                    Guidance logic determines the direction and movement
+                    needed to follow the planned route or reach the
+                    next mission waypoint.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">04</div>
+                <h3>Control</h3>
+                <p>
+                    Control algorithms calculate commands for motors,
+                    propellers, and control surfaces to achieve the
+                    required motion.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">05</div>
+                <h3>Payload Management</h3>
+                <p>
+                    Mission software coordinates sensor activation,
+                    measurement timing, data recording, and payload
+                    operating modes.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <div class="number">06</div>
+                <h3>Health Monitoring</h3>
+                <p>
+                    The onboard system checks selected parameters
+                    such as battery condition, leakage indicators,
+                    temperature, and navigation status.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3>How Does an AUV Follow a Survey Route?</h3>
+
+            <p>
+                A common survey strategy is a lawnmower pattern.
+                The vehicle follows a series of parallel survey lines
+                across a defined area to collect systematic coverage.
+            </p>
+
+            <p>
+                The route is divided into waypoints. The guidance
+                system determines how the vehicle should move toward
+                each waypoint, while the control system adjusts
+                propulsion and steering to follow the intended path.
+            </p>
+
+            <p>
+                Survey planning must account for vehicle turning
+                radius, speed, depth, seabed terrain, sensor coverage,
+                navigation uncertainty, and safety margins.
+            </p>
+        </div>
+    </section>
+
+    <!-- COMMUNICATION -->
+
+    <section class="section" id="communication">
+        <div class="section-header">
+            <div class="section-label">06 / Underwater Communication</div>
+            <h2>How Do AUVs Communicate?</h2>
+            <p>
+                Communication underwater is more difficult than
+                communication through air because radio-frequency
+                signals are strongly attenuated in seawater.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <h3>Acoustic Modems</h3>
+
+                <p>
+                    Underwater acoustic modems transmit information
+                    using sound waves. They can exchange selected
+                    commands, status information, and navigation data
+                    between an AUV and a support platform.
+                </p>
+
+                <ul>
+                    <li>Can support underwater vehicle tracking.</li>
+                    <li>May provide mission status and health information.</li>
+                    <li>Can support limited mission updates on compatible platforms.</li>
+                    <li>Can be affected by noise, multipath propagation, range, and water conditions.</li>
+                </ul>
+
+                <p>
+                    Acoustic communication generally has lower data
+                    rates and higher latency than typical radio or
+                    wired networks.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Surface Communication</h3>
+
+                <p>
+                    When an AUV reaches the surface, it may use
+                    communication technologies that are more suitable
+                    for above-water transmission.
+                </p>
+
+                <ul>
+                    <li><strong>Wi-Fi:</strong> can support local data transfer and configuration.</li>
+                    <li><strong>Satellite communication:</strong> may support remote status reporting where installed and available.</li>
+                    <li><strong>GPS:</strong> provides a surface position fix when the antenna has suitable satellite visibility.</li>
+                    <li><strong>Radio links:</strong> may be used for local communication with nearby support equipment.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight">
+            An AUV should not be assumed to provide continuous live video
+            or uninterrupted remote piloting. Many survey vehicles store
+            large sensor datasets onboard and transfer them after recovery.
+            Communication capabilities depend on the specific platform.
+        </div>
+    </section>
+
+    <!-- OPERATIONAL WORKFLOW -->
+
+    <section class="section" id="operations">
+        <div class="section-header">
+            <div class="section-label">07 / Operational Workflow</div>
+            <h2>From Mission Planning to Recovery</h2>
+            <p>
+                A successful AUV operation requires more than launching
+                a robot into the sea. It involves preparation,
+                calibration, mission execution, recovery, and data analysis.
+            </p>
+        </div>
+
+        <div class="process-list">
+            <div class="process-step">
+                <span>PHASE 01</span>
+                <h3>Mission Definition</h3>
+                <p>
+                    Define the mission objectives, survey boundaries,
+                    required measurements, route, depth, and recovery plan.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 02</span>
+                <h3>Mission Configuration</h3>
+                <p>
+                    Configure mission software, waypoints, sensor settings,
+                    safety limits, and onboard data recording.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 03</span>
+                <h3>Pre-Dive Checks</h3>
+                <p>
+                    Inspect the hull, seals, batteries, navigation
+                    equipment, payload, communications, and software status.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 04</span>
+                <h3>Launch and Initialization</h3>
+                <p>
+                    Deploy the vehicle, establish its initial position
+                    and orientation, and verify that the mission can begin.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 05</span>
+                <h3>Autonomous Execution</h3>
+                <p>
+                    The AUV follows its programmed route, collects
+                    sensor measurements, and monitors its operating state.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 06</span>
+                <h3>Recovery</h3>
+                <p>
+                    The vehicle follows its recovery procedure,
+                    which may include returning to a designated point
+                    and surfacing for retrieval.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 07</span>
+                <h3>Data Download</h3>
+                <p>
+                    Engineers and researchers retrieve stored mission
+                    data and check that the required measurements were recorded.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 08</span>
+                <h3>Data Processing</h3>
+                <p>
+                    Raw measurements are processed, corrected,
+                    georeferenced where possible, and converted into
+                    useful survey products.
+                </p>
+            </div>
+
+            <div class="process-step">
+                <span>PHASE 09</span>
+                <h3>Maintenance and Review</h3>
+                <p>
+                    Inspect the vehicle, evaluate system performance,
+                    recharge batteries, and prepare for the next mission.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPLICATIONS -->
+
+    <section class="section" id="applications">
+        <div class="section-header">
+            <div class="section-label">08 / Practical Applications</div>
+            <h2>Where Are AUVs Used?</h2>
+            <p>
+                AUVs support scientific research, maritime infrastructure,
+                environmental monitoring, and underwater survey operations.
+            </p>
+        </div>
+
+        <div class="three-column">
+            <div class="content-card">
+                <h3>Seafloor Mapping</h3>
+                <p>
+                    AUVs use multibeam and side-scan sonar to collect
+                    information about seabed depth, shape, and acoustic
+                    characteristics.
+                </p>
+                <span class="tag">Bathymetry</span>
+                <span class="tag">Sonar Mapping</span>
+            </div>
+
+            <div class="content-card">
+                <h3>Marine Science</h3>
+                <p>
+                    Scientific AUVs collect physical, chemical,
+                    and biological measurements to support oceanographic
+                    research.
+                </p>
+                <span class="tag">Oceanography</span>
+                <span class="tag">Research</span>
+            </div>
+
+            <div class="content-card">
+                <h3>Offshore Infrastructure</h3>
+                <p>
+                    AUV surveys can support inspection and assessment
+                    of underwater infrastructure such as pipelines,
+                    cables, and offshore installations.
+                </p>
+                <span class="tag">Inspection</span>
+                <span class="tag">Offshore</span>
+            </div>
+
+            <div class="content-card">
+                <h3>Environmental Monitoring</h3>
+                <p>
+                    Equipped with suitable sensors, AUVs can collect
+                    information about water properties, seabed conditions,
+                    and selected environmental indicators.
+                </p>
+                <span class="tag">CTD</span>
+                <span class="tag">Water Quality</span>
+            </div>
+
+            <div class="content-card">
+                <h3>Archaeological Surveys</h3>
+                <p>
+                    Sonar and imaging payloads can help locate and
+                    document submerged archaeological sites and
+                    underwater cultural heritage.
+                </p>
+                <span class="tag">Marine Archaeology</span>
+                <span class="tag">Imaging</span>
+            </div>
+
+            <div class="content-card">
+                <h3>Search and Survey</h3>
+                <p>
+                    AUVs can systematically search designated underwater
+                    areas for objects or features using mission-specific
+                    acoustic and imaging sensors.
+                </p>
+                <span class="tag">Detection</span>
+                <span class="tag">Area Survey</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+
+    <section class="section" id="case-study">
+        <div class="section-header">
+            <div class="section-label">09 / Real-World Engineering</div>
+            <h2>Case Study: WHOI Sentry AUV</h2>
+            <p>
+                A real deep-ocean autonomous platform demonstrates
+                how multiple engineering disciplines are integrated
+                into one operational system.
+            </p>
+        </div>
+
+        <div class="case-study">
+            <h3>Sentry — Deep-Sea Exploration Vehicle</h3>
+
+            <p>
+                Sentry is an autonomous underwater vehicle operated by
+                the Woods Hole Oceanographic Institution (WHOI).
+                It is designed for deep-sea exploration and can operate
+                at depths reaching 6,000 meters.
+            </p>
+
+            <p>
+                Its scientific capabilities include producing
+                bathymetric, side-scan, sub-bottom, and magnetic maps
+                of the seafloor, as well as collecting digital images
+                and other scientific measurements.
+            </p>
+
+            <p>
+                Sentry uses a navigation architecture that includes
+                a Doppler Velocity Log and an Inertial Navigation System.
+                Acoustic positioning systems such as USBL or LBL can
+                provide additional navigation support.
+            </p>
+
+            <p>
+                Its acoustic communication capability can be used
+                to obtain vehicle state and sensor information and,
+                where supported, to send mission-related instructions
+                while the vehicle is underwater.
+            </p>
+
+            <p>
+                This example illustrates an important engineering
+                principle: deep-sea autonomy depends on the coordinated
+                performance of navigation, propulsion, power,
+                payload sensors, software, and recovery systems.
+            </p>
+
+            <div style="margin-top:22px;">
+                <span class="tag">6,000 m Depth Capability</span>
+                <span class="tag">INS + DVL Navigation</span>
+                <span class="tag">Acoustic Positioning</span>
+                <span class="tag">Seafloor Mapping</span>
+            </div>
+
+            <p style="margin-top:24px;">
+                Official technical information:
+                <a href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/auvs/sentry/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   style="color:var(--purple-light);">
+                    WHOI — Sentry AUV
+                </a>
+            </p>
+        </div>
+
+        <div class="content-card" style="margin-top:22px;">
+            <h3>Additional Example: MBARI Seafloor Mapping AUV</h3>
+
+            <p>
+                The Monterey Bay Aquarium Research Institute (MBARI)
+                describes a seafloor-mapping AUV equipped with an
+                inertial navigation system, DVL, pressure sensor,
+                multibeam sonar, side-scan sonar, and sub-bottom profiler.
+            </p>
+
+            <p>
+                Its documented operating procedure illustrates how
+                GPS may establish a surface position before descent,
+                while underwater navigation is supported by INS,
+                DVL, and acoustic tracking where required.
+            </p>
+
+            <p>
+                This is a useful example of how navigation architecture
+                changes with depth and sensor availability.
+            </p>
+
+            <a href="https://www.mbari.org/technology/seafloor-mapping-auv/"
+               target="_blank"
+               rel="noopener noreferrer"
+               style="color:var(--purple-light);">
+                Explore MBARI's Seafloor Mapping AUV →
+            </a>
+        </div>
+    </section>
+
+    <!-- TECHNICAL CHALLENGES -->
+
+    <section class="section" id="challenges">
+        <div class="section-header">
+            <div class="section-label">10 / Technical Challenges</div>
+            <h2>Engineering Challenges in AUV Operations</h2>
+            <p>
+                Autonomous underwater systems must operate in a
+                physically demanding environment where failures can
+                be difficult to detect, diagnose, and recover from.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <h3>Navigation Drift</h3>
+                <p>
+                    Inertial navigation errors accumulate over time.
+                    Without reliable external corrections, the estimated
+                    vehicle position can gradually diverge from its
+                    actual position.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Limited Energy</h3>
+                <p>
+                    Battery capacity limits operating time and mission
+                    range. High propulsion demand, sensor power,
+                    and unfavorable operating conditions can reduce
+                    endurance.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Communication Limitations</h3>
+                <p>
+                    Acoustic communication has limited bandwidth and
+                    can be affected by environmental noise, propagation
+                    conditions, and distance.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Water Ingress and Pressure</h3>
+                <p>
+                    Seal failure, connector problems, or structural
+                    weaknesses can cause water ingress or damage
+                    at depth. Pressure design and testing are essential.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Sensor Reliability</h3>
+                <p>
+                    Incorrect calibration, fouling, sensor degradation,
+                    and environmental interference can reduce the
+                    quality of collected data.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Recovery and Vehicle Loss</h3>
+                <p>
+                    Unexpected currents, navigation errors, equipment
+                    failure, or unsuccessful surfacing can complicate
+                    recovery and may result in a lost vehicle.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Complex Seafloor Terrain</h3>
+                <p>
+                    Slopes, obstacles, rugged seabed features, and
+                    uncertain bathymetric information can increase
+                    collision risk and make mission planning more difficult.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>System Integration</h3>
+                <p>
+                    Navigation, control, power, communication,
+                    and payload systems must exchange information
+                    reliably. Interface failures can affect the
+                    entire mission.
+                </p>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>Critical operational lesson:</strong>
+            AUV autonomy must include defined responses to abnormal
+            conditions. A vehicle that can follow a route but cannot
+            recognize unsafe conditions or execute a recovery strategy
+            is not a robust operational system.
+        </div>
+    </section>
+
+    <!-- FUTURE -->
+
+    <section class="section" id="future">
+        <div class="section-header">
+            <div class="section-label">11 / Future Developments</div>
+            <h2>The Future of Autonomous Underwater Vehicles</h2>
+            <p>
+                Research is advancing AUV capability through improved
+                autonomy, navigation, sensing, energy efficiency,
+                and coordinated operations.
+            </p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-card">
+                <h3>AI-Assisted Mission Decisions</h3>
+                <p>
+                    Machine learning and intelligent algorithms may help
+                    AUVs identify features of interest, classify selected
+                    sonar or image data, and adjust mission behavior
+                    within approved operational limits.
+                </p>
+                <p>
+                    AI outputs still require validation. An algorithm
+                    should not be assumed to make every decision safely
+                    or correctly in unfamiliar underwater conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Improved Underwater Navigation</h3>
+                <p>
+                    Advances in inertial sensors, acoustic positioning,
+                    terrain-aided navigation, and sensor fusion can
+                    improve position estimation and mission accuracy.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Multi-AUV Coordination</h3>
+                <p>
+                    Multiple vehicles may work together to survey
+                    larger areas, distribute tasks, and collect
+                    complementary measurements.
+                </p>
+                <p>
+                    This requires coordination strategies, communication
+                    planning, collision avoidance, and reliable
+                    mission management.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Energy Efficiency</h3>
+                <p>
+                    Improvements in battery technology, hydrodynamic
+                    design, propulsion efficiency, and mission planning
+                    may increase endurance and operational range.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Advanced Sensor Processing</h3>
+                <p>
+                    More capable onboard processing can support
+                    real-time data quality checks, feature detection,
+                    and selective data recording.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Greater Operational Reliability</h3>
+                <p>
+                    Better fault detection, health monitoring,
+                    fault-tolerant software, and recovery strategies
+                    can improve mission resilience.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEARNING SUMMARY -->
+
+    <section class="section" id="summary">
+        <div class="section-header">
+            <div class="section-label">12 / Learning Review</div>
+            <h2>What You Should Understand</h2>
+            <p>
+                Before completing the assessment, make sure you can
+                explain how the AUV's engineering systems work together.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <ul>
+                <li>Define an AUV and explain how autonomous underwater operation works.</li>
+                <li>Distinguish AUVs from ROVs and underwater gliders.</li>
+                <li>Identify the major mechanical, electrical, and computing subsystems.</li>
+                <li>Explain the roles of INS, DVL, pressure sensors, and acoustic positioning.</li>
+                <li>Describe how navigation measurements can be combined through sensor fusion.</li>
+                <li>Explain how onboard software manages mission planning, guidance, and control.</li>
+                <li>Compare underwater acoustic communication with surface communication.</li>
+                <li>Describe the operational workflow from mission planning to recovery.</li>
+                <li>Identify real-world applications and major engineering challenges.</li>
+                <li>Explain how emerging technologies may improve future AUV operations.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+
+    <section class="section quiz-section" id="quiz">
+        <div class="section-header">
+            <div class="section-label">Knowledge Assessment</div>
+            <h2>Test Your Understanding</h2>
+            <p>
+                Answer all ten questions to evaluate your understanding
+                of AUV engineering, navigation, operation, and applications.
+            </p>
+        </div>
+
+        <div class="quiz-container">
+            <p class="quiz-intro">
+                Select one answer for each question. Submit your answers
+                to receive your score and detailed explanations.
+            </p>
+
+            <form id="auvQuiz">
+
+                <div class="quiz-question" data-answer="b">
+                    <span class="question-number">QUESTION 01</span>
+                    <h3>What is the main characteristic that distinguishes an AUV from a conventional ROV?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="a">
+                        It always uses hydraulic manipulators.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="b">
+                        It performs underwater missions without requiring a continuous physical tether for piloting.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="c">
+                        It can only operate near the water surface.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="d">
+                        It does not require onboard power.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: B. An AUV normally carries its own
+                        power and executes mission logic onboard, while a
+                        conventional ROV is connected to a surface platform
+                        through a tether.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <span class="question-number">QUESTION 02</span>
+                    <h3>Why can a submerged AUV not normally rely on GPS for continuous underwater positioning?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="a">
+                        GPS only works at night.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="b">
+                        GPS requires a mechanical propeller.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="c">
+                        GPS radio signals do not effectively propagate through seawater to the submerged vehicle.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="d">
+                        GPS only measures water temperature.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: C. GPS relies on satellite radio
+                        signals. A submerged vehicle generally uses
+                        inertial, Doppler, pressure, and acoustic
+                        navigation methods instead.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <span class="question-number">QUESTION 03</span>
+                    <h3>What is the primary function of an Inertial Navigation System (INS)?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="a">
+                        Estimate vehicle motion, orientation, velocity, and position using inertial measurements.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="b">
+                        Generate underwater satellite signals.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="c">
+                        Measure seawater salinity only.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="d">
+                        Store battery energy.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: A. INS uses inertial sensors,
+                        typically gyroscopes and accelerometers, to
+                        estimate movement and orientation. Its errors
+                        can accumulate over time.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <span class="question-number">QUESTION 04</span>
+                    <h3>How does a DVL help an AUV navigate?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="a">
+                        By measuring battery temperature only.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="b">
+                        By transmitting GPS signals to satellites.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="c">
+                        By changing the vehicle's buoyancy.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="d">
+                        By estimating velocity using Doppler shifts in acoustic signals.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: D. A DVL uses acoustic Doppler
+                        measurements to estimate velocity relative to
+                        the seabed or surrounding water, depending on
+                        the operating mode.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <span class="question-number">QUESTION 05</span>
+                    <h3>Which statement correctly describes underwater acoustic communication?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="a">
+                        It uses ordinary Wi-Fi signals underwater.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="b">
+                        It uses sound waves to exchange information underwater.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="c">
+                        It always provides high-speed live video.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="d">
+                        It requires a fiber-optic tether.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: B. Acoustic modems transmit data
+                        using sound. Their bandwidth and latency are
+                        generally more limited than typical wired or
+                        above-water communication technologies.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <span class="question-number">QUESTION 06</span>
+                    <h3>What is the main purpose of a mission-planning system?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="a">
+                        To physically repair the AUV underwater.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="b">
+                        To replace all navigation sensors.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="c">
+                        To define the mission route, waypoints, operating parameters, and task requirements.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="d">
+                        To eliminate the need for recovery planning.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: C. Mission planning defines
+                        where the AUV should travel, what it should
+                        measure, how it should operate, and how the
+                        mission should end.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <span class="question-number">QUESTION 07</span>
+                    <h3>Which sensor is commonly used to measure surrounding water pressure and estimate vehicle depth?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="a">
+                        Pressure sensor.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="b">
+                        Camera.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="c">
+                        Magnetometer.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="d">
+                        Acoustic modem.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: A. A pressure sensor measures
+                        surrounding water pressure, which increases
+                        with depth and can be used to estimate the
+                        vehicle's depth.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <span class="question-number">QUESTION 08</span>
+                    <h3>What is a major advantage of combining INS and DVL measurements?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="a">
+                        It removes the need for batteries.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="b">
+                        It enables unlimited underwater radio communication.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="c">
+                        It guarantees that navigation errors can never occur.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="d">
+                        It can improve navigation estimates by combining inertial motion information with velocity updates.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: D. INS provides continuous
+                        inertial estimates, while DVL can provide
+                        velocity corrections. Their integration can
+                        reduce navigation drift, although it cannot
+                        eliminate every source of error.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <span class="question-number">QUESTION 09</span>
+                    <h3>Which statement best describes a typical underwater glider?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="a">
+                        It always uses a high-speed propeller for movement.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="b">
+                        It primarily uses buoyancy changes and hydrodynamic lift to move through the water.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="c">
+                        It must remain physically connected to a ship.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="d">
+                        It cannot collect oceanographic measurements.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: B. Underwater gliders change
+                        buoyancy and use wings to convert vertical
+                        movement into forward motion, allowing
+                        energy-efficient long-duration missions.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <span class="question-number">QUESTION 10</span>
+                    <h3>Which of the following is a significant operational challenge for AUVs?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="a">
+                        Unlimited communication bandwidth.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="b">
+                        Permanent GPS availability underwater.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="c">
+                        Navigation uncertainty, limited energy, and recovery difficulties.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="d">
+                        No need for sensor calibration.
+                    </label>
+
+                    <div class="explanation">
+                        Correct answer: C. AUVs must manage navigation
+                        uncertainty, finite energy, communication
+                        limitations, environmental conditions, and
+                        the possibility of unsuccessful recovery.
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button type="submit" class="quiz-btn submit-btn" id="submitQuiz">
+                        Submit Assessment
+                    </button>
+
+                    <button type="button" class="quiz-btn reset-btn" id="resetQuiz">
+                        Reset Quiz
+                    </button>
+                </div>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite">
+                    <h3 id="resultScore"></h3>
+                    <p id="resultMessage"></p>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- REFERENCES -->
+
+    <section class="section" id="references">
+        <div class="section-header">
+            <div class="section-label">Technical References</div>
+            <h2>Further Reading and Official Sources</h2>
+            <p>
+                The following institutional resources support the
+                technical explanations and real-world examples
+                presented on this page.
+            </p>
+        </div>
+
+        <div class="reference-list">
+
+            <div class="reference-item">
+                <h3>01 — NOAA Ocean Service: AUV vs ROV</h3>
+                <p>
+                    Explains the basic difference between autonomous
+                    underwater vehicles and remotely operated vehicles.
+                </p>
+                <a href="https://oceanservice.noaa.gov/facts/auv-rov.html"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Read NOAA Reference →
+                </a>
+            </div>
+
+            <div class="reference-item">
+                <h3>02 — NOAA Ocean Exploration: Autonomous Underwater Vehicles</h3>
+                <p>
+                    Introduces AUVs, their operation, underwater
+                    exploration capabilities, and mission applications.
+                </p>
+                <a href="https://oceanexplorer.noaa.gov/technology/subs-auvs/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Read NOAA Ocean Exploration →
+                </a>
+            </div>
+
+            <div class="reference-item">
+                <h3>03 — WHOI: Sentry AUV</h3>
+                <p>
+                    Official information about Sentry's deep-sea
+                    capabilities, navigation, sensors, and scientific work.
+                </p>
+                <a href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/auvs/sentry/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Explore WHOI Sentry →
+                </a>
+            </div>
+
+            <div class="reference-item">
+                <h3>04 — WHOI: REMUS AUVs</h3>
+                <p>
+                    Describes REMUS platforms, their mission programming,
+                    acoustic navigation, sensors, and operating principles.
+                </p>
+                <a href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/auvs/remus/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Explore WHOI REMUS →
+                </a>
+            </div>
+
+            <div class="reference-item">
+                <h3>05 — MBARI: Seafloor Mapping AUV</h3>
+                <p>
+                    Detailed engineering example covering vehicle
+                    architecture, INS, DVL, sonar payloads, mission
+                    planning, and underwater navigation.
+                </p>
+                <a href="https://www.mbari.org/technology/seafloor-mapping-auv/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Explore MBARI AUV →
+                </a>
+            </div>
+
+            <div class="reference-item">
+                <h3>06 — WHOI Oceanographic Systems Laboratory</h3>
+                <p>
+                    Additional information about REMUS vehicle
+                    configurations and scientific payloads.
+                </p>
+                <a href="https://www2.whoi.edu/site/osl/vehicles/"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Explore WHOI OSL →
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="marine-robotics.html">Marine Robotics</a>
+            <a href="rov-systems.html">Previous Topic: ROV Systems</a>
+        </div>
+
+        <p>
+            MARITERRA — Maritime Technology & Engineering Education
+        </p>
+
+        <p style="margin-top:8px;">
+            Designed and Developed by
+            <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+
+        <p style="margin-top:8px; font-size:0.78rem;">
+            Educational content based on referenced institutional resources.
+        </p>
+    </footer>
+
+    <!-- QUIZ SCRIPT -->
+
+    <script>
+        const quizForm = document.getElementById("auvQuiz");
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+        const quizResult = document.getElementById("quizResult");
+        const resultScore = document.getElementById("resultScore");
+        const resultMessage = document.getElementById("resultMessage");
+
+        const questions = document.querySelectorAll(".quiz-question");
+
+        let quizSubmitted = false;
+
+        quizForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            if (quizSubmitted) {
+                return;
+            }
+
+            let score = 0;
+            let unanswered = [];
+
+            questions.forEach((question, index) => {
+                const questionName = "q" + (index + 1);
+                const selected = quizForm.querySelector(
+                    'input[name="' + questionName + '"]:checked'
+                );
+
+                if (!selected) {
+                    unanswered.push(index + 1);
+                }
+            });
+
+            if (unanswered.length > 0) {
+                alert(
+                    "Please answer all questions before submitting.\n" +
+                    "Unanswered questions: " + unanswered.join(", ")
+                );
+
+                const firstUnanswered = questions[unanswered[0] - 1];
+
+                firstUnanswered.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            questions.forEach((question, index) => {
+                const questionName = "q" + (index + 1);
+                const correctAnswer = question.dataset.answer;
+
+                const selected = quizForm.querySelector(
+                    'input[name="' + questionName + '"]:checked'
+                );
+
+                const options = question.querySelectorAll(".option");
+                const explanation = question.querySelector(".explanation");
+
+                options.forEach(option => {
+                    const input = option.querySelector("input");
+
+                    if (input.value === correctAnswer) {
+                        option.classList.add("correct");
+                    }
+
+                    if (
+                        input.checked &&
+                        input.value !== correctAnswer
+                    ) {
+                        option.classList.add("incorrect");
+                    }
+
+                    input.disabled = true;
+                });
+
+                if (selected.value === correctAnswer) {
+                    score++;
+                }
+
+                explanation.classList.add("show");
+            });
+
+            quizSubmitted = true;
+            submitButton.disabled = true;
+
+            const percentage = score * 10;
+
+            resultScore.textContent =
+                "Your Score: " + score + " / 10 (" + percentage + "%)";
+
+            if (score === 10) {
+                resultMessage.textContent =
+                    "Excellent! You demonstrated a strong understanding of AUV systems and their engineering principles.";
+            } else if (score >= 8) {
+                resultMessage.textContent =
+                    "Very good! You understand most of the major concepts. Review the explanations to strengthen your knowledge.";
+            } else if (score >= 6) {
+                resultMessage.textContent =
+                    "Good progress. Review navigation, control architecture, and operational procedures to improve your understanding.";
+            } else if (score >= 4) {
+                resultMessage.textContent =
+                    "You have a basic understanding, but several important engineering concepts need more review.";
+            } else {
+                resultMessage.textContent =
+                    "Review the learning sections carefully and try the assessment again. Focus on the differences between AUVs, ROVs, and underwater gliders.";
+            }
+
+            quizResult.classList.add("show");
+
+            quizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        resetButton.addEventListener("click", function() {
+            quizForm.reset();
+
+            quizSubmitted = false;
+            submitButton.disabled = false;
+
+            quizResult.classList.remove("show");
+
+            resultScore.textContent = "";
+            resultMessage.textContent = "";
+
+            questions.forEach(question => {
+                question.querySelectorAll(".option").forEach(option => {
+                    option.classList.remove("correct", "incorrect");
+
+                    const input = option.querySelector("input");
+                    input.disabled = false;
+                });
+
+                question.querySelector(".explanation").classList.remove("show");
+            });
+
+            document.getElementById("quiz").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2595 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore marine propulsion engineering, electric thrusters, motors, batteries, power distribution, energy management, efficiency, and endurance in marine robotic systems.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Propulsion, Power & Energy Systems</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --card: rgba(16, 19, 43, 0.9);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --blue: #2563eb;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #a1a1aa;
+            --border: rgba(192, 132, 252, 0.2);
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1150px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                radial-gradient(circle at 80% 40%, rgba(147,51,234,0.22), transparent 40%),
+                linear-gradient(110deg, #070816, #0d1027);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: -100px;
+            top: 30px;
+            border: 1px solid rgba(192,132,252,0.16);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 45px rgba(147,51,234,0.025),
+                0 0 0 90px rgba(147,51,234,0.02);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
+            padding: 75px 0;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            font-size: 0.78rem;
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5.5vw, 4rem);
+            line-height: 1.15;
+            color: var(--white);
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: #c4c4d0;
+            max-width: 730px;
+            font-size: 1.05rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .hero-tags span,
+        .tag {
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            background: rgba(147,51,234,0.1);
+            border-radius: 30px;
+            padding: 6px 13px;
+            font-size: 0.78rem;
+        }
+
+        /* MAIN CONTENT */
+
+        main {
+            padding: 55px 0 85px;
+        }
+
+        .section {
+            margin-bottom: 65px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-heading {
+            margin-bottom: 25px;
+        }
+
+        .section-heading .number {
+            color: var(--purple-light);
+            font-size: 0.76rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .section-heading h2 {
+            color: var(--white);
+            font-size: clamp(1.6rem, 4vw, 2.35rem);
+            line-height: 1.3;
+            margin: 7px 0;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            max-width: 850px;
+        }
+
+        .content-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 27px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            border-color: rgba(192,132,252,0.5);
+            transform: translateY(-3px);
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.18rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: #c7c7d2;
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 22px;
+            color: #c7c7d2;
+            margin: 12px 0;
+        }
+
+        .content-card li {
+            margin-bottom: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .three-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .small-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            transition: var(--transition);
+        }
+
+        .small-card:hover {
+            border-color: var(--purple-light);
+            transform: translateY(-3px);
+        }
+
+        .small-card h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .small-card p {
+            color: var(--muted);
+            font-size: 0.93rem;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .note {
+            border-left: 3px solid var(--purple);
+            background: rgba(147,51,234,0.08);
+            padding: 18px 22px;
+            border-radius: 0 10px 10px 0;
+            color: #d6c8e8;
+            margin: 20px 0;
+        }
+
+        .formula {
+            text-align: center;
+            padding: 22px;
+            background: rgba(147,51,234,0.09);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 18px 0;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .formula small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+            background: var(--card);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            color: #c7c7d2;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147,51,234,0.1);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PROCESS */
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 13px;
+            margin-top: 22px;
+        }
+
+        .process-step {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147,51,234,0.08);
+        }
+
+        .process-step span {
+            display: block;
+            color: var(--purple-light);
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* QUIZ */
+
+        .quiz-container {
+            background: linear-gradient(145deg, rgba(147,51,234,0.12), rgba(12,16,36,0.95));
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 30px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: rgba(7,8,22,0.55);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .question h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #c7c7d2;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            background: rgba(147,51,234,0.1);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+            cursor: pointer;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(147,51,234,0.1);
+            color: #d8c6ee;
+            font-size: 0.9rem;
+        }
+
+        .question.correct {
+            border-color: #22c55e;
+        }
+
+        .question.incorrect {
+            border-color: #ef4444;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: 1px solid var(--purple);
+            padding: 12px 23px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            color: white;
+            background: var(--purple);
+        }
+
+        .btn-primary:hover {
+            background: #7e22ce;
+        }
+
+        .btn-secondary {
+            color: var(--purple-light);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(147,51,234,0.12);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147,51,234,0.1);
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .quiz-result p {
+            color: var(--text);
+        }
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 850px) {
+            .three-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .process {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .grid,
+            .three-grid,
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 390px;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .nav-content {
+                min-height: 65px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+            <a href="marine-robotics.html" class="back-link">← Marine Robotics</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="eyebrow">MARINE ROBOTICS / TOPIC 06</div>
+
+                <h1>Propulsion, Power <span>& Energy Systems</span></h1>
+
+                <p>
+                    Explore the engineering systems that generate movement,
+                    deliver electrical power, and manage energy consumption
+                    in marine robotic platforms. Understand how propulsion
+                    technologies, electric motors, batteries, and power
+                    management systems work together during marine missions.
+                </p>
+
+                <div class="hero-tags">
+                    <span>Marine Propulsion</span>
+                    <span>Electric Motors</span>
+                    <span>Energy Management</span>
+                    <span>Battery Systems</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="section" id="introduction">
+            <div class="section-heading">
+                <span class="number">01 / FOUNDATIONS</span>
+                <h2>Understanding Marine Propulsion & Energy</h2>
+                <p>
+                    Every marine robotic platform needs a reliable way to move
+                    and an energy system capable of supporting its mission.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Are Propulsion, Power & Energy Systems?</h3>
+
+                <p>
+                    Marine propulsion, power, and energy systems are the
+                    interconnected engineering components responsible for
+                    generating thrust, supplying electricity, distributing
+                    power, and maintaining the operation of a marine vehicle.
+                </p>
+
+                <p>
+                    A propulsion system converts an energy source into
+                    mechanical force that moves a vehicle through water.
+                    The electrical power system supplies the energy required
+                    by propulsion motors, sensors, computers, communication
+                    equipment, navigation instruments, and other onboard
+                    components.
+                </p>
+
+                <p>
+                    Their design directly affects vehicle speed, maneuverability,
+                    mission duration, payload capacity, reliability, and
+                    operational safety.
+                </p>
+            </div>
+
+            <div class="note">
+                <strong>Engineering distinction:</strong>
+                Propulsion is only one consumer of energy. A marine robot also
+                needs electricity for computing, navigation, sensing,
+                communication, thermal management, and control.
+            </div>
+
+            <div class="three-grid">
+                <div class="small-card">
+                    <span class="tag">01</span>
+                    <h3>Propulsion</h3>
+                    <p>
+                        Produces thrust and controls the movement of a
+                        marine vehicle.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <span class="tag">02</span>
+                    <h3>Power Supply</h3>
+                    <p>
+                        Provides the electrical energy required by onboard
+                        systems and equipment.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <span class="tag">03</span>
+                    <h3>Energy Management</h3>
+                    <p>
+                        Monitors, distributes, and controls energy usage
+                        throughout the mission.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 PROPULSION PRINCIPLES -->
+
+        <section class="section" id="principles">
+            <div class="section-heading">
+                <span class="number">02 / FOUNDATIONS</span>
+                <h2>Fundamental Principles of Marine Propulsion</h2>
+                <p>
+                    Propulsion systems generate thrust by interacting with
+                    surrounding water.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>How Does Propulsion Work?</h3>
+
+                <p>
+                    A marine propulsion system generates a force that moves
+                    a vehicle through water. In many electrically powered
+                    systems, an electric motor rotates a propeller or
+                    impeller, accelerating water and producing thrust.
+                </p>
+
+                <p>
+                    According to Newton's third law, when a propeller
+                    accelerates water in one direction, an opposing force
+                    acts on the propeller and vehicle.
+                </p>
+
+                <p>
+                    The amount of thrust depends on several factors,
+                    including propeller geometry, rotational speed,
+                    water density, inflow velocity, and operating conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Thrust and Resistance</h3>
+
+                <p>
+                    A moving marine vehicle experiences hydrodynamic
+                    resistance. This resistance acts opposite to its
+                    direction of motion.
+                </p>
+
+                <p>
+                    During steady movement, the available thrust must
+                    balance the total resistance. If thrust is greater
+                    than resistance, the vehicle can accelerate.
+                </p>
+
+                <div class="formula">
+                    Net Force = Thrust − Drag
+                    <small>
+                        Simplified representation of the forces along
+                        the direction of motion.
+                    </small>
+                </div>
+
+                <p>
+                    Drag is affected by vehicle shape, surface roughness,
+                    speed, water properties, and flow conditions.
+                    Increasing speed can significantly increase the
+                    power needed to overcome hydrodynamic resistance.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Propeller Fundamentals</h3>
+
+                <p>
+                    A propeller consists of blades attached to a rotating
+                    hub. As the blades rotate, they transfer momentum to
+                    the surrounding water and generate thrust.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Diameter:</strong> Influences the volume
+                        of water interacting with the propeller.
+                    </li>
+                    <li>
+                        <strong>Pitch:</strong> Describes the theoretical
+                        distance a propeller advances in one revolution
+                        under idealized conditions.
+                    </li>
+                    <li>
+                        <strong>Blade geometry:</strong> Influences
+                        hydrodynamic performance and efficiency.
+                    </li>
+                    <li>
+                        <strong>Rotational speed:</strong> Affects thrust,
+                        torque, power consumption, and noise.
+                    </li>
+                </ul>
+
+                <p>
+                    Propeller selection requires balancing thrust
+                    requirements, efficiency, available space,
+                    operating speed, and cavitation risk.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Hydrodynamic Efficiency and Cavitation</h3>
+
+                <p>
+                    Propulsion efficiency describes how effectively
+                    input power is converted into useful movement.
+                    Losses can occur through turbulence, friction,
+                    mechanical resistance, and electrical conversion.
+                </p>
+
+                <p>
+                    Cavitation occurs when local pressure around a
+                    propeller blade falls below the vapor pressure
+                    of water, producing vapor cavities that may
+                    collapse as pressure increases.
+                </p>
+
+                <p>
+                    Cavitation can cause noise, vibration, reduced
+                    performance, and damage to propeller surfaces.
+                </p>
+            </div>
+        </section>
+
+        <!-- 03 PROPULSION TYPES -->
+
+        <section class="section" id="propulsion-types">
+            <div class="section-heading">
+                <span class="number">03 / ENGINEERING SYSTEMS</span>
+                <h2>Types of Marine Propulsion Systems</h2>
+                <p>
+                    Different marine platforms require different
+                    propulsion architectures according to their
+                    mission, size, operating environment, and
+                    maneuverability requirements.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>01. Fixed-Pitch Propellers</h3>
+
+                    <p>
+                        Fixed-pitch propellers have blades with a
+                        constant geometric pitch. Their thrust is
+                        generally controlled by changing the motor's
+                        rotational speed.
+                    </p>
+
+                    <p>
+                        They are mechanically straightforward and
+                        commonly used in underwater vehicles and
+                        small marine platforms.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>02. Ducted Propellers</h3>
+
+                    <p>
+                        A ducted propeller operates inside a surrounding
+                        nozzle or duct. The duct changes the flow around
+                        the propeller and can improve thrust performance
+                        in some operating conditions.
+                    </p>
+
+                    <p>
+                        Ducts can also provide physical protection
+                        around rotating blades.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>03. Electric Thrusters</h3>
+
+                    <p>
+                        Electric thrusters combine an electric motor
+                        with a propeller or impeller assembly to
+                        generate controlled thrust.
+                    </p>
+
+                    <p>
+                        They are widely used in ROVs and other
+                        remotely or autonomously controlled
+                        marine vehicles.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>04. Waterjet Propulsion</h3>
+
+                    <p>
+                        Waterjet systems draw water through an inlet
+                        and accelerate it through a pump and nozzle.
+                        The resulting high-velocity water jet produces
+                        thrust.
+                    </p>
+
+                    <p>
+                        Waterjets are used in some surface vessels
+                        where maneuverability and reduced exposed
+                        propeller hardware are useful.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>05. Azimuth Thrusters</h3>
+
+                    <p>
+                        Azimuth thrusters can rotate their thrust
+                        direction around a vertical axis. This allows
+                        a vessel to direct thrust in different
+                        horizontal directions.
+                    </p>
+
+                    <p>
+                        They are particularly useful in vessels
+                        requiring precise maneuvering and positioning.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>06. Hybrid Propulsion</h3>
+
+                    <p>
+                        Hybrid propulsion architectures combine
+                        multiple propulsion or energy technologies,
+                        such as battery-electric systems and
+                        combustion-based generators.
+                    </p>
+
+                    <p>
+                        Their purpose may include improving
+                        operational flexibility, endurance,
+                        or energy efficiency.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                No propulsion technology is universally superior.
+                The correct selection depends on the mission profile,
+                vehicle geometry, required thrust, environmental
+                conditions, maintenance requirements, and energy budget.
+            </div>
+        </section>
+
+        <!-- 04 THRUSTERS -->
+
+        <section class="section" id="thrusters">
+            <div class="section-heading">
+                <span class="number">04 / ENGINEERING SYSTEMS</span>
+                <h2>Electric Thrusters and Vehicle Movement</h2>
+                <p>
+                    Thrusters allow underwater robots to control their
+                    position, orientation, and movement in three dimensions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Is an Electric Thruster?</h3>
+
+                <p>
+                    An electric thruster is a propulsion unit that
+                    converts electrical energy into mechanical rotation
+                    and then into hydrodynamic thrust.
+                </p>
+
+                <p>
+                    A typical thruster assembly may include:
+                </p>
+
+                <ul>
+                    <li>Electric motor.</li>
+                    <li>Propeller or impeller.</li>
+                    <li>Motor controller or electronic drive.</li>
+                    <li>Housing and mechanical support.</li>
+                    <li>Seals or pressure-resistant construction.</li>
+                    <li>Electrical and control connections.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Thruster Configurations in ROVs</h3>
+
+                <p>
+                    ROVs often use multiple thrusters arranged in
+                    different directions. A control system combines
+                    their individual thrust outputs to produce
+                    the requested vehicle movement.
+                </p>
+
+                <p>
+                    A vehicle may use horizontal thrusters for forward,
+                    backward, and sideways motion, while vertical
+                    thrusters control ascent and descent.
+                </p>
+
+                <p>
+                    The exact configuration depends on vehicle design.
+                    Some ROVs have more thrusters or different
+                    arrangements to provide additional control authority.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Six Degrees of Freedom</h3>
+
+                <p>
+                    A fully maneuverable underwater vehicle can be
+                    described using six degrees of freedom.
+                </p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Movement</th>
+                                <th>Meaning</th>
+                                <th>Axis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Surge</td>
+                                <td>Forward and backward movement</td>
+                                <td>Longitudinal</td>
+                            </tr>
+                            <tr>
+                                <td>Sway</td>
+                                <td>Sideways movement</td>
+                                <td>Lateral</td>
+                            </tr>
+                            <tr>
+                                <td>Heave</td>
+                                <td>Upward and downward movement</td>
+                                <td>Vertical</td>
+                            </tr>
+                            <tr>
+                                <td>Roll</td>
+                                <td>Rotation around the longitudinal axis</td>
+                                <td>Longitudinal</td>
+                            </tr>
+                            <tr>
+                                <td>Pitch</td>
+                                <td>Nose-up and nose-down rotation</td>
+                                <td>Lateral</td>
+                            </tr>
+                            <tr>
+                                <td>Yaw</td>
+                                <td>Rotation to the left or right</td>
+                                <td>Vertical</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>
+                    The vehicle's control system determines how much
+                    thrust each thruster should produce to achieve
+                    a requested movement.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Thruster Allocation</h3>
+
+                <p>
+                    Thruster allocation is the process of converting
+                    a desired vehicle force and torque into individual
+                    thruster commands.
+                </p>
+
+                <p>
+                    A mathematical model describes how each thruster's
+                    direction and position contribute to the total
+                    force and moment acting on the vehicle.
+                </p>
+
+                <p>
+                    The control system uses this relationship to
+                    calculate suitable thrust commands while
+                    respecting motor limits and available power.
+                </p>
+            </div>
+        </section>
+
+        <!-- 05 ELECTRIC MOTORS -->
+
+        <section class="section" id="motors">
+            <div class="section-heading">
+                <span class="number">05 / ELECTRICAL ENGINEERING</span>
+                <h2>Electric Motors and Motor Controllers</h2>
+                <p>
+                    Electric motors are key components in modern
+                    electrically powered marine propulsion systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>How Electric Motors Convert Energy</h3>
+
+                <p>
+                    An electric motor converts electrical energy
+                    into mechanical energy through electromagnetic
+                    interactions between its components.
+                </p>
+
+                <p>
+                    Electrical current produces magnetic fields
+                    that interact to create rotational torque.
+                    The motor shaft transfers this mechanical
+                    output to a propeller, pump, or other mechanical
+                    component.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Brushless DC Motors (BLDC)</h3>
+
+                    <p>
+                        Brushless DC motors use electronic commutation
+                        instead of mechanical brushes. They are
+                        widely used in compact propulsion systems
+                        because of their power density and controllability.
+                    </p>
+
+                    <ul>
+                        <li>Electronic commutation.</li>
+                        <li>High power-to-weight potential.</li>
+                        <li>Reduced brush-related maintenance.</li>
+                        <li>Require suitable electronic controllers.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Permanent Magnet Synchronous Motors</h3>
+
+                    <p>
+                        Permanent magnet synchronous motors use
+                        permanent magnets in the rotor and a
+                        controlled stator magnetic field.
+                    </p>
+
+                    <ul>
+                        <li>Precise speed and torque control.</li>
+                        <li>High efficiency in suitable designs.</li>
+                        <li>Common in advanced electric drives.</li>
+                        <li>Require appropriate drive electronics.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Induction Motors</h3>
+
+                    <p>
+                        Induction motors generate rotor current
+                        through electromagnetic induction. They
+                        are widely used in industrial and marine
+                        applications.
+                    </p>
+
+                    <ul>
+                        <li>Robust construction.</li>
+                        <li>No permanent magnets required.</li>
+                        <li>Variable-speed operation is possible.</li>
+                        <li>Efficiency depends on motor design and load.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Motor Controllers</h3>
+
+                    <p>
+                        A motor controller regulates the electrical
+                        power delivered to a motor and controls
+                        its operating behavior.
+                    </p>
+
+                    <ul>
+                        <li>Speed regulation.</li>
+                        <li>Torque control.</li>
+                        <li>Direction control where supported.</li>
+                        <li>Current and temperature protection.</li>
+                        <li>Fault monitoring and shutdown.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="note">
+                A motor and its controller must be selected as a compatible
+                system. Voltage, current, cooling, communication interfaces,
+                environmental protection, and operating limits all matter.
+            </div>
+        </section>
+
+        <!-- 06 POWER SOURCES -->
+
+        <section class="section" id="power-sources">
+            <div class="section-heading">
+                <span class="number">06 / POWER SYSTEMS</span>
+                <h2>Marine Energy Sources and Batteries</h2>
+                <p>
+                    Energy sources determine how long a vehicle can operate
+                    and what equipment it can support.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Battery Systems</h3>
+
+                <p>
+                    Batteries store chemical energy and convert it
+                    into electrical energy when a circuit is connected.
+                    They are widely used in autonomous underwater
+                    vehicles and electrically powered marine robots.
+                </p>
+
+                <p>
+                    Battery selection depends on energy capacity,
+                    voltage, discharge rate, mass, volume, operating
+                    temperature, safety, charging requirements,
+                    and mission duration.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Lithium-Ion Batteries</h3>
+
+                    <p>
+                        Lithium-ion batteries are rechargeable
+                        electrochemical energy storage devices
+                        widely used in portable electronics,
+                        electric vehicles, and marine robotics.
+                    </p>
+
+                    <ul>
+                        <li>High energy density in many cell designs.</li>
+                        <li>Rechargeable operation.</li>
+                        <li>Require battery management and protection.</li>
+                        <li>Thermal and electrical safety are essential.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Lithium Primary Batteries</h3>
+
+                    <p>
+                        Primary lithium batteries are non-rechargeable
+                        batteries designed for applications that
+                        require high stored energy and long shelf life.
+                    </p>
+
+                    <ul>
+                        <li>High energy density in suitable chemistries.</li>
+                        <li>Useful for some long-duration missions.</li>
+                        <li>Cannot be recharged like secondary cells.</li>
+                        <li>Require appropriate handling and disposal.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Lead-Acid Batteries</h3>
+
+                    <p>
+                        Lead-acid batteries are established rechargeable
+                        batteries used in many industrial and marine
+                        electrical systems.
+                    </p>
+
+                    <ul>
+                        <li>Well-established technology.</li>
+                        <li>Relatively low energy density.</li>
+                        <li>Heavy compared with many alternatives.</li>
+                        <li>Require appropriate charging and maintenance.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>Fuel Cells</h3>
+
+                    <p>
+                        Fuel cells generate electricity through
+                        electrochemical reactions using a fuel
+                        and an oxidizing agent.
+                    </p>
+
+                    <ul>
+                        <li>Can provide sustained electrical generation.</li>
+                        <li>May be used in specialized underwater systems.</li>
+                        <li>Require fuel storage and supporting equipment.</li>
+                        <li>System complexity and safety must be considered.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>External Power for Tethered ROVs</h3>
+
+                <p>
+                    Many ROVs receive electrical power from a surface
+                    vessel through an umbilical or tether. The surface
+                    power system supplies energy to the vehicle,
+                    sometimes through high-voltage transmission
+                    followed by onboard conversion.
+                </p>
+
+                <p>
+                    This arrangement can support longer operations
+                    without relying entirely on onboard batteries.
+                    However, tether design introduces constraints
+                    involving cable length, electrical losses,
+                    handling, mechanical loading, and communication.
+                </p>
+
+                <p>
+                    Some ROVs use onboard batteries or hybrid
+                    arrangements instead. The power architecture
+                    depends on the vehicle and its mission.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Energy Storage vs. Power Delivery</h3>
+
+                <p>
+                    Energy capacity and power capability are
+                    different engineering properties.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Energy:</strong> The total amount
+                        of electrical work that can be supplied,
+                        often measured in watt-hours (Wh).
+                    </li>
+                    <li>
+                        <strong>Power:</strong> The rate at which
+                        energy is delivered or consumed, measured
+                        in watts (W).
+                    </li>
+                    <li>
+                        <strong>Voltage:</strong> The electrical
+                        potential difference, measured in volts (V).
+                    </li>
+                    <li>
+                        <strong>Current:</strong> The rate of
+                        electrical charge flow, measured in amperes (A).
+                    </li>
+                </ul>
+
+                <div class="formula">
+                    Electrical Power = Voltage × Current
+                    <small>P = V × I</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- 07 POWER MANAGEMENT -->
+
+        <section class="section" id="management">
+            <div class="section-heading">
+                <span class="number">07 / POWER MANAGEMENT</span>
+                <h2>Power Distribution and Energy Management</h2>
+                <p>
+                    A marine robot needs more than a battery.
+                    It requires a controlled architecture for
+                    distributing energy safely and efficiently.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Power Distribution Architecture</h3>
+
+                <p>
+                    A power distribution system transfers electrical
+                    energy from its source to different onboard
+                    subsystems.
+                </p>
+
+                <p>
+                    A typical electrically powered architecture
+                    may include:
+                </p>
+
+                <ul>
+                    <li>Battery pack or external power input.</li>
+                    <li>Main power switch and protection devices.</li>
+                    <li>Power distribution board.</li>
+                    <li>DC-DC converters or other power converters.</li>
+                    <li>Motor controllers and propulsion units.</li>
+                    <li>Computers, sensors, and communication devices.</li>
+                    <li>Monitoring and safety circuits.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Battery Management System (BMS)</h3>
+
+                <p>
+                    A Battery Management System monitors and protects
+                    rechargeable battery packs. It helps ensure
+                    that the cells operate within their permitted
+                    electrical and thermal limits.
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Voltage monitoring:</strong>
+                        Measures cell and pack voltage.
+                    </li>
+                    <li>
+                        <strong>Current monitoring:</strong>
+                        Tracks charging and discharging current.
+                    </li>
+                    <li>
+                        <strong>Temperature monitoring:</strong>
+                        Detects unsafe thermal conditions.
+                    </li>
+                    <li>
+                        <strong>Cell balancing:</strong>
+                        Helps maintain appropriate cell voltage balance.
+                    </li>
+                    <li>
+                        <strong>Protection:</strong>
+                        Can disconnect or limit operation when
+                        dangerous conditions are detected.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Energy Management System (EMS)</h3>
+
+                <p>
+                    An Energy Management System supervises how energy
+                    is used across the vehicle. It can monitor
+                    consumption, estimate remaining energy, and
+                    help prioritize critical loads.
+                </p>
+
+                <p>
+                    For example, a mission controller may reduce
+                    non-essential sensor activity or adjust
+                    propulsion commands when the remaining
+                    energy becomes limited.
+                </p>
+
+                <p>
+                    The goal is to complete the mission safely
+                    while maintaining enough reserve energy
+                    for recovery and essential operations.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Power Budgeting</h3>
+
+                <p>
+                    Engineers estimate the energy required by
+                    every major subsystem before deployment.
+                    This is called power or energy budgeting.
+                </p>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subsystem</th>
+                                <th>Example Load</th>
+                                <th>Operating Pattern</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Propulsion</td>
+                                <td>Thrusters and motors</td>
+                                <td>Variable / mission-dependent</td>
+                            </tr>
+                            <tr>
+                                <td>Navigation</td>
+                                <td>INS, compass, depth sensor</td>
+                                <td>Continuous or periodic</td>
+                            </tr>
+                            <tr>
+                                <td>Computing</td>
+                                <td>Onboard computer</td>
+                                <td>Continuous</td>
+                            </tr>
+                            <tr>
+                                <td>Sensors</td>
+                                <td>Sonar, cameras, scientific sensors</td>
+                                <td>Continuous or scheduled</td>
+                            </tr>
+                            <tr>
+                                <td>Communication</td>
+                                <td>Acoustic or radio modem</td>
+                                <td>Intermittent or scheduled</td>
+                            </tr>
+                            <tr>
+                                <td>Auxiliary</td>
+                                <td>Lighting and other equipment</td>
+                                <td>Task-dependent</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="formula">
+                    Energy = Power × Time
+                    <small>E = P × t</small>
+                </div>
+
+                <p>
+                    If a device consumes 100 watts for 2 hours,
+                    its energy consumption is 200 watt-hours.
+                    Real mission calculations must also account
+                    for conversion losses, variable loads,
+                    battery limits, and reserve requirements.
+                </p>
+            </div>
+        </section>
+
+        <!-- 08 EFFICIENCY AND ENDURANCE -->
+
+        <section class="section" id="efficiency">
+            <div class="section-heading">
+                <span class="number">08 / PERFORMANCE</span>
+                <h2>Energy Efficiency and Mission Endurance</h2>
+                <p>
+                    Efficient energy use helps marine robots
+                    operate longer and complete missions reliably.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What Determines Energy Efficiency?</h3>
+
+                <p>
+                    Energy efficiency describes how much of the
+                    supplied energy is converted into useful output.
+                    In marine robotics, the overall result depends
+                    on several interacting subsystems.
+                </p>
+
+                <ul>
+                    <li>Hydrodynamic shape and drag.</li>
+                    <li>Propeller and thruster efficiency.</li>
+                    <li>Motor and controller efficiency.</li>
+                    <li>Electrical conversion losses.</li>
+                    <li>Vehicle speed and mission profile.</li>
+                    <li>Payload and auxiliary equipment demand.</li>
+                    <li>Battery condition and operating temperature.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Mission Endurance</h3>
+
+                <p>
+                    Mission endurance is the amount of time a vehicle
+                    can operate before it must be recovered,
+                    recharged, refueled, or otherwise serviced.
+                </p>
+
+                <p>
+                    Endurance is not determined by battery capacity
+                    alone. It depends on average power consumption,
+                    usable stored energy, environmental conditions,
+                    mission tasks, and safety reserves.
+                </p>
+
+                <div class="formula">
+                    Ideal Runtime = Usable Energy ÷ Average Power
+                    <small>Runtime in hours = Energy in Wh / Power in W</small>
+                </div>
+
+                <p>
+                    Example: if a vehicle has 1,000 Wh of usable
+                    energy and its average load is 100 W, its
+                    ideal calculated runtime is 10 hours.
+                </p>
+
+                <p>
+                    Actual runtime may be lower because of power
+                    conversion losses, battery discharge limits,
+                    temperature, aging, and changing mission loads.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Practical Energy-Saving Strategies</h3>
+
+                <ul>
+                    <li>
+                        Optimize vehicle shape to reduce hydrodynamic drag.
+                    </li>
+                    <li>
+                        Select propellers and motors suited to the
+                        expected operating range.
+                    </li>
+                    <li>
+                        Avoid unnecessary acceleration and rapid
+                        changes in propulsion demand.
+                    </li>
+                    <li>
+                        Schedule sensors and communication systems
+                        according to mission requirements.
+                    </li>
+                    <li>
+                        Monitor battery condition and energy consumption.
+                    </li>
+                    <li>
+                        Use mission planning to preserve energy
+                        for recovery and unexpected events.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="note">
+                A vehicle with a larger battery is not automatically
+                more efficient. Extra battery mass can increase
+                vehicle weight and influence buoyancy, trim,
+                hydrodynamic drag, and structural requirements.
+            </div>
+        </section>
+
+        <!-- 09 PLATFORM COMPARISON -->
+
+        <section class="section" id="platforms">
+            <div class="section-heading">
+                <span class="number">09 / PLATFORM APPLICATIONS</span>
+                <h2>Propulsion and Energy Across Marine Robots</h2>
+                <p>
+                    ROVs, AUVs, and USVs use different propulsion
+                    and power architectures because their missions
+                    and operating environments are different.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>ROV Systems</h3>
+
+                    <p>
+                        Many ROVs use multiple electric thrusters
+                        for precise underwater movement.
+                    </p>
+
+                    <p>
+                        Their power may be supplied from a surface
+                        vessel through a tether, through onboard
+                        batteries, or through a hybrid architecture.
+                    </p>
+
+                    <p>
+                        The design must account for tether electrical
+                        losses, motor demand, depth, and vehicle
+                        maneuverability.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>AUV Systems</h3>
+
+                    <p>
+                        AUVs commonly use onboard batteries to
+                        power propulsion, computing, navigation,
+                        and payload systems.
+                    </p>
+
+                    <p>
+                        Some use a main propeller, while others
+                        use different propulsion arrangements
+                        depending on their mission.
+                    </p>
+
+                    <p>
+                        Energy planning is particularly important
+                        because the vehicle operates without
+                        continuous physical power from a surface
+                        vessel.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>USV Systems</h3>
+
+                    <p>
+                        Uncrewed Surface Vehicles may use
+                        electric motors, combustion engines,
+                        hybrid propulsion, or other configurations.
+                    </p>
+
+                    <p>
+                        Their energy architecture may include
+                        batteries, fuel systems, solar panels,
+                        and generators.
+                    </p>
+
+                    <p>
+                        The design depends on speed, payload,
+                        mission range, weather, and endurance.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Underwater Gliders</h3>
+
+                    <p>
+                        Underwater gliders primarily move by
+                        changing buoyancy and using wings to
+                        convert vertical movement into horizontal
+                        travel.
+                    </p>
+
+                    <p>
+                        Their energy requirements differ from
+                        conventional propeller-driven AUVs.
+                        Electrical energy is still needed for
+                        control, instruments, and onboard systems.
+                    </p>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Typical Propulsion</th>
+                            <th>Common Power Architecture</th>
+                            <th>Key Design Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ROV</td>
+                            <td>Multiple electric thrusters</td>
+                            <td>Tethered, battery, or hybrid</td>
+                            <td>Precise control</td>
+                        </tr>
+                        <tr>
+                            <td>AUV</td>
+                            <td>Propeller or other onboard propulsion</td>
+                            <td>Onboard energy storage</td>
+                            <td>Mission endurance</td>
+                        </tr>
+                        <tr>
+                            <td>USV</td>
+                            <td>Propeller, waterjet, or other systems</td>
+                            <td>Battery, fuel, hybrid, or solar-assisted</td>
+                            <td>Range and surface performance</td>
+                        </tr>
+                        <tr>
+                            <td>Glider</td>
+                            <td>Buoyancy-driven movement</td>
+                            <td>Low-power onboard electrical system</td>
+                            <td>Long-duration sampling</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 10 OPERATIONAL WORKFLOW -->
+
+        <section class="section" id="operation">
+            <div class="section-heading">
+                <span class="number">10 / PRACTICAL APPLICATIONS</span>
+                <h2>How Propulsion and Power Systems Operate</h2>
+                <p>
+                    The following workflow shows how engineers
+                    prepare, monitor, and manage a marine robot's
+                    propulsion and electrical systems.
+                </p>
+            </div>
+
+            <div class="process">
+                <div class="process-step">
+                    <span>STEP 01</span>
+                    <h3>Mission Planning</h3>
+                    <p>
+                        Define mission distance, speed, duration,
+                        operating depth, and payload requirements.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 02</span>
+                    <h3>Energy Estimation</h3>
+                    <p>
+                        Estimate the energy required by propulsion,
+                        sensors, computing, and auxiliary systems.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 03</span>
+                    <h3>System Preparation</h3>
+                    <p>
+                        Inspect batteries, connections, controllers,
+                        protection circuits, and propulsion units.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 04</span>
+                    <h3>Power Activation</h3>
+                    <p>
+                        Activate the electrical architecture
+                        according to the manufacturer's procedures.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 05</span>
+                    <h3>Propulsion Control</h3>
+                    <p>
+                        Motor controllers regulate thrust based
+                        on vehicle movement commands.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 06</span>
+                    <h3>Energy Monitoring</h3>
+                    <p>
+                        Monitor voltage, current, temperature,
+                        consumption, and estimated remaining energy.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 07</span>
+                    <h3>Mission Adjustment</h3>
+                    <p>
+                        Adjust the mission when energy reserves
+                        or operating conditions require it.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <span>STEP 08</span>
+                    <h3>Recovery and Inspection</h3>
+                    <p>
+                        Recover the vehicle, inspect components,
+                        and evaluate energy-system performance.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11 CHALLENGES -->
+
+        <section class="section" id="challenges">
+            <div class="section-heading">
+                <span class="number">11 / TECHNICAL CHALLENGES</span>
+                <h2>Engineering Challenges and Reliability</h2>
+                <p>
+                    Marine propulsion and energy systems operate
+                    in environments that impose demanding
+                    mechanical, electrical, and environmental constraints.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Water Ingress and Corrosion</h3>
+                    <p>
+                        Saltwater can damage electrical connections,
+                        metal surfaces, and electronic components.
+                        Pressure housings, seals, connectors,
+                        and suitable materials are essential.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Pressure and Depth</h3>
+                    <p>
+                        Hydrostatic pressure increases with depth.
+                        Housings, cables, connectors, and battery
+                        enclosures must be designed for their
+                        intended pressure conditions.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Thermal Management</h3>
+                    <p>
+                        Motors, controllers, batteries, and
+                        converters generate heat. Their temperatures
+                        must remain within specified operating limits.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Battery Safety</h3>
+                    <p>
+                        Electrical abuse, overheating, damaged
+                        cells, and incorrect charging can create
+                        serious battery hazards. Protection and
+                        monitoring are essential.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Mechanical Wear</h3>
+                    <p>
+                        Propellers, shafts, bearings, seals,
+                        and moving components may experience
+                        wear, vibration, and damage.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Energy Limitations</h3>
+                    <p>
+                        Limited stored energy can restrict speed,
+                        payload operation, mission duration,
+                        and recovery options.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Electrical Interference</h3>
+                    <p>
+                        Motor switching and high-current equipment
+                        can introduce electrical noise that affects
+                        sensitive sensors and communication systems.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>System Failure</h3>
+                    <p>
+                        Motor controller faults, damaged wiring,
+                        battery degradation, or sensor failures
+                        may reduce propulsion performance or
+                        cause mission interruption.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12 FUTURE -->
+
+        <section class="section" id="future">
+            <div class="section-heading">
+                <span class="number">12 / FUTURE DEVELOPMENTS</span>
+                <h2>Future of Marine Propulsion and Energy</h2>
+                <p>
+                    New technologies are improving energy storage,
+                    propulsion efficiency, system monitoring,
+                    and autonomous mission management.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="content-card">
+                    <h3>Advanced Battery Technologies</h3>
+                    <p>
+                        Research into improved battery chemistries,
+                        safer materials, higher energy density,
+                        and faster charging may increase
+                        the capabilities of marine robotic platforms.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Intelligent Energy Management</h3>
+                    <p>
+                        Advanced control algorithms can analyze
+                        mission requirements and energy consumption
+                        to help allocate power more effectively.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>AI-Based Predictive Maintenance</h3>
+                    <p>
+                        Data from motors, bearings, batteries,
+                        and controllers can help identify abnormal
+                        operating patterns and predict potential
+                        maintenance needs.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>High-Efficiency Propulsion</h3>
+                    <p>
+                        Improved propeller designs, motor control,
+                        hydrodynamic optimization, and advanced
+                        materials can improve overall propulsion
+                        performance.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Hybrid Energy Architectures</h3>
+                    <p>
+                        Combining batteries with generators,
+                        fuel cells, or renewable energy sources
+                        may provide greater flexibility for
+                        specific marine missions.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Autonomous Energy Optimization</h3>
+                    <p>
+                        Future marine robots may adapt their
+                        operating speed, sensor schedules,
+                        and mission priorities according to
+                        remaining energy and environmental conditions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="note">
+                Future technologies should be evaluated by demonstrated
+                performance, safety, cost, maintainability, and
+                operational readiness—not by technological claims alone.
+            </div>
+        </section>
+
+        <!-- 13 KNOWLEDGE REVIEW -->
+
+        <section class="section" id="review">
+            <div class="section-heading">
+                <span class="number">13 / KNOWLEDGE REVIEW</span>
+                <h2>Key Engineering Concepts</h2>
+                <p>
+                    Review the most important principles before
+                    taking the knowledge assessment.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What You Should Understand</h3>
+
+                <ul>
+                    <li>
+                        Propulsion converts energy into thrust
+                        to move a marine vehicle.
+                    </li>
+                    <li>
+                        Electric thrusters use motors and
+                        propellers or impellers to generate thrust.
+                    </li>
+                    <li>
+                        Motor controllers regulate motor
+                        operation and electrical power.
+                    </li>
+                    <li>
+                        Batteries store energy, while power
+                        distribution systems deliver it to
+                        onboard equipment.
+                    </li>
+                    <li>
+                        A Battery Management System monitors
+                        and protects battery operation.
+                    </li>
+                    <li>
+                        Energy management helps balance
+                        propulsion and other electrical loads.
+                    </li>
+                    <li>
+                        Mission endurance depends on usable
+                        energy and average power consumption.
+                    </li>
+                    <li>
+                        ROVs, AUVs, USVs, and underwater gliders
+                        use different propulsion and energy designs.
+                    </li>
+                    <li>
+                        Marine environments create pressure,
+                        corrosion, thermal, and reliability challenges.
+                    </li>
+                    <li>
+                        Efficient system design must consider
+                        the complete vehicle, not just its motor
+                        or battery.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 14 QUIZ -->
+
+        <section class="section" id="quiz">
+            <div class="section-heading">
+                <span class="number">14 / KNOWLEDGE ASSESSMENT</span>
+                <h2>Test Your Understanding</h2>
+                <p>
+                    Answer all ten questions to evaluate your
+                    understanding of marine propulsion, electrical
+                    power, energy management, and engineering challenges.
+                </p>
+            </div>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    Select one answer for each question.
+                    Your score and explanations will appear
+                    after you submit all answers.
+                </p>
+
+                <form id="quizForm">
+
+                    <div class="question" data-answer="b">
+                        <h3>1. What is the primary function of a marine propulsion system?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="a">
+                            To store electrical energy.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="b">
+                            To generate thrust and move the vehicle.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="c">
+                            To measure water temperature.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="d">
+                            To transmit satellite signals.
+                        </label>
+
+                        <div class="explanation">
+                            Propulsion systems generate the force
+                            required to move a marine vehicle through water.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>2. What is the main purpose of an electric thruster?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="a">
+                            To increase battery capacity.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="b">
+                            To measure underwater pressure.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="c">
+                            To convert electrical power into thrust.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="d">
+                            To store navigation data.
+                        </label>
+
+                        <div class="explanation">
+                            An electric thruster uses an electric motor
+                            and a propeller or impeller to generate
+                            hydrodynamic thrust.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="a">
+                        <h3>3. What does a motor controller regulate?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="a">
+                            Motor operation and electrical power delivery.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="b">
+                            Ocean salinity.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="c">
+                            Underwater GPS signals.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="d">
+                            Vehicle hull pressure only.
+                        </label>
+
+                        <div class="explanation">
+                            Motor controllers manage electrical power
+                            and regulate motor speed, torque, and
+                            other operating functions.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="d">
+                        <h3>4. Which unit is commonly used to measure electrical energy capacity?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="a">
+                            Volt.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="b">
+                            Ampere.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="c">
+                            Watt.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="d">
+                            Watt-hour.
+                        </label>
+
+                        <div class="explanation">
+                            Watt-hours measure energy capacity.
+                            Watts measure the rate of energy use,
+                            or power.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="b">
+                        <h3>5. What is a major function of a Battery Management System?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="a">
+                            Controlling underwater navigation.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="b">
+                            Monitoring and protecting battery operation.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="c">
+                            Generating propeller thrust.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="d">
+                            Measuring ocean currents.
+                        </label>
+
+                        <div class="explanation">
+                            A BMS monitors battery voltage, current,
+                            temperature, and other conditions to
+                            support safe battery operation.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>6. A device consumes 100 W for 2 hours. How much energy does it use?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="a">
+                            50 Wh.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="b">
+                            100 Wh.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="c">
+                            200 Wh.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="d">
+                            400 Wh.
+                        </label>
+
+                        <div class="explanation">
+                            Energy = Power × Time.
+                            100 W × 2 hours = 200 Wh.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="a">
+                        <h3>7. Which power architecture is common in many tethered ROVs?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="a">
+                            Electrical power supplied through a surface tether.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="b">
+                            Solar panels operating underwater.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="c">
+                            No electrical power source.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="d">
+                            Power generated by underwater GPS.
+                        </label>
+
+                        <div class="explanation">
+                            Many ROVs receive electrical power from
+                            a surface vessel through an umbilical,
+                            although battery and hybrid designs
+                            also exist.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="d">
+                        <h3>8. Which factor can significantly affect mission endurance?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="a">
+                            Average power consumption.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="b">
+                            Usable battery energy.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="c">
+                            Mission operating conditions.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="d">
+                            All of the above.
+                        </label>
+
+                        <div class="explanation">
+                            Endurance depends on usable stored energy,
+                            average load, mission conditions, losses,
+                            and safety reserves.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="b">
+                        <h3>9. What is cavitation in a marine propeller?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="a">
+                            A method of charging batteries.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="b">
+                            Formation and collapse of vapor cavities due to low local pressure.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="c">
+                            A navigation error caused by GPS.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="d">
+                            A method of increasing battery voltage.
+                        </label>
+
+                        <div class="explanation">
+                            Cavitation occurs when local pressure
+                            falls below water vapor pressure,
+                            creating vapor cavities that may collapse.
+                        </div>
+                    </div>
+
+                    <div class="question" data-answer="c">
+                        <h3>10. Why must engineers consider the complete vehicle when designing its energy system?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="a">
+                            Because the motor is the only energy consumer.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="b">
+                            Because battery capacity alone determines performance.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="c">
+                            Because propulsion, sensors, computing, and other loads share available energy.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="d">
+                            Because energy management is unrelated to mission planning.
+                        </label>
+
+                        <div class="explanation">
+                            A marine robot's total energy demand
+                            includes propulsion and all other
+                            electrical subsystems. The entire
+                            architecture must be considered.
+                        </div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="btn btn-primary" id="submitQuiz">
+                            Submit Answers
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" id="resetQuiz">
+                            Reset Quiz
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite">
+                    <h3 id="scoreText"></h3>
+                    <p id="resultMessage"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 15 REFERENCES -->
+
+        <section class="section" id="references">
+            <div class="section-heading">
+                <span class="number">15 / TECHNICAL REFERENCES</span>
+                <h2>Further Reading & Engineering Resources</h2>
+                <p>
+                    Explore established marine engineering and
+                    ocean technology resources for further study.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Recommended Technical Sources</h3>
+
+                <ul>
+                    <li>
+                        <a href="https://www.nationalacademies.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            National Academies of Sciences, Engineering, and Medicine
+                        </a>
+                        — Engineering research and technical publications.
+                    </li>
+
+                    <li>
+                        <a href="https://www.whoi.edu/"
+                           target="_blank" rel="noopener noreferrer">
+                            Woods Hole Oceanographic Institution (WHOI)
+                        </a>
+                        — Marine robotics, underwater vehicles,
+                        and ocean engineering research.
+                    </li>
+
+                    <li>
+                        <a href="https://oceanexplorer.noaa.gov/"
+                           target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Exploration
+                        </a>
+                        — Underwater vehicles and marine exploration systems.
+                    </li>
+
+                    <li>
+                        <a href="https://www.teledynemarine.com/"
+                           target="_blank" rel="noopener noreferrer">
+                            Teledyne Marine
+                        </a>
+                        — Marine technology, propulsion-related
+                        equipment, and underwater vehicle systems.
+                    </li>
+
+                    <li>
+                        <a href="https://www.ieee.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            IEEE
+                        </a>
+                        — Electrical engineering, motor control,
+                        power electronics, and energy systems research.
+                    </li>
+
+                    <li>
+                        <a href="https://www.energy.gov/"
+                           target="_blank" rel="noopener noreferrer">
+                            U.S. Department of Energy
+                        </a>
+                        — Battery technologies and energy storage research.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>
+                MARITERRA | Marine Technology & Engineering Education
+            </p>
+            <p>
+                Developed by <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const quizForm = document.getElementById("quizForm");
+        const questions = Array.from(
+            document.querySelectorAll(".question")
+        );
+
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+
+        const quizResult = document.getElementById("quizResult");
+        const scoreText = document.getElementById("scoreText");
+        const resultMessage = document.getElementById("resultMessage");
+
+        let submitted = false;
+
+        submitButton.addEventListener("click", function () {
+            if (submitted) {
+                return;
+            }
+
+            let score = 0;
+            let answered = 0;
+
+            questions.forEach(function (question) {
+                const selected = question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+                if (selected) {
+                    answered++;
+                }
+            });
+
+            if (answered !== questions.length) {
+                alert("Please answer all 10 questions before submitting.");
+                return;
+            }
+
+            questions.forEach(function (question) {
+                const correctAnswer = question.dataset.answer;
+
+                const selected = question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+                const explanation = question.querySelector(".explanation");
+
+                const options = question.querySelectorAll("input");
+
+                options.forEach(function (input) {
+                    input.disabled = true;
+                });
+
+                if (selected.value === correctAnswer) {
+                    score++;
+                    question.classList.add("correct");
+                } else {
+                    question.classList.add("incorrect");
+                }
+
+                explanation.style.display = "block";
+            });
+
+            submitted = true;
+            submitButton.disabled = true;
+
+            scoreText.textContent = "Your Score: " + score + " / 10";
+
+            if (score === 10) {
+                resultMessage.textContent =
+                    "Excellent! You have demonstrated a strong understanding of propulsion and energy systems.";
+            } else if (score >= 8) {
+                resultMessage.textContent =
+                    "Very good! Review the explanations to strengthen your engineering knowledge.";
+            } else if (score >= 6) {
+                resultMessage.textContent =
+                    "Good progress. Revisit the technical sections and review the questions you missed.";
+            } else {
+                resultMessage.textContent =
+                    "You need more practice. Review the learning material and try the assessment again.";
+            }
+
+            quizResult.style.display = "block";
+
+            quizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            questions.forEach(function (question) {
+                question.classList.remove("correct", "incorrect");
+
+                question.querySelectorAll("input").forEach(function (input) {
+                    input.disabled = false;
+                });
+
+                question.querySelector(".explanation").style.display = "none";
+            });
+
+            submitted = false;
+            submitButton.disabled = false;
+
+            quizResult.style.display = "none";
+            scoreText.textContent = "";
+            resultMessage.textContent = "";
+
+            quizForm.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+    </script>
+
+</body>
+</html>

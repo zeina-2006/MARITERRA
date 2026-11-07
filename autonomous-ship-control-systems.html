@@ -1,0 +1,1527 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Guidance, Navigation and Control (GNC) systems in autonomous ships, including vessel motion, navigation estimation, guidance algorithms, control strategies, actuators, and maritime applications.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Guidance, Navigation and Control Systems</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101226;
+            --surface-light: #171a34;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a6a8c4;
+            --border: rgba(196, 181, 253, 0.17);
+            --success: #34d399;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--blue);
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            padding: 75px 0 55px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.12), rgba(56, 189, 248, 0.04));
+        }
+
+        .breadcrumb {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb a {
+            color: var(--purple-light);
+        }
+
+        .topic-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            max-width: 950px;
+            margin-bottom: 22px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 850px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta span {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.78rem;
+            color: var(--purple-light);
+        }
+
+        main {
+            padding: 55px 0 80px;
+        }
+
+        .content-section {
+            margin-bottom: 48px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: rgba(16, 18, 38, 0.78);
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            color: var(--purple-light);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--blue);
+            font-size: 1rem;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            color: var(--muted);
+            padding-left: 24px;
+            margin: 12px 0 18px;
+        }
+
+        li {
+            margin-bottom: 9px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .concept-card {
+            padding: 22px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: 0.3s;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+        }
+
+        .concept-card h3 {
+            margin-top: 0;
+        }
+
+        .concept-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .formula {
+            background: #090b1b;
+            border-left: 3px solid var(--purple);
+            padding: 20px;
+            margin: 18px 0;
+            border-radius: 8px;
+            color: var(--purple-light);
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .note {
+            padding: 18px 20px;
+            margin: 22px 0;
+            border-radius: 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .warning {
+            border-color: rgba(251, 113, 133, 0.35);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .process div {
+            text-align: center;
+            padding: 16px 10px;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--purple-light);
+            font-size: 0.83rem;
+        }
+
+        .process div span {
+            display: block;
+            color: var(--blue);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        th {
+            background: var(--surface-light);
+            color: var(--purple-light);
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            margin: 0 0 15px;
+        }
+
+        .option {
+            display: block;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-right: 9px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(52, 211, 153, 0.09);
+            color: var(--success);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(251, 113, 133, 0.08);
+            color: var(--danger);
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 15px;
+            margin-top: 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 13px 23px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+            background: transparent;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.15);
+        }
+
+        #result {
+            display: none;
+            margin-top: 22px;
+            padding: 22px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid var(--blue);
+        }
+
+        #result h3 {
+            margin-top: 0;
+        }
+
+        .references li {
+            margin-bottom: 13px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 800px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-section {
+                padding: 22px 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 50px 0 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> /
+            <a href="autonomous-ships.html">Autonomous Ships</a> /
+            Topic 06
+        </div>
+
+        <div class="topic-number">AUTONOMOUS SHIPS — TOPIC 06</div>
+
+        <h1>Guidance, Navigation and <span class="gradient">Control Systems</span></h1>
+
+        <p class="hero-description">
+            Discover how autonomous vessels determine their position, calculate
+            desired movements, and control propulsion and steering systems to
+            follow planned routes while responding to changing maritime conditions.
+        </p>
+
+        <div class="meta">
+            <span>Marine Engineering</span>
+            <span>Autonomous Navigation</span>
+            <span>Control Engineering</span>
+            <span>Advanced Maritime Systems</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="content-section">
+        <h2>1. Introduction to GNC Systems</h2>
+
+        <p>
+            Guidance, Navigation and Control (GNC) is a fundamental engineering
+            framework used to determine where a vessel is, decide where it should
+            go, and control its physical movement to achieve the intended motion.
+            It connects navigation sensors, onboard computers, decision-making
+            software, propulsion equipment, and steering mechanisms.
+        </p>
+
+        <p>
+            In an autonomous ship, GNC systems help translate a planned route
+            into real vessel movement. The system continuously compares the
+            vessel's estimated state with its desired state and calculates
+            appropriate control actions.
+        </p>
+
+        <p>
+            GNC is not a single device. It is an interconnected collection of
+            hardware, software, mathematical models, algorithms, and feedback
+            mechanisms.
+        </p>
+
+        <div class="concept-grid">
+            <div class="concept-card">
+                <h3>Navigation</h3>
+                <p>
+                    Estimates the vessel's current position, heading, speed,
+                    orientation, and motion using sensors and estimation methods.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>Guidance</h3>
+                <p>
+                    Determines the desired path, direction, speed, or motion
+                    needed to reach a target or follow a route.
+                </p>
+            </div>
+
+            <div class="concept-card">
+                <h3>Control</h3>
+                <p>
+                    Commands propulsion and steering equipment to make the
+                    vessel's actual movement approach the desired movement.
+                </p>
+            </div>
+        </div>
+
+        <div class="note">
+            <p>
+                <strong>Important distinction:</strong> Navigation answers
+                "Where am I?", guidance answers "Where should I go and how should
+                I move?", and control answers "How can I make the vessel move
+                as intended?"
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>2. The Relationship Between Navigation, Guidance and Control</h2>
+
+        <p>
+            The three GNC functions operate as a continuous feedback system.
+            Their outputs and inputs are closely connected rather than working
+            as isolated processes.
+        </p>
+
+        <div class="process">
+            <div><span>01</span>Sensor Data</div>
+            <div><span>02</span>Navigation Estimate</div>
+            <div><span>03</span>Guidance Reference</div>
+            <div><span>04</span>Control Commands</div>
+            <div><span>05</span>Vessel Motion</div>
+        </div>
+
+        <p>
+            First, sensors collect information about the vessel's motion and
+            surrounding environment. The navigation function processes these
+            measurements to estimate the vessel's state. Guidance compares
+            this state with the intended route and produces desired motion
+            references. The control system then converts these references into
+            commands for the vessel's actuators.
+        </p>
+
+        <p>
+            New sensor measurements are continuously collected after the vessel
+            moves. This allows the system to detect deviations and update its
+            commands.
+        </p>
+
+        <h3>Feedback Control Loop</h3>
+
+        <p>
+            A feedback loop uses the difference between desired and measured
+            behaviour to calculate corrective actions. This difference is
+            commonly called the tracking error.
+        </p>
+
+        <div class="formula">
+            Tracking Error = Desired State − Estimated Actual State
+        </div>
+
+        <p>
+            For example, if a vessel should maintain a heading of 090 degrees
+            but its estimated heading is 085 degrees, the heading error is
+            approximately 5 degrees. The controller may request a steering
+            correction, depending on the vessel's dynamics and operating conditions.
+        </p>
+
+        <div class="note">
+            <p>
+                A small tracking error does not automatically mean that a vessel
+                is safe. The system must also consider traffic, obstacles,
+                environmental conditions, equipment limitations, and navigation rules.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>3. Navigation: Estimating the Vessel's State</h2>
+
+        <p>
+            Navigation within a GNC architecture is concerned with estimating
+            the vessel's state. This state may include position, velocity,
+            heading, angular motion, and other variables required for guidance
+            and control.
+        </p>
+
+        <h3>3.1 Position Estimation</h3>
+
+        <p>
+            Position estimation determines where the vessel is located relative
+            to a geographic reference system. Satellite navigation receivers
+            such as GNSS can provide position and velocity information.
+        </p>
+
+        <p>
+            However, GNSS signals may be degraded, obstructed, jammed, or spoofed.
+            Therefore, autonomous vessels may combine satellite positioning
+            with other navigation sources to improve reliability.
+        </p>
+
+        <h3>3.2 Heading and Orientation</h3>
+
+        <p>
+            Heading describes the direction in which the vessel's bow points
+            relative to a reference, commonly true north. Heading sensors and
+            inertial measurement units can contribute to orientation estimation.
+        </p>
+
+        <p>
+            Heading must not be confused with course over ground. A vessel may
+            point in one direction while moving over the ground in another
+            direction because of wind, waves, and current.
+        </p>
+
+        <h3>3.3 Velocity and Motion Estimation</h3>
+
+        <p>
+            Navigation systems estimate how fast the vessel moves and how its
+            motion changes. Speed through water and speed over ground are
+            different measurements and may vary significantly in strong currents.
+        </p>
+
+        <h3>3.4 Sensor Fusion and State Estimation</h3>
+
+        <p>
+            Sensor fusion combines measurements from different sources to
+            produce a more useful estimate of the vessel's state. Common
+            techniques include Kalman filtering and its variations.
+        </p>
+
+        <ul>
+            <li><strong>GNSS:</strong> Provides satellite-based position and velocity measurements.</li>
+            <li><strong>IMU:</strong> Measures acceleration and angular velocity.</li>
+            <li><strong>Gyrocompass:</strong> Provides heading information.</li>
+            <li><strong>Speed log:</strong> Measures speed relative to the surrounding water or another reference, depending on its type.</li>
+            <li><strong>Radar:</strong> Supports observation of nearby objects and relative motion.</li>
+        </ul>
+
+        <div class="note">
+            <p>
+                Sensor fusion does not make every measurement correct. Sensors
+                have different errors, update rates, failure modes, and reference
+                frames. Their quality and consistency must be monitored.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>4. Guidance: Generating Desired Vessel Motion</h2>
+
+        <p>
+            Guidance transforms a navigation objective into desired motion
+            references. These references may include a target heading, desired
+            speed, course, waypoint, or path-following command.
+        </p>
+
+        <h3>4.1 Waypoint Guidance</h3>
+
+        <p>
+            A waypoint is a predefined geographic position along a planned
+            route. Waypoint guidance calculates how the vessel should move
+            toward the next waypoint.
+        </p>
+
+        <p>
+            The guidance system may calculate the bearing to the waypoint and
+            compare it with the vessel's current heading to determine a
+            heading reference.
+        </p>
+
+        <div class="formula">
+            Heading Error = Desired Heading − Current Heading
+        </div>
+
+        <h3>4.2 Path Following</h3>
+
+        <p>
+            Path following focuses on keeping the vessel close to a predefined
+            geometric path. The vessel may travel at a suitable speed while
+            the guidance algorithm continuously adjusts the desired direction.
+        </p>
+
+        <h3>4.3 Trajectory Tracking</h3>
+
+        <p>
+            Trajectory tracking follows a path that also specifies how the
+            vessel should move over time. It can include desired position,
+            heading, speed, and timing.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Guidance Method</th>
+                        <th>Main Objective</th>
+                        <th>Typical Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Waypoint Guidance</td>
+                        <td>Reach successive target positions</td>
+                        <td>Route navigation</td>
+                    </tr>
+                    <tr>
+                        <td>Path Following</td>
+                        <td>Remain close to a geometric path</td>
+                        <td>Autonomous transit</td>
+                    </tr>
+                    <tr>
+                        <td>Trajectory Tracking</td>
+                        <td>Follow a time-dependent motion reference</td>
+                        <td>Precision manoeuvring</td>
+                    </tr>
+                    <tr>
+                        <td>Dynamic Positioning</td>
+                        <td>Maintain a desired position and heading</td>
+                        <td>Offshore operations</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>4.4 Guidance Algorithms</h3>
+
+        <p>
+            Different guidance algorithms are selected according to the vessel,
+            mission, environmental conditions, and required performance.
+        </p>
+
+        <ul>
+            <li><strong>Line-of-Sight (LOS):</strong> Generates a desired heading toward a target point on the path.</li>
+            <li><strong>Adaptive LOS:</strong> Adjusts guidance behaviour to help compensate for disturbances such as current.</li>
+            <li><strong>Pure Pursuit:</strong> Uses a look-ahead target on the path to calculate a steering direction.</li>
+            <li><strong>Model Predictive Guidance:</strong> Uses a predictive model to select suitable future motion references.</li>
+        </ul>
+
+        <div class="note">
+            <p>
+                Path following and trajectory tracking are related but not
+                identical. A vessel can follow the correct geometric path
+                without meeting a specified time or speed profile.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>5. Control: Managing Vessel Movement</h2>
+
+        <p>
+            The control function converts desired motion references into
+            physical commands. It attempts to reduce the difference between
+            the desired vessel behaviour and the actual estimated behaviour.
+        </p>
+
+        <h3>5.1 Heading Control</h3>
+
+        <p>
+            Heading control maintains or changes the vessel's heading by
+            controlling steering equipment. The controller receives a desired
+            heading and compares it with the estimated heading.
+        </p>
+
+        <h3>5.2 Speed Control</h3>
+
+        <p>
+            Speed control regulates propulsion to achieve a desired speed.
+            It may adjust engine output, electric motor power, propeller
+            commands, or other propulsion mechanisms.
+        </p>
+
+        <h3>5.3 Course and Track Control</h3>
+
+        <p>
+            Course control aims to maintain a desired direction of travel.
+            Track control focuses on following a planned ground track. Because
+            current and wind can move a vessel away from its intended track,
+            track control may require additional corrections.
+        </p>
+
+        <h3>5.4 Dynamic Positioning</h3>
+
+        <p>
+            Dynamic Positioning (DP) is a specialised control capability that
+            maintains a vessel's position and heading using computer-controlled
+            thrusters and propulsion units.
+        </p>
+
+        <p>
+            DP systems are widely used in offshore operations where a vessel
+            must remain near a specific location without relying solely on
+            conventional anchoring.
+        </p>
+
+        <h3>5.5 Common Control Algorithms</h3>
+
+        <p>
+            Several control methods can be used in maritime systems. The
+            appropriate choice depends on the vessel's dynamics, equipment,
+            operating environment, and performance requirements.
+        </p>
+
+        <ul>
+            <li><strong>PID Control:</strong> Uses proportional, integral, and derivative actions to reduce control error.</li>
+            <li><strong>Model Predictive Control (MPC):</strong> Predicts future behaviour and optimises control actions while considering constraints.</li>
+            <li><strong>Adaptive Control:</strong> Adjusts controller parameters when system behaviour or operating conditions change.</li>
+            <li><strong>Robust Control:</strong> Aims to maintain acceptable performance despite model uncertainty and disturbances.</li>
+            <li><strong>Sliding Mode Control:</strong> Uses a switching control strategy designed to provide robustness under certain uncertainties.</li>
+        </ul>
+
+        <h3>Understanding PID Control</h3>
+
+        <p>
+            PID is a widely used feedback-control approach. It combines three
+            components that respond to the control error in different ways.
+        </p>
+
+        <div class="formula">
+            u(t) = Kp e(t) + Ki ∫ e(t) dt + Kd de(t)/dt
+        </div>
+
+        <ul>
+            <li><strong>Proportional (P):</strong> Responds to the current error.</li>
+            <li><strong>Integral (I):</strong> Responds to accumulated error over time.</li>
+            <li><strong>Derivative (D):</strong> Responds to how quickly the error changes.</li>
+        </ul>
+
+        <p>
+            In a vessel heading controller, the PID output may contribute to
+            the rudder command. The actual implementation must account for
+            actuator limits, sensor noise, vessel dynamics, and safe operating
+            constraints.
+        </p>
+
+        <div class="note">
+            <p>
+                PID is not automatically the best controller for every ship.
+                Poor tuning can cause oscillation, slow response, excessive
+                actuator activity, or unstable behaviour.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>6. Vessel Dynamics and Mathematical Modelling</h2>
+
+        <p>
+            A control system needs a representation of how the vessel responds
+            to forces and control inputs. Vessel dynamics describe the
+            relationship between external forces, propulsion, steering,
+            and resulting motion.
+        </p>
+
+        <h3>6.1 Degrees of Freedom</h3>
+
+        <p>
+            A marine vessel can move in six degrees of freedom. These describe
+            its translation and rotation in three-dimensional space.
+        </p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Motion</th>
+                        <th>Description</th>
+                        <th>Axis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Surge</td>
+                        <td>Forward and backward movement</td>
+                        <td>Longitudinal</td>
+                    </tr>
+                    <tr>
+                        <td>Sway</td>
+                        <td>Sideways movement</td>
+                        <td>Transverse</td>
+                    </tr>
+                    <tr>
+                        <td>Heave</td>
+                        <td>Vertical movement</td>
+                        <td>Vertical</td>
+                    </tr>
+                    <tr>
+                        <td>Roll</td>
+                        <td>Rotation around the longitudinal axis</td>
+                        <td>Longitudinal</td>
+                    </tr>
+                    <tr>
+                        <td>Pitch</td>
+                        <td>Rotation around the transverse axis</td>
+                        <td>Transverse</td>
+                    </tr>
+                    <tr>
+                        <td>Yaw</td>
+                        <td>Rotation around the vertical axis</td>
+                        <td>Vertical</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>
+            For many horizontal-plane navigation and manoeuvring applications,
+            surge, sway, and yaw are particularly important. However, waves and
+            other operating conditions may require consideration of all six
+            degrees of freedom.
+        </p>
+
+        <h3>6.2 Forces and Disturbances</h3>
+
+        <p>
+            Vessel motion is affected by several forces and environmental
+            disturbances, including:
+        </p>
+
+        <ul>
+            <li>Propulsion forces generated by engines and propellers.</li>
+            <li>Hydrodynamic forces acting on the hull.</li>
+            <li>Rudder forces and steering effects.</li>
+            <li>Wind forces acting on exposed surfaces.</li>
+            <li>Wave-induced forces and motions.</li>
+            <li>Ocean currents and water movement.</li>
+        </ul>
+
+        <h3>6.3 A Simplified Dynamic Model</h3>
+
+        <p>
+            A common mathematical representation of marine craft dynamics
+            expresses the relationship between vessel velocity, acceleration,
+            forces, and environmental effects.
+        </p>
+
+        <div class="formula">
+            M ν̇ + C(ν)ν + D(ν)ν + g(η) = τ + τ_environment
+        </div>
+
+        <p>In this representation:</p>
+
+        <ul>
+            <li><strong>M:</strong> Inertia and added-mass matrix.</li>
+            <li><strong>ν:</strong> Vessel velocity vector.</li>
+            <li><strong>ν̇:</strong> Rate of change of vessel velocity.</li>
+            <li><strong>C(ν):</strong> Coriolis and centripetal effects.</li>
+            <li><strong>D(ν):</strong> Hydrodynamic damping.</li>
+            <li><strong>g(η):</strong> Restoring forces and moments, where relevant to the model.</li>
+            <li><strong>τ:</strong> Control forces and moments generated by actuators.</li>
+            <li><strong>τ_environment:</strong> Environmental forces and disturbances.</li>
+        </ul>
+
+        <p>
+            This is a generalised model. Its exact form, coordinate conventions,
+            and included terms depend on the vessel and modelling assumptions.
+            Engineers use vessel-specific parameters and validated models for
+            real control-system design.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>7. Actuators and Propulsion Interfaces</h2>
+
+        <p>
+            Actuators are the physical devices that execute control commands.
+            They connect the digital control system to the vessel's mechanical
+            and propulsion equipment.
+        </p>
+
+        <h3>Common Maritime Actuators</h3>
+
+        <ul>
+            <li><strong>Rudder:</strong> Changes the hydrodynamic forces that influence vessel heading.</li>
+            <li><strong>Main Propeller:</strong> Produces thrust for forward or reverse movement.</li>
+            <li><strong>Azimuth Thruster:</strong> Can rotate its thrust direction to support manoeuvring.</li>
+            <li><strong>Bow and Stern Thrusters:</strong> Provide lateral thrust for low-speed manoeuvring and positioning.</li>
+            <li><strong>Waterjet Systems:</strong> Generate thrust by accelerating a water stream.</li>
+            <li><strong>Electric Propulsion Motors:</strong> Convert electrical power into mechanical propulsion.</li>
+        </ul>
+
+        <h3>Actuator Constraints</h3>
+
+        <p>
+            Real actuators cannot respond instantly or produce unlimited force.
+            Their physical limits must be considered by the control system.
+        </p>
+
+        <ul>
+            <li>Maximum and minimum actuator output.</li>
+            <li>Rate limits and response time.</li>
+            <li>Mechanical wear and maintenance condition.</li>
+            <li>Power availability and energy consumption.</li>
+            <li>Communication and command failures.</li>
+        </ul>
+
+        <div class="note">
+            <p>
+                A controller may calculate a desired rudder angle, but the
+                physical steering gear may not be able to reach that angle
+                immediately. Safe control design must account for this delay
+                and actuator limitation.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>8. GNC Integration in Autonomous Ships</h2>
+
+        <p>
+            In an autonomous vessel, GNC functions are integrated with other
+            systems, including perception, mission planning, collision-risk
+            assessment, communications, and safety monitoring.
+        </p>
+
+        <h3>Typical Integrated Workflow</h3>
+
+        <ol>
+            <li>The navigation system estimates the vessel's position, heading, and motion.</li>
+            <li>The perception system detects and tracks relevant objects and environmental features.</li>
+            <li>The mission planner provides the intended destination and route.</li>
+            <li>The guidance function generates desired motion references.</li>
+            <li>The control function calculates steering and propulsion commands.</li>
+            <li>Actuators execute the commands within their physical limits.</li>
+            <li>Feedback measurements are used to evaluate actual vessel movement.</li>
+            <li>Safety functions monitor abnormal conditions and may request a safe response.</li>
+        </ol>
+
+        <h3>Coordination with Collision Avoidance</h3>
+
+        <p>
+            GNC does not independently decide every navigation action. A
+            collision-avoidance or supervisory decision system may request
+            a change in course or speed. Guidance and control then help execute
+            the approved manoeuvre.
+        </p>
+
+        <p>
+            The system must ensure that a requested manoeuvre is physically
+            achievable and remains compatible with vessel limitations,
+            navigational constraints, and applicable collision regulations.
+        </p>
+
+        <div class="note warning">
+            <p>
+                <strong>Safety principle:</strong> A technically successful
+                steering command is not necessarily a safe navigational
+                decision. GNC execution must remain coordinated with
+                collision avoidance, COLREGs compliance, and the vessel's
+                safety architecture.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>9. Practical Engineering Scenario</h2>
+
+        <p>
+            Consider an autonomous cargo vessel travelling toward a waypoint
+            along a planned route. Wind and current gradually push the vessel
+            away from its intended track.
+        </p>
+
+        <h3>Step 1 — Navigation</h3>
+        <p>
+            GNSS, heading sensors, speed measurements, and inertial data are
+            processed to estimate the vessel's position and movement.
+        </p>
+
+        <h3>Step 2 — Guidance</h3>
+        <p>
+            The guidance algorithm calculates the required heading reference
+            to reduce cross-track error and continue toward the waypoint.
+        </p>
+
+        <h3>Step 3 — Control</h3>
+        <p>
+            The controller compares the desired heading with the estimated
+            heading and calculates a steering command.
+        </p>
+
+        <h3>Step 4 — Actuation</h3>
+        <p>
+            The steering gear moves the rudder according to the command,
+            subject to its response time and mechanical limits.
+        </p>
+
+        <h3>Step 5 — Feedback</h3>
+        <p>
+            New sensor measurements show whether the vessel is returning
+            toward the planned track. The system updates its calculations
+            and commands as necessary.
+        </p>
+
+        <p>
+            If the system detects an obstacle or a developing collision risk,
+            a higher-level safety or collision-avoidance function may request
+            a different manoeuvre rather than simply continuing to reduce
+            cross-track error.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>10. Engineering Challenges and Limitations</h2>
+
+        <h3>Environmental Uncertainty</h3>
+        <p>
+            Wind, waves, currents, and changing water conditions can make vessel
+            behaviour differ from mathematical predictions.
+        </p>
+
+        <h3>Sensor Errors and Failures</h3>
+        <p>
+            Incorrect measurements, signal loss, calibration problems, or
+            cyber interference can reduce the accuracy of navigation estimates.
+        </p>
+
+        <h3>Model Uncertainty</h3>
+        <p>
+            A mathematical model cannot perfectly represent every hydrodynamic
+            effect, loading condition, or operating environment.
+        </p>
+
+        <h3>Control Delays</h3>
+        <p>
+            Sensors, communication networks, computers, and actuators all
+            introduce delays that can affect system performance.
+        </p>
+
+        <h3>System Integration</h3>
+        <p>
+            Navigation, guidance, control, perception, propulsion, and safety
+            systems must exchange information reliably and consistently.
+        </p>
+
+        <h3>Cybersecurity and Functional Safety</h3>
+        <p>
+            Unauthorised commands, software faults, compromised sensors, and
+            communication failures can affect the vessel's ability to navigate
+            and control its movement safely.
+        </p>
+
+        <h3>Testing and Validation</h3>
+        <p>
+            GNC algorithms must be tested under realistic conditions, including
+            simulation, hardware-in-the-loop testing, controlled trials, and
+            operational validation as appropriate.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>11. Future Developments in Maritime GNC</h2>
+
+        <ul>
+            <li>
+                <strong>AI-Assisted Control:</strong> Machine learning may help
+                estimate complex system behaviour and support adaptive control.
+            </li>
+            <li>
+                <strong>Digital Twins:</strong> Virtual vessel models can support
+                simulation, performance analysis, and predictive maintenance.
+            </li>
+            <li>
+                <strong>Advanced Sensor Fusion:</strong> Improved estimation
+                methods may combine more diverse navigation and perception sources.
+            </li>
+            <li>
+                <strong>Energy-Aware Control:</strong> Control strategies may
+                optimise propulsion and energy use while respecting safety limits.
+            </li>
+            <li>
+                <strong>Cooperative Autonomous Systems:</strong> Connected vessels
+                may exchange information to support coordinated operations.
+            </li>
+            <li>
+                <strong>Resilient Navigation:</strong> Future systems will place
+                greater emphasis on maintaining reliable navigation when
+                satellite signals or other sources become unavailable.
+            </li>
+        </ul>
+
+        <div class="note">
+            <p>
+                AI can support GNC, but it does not automatically guarantee
+                safe or reliable control. Any AI-assisted function must be
+                evaluated for robustness, explainability where required,
+                failure handling, and operational safety.
+            </p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <h2>12. Key Takeaways</h2>
+
+        <ul>
+            <li>GNC stands for Guidance, Navigation and Control.</li>
+            <li>Navigation estimates the vessel's position and motion.</li>
+            <li>Guidance generates desired motion references.</li>
+            <li>Control calculates commands to achieve the desired movement.</li>
+            <li>Feedback helps the system correct deviations continuously.</li>
+            <li>Sensor fusion can improve state estimation but cannot eliminate all uncertainty.</li>
+            <li>Vessel dynamics describe how forces and control inputs affect motion.</li>
+            <li>Actuator limitations must be considered in real control systems.</li>
+            <li>GNC must coordinate with collision avoidance and safety functions.</li>
+            <li>Simulation, testing, and validation are essential before operational deployment.</li>
+        </ul>
+    </section>
+
+    <section class="content-section" id="quiz">
+        <h2>13. Knowledge Assessment</h2>
+
+        <p class="quiz-intro">
+            Answer all 10 questions to evaluate your understanding of
+            Guidance, Navigation and Control Systems. Submit your answers
+            to see your score, the correct answers, and explanations.
+        </p>
+
+        <div id="questions"></div>
+
+        <div class="quiz-actions">
+            <button class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+            <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+        </div>
+
+        <div id="result" aria-live="polite"></div>
+    </section>
+
+    <section class="content-section">
+        <h2>14. Technical References and Further Reading</h2>
+
+        <ul class="references">
+            <li>
+                <strong>IMO — International Maritime Organization:</strong>
+                <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                    Official maritime safety and regulatory resources.
+                </a>
+            </li>
+            <li>
+                <strong>IALA — International Organization for Marine Aids to Navigation:</strong>
+                <a href="https://www.iala.int/" target="_blank" rel="noopener noreferrer">
+                    Marine aids to navigation, systems, and technical guidance.
+                </a>
+            </li>
+            <li>
+                <strong>Fossen, T. I. — Handbook of Marine Craft Hydrodynamics and Motion Control:</strong>
+                <a href="https://www.wiley.com/" target="_blank" rel="noopener noreferrer">
+                    Reference publisher — Wiley.
+                </a>
+            </li>
+            <li>
+                <strong>Fossen, T. I. — Marine Control Systems:</strong>
+                <a href="https://www.fossen.biz/" target="_blank" rel="noopener noreferrer">
+                    Marine craft modelling, guidance, navigation, and control resources.
+                </a>
+            </li>
+            <li>
+                <strong>IMO — International Convention on Standards of Training, Certification and Watchkeeping:</strong>
+                <a href="https://www.imo.org/en/OurWork/HumanElement/Pages/STCW-Convention.aspx" target="_blank" rel="noopener noreferrer">
+                    STCW Convention and related information.
+                </a>
+            </li>
+            <li>
+                <strong>DNV:</strong>
+                <a href="https://www.dnv.com/" target="_blank" rel="noopener noreferrer">
+                    Maritime technology, classification, and technical publications.
+                </a>
+            </li>
+        </ul>
+
+        <p>
+            These references provide starting points for further study.
+            Specific vessel-control designs require additional technical
+            standards, validated models, manufacturer documentation, and
+            vessel-specific engineering data.
+        </p>
+    </section>
+
+</main>
+
+<footer>
+    DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED
+    <br>
+    MARITERRA — EXPLORING THE FUTURE OF MARITIME TECHNOLOGY
+</footer>
+
+<script>
+    const quizData = [
+        {
+            question: "1. What is the primary purpose of Navigation in a GNC system?",
+            options: [
+                "To control the rudder directly",
+                "To estimate the vessel's position and motion",
+                "To generate engine power",
+                "To select the vessel's cargo"
+            ],
+            answer: 1,
+            explanation: "Navigation estimates the vessel's state, including position, heading, and velocity, using available sensor information."
+        },
+        {
+            question: "2. Which GNC function generates desired motion references?",
+            options: [
+                "Guidance",
+                "Actuation",
+                "Propulsion",
+                "Communication"
+            ],
+            answer: 0,
+            explanation: "Guidance determines the desired path, heading, speed, or trajectory that the vessel should follow."
+        },
+        {
+            question: "3. What is the main role of the Control function?",
+            options: [
+                "To identify cargo documents",
+                "To generate geographic maps",
+                "To calculate commands that achieve desired vessel motion",
+                "To replace all navigation sensors"
+            ],
+            answer: 2,
+            explanation: "Control converts desired motion references into physical commands for steering and propulsion equipment."
+        },
+        {
+            question: "4. What does GNSS primarily provide to a vessel navigation system?",
+            options: [
+                "Direct rudder movement",
+                "Satellite-based position and velocity information",
+                "Engine temperature",
+                "Collision regulations"
+            ],
+            answer: 1,
+            explanation: "GNSS provides satellite-based positioning and can provide velocity information, although its signals may be degraded or unavailable."
+        },
+        {
+            question: "5. Which method combines proportional, integral, and derivative actions?",
+            options: [
+                "LOS",
+                "GNSS",
+                "PID",
+                "AIS"
+            ],
+            answer: 2,
+            explanation: "PID control combines proportional, integral, and derivative terms to calculate corrective control actions."
+        },
+        {
+            question: "6. What is the main difference between path following and trajectory tracking?",
+            options: [
+                "Path following is always safer",
+                "Trajectory tracking includes time-dependent motion references",
+                "Path following requires no navigation",
+                "Trajectory tracking only works with submarines"
+            ],
+            answer: 1,
+            explanation: "Path following focuses on a geometric path, while trajectory tracking also considers how the desired motion changes over time."
+        },
+        {
+            question: "7. Which of the following is an example of an actuator?",
+            options: [
+                "A rudder",
+                "A digital chart",
+                "A GNSS satellite",
+                "A navigation database"
+            ],
+            answer: 0,
+            explanation: "A rudder is a physical steering actuator that changes hydrodynamic forces and influences vessel heading."
+        },
+        {
+            question: "8. How many degrees of freedom are commonly used to describe a vessel's full three-dimensional motion?",
+            options: [
+                "Two",
+                "Three",
+                "Four",
+                "Six"
+            ],
+            answer: 3,
+            explanation: "The six degrees of freedom are surge, sway, heave, roll, pitch, and yaw."
+        },
+        {
+            question: "9. Why must actuator limitations be considered in control-system design?",
+            options: [
+                "Because actuators have physical output and response limits",
+                "Because actuators always respond instantly",
+                "Because actuators determine satellite positions",
+                "Because actuator limits remove environmental disturbances"
+            ],
+            answer: 0,
+            explanation: "Actuators have constraints such as maximum output, response time, rate limits, and power availability."
+        },
+        {
+            question: "10. Why must GNC systems coordinate with collision-avoidance functions?",
+            options: [
+                "To ignore environmental conditions",
+                "To guarantee that every planned route is safe",
+                "To ensure control actions are consistent with safe navigation decisions",
+                "To remove the need for COLREGs"
+            ],
+            answer: 2,
+            explanation: "GNC executes desired motion, but safe manoeuvres must be coordinated with collision avoidance, navigational constraints, and applicable COLREGs."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById("questions");
+
+        container.innerHTML = quizData.map((item, index) => `
+            <div class="question" id="question-${index}">
+                <h3>${item.question}</h3>
+
+                ${item.options.map((option, optionIndex) => `
+                    <label class="option" id="option-${index}-${optionIndex}">
+                        <input
+                            type="radio"
+                            name="question-${index}"
+                            value="${optionIndex}"
+                        >
+                        ${option}
+                    </label>
+                `).join("")}
+
+                <div class="explanation" id="explanation-${index}"></div>
+            </div>
+        `).join("");
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let unanswered = 0;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            if (!selected) {
+                unanswered++;
+            }
+        });
+
+        if (unanswered > 0) {
+            alert(`Please answer all questions. Unanswered: ${unanswered}`);
+            return;
+        }
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            const selectedValue = Number(selected.value);
+            const correctOption = document.getElementById(
+                `option-${index}-${item.answer}`
+            );
+
+            const selectedOption = document.getElementById(
+                `option-${index}-${selectedValue}`
+            );
+
+            const explanation = document.getElementById(
+                `explanation-${index}`
+            );
+
+            if (selectedValue === item.answer) {
+                score++;
+                selectedOption.classList.add("correct");
+            } else {
+                selectedOption.classList.add("incorrect");
+                correctOption.classList.add("correct");
+            }
+
+            explanation.innerHTML = `
+                <strong>Correct answer:</strong>
+                ${item.options[item.answer]}
+                <br><br>
+                <strong>Explanation:</strong>
+                ${item.explanation}
+            `;
+
+            explanation.classList.add("show");
+
+            document.querySelectorAll(
+                `input[name="question-${index}"]`
+            ).forEach(input => input.disabled = true);
+        });
+
+        const percentage = (score / quizData.length) * 100;
+        let message = "";
+
+        if (percentage >= 90) {
+            message = "Excellent! You have a strong understanding of GNC systems.";
+        } else if (percentage >= 70) {
+            message = "Good work! Review the explanations to strengthen your knowledge.";
+        } else if (percentage >= 50) {
+            message = "A fair attempt. Review the topic and try again.";
+        } else {
+            message = "You need more practice. Revisit the learning material before retrying.";
+        }
+
+        const result = document.getElementById("result");
+
+        result.innerHTML = `
+            <h3>Assessment Results</h3>
+            <p><strong>Score:</strong> ${score} / ${quizData.length}</p>
+            <p><strong>Percentage:</strong> ${percentage}%</p>
+            <p>${message}</p>
+            <p>Correct answers are highlighted in green.
+            Incorrect selections are highlighted in red.</p>
+        `;
+
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetQuiz() {
+        renderQuiz();
+
+        const result = document.getElementById("result");
+        result.style.display = "none";
+        result.innerHTML = "";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>

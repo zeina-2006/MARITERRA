@@ -1,0 +1,1519 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Artificial Intelligence | MARITERRA</title>
+    <meta name="description" content="Explore Artificial Intelligence in the maritime industry through engineering knowledge, machine learning, predictive analytics, intelligent navigation and autonomous ships.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --ai-bg: #070816;
+            --ai-panel: #100e22;
+            --ai-panel-light: #17132d;
+            --ai-purple: #9333ea;
+            --ai-purple-light: #c4b5fd;
+            --ai-blue: #38bdf8;
+            --ai-white: #f5f3ff;
+            --ai-muted: #aaa7c2;
+            --ai-border: rgba(168, 85, 247, 0.23);
+            --ai-glow: rgba(147, 51, 234, 0.25);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background: var(--ai-bg);
+            color: var(--ai-white);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        .ai-page {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 15% 12%, rgba(147, 51, 234, 0.13), transparent 35%),
+                radial-gradient(ellipse at 90% 42%, rgba(56, 189, 248, 0.07), transparent 32%),
+                var(--ai-bg);
+        }
+
+        .ai-page a {
+            text-decoration: none;
+        }
+
+        .ai-container {
+            width: min(1320px, 92%);
+            margin: auto;
+        }
+
+        .ai-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ai-purple-light);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .ai-label::before {
+            content: "";
+            width: 25px;
+            height: 1px;
+            background: var(--ai-purple);
+            box-shadow: 0 0 10px var(--ai-purple);
+        }
+
+        /* HERO */
+
+        .ai-hero {
+            min-height: 650px;
+            padding: 110px 0 100px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            isolation: isolate;
+        }
+
+        .ai-hero::before {
+            content: "";
+            position: absolute;
+            width: 540px;
+            height: 540px;
+            right: -120px;
+            top: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(196, 181, 253, 0.12);
+            box-shadow:
+                0 0 80px rgba(147, 51, 234, 0.12),
+                inset 0 0 80px rgba(147, 51, 234, 0.08);
+            z-index: -1;
+            animation: ai-orbit 24s linear infinite;
+        }
+
+        .ai-hero::after {
+            content: "";
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            right: -45px;
+            top: 105px;
+            border-radius: 50%;
+            border: 1px dashed rgba(56, 189, 248, 0.25);
+            z-index: -1;
+            animation: ai-orbit 18s linear infinite reverse;
+        }
+
+        .ai-hero-content {
+            max-width: 790px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ai-hero h1 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(42px, 7vw, 83px);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -2px;
+            margin: 25px 0;
+        }
+
+        .ai-hero h1 span {
+            display: block;
+            color: var(--ai-purple-light);
+            text-shadow: 0 0 35px rgba(147, 51, 234, 0.35);
+        }
+
+        .ai-hero-description {
+            max-width: 680px;
+            color: var(--ai-muted);
+            font-size: 15px;
+            line-height: 2;
+            margin-bottom: 35px;
+        }
+
+        .ai-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .ai-btn {
+            min-height: 48px;
+            padding: 0 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+        }
+
+        .ai-btn-primary {
+            color: white;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            box-shadow: 0 8px 30px rgba(147, 51, 234, 0.2);
+        }
+
+        .ai-btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.4);
+        }
+
+        .ai-btn-secondary {
+            color: var(--ai-purple-light);
+            border: 1px solid var(--ai-border);
+        }
+
+        .ai-btn-secondary:hover {
+            border-color: var(--ai-purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .ai-hero-note {
+            margin-top: 55px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+        }
+
+        .ai-hero-note div {
+            border-left: 2px solid var(--ai-purple);
+            padding-left: 14px;
+        }
+
+        .ai-hero-note strong {
+            display: block;
+            font-family: "Orbitron", sans-serif;
+            font-size: 23px;
+            color: var(--ai-white);
+        }
+
+        .ai-hero-note span {
+            display: block;
+            margin-top: 6px;
+            color: var(--ai-muted);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* INTRODUCTION */
+
+        .ai-intro {
+            padding: 90px 0;
+            border-top: 1px solid var(--ai-border);
+            border-bottom: 1px solid var(--ai-border);
+            background: linear-gradient(110deg, rgba(147, 51, 234, 0.07), rgba(7, 8, 22, 0.1));
+        }
+
+        .ai-intro-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 75px;
+            align-items: center;
+        }
+
+        .ai-intro h2,
+        .ai-section-heading h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(27px, 4vw, 43px);
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 18px 0;
+        }
+
+        .ai-intro h2 span,
+        .ai-section-heading h2 span {
+            color: var(--ai-purple-light);
+        }
+
+        .ai-intro-text p {
+            color: var(--ai-muted);
+            font-size: 13px;
+            line-height: 2.1;
+            margin-bottom: 15px;
+        }
+
+        .ai-intro-visual {
+            min-height: 300px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px solid var(--ai-border);
+            border-radius: 8px;
+            background:
+                radial-gradient(circle at center, rgba(147, 51, 234, 0.2), transparent 65%),
+                linear-gradient(145deg, #17112b, #090a19);
+        }
+
+        .ai-core {
+            width: 155px;
+            height: 155px;
+            border: 1px solid rgba(196, 181, 253, 0.65);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            background: rgba(147, 51, 234, 0.12);
+            box-shadow: 0 0 45px rgba(147, 51, 234, 0.25);
+            animation: ai-pulse 3s ease-in-out infinite;
+        }
+
+        .ai-core strong {
+            font-family: "Orbitron", sans-serif;
+            font-size: 27px;
+            color: var(--ai-purple-light);
+        }
+
+        .ai-core span {
+            font-size: 8px;
+            letter-spacing: 2px;
+            margin-top: 7px;
+        }
+
+        .ai-orbit {
+            position: absolute;
+            width: 245px;
+            height: 245px;
+            border: 1px dashed rgba(56, 189, 248, 0.45);
+            border-radius: 50%;
+            animation: ai-orbit 20s linear infinite;
+        }
+
+        .ai-orbit-two {
+            width: 320px;
+            height: 320px;
+            border-color: rgba(196, 181, 253, 0.2);
+            animation-duration: 30s;
+            animation-direction: reverse;
+        }
+
+        .ai-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--ai-blue);
+            box-shadow: 0 0 15px var(--ai-blue);
+        }
+
+        .ai-node-one { top: 28%; left: 22%; }
+        .ai-node-two { right: 20%; top: 30%; background: var(--ai-purple-light); }
+        .ai-node-three { bottom: 18%; left: 48%; }
+
+        /* WHY AI */
+
+        .ai-why {
+            padding: 100px 0;
+        }
+
+        .ai-section-heading {
+            max-width: 760px;
+            margin: 0 auto 55px;
+            text-align: center;
+        }
+
+        .ai-section-heading .ai-label {
+            justify-content: center;
+        }
+
+        .ai-section-heading p {
+            color: var(--ai-muted);
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .ai-benefits {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .ai-benefit {
+            padding: 30px;
+            min-height: 205px;
+            border: 1px solid var(--ai-border);
+            background: linear-gradient(145deg, rgba(23, 19, 45, 0.9), rgba(10, 10, 25, 0.9));
+            border-radius: 7px;
+            transition: 0.35s ease;
+        }
+
+        .ai-benefit:hover {
+            transform: translateY(-7px);
+            border-color: var(--ai-purple);
+            box-shadow: 0 15px 35px rgba(147, 51, 234, 0.1);
+        }
+
+        .ai-benefit-number {
+            font-family: "Orbitron", sans-serif;
+            color: var(--ai-purple-light);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .ai-benefit h3 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            margin: 22px 0 12px;
+        }
+
+        .ai-benefit p {
+            color: var(--ai-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        /* AI WORKFLOW */
+
+        .ai-workflow {
+            padding: 95px 0;
+            background:
+                radial-gradient(ellipse at 50% 50%, rgba(147, 51, 234, 0.11), transparent 60%),
+                #0b0a1a;
+            border-top: 1px solid var(--ai-border);
+            border-bottom: 1px solid var(--ai-border);
+        }
+
+        .ai-workflow-layout {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 65px;
+            align-items: center;
+        }
+
+        .ai-workflow-info h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(25px, 3.5vw, 38px);
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 20px 0;
+        }
+
+        .ai-workflow-info h2 span {
+            color: var(--ai-purple-light);
+        }
+
+        .ai-workflow-info p {
+            color: var(--ai-muted);
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        .ai-workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .ai-step {
+            min-height: 115px;
+            text-align: left;
+            padding: 20px;
+            cursor: pointer;
+            color: var(--ai-white);
+            background: rgba(20, 16, 39, 0.85);
+            border: 1px solid var(--ai-border);
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .ai-step:hover,
+        .ai-step.active {
+            border-color: var(--ai-purple);
+            background: rgba(147, 51, 234, 0.13);
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.1);
+        }
+
+        .ai-step span {
+            display: block;
+            color: var(--ai-purple-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .ai-step strong {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .ai-step-description {
+            grid-column: 1 / -1;
+            min-height: 75px;
+            padding: 20px;
+            border-left: 2px solid var(--ai-purple);
+            background: rgba(147, 51, 234, 0.06);
+            color: var(--ai-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        /* TOPICS */
+
+        .ai-topics {
+            padding: 110px 0;
+        }
+
+        .ai-topics-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 45px;
+        }
+
+        .ai-topics-heading h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(28px, 4vw, 45px);
+            font-weight: 500;
+            line-height: 1.4;
+            margin-top: 17px;
+        }
+
+        .ai-topics-heading h2 span {
+            color: var(--ai-purple-light);
+        }
+
+        .ai-topics-heading p {
+            max-width: 390px;
+            color: var(--ai-muted);
+            font-size: 11px;
+            line-height: 1.9;
+        }
+
+        .ai-topics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 19px;
+        }
+
+        .ai-topic-card {
+            min-height: 245px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 27px;
+            overflow: hidden;
+            border: 1px solid var(--ai-border);
+            border-radius: 7px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(147, 51, 234, 0.12), transparent 45%),
+                linear-gradient(145deg, #151127, #0b0b1b);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .ai-topic-card::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -45px;
+            bottom: -45px;
+            border: 1px solid rgba(196, 181, 253, 0.14);
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        .ai-topic-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--ai-purple);
+            box-shadow: 0 15px 40px rgba(147, 51, 234, 0.13);
+        }
+
+        .ai-topic-card:hover::before {
+            transform: scale(2.2);
+            border-color: rgba(196, 181, 253, 0.28);
+        }
+
+        .ai-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .ai-card-number {
+            color: var(--ai-purple-light);
+            font-family: "Orbitron", sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        .ai-card-mark {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--ai-border);
+            border-radius: 50%;
+            color: var(--ai-purple-light);
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .ai-topic-card:hover .ai-card-mark {
+            color: white;
+            background: var(--ai-purple);
+            transform: rotate(45deg);
+        }
+
+        .ai-topic-card h3 {
+            position: relative;
+            z-index: 1;
+            font-family: "Orbitron", sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.7;
+            margin-bottom: 13px;
+        }
+
+        .ai-topic-card p {
+            position: relative;
+            z-index: 1;
+            color: var(--ai-muted);
+            font-size: 11px;
+            line-height: 1.9;
+            margin-bottom: 25px;
+        }
+
+        .ai-card-link {
+            position: relative;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: auto;
+            color: var(--ai-purple-light);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .ai-card-link span {
+            transition: transform 0.3s;
+        }
+
+        .ai-topic-card:hover .ai-card-link span {
+            transform: translateX(5px);
+        }
+
+        /* LEARNING OUTCOMES */
+
+        .ai-outcomes {
+            padding: 90px 0;
+            border-top: 1px solid var(--ai-border);
+            background: linear-gradient(110deg, rgba(147, 51, 234, 0.08), transparent);
+        }
+
+        .ai-outcomes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .ai-outcomes h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(26px, 3.5vw, 40px);
+            font-weight: 500;
+            line-height: 1.4;
+            margin: 18px 0;
+        }
+
+        .ai-outcomes h2 span {
+            color: var(--ai-purple-light);
+        }
+
+        .ai-outcomes p {
+            color: var(--ai-muted);
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        .ai-outcome-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .ai-outcome-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 15px;
+            border: 1px solid var(--ai-border);
+            background: rgba(15, 13, 32, 0.75);
+            border-radius: 5px;
+        }
+
+        .ai-outcome-item span {
+            color: var(--ai-purple-light);
+            font-size: 15px;
+        }
+
+        .ai-outcome-item p {
+            color: var(--ai-white);
+            font-size: 11px;
+        }
+
+        /* FOOTER */
+
+        .ai-footer {
+            padding: 50px 4%;
+            text-align: center;
+            border-top: 1px solid var(--ai-border);
+            background: #060611;
+        }
+
+        .ai-footer-logo {
+            font-family: "Orbitron", sans-serif;
+            font-size: 24px;
+            letter-spacing: 5px;
+        }
+
+        .ai-footer > p {
+            margin-top: 12px;
+            color: var(--ai-muted);
+            font-size: 9px;
+            letter-spacing: 2px;
+        }
+
+        .ai-footer-line {
+            width: min(500px, 80%);
+            height: 1px;
+            margin: 28px auto;
+            background: linear-gradient(90deg, transparent, var(--ai-purple), transparent);
+        }
+
+        .ai-footer .copyright {
+            font-size: 10px;
+            line-height: 2;
+            letter-spacing: 0.5px;
+        }
+
+        .ai-footer .developer {
+            color: var(--ai-purple-light);
+        }
+
+        /* REVEAL ANIMATION */
+
+        .ai-reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .ai-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes ai-orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes ai-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.2); }
+            50% { box-shadow: 0 0 65px rgba(147, 51, 234, 0.4); }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            .ai-hero::before {
+                right: -260px;
+            }
+
+            .ai-hero::after {
+                right: -180px;
+            }
+
+            .ai-intro-grid,
+            .ai-workflow-layout {
+                gap: 35px;
+            }
+
+            .ai-topics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .ai-hero {
+                min-height: 580px;
+                padding: 85px 0;
+            }
+
+            .ai-hero-description {
+                font-size: 13px;
+            }
+
+            .ai-hero::before {
+                width: 350px;
+                height: 350px;
+                right: -230px;
+                top: 70px;
+            }
+
+            .ai-hero::after {
+                width: 260px;
+                height: 260px;
+                right: -180px;
+                top: 115px;
+            }
+
+            .ai-intro-grid,
+            .ai-workflow-layout,
+            .ai-outcomes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-intro-grid {
+                gap: 35px;
+            }
+
+            .ai-intro-visual {
+                min-height: 270px;
+            }
+
+            .ai-benefits {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-topics-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .ai-topics-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .ai-container {
+                width: 90%;
+            }
+
+            .ai-hero h1 {
+                font-size: 39px;
+                letter-spacing: -1px;
+            }
+
+            .ai-hero-note {
+                gap: 20px;
+            }
+
+            .ai-hero-note strong {
+                font-size: 19px;
+            }
+
+            .ai-topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-topic-card {
+                min-height: 220px;
+            }
+
+            .ai-workflow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-step-description {
+                grid-column: auto;
+            }
+
+            .ai-intro,
+            .ai-why,
+            .ai-workflow,
+            .ai-topics,
+            .ai-outcomes {
+                padding: 70px 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .ai-reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ai-page">
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">⚓</span>
+            <div class="logo-text">
+                MARITERRA
+                <small>The Future of Maritime Knowledge</small>
+            </div>
+        </a>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="academics.html">Academics <span>⌄</span></a>
+            <a href="technology.html" class="active">Maritime Technology <span>⌄</span></a>
+            <a href="knowledge.html">Knowledge Hub <span>⌄</span></a>
+            <a href="index.html#about">About</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="login.html" class="login-btn">♙ Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="ai-hero">
+            <div class="ai-container">
+                <div class="ai-hero-content ai-reveal">
+
+                    <span class="ai-label">
+                        MARITIME TECHNOLOGY / INTELLIGENT SYSTEMS
+                    </span>
+
+                    <h1>
+                        ARTIFICIAL
+                        <span>INTELLIGENCE.</span>
+                    </h1>
+
+                    <p class="ai-hero-description">
+                        Discover how Artificial Intelligence is transforming
+                        the maritime industry. Explore intelligent algorithms,
+                        machine learning, predictive systems, autonomous
+                        vessels, and the technologies shaping the future
+                        of global maritime operations.
+                    </p>
+
+                    <div class="ai-hero-actions">
+                        <a href="#ai-topics" class="ai-btn ai-btn-primary">
+                            EXPLORE 15 TOPICS →
+                        </a>
+
+                        <a href="#ai-overview" class="ai-btn ai-btn-secondary">
+                            DISCOVER AI
+                        </a>
+                    </div>
+
+                    <div class="ai-hero-note">
+                        <div>
+                            <strong>15</strong>
+                            <span>Learning Topics</span>
+                        </div>
+
+                        <div>
+                            <strong>20</strong>
+                            <span>Questions Per Topic</span>
+                        </div>
+
+                        <div>
+                            <strong>360°</strong>
+                            <span>Maritime Applications</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-intro" id="ai-overview">
+            <div class="ai-container ai-intro-grid">
+
+                <div class="ai-intro-text ai-reveal">
+                    <span class="ai-label">UNDERSTANDING THE TECHNOLOGY</span>
+
+                    <h2>
+                        Intelligence Beyond
+                        <span>Human Limits.</span>
+                    </h2>
+
+                    <p>
+                        Artificial Intelligence is a field of computer science
+                        focused on developing systems capable of performing
+                        tasks that normally require human intelligence.
+                    </p>
+
+                    <p>
+                        In the maritime industry, AI can analyze operational
+                        data, identify patterns, support navigation decisions,
+                        predict equipment failures, and improve the efficiency
+                        of ships, ports, and maritime networks.
+                    </p>
+
+                    <p>
+                        This learning hub connects the fundamental concepts
+                        of AI with real maritime engineering challenges
+                        and practical industrial applications.
+                    </p>
+                </div>
+
+                <div class="ai-intro-visual ai-reveal">
+                    <div class="ai-orbit"></div>
+                    <div class="ai-orbit ai-orbit-two"></div>
+
+                    <span class="ai-node ai-node-one"></span>
+                    <span class="ai-node ai-node-two"></span>
+                    <span class="ai-node ai-node-three"></span>
+
+                    <div class="ai-core">
+                        <strong>AI</strong>
+                        <span>INTELLIGENCE</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="ai-why">
+            <div class="ai-container">
+
+                <div class="ai-section-heading ai-reveal">
+                    <span class="ai-label">THE IMPORTANCE OF AI</span>
+
+                    <h2>
+                        Why AI Matters in the
+                        <span>Maritime World.</span>
+                    </h2>
+
+                    <p>
+                        AI is not simply about automation. It helps maritime
+                        professionals interpret complex information,
+                        anticipate potential problems, and make better-informed
+                        operational decisions.
+                    </p>
+                </div>
+
+                <div class="ai-benefits">
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">01 / SAFETY</span>
+                        <h3>Improved Maritime Safety</h3>
+                        <p>
+                            Analyze navigational conditions, recognize
+                            potential hazards, and support collision-risk
+                            assessment.
+                        </p>
+                    </article>
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">02 / EFFICIENCY</span>
+                        <h3>Operational Efficiency</h3>
+                        <p>
+                            Support route planning, fuel optimization,
+                            vessel performance analysis, and port operations.
+                        </p>
+                    </article>
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">03 / MAINTENANCE</span>
+                        <h3>Predictive Maintenance</h3>
+                        <p>
+                            Use equipment data to identify abnormal patterns
+                            and estimate when maintenance may be required.
+                        </p>
+                    </article>
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">04 / ANALYSIS</span>
+                        <h3>Intelligent Data Analysis</h3>
+                        <p>
+                            Process large volumes of maritime data and
+                            discover patterns that may not be immediately
+                            visible to human operators.
+                        </p>
+                    </article>
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">05 / AUTOMATION</span>
+                        <h3>Autonomous Operations</h3>
+                        <p>
+                            Enable advanced control systems to support
+                            automated vessel functions under defined
+                            operating conditions.
+                        </p>
+                    </article>
+
+                    <article class="ai-benefit ai-reveal">
+                        <span class="ai-benefit-number">06 / SUSTAINABILITY</span>
+                        <h3>Environmental Performance</h3>
+                        <p>
+                            Help monitor emissions, improve energy use,
+                            and support more sustainable maritime operations.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-workflow">
+            <div class="ai-container ai-workflow-layout">
+
+                <div class="ai-workflow-info ai-reveal">
+                    <span class="ai-label">HOW AI WORKS</span>
+
+                    <h2>
+                        From Raw Data to
+                        <span>Intelligent Decisions.</span>
+                    </h2>
+
+                    <p>
+                        AI systems typically depend on a sequence of
+                        connected processes. Select each stage to explore
+                        how maritime information can become useful
+                        operational insight.
+                    </p>
+                </div>
+
+                <div class="ai-workflow-steps ai-reveal">
+
+                    <button class="ai-step active" data-step="0">
+                        <span>STAGE 01</span>
+                        <strong>Data Collection</strong>
+                    </button>
+
+                    <button class="ai-step" data-step="1">
+                        <span>STAGE 02</span>
+                        <strong>Data Processing</strong>
+                    </button>
+
+                    <button class="ai-step" data-step="2">
+                        <span>STAGE 03</span>
+                        <strong>AI Analysis</strong>
+                    </button>
+
+                    <button class="ai-step" data-step="3">
+                        <span>STAGE 04</span>
+                        <strong>Decision Support</strong>
+                    </button>
+
+                    <div class="ai-step-description" id="aiStepDescription" aria-live="polite">
+                        Sensors and onboard systems collect information
+                        such as engine temperature, fuel consumption,
+                        vessel position, and environmental conditions.
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- THE LEARNING PATH -->
+
+        <section class="ai-topics" id="ai-topics">
+            <div class="ai-container">
+
+                <div class="ai-topics-heading ai-reveal">
+                    <div>
+                        <span class="ai-label">THE LEARNING PATH</span>
+
+                        <h2>
+                            Explore the
+                            <span>15 Topics.</span>
+                        </h2>
+                    </div>
+
+                    <p>
+                        Follow a structured learning path from AI fundamentals
+                        to advanced maritime applications. Every topic opens
+                        its own dedicated learning page.
+                    </p>
+                </div>
+
+                <div class="ai-topics-grid">
+
+                    <!-- TOPIC 01: FIXED LINK -->
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-introduction-maritime.html">
+
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">01 / FOUNDATION</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+
+                        <h3>Introduction to Artificial Intelligence in Maritime</h3>
+
+                        <p>
+                            Understand AI concepts, its development, and
+                            its growing role in the maritime industry.
+                        </p>
+
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=machine-learning-fundamentals">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">02 / FUNDAMENTALS</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Machine Learning Fundamentals</h3>
+                        <p>
+                            Explore supervised, unsupervised, and
+                            reinforcement learning with maritime examples.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=deep-learning-neural-networks">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">03 / ADVANCED AI</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Deep Learning & Neural Networks</h3>
+                        <p>
+                            Discover artificial neural networks, deep
+                            architectures, and complex pattern recognition.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=predictive-analytics-forecasting">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">04 / DATA SCIENCE</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Predictive Analytics & Forecasting</h3>
+                        <p>
+                            Learn how AI models analyze historical data
+                            to estimate future maritime conditions.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=ai-based-predictive-maintenance">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">05 / ENGINEERING</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>AI-Based Predictive Maintenance</h3>
+                        <p>
+                            Understand how intelligent systems monitor
+                            machinery and anticipate equipment failures.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=computer-vision-image-recognition">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">06 / PERCEPTION</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Computer Vision & Image Recognition</h3>
+                        <p>
+                            Explore how AI interprets images and video
+                            to identify vessels, objects, and hazards.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=ai-powered-maritime-navigation">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">07 / NAVIGATION</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>AI-Powered Maritime Navigation</h3>
+                        <p>
+                            Examine intelligent navigation technologies
+                            and AI-assisted vessel positioning and guidance.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=intelligent-route-optimization">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">08 / OPTIMIZATION</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Intelligent Route Optimization</h3>
+                        <p>
+                            Study how intelligent algorithms evaluate
+                            routes, weather, fuel use, and voyage constraints.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=collision-avoidance-risk-prediction">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">09 / MARITIME SAFETY</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Collision Avoidance & Risk Prediction</h3>
+                        <p>
+                            Understand how AI supports collision-risk
+                            assessment and safer navigational decisions.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=autonomous-ships-ai-control-systems">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">10 / AUTONOMY</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Autonomous Ships & AI Control Systems</h3>
+                        <p>
+                            Explore autonomous vessel concepts, control
+                            architectures, and levels of automation.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=intelligent-decision-support-systems">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">11 / DECISION SYSTEMS</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Intelligent Decision Support Systems</h3>
+                        <p>
+                            Learn how AI transforms operational information
+                            into recommendations for maritime professionals.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=ai-in-marine-engineering-engine-management">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">12 / MARINE SYSTEMS</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>AI in Marine Engineering & Engine Management</h3>
+                        <p>
+                            Investigate AI applications in engine monitoring,
+                            energy management, and machinery performance.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=ai-in-smart-ports-maritime-logistics">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">13 / PORT TECHNOLOGY</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>AI in Smart Ports & Maritime Logistics</h3>
+                        <p>
+                            Discover intelligent port operations, cargo
+                            management, and maritime supply-chain systems.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=ai-maritime-safety-environmental-protection">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">14 / SUSTAINABILITY</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>AI, Maritime Safety & Environmental Protection</h3>
+                        <p>
+                            Explore intelligent environmental monitoring,
+                            safety systems, and sustainable operations.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                    <a class="ai-topic-card ai-reveal"
+                       href="ai-topic.html?topic=cybersecurity-ethics-future-challenges">
+                        <div class="ai-card-top">
+                            <span class="ai-card-number">15 / FUTURE CHALLENGES</span>
+                            <span class="ai-card-mark">↗</span>
+                        </div>
+                        <h3>Cybersecurity, Ethics & Future Challenges of Maritime AI</h3>
+                        <p>
+                            Examine AI security, data privacy, ethical
+                            responsibilities, and emerging challenges.
+                        </p>
+                        <span class="ai-card-link">Explore Topic <span>→</span></span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="ai-outcomes">
+            <div class="ai-container ai-outcomes-grid">
+
+                <div class="ai-reveal">
+                    <span class="ai-label">YOUR LEARNING JOURNEY</span>
+
+                    <h2>
+                        Learn the Science.
+                        <span>Understand the Application.</span>
+                    </h2>
+
+                    <p>
+                        The objective is not simply to memorize AI terminology.
+                        It is to understand the engineering principles,
+                        evaluate real applications, and recognize both
+                        the capabilities and limitations of intelligent
+                        maritime systems.
+                    </p>
+                </div>
+
+                <div class="ai-outcome-list ai-reveal">
+
+                    <div class="ai-outcome-item">
+                        <span>✦</span>
+                        <p>Understand the scientific foundations of Artificial Intelligence.</p>
+                    </div>
+
+                    <div class="ai-outcome-item">
+                        <span>✦</span>
+                        <p>Connect AI methods with practical maritime engineering applications.</p>
+                    </div>
+
+                    <div class="ai-outcome-item">
+                        <span>✦</span>
+                        <p>Evaluate the advantages, limitations, and risks of AI-based systems.</p>
+                    </div>
+
+                    <div class="ai-outcome-item">
+                        <span>✦</span>
+                        <p>Develop technical understanding through structured learning and assessment.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="ai-footer">
+        <div class="ai-footer-logo">MARITERRA</div>
+
+        <p>THE FUTURE OF MARITIME KNOWLEDGE</p>
+
+        <div class="ai-footer-line"></div>
+
+        <p class="copyright">
+            © 2026 MARITERRA. All rights reserved.
+            <br>
+            Designed & Developed by
+            <span class="developer">Engineer Zeinab Mohamed</span>
+        </p>
+    </footer>
+
+</div>
+
+<script>
+    // Interactive AI workflow
+
+    const aiSteps = document.querySelectorAll(".ai-step");
+    const aiStepDescription = document.getElementById("aiStepDescription");
+
+    const aiWorkflowDescriptions = [
+        "Sensors and onboard systems collect information such as engine temperature, fuel consumption, vessel position, and environmental conditions.",
+
+        "Collected information is organized, cleaned, and prepared. This stage helps reduce errors and ensures that the data can be analyzed reliably.",
+
+        "AI models examine the processed data, recognize patterns, estimate possible outcomes, and identify unusual behavior.",
+
+        "The system presents predictions or recommendations to support operators and maritime professionals. Final decisions must account for operational procedures and human responsibility."
+    ];
+
+    aiSteps.forEach((step) => {
+        step.addEventListener("click", () => {
+            const selectedStep = Number(step.dataset.step);
+
+            aiSteps.forEach((item) => {
+                item.classList.remove("active");
+            });
+
+            step.classList.add("active");
+
+            aiStepDescription.textContent =
+                aiWorkflowDescriptions[selectedStep];
+        });
+    });
+
+    // Scroll reveal animation
+
+    const aiRevealElements = document.querySelectorAll(".ai-reveal");
+
+    if ("IntersectionObserver" in window) {
+
+        const aiObserver = new IntersectionObserver((entries, observer) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+
+            });
+
+        }, {
+            threshold: 0.12
+        });
+
+        aiRevealElements.forEach((element) => {
+            aiObserver.observe(element);
+        });
+
+    } else {
+
+        aiRevealElements.forEach((element) => {
+            element.classList.add("visible");
+        });
+
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2418 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A comprehensive engineering guide to GNSS and satellite navigation in maritime operations, including GPS, Galileo, positioning principles, accuracy, augmentation, and signal vulnerabilities.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Satellite Navigation & GNSS</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --card: rgba(13, 16, 38, 0.94);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #a1a1aa;
+            --border: rgba(192, 132, 252, 0.19);
+            --green: #4ade80;
+            --red: #f87171;
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            width: min(1120px, 92%);
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        .top-header {
+            position: relative;
+            z-index: 10;
+            background: rgba(7, 8, 22, 0.96);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            width: min(1250px, 94%);
+            min-height: 75px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            color: var(--purple-light);
+            text-decoration: none;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 85px 0 95px;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    ellipse at 80% 25%,
+                    rgba(147, 51, 234, 0.17),
+                    transparent 45%
+                ),
+                linear-gradient(120deg, #08091b, #12102b);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::after {
+            content: "01";
+            position: absolute;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: clamp(160px, 25vw, 320px);
+            font-weight: 900;
+            color: rgba(192, 132, 252, 0.045);
+            pointer-events: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 28px;
+        }
+
+        .breadcrumb a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 13px;
+            border: 1px solid rgba(192, 132, 252, 0.35);
+            border-radius: 30px;
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.1);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            max-width: 850px;
+            color: var(--white);
+            font-size: clamp(38px, 6vw, 66px);
+            line-height: 1.12;
+            letter-spacing: -1.5px;
+            margin-bottom: 23px;
+        }
+
+        .hero h1 span {
+            display: block;
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            position: relative;
+            z-index: 1;
+            max-width: 760px;
+            color: #c5c3d1;
+            font-size: 15px;
+            line-height: 1.95;
+            margin-bottom: 30px;
+        }
+
+        .hero-meta {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-meta span {
+            padding: 8px 13px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: rgba(13, 16, 38, 0.7);
+            color: #d8b4fe;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        /* MAIN LAYOUT */
+
+        .page-layout {
+            display: grid;
+            grid-template-columns: 245px minmax(0, 1fr);
+            gap: 40px;
+            align-items: start;
+            padding-top: 65px;
+            padding-bottom: 90px;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 22px;
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--card);
+        }
+
+        .sidebar h3 {
+            color: var(--purple-light);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 17px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 9px 0;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.08);
+            transition: var(--transition);
+        }
+
+        .sidebar a:hover {
+            color: var(--purple-light);
+            padding-left: 5px;
+        }
+
+        .content {
+            min-width: 0;
+        }
+
+        .content-section {
+            margin-bottom: 55px;
+            scroll-margin-top: 25px;
+        }
+
+        .section-label {
+            color: var(--purple-light);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            margin-bottom: 12px;
+        }
+
+        .content-section h2 {
+            color: var(--white);
+            font-size: clamp(25px, 3vw, 33px);
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .content-section h3 {
+            color: #e9d5ff;
+            font-size: 18px;
+            margin: 27px 0 12px;
+        }
+
+        .content-section p {
+            color: #c0bfcc;
+            font-size: 14px;
+            line-height: 1.95;
+            margin-bottom: 15px;
+        }
+
+        .content-section ul {
+            padding-left: 22px;
+            margin: 12px 0 20px;
+        }
+
+        .content-section li {
+            color: #c0bfcc;
+            font-size: 13px;
+            line-height: 1.9;
+            margin-bottom: 8px;
+        }
+
+        .content-section li::marker {
+            color: var(--purple-light);
+        }
+
+        .highlight {
+            color: var(--purple-light);
+            font-weight: 700;
+        }
+
+        /* INFO BOXES */
+
+        .info-box {
+            padding: 22px 24px;
+            margin: 22px 0;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .info-box h4 {
+            color: var(--purple-light);
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+        }
+
+        .warning-box {
+            padding: 22px 24px;
+            margin: 22px 0;
+            border: 1px solid rgba(248, 113, 113, 0.25);
+            border-left: 3px solid var(--red);
+            border-radius: 8px;
+            background: rgba(248, 113, 113, 0.055);
+        }
+
+        .warning-box h4 {
+            color: #fca5a5;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .warning-box p {
+            margin: 0;
+        }
+
+        /* TABLES */
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 22px 0;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 540px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.13);
+            letter-spacing: 0.7px;
+        }
+
+        td {
+            color: #c6c5d1;
+            line-height: 1.7;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PROCESS STEPS */
+
+        .process-list {
+            display: grid;
+            gap: 13px;
+            margin: 22px 0;
+        }
+
+        .process-step {
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 15px;
+            align-items: start;
+            padding: 17px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 7px;
+            background: rgba(147, 51, 234, 0.16);
+            color: var(--purple-light);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .process-step h4 {
+            color: #ffffff;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .process-step p {
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* FORMULA */
+
+        .formula {
+            padding: 24px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(13, 16, 38, 0.95);
+        }
+
+        .formula strong {
+            display: block;
+            color: var(--purple-light);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .formula span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            padding: 32px;
+            margin-top: 75px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: linear-gradient(
+                145deg,
+                rgba(19, 17, 43, 0.98),
+                rgba(10, 12, 29, 0.98)
+            );
+            scroll-margin-top: 25px;
+        }
+
+        .quiz-heading {
+            margin-bottom: 28px;
+        }
+
+        .quiz-heading .section-label {
+            margin-bottom: 10px;
+        }
+
+        .quiz-heading h2 {
+            color: #ffffff;
+            font-size: 29px;
+            margin-bottom: 10px;
+        }
+
+        .quiz-heading p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .quiz-progress {
+            height: 6px;
+            background: rgba(192, 132, 252, 0.12);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0 30px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(
+                90deg,
+                var(--purple-dark),
+                var(--purple-light)
+            );
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            padding: 22px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.12);
+        }
+
+        .question h3 {
+            color: #ffffff;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            margin-right: 7px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 12px 14px;
+            margin: 8px 0;
+            border: 1px solid rgba(192, 132, 252, 0.12);
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.018);
+            color: #c7c5d3;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: rgba(192, 132, 252, 0.55);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-top: 4px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.7);
+            background: rgba(74, 222, 128, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: rgba(248, 113, 113, 0.7);
+            background: rgba(248, 113, 113, 0.08);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 14px;
+            margin-top: 10px;
+            border-left: 2px solid var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+            color: #d6d3e0;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .quiz-button {
+            padding: 13px 23px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(110deg, #7e22ce, #9333ea);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 22px rgba(147, 51, 234, 0.25);
+        }
+
+        .quiz-button.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--purple-light);
+        }
+
+        .quiz-button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 22px;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .quiz-result p {
+            color: #d1d0dc;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .quiz-status {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        /* REFERENCES */
+
+        .references {
+            padding: 25px;
+            margin-top: 60px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: var(--card);
+        }
+
+        .references h2 {
+            color: #ffffff;
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .references a {
+            display: block;
+            color: var(--purple-light);
+            font-size: 12px;
+            line-height: 1.7;
+            text-decoration: none;
+            margin: 12px 0;
+            overflow-wrap: anywhere;
+        }
+
+        .references a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .references p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 17px;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            padding: 35px 5%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: #070816;
+        }
+
+        .footer h3 {
+            color: var(--purple-light);
+            font-size: 20px;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .footer p {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 5px 0;
+        }
+
+        .footer strong {
+            color: #e9d5ff;
+        }
+
+        .footer a {
+            display: inline-block;
+            margin-top: 17px;
+            color: var(--purple-light);
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .sidebar {
+                position: relative;
+                top: auto;
+            }
+
+            .sidebar-links {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0 18px;
+            }
+
+            .hero::after {
+                right: -40px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .hero {
+                padding: 65px 0 75px;
+            }
+
+            .hero h1 {
+                letter-spacing: -0.5px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            .page-layout {
+                padding-top: 40px;
+            }
+
+            .sidebar-links {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-section {
+                padding: 22px 16px;
+            }
+
+            .quiz-heading h2 {
+                font-size: 24px;
+            }
+
+            .content-section {
+                margin-bottom: 43px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="top-header">
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            MARITERRA
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html">Maritime Technology</a>
+            <a href="smart-navigation.html">Smart Navigation</a>
+            <a href="#quiz">Knowledge Quiz</a>
+        </div>
+
+    </nav>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="breadcrumb">
+            <a href="index.html">Home</a>
+            <span>/</span>
+            <a href="smart-navigation.html">Smart Navigation</a>
+            <span>/</span>
+            <span>Satellite Navigation & GNSS</span>
+        </div>
+
+        <div class="eyebrow">
+            SMART NAVIGATION — TOPIC 01
+        </div>
+
+        <h1>
+            SATELLITE NAVIGATION
+            <span>& GNSS</span>
+        </h1>
+
+        <p>
+            Explore the engineering principles behind satellite-based
+            positioning and understand how Global Navigation Satellite
+            Systems support vessel positioning, navigation, timing,
+            and maritime operations.
+        </p>
+
+        <div class="hero-meta">
+            <span>GNSS TECHNOLOGY</span>
+            <span>POSITIONING SYSTEMS</span>
+            <span>MARITIME ENGINEERING</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="container page-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <h3>TOPIC CONTENTS</h3>
+
+        <div class="sidebar-links">
+            <a href="#overview">01. Overview</a>
+            <a href="#fundamentals">02. Fundamentals</a>
+            <a href="#architecture">03. System Architecture</a>
+            <a href="#positioning">04. Position Calculation</a>
+            <a href="#constellations">05. GNSS Constellations</a>
+            <a href="#maritime">06. Maritime Applications</a>
+            <a href="#accuracy">07. Accuracy & Errors</a>
+            <a href="#augmentation">08. Accuracy Enhancement</a>
+            <a href="#challenges">09. Challenges & Security</a>
+            <a href="#future">10. Future Developments</a>
+            <a href="#quiz">11. Knowledge Assessment</a>
+        </div>
+
+    </aside>
+
+
+    <!-- ARTICLE -->
+
+    <main class="content">
+
+
+        <!-- OVERVIEW -->
+
+        <section class="content-section" id="overview">
+
+            <div class="section-label">FOUNDATIONS — 01</div>
+
+            <h2>Understanding Satellite Navigation</h2>
+
+            <p>
+                Satellite navigation is a positioning technology that
+                uses signals transmitted by satellites orbiting Earth.
+                A receiver collects these signals and calculates its
+                position by measuring the time required for each signal
+                to travel from a satellite to the receiver.
+            </p>
+
+            <p>
+                In maritime operations, satellite positioning provides
+                important information about a vessel's geographical
+                location. It supports navigation systems, electronic
+                charts, route monitoring, vessel tracking, and many
+                other onboard applications.
+            </p>
+
+            <p>
+                The term <span class="highlight">GNSS</span> stands for
+                Global Navigation Satellite System. It describes the
+                broader family of satellite constellations that provide
+                positioning, navigation, and timing services.
+            </p>
+
+            <div class="info-box">
+                <h4>Important Terminology</h4>
+
+                <p>
+                    GPS is one specific satellite navigation system
+                    operated by the United States. GNSS is the general
+                    term that includes GPS, Galileo, GLONASS, BeiDou,
+                    and other compatible satellite navigation services.
+                </p>
+            </div>
+
+            <h3>Position, Navigation and Timing (PNT)</h3>
+
+            <p>
+                GNSS provides three closely related services known as
+                Positioning, Navigation and Timing (PNT).
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Positioning:</strong>
+                    determining geographical coordinates such as
+                    latitude, longitude, and height.
+                </li>
+
+                <li>
+                    <strong>Navigation:</strong>
+                    using position and movement information to support
+                    route guidance and navigation decisions.
+                </li>
+
+                <li>
+                    <strong>Timing:</strong>
+                    providing precise time references that can
+                    synchronize navigation equipment and other
+                    technical systems.
+                </li>
+            </ul>
+
+        </section>
+
+
+        <!-- FUNDAMENTALS -->
+
+        <section class="content-section" id="fundamentals">
+
+            <div class="section-label">ENGINEERING PRINCIPLES — 02</div>
+
+            <h2>How Satellite Navigation Works</h2>
+
+            <p>
+                GNSS positioning is based on accurate time measurement,
+                known satellite positions, radio signal transmission,
+                and mathematical distance estimation.
+            </p>
+
+            <p>
+                Navigation satellites continuously broadcast coded
+                radio signals containing timing information and
+                navigation data. The receiver uses these signals
+                to estimate its distance from multiple satellites.
+            </p>
+
+            <h3>Signal Travel Time</h3>
+
+            <p>
+                Radio signals travel at approximately the speed of
+                light. By estimating how long a signal takes to reach
+                the receiver, the system can calculate an approximate
+                distance between the satellite and the receiver.
+            </p>
+
+            <div class="formula">
+                <strong>Distance = Signal Speed × Travel Time</strong>
+                <span>
+                    The basic relationship used to estimate satellite
+                    to receiver distance.
+                </span>
+            </div>
+
+            <p>
+                The measured distance is called a
+                <span class="highlight">pseudorange</span>, because it
+                includes errors caused by receiver clock offset,
+                atmospheric delays, satellite clock and orbit errors,
+                and other measurement effects.
+            </p>
+
+            <h3>Trilateration</h3>
+
+            <p>
+                GNSS uses a mathematical method called trilateration.
+                The receiver estimates its distance from satellites
+                whose positions are known. Combining these distance
+                measurements allows the receiver to calculate its
+                location.
+            </p>
+
+            <p>
+                A simplified explanation uses three satellite
+                distances to illustrate how position can be constrained.
+                In a practical standalone three-dimensional GNSS fix,
+                at least four satellite measurements are normally
+                needed to solve for three position coordinates and
+                the receiver clock offset.
+            </p>
+
+            <div class="info-box">
+                <h4>Why Are Four Satellites Normally Needed?</h4>
+
+                <p>
+                    The receiver must estimate latitude, longitude,
+                    height, and its own clock error. Four independent
+                    satellite measurements provide the basic
+                    observations needed to solve these four unknowns,
+                    assuming suitable satellite geometry.
+                </p>
+            </div>
+
+            <h3>Satellite Geometry</h3>
+
+            <p>
+                The spatial arrangement of satellites affects the
+                quality of the position solution. Satellites spread
+                across different directions generally provide a
+                stronger geometric arrangement than satellites
+                clustered together in a small part of the sky.
+            </p>
+
+            <p>
+                This effect is commonly described using
+                Dilution of Precision (DOP). Lower DOP values
+                generally indicate more favorable satellite geometry,
+                while higher values indicate that measurement errors
+                may have a greater effect on the calculated position.
+            </p>
+
+        </section>
+
+
+        <!-- ARCHITECTURE -->
+
+        <section class="content-section" id="architecture">
+
+            <div class="section-label">SYSTEM DESIGN — 03</div>
+
+            <h2>GNSS System Architecture</h2>
+
+            <p>
+                A satellite navigation system is not made up of
+                satellites alone. It requires space infrastructure,
+                ground control facilities, and user equipment.
+            </p>
+
+            <h3>1. Space Segment</h3>
+
+            <p>
+                The space segment consists of navigation satellites
+                distributed across carefully designed orbital
+                constellations.
+            </p>
+
+            <ul>
+                <li>
+                    Broadcast navigation signals.
+                </li>
+                <li>
+                    Transmit precise timing information.
+                </li>
+                <li>
+                    Broadcast orbital information used to calculate
+                    satellite positions.
+                </li>
+                <li>
+                    Provide global or regional coverage according
+                    to the constellation design.
+                </li>
+            </ul>
+
+            <h3>2. Control Segment</h3>
+
+            <p>
+                The control segment consists of ground infrastructure
+                responsible for monitoring and maintaining the
+                satellite constellation.
+            </p>
+
+            <ul>
+                <li>
+                    Monitor satellite health and performance.
+                </li>
+                <li>
+                    Estimate satellite orbital parameters.
+                </li>
+                <li>
+                    Monitor and correct satellite clock information.
+                </li>
+                <li>
+                    Upload updated navigation data and control
+                    information.
+                </li>
+            </ul>
+
+            <h3>3. User Segment</h3>
+
+            <p>
+                The user segment includes GNSS receivers and the
+                equipment that processes satellite signals.
+                In maritime environments, these receivers may be
+                installed on ships, offshore platforms, buoys,
+                survey equipment, and other marine systems.
+            </p>
+
+            <ul>
+                <li>
+                    Receive satellite signals through an antenna.
+                </li>
+                <li>
+                    Decode navigation information.
+                </li>
+                <li>
+                    Calculate position, velocity, and time.
+                </li>
+                <li>
+                    Send positioning information to connected
+                    navigation equipment.
+                </li>
+            </ul>
+
+            <div class="info-box">
+                <h4>Engineering Insight</h4>
+
+                <p>
+                    A GNSS receiver does not simply read a location
+                    transmitted directly by a satellite. It processes
+                    signals from multiple satellites and calculates
+                    its own position using timing measurements and
+                    satellite navigation data.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- POSITIONING -->
+
+        <section class="content-section" id="positioning">
+
+            <div class="section-label">POSITION COMPUTATION — 04</div>
+
+            <h2>How a GNSS Receiver Calculates Position</h2>
+
+            <p>
+                The receiver follows a sequence of signal-processing
+                and mathematical operations to produce a position
+                solution.
+            </p>
+
+            <div class="process-list">
+
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h4>Signal Acquisition</h4>
+                        <p>
+                            The receiver searches for available
+                            satellite signals and identifies the
+                            signals it can process.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h4>Signal Tracking</h4>
+                        <p>
+                            The receiver tracks signal timing and
+                            carrier information to maintain reliable
+                            measurements.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h4>Navigation Data Decoding</h4>
+                        <p>
+                            The receiver obtains satellite timing,
+                            orbital information, and other navigation
+                            parameters.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h4>Pseudorange Measurement</h4>
+                        <p>
+                            Signal travel time is used to estimate
+                            the distance between the receiver and
+                            each satellite.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">05</div>
+                    <div>
+                        <h4>Position Solution</h4>
+                        <p>
+                            The receiver combines satellite
+                            measurements to estimate its position
+                            and clock offset.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">06</div>
+                    <div>
+                        <h4>Output and Validation</h4>
+                        <p>
+                            The calculated position, velocity,
+                            time, and quality indicators are
+                            provided to connected equipment.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <h3>Position Output</h3>
+
+            <p>
+                A GNSS receiver may provide several outputs,
+                depending on the receiver design and configuration:
+            </p>
+
+            <ul>
+                <li>Latitude and longitude.</li>
+                <li>Ellipsoidal height or other configured height reference.</li>
+                <li>Speed over ground (SOG).</li>
+                <li>Course over ground (COG).</li>
+                <li>Time and synchronization information.</li>
+                <li>Position quality and satellite information.</li>
+            </ul>
+
+            <div class="warning-box">
+                <h4>COG Is Not the Same as Heading</h4>
+
+                <p>
+                    Course over Ground describes the direction of
+                    movement relative to the Earth's surface.
+                    Heading describes the direction the vessel's
+                    bow is pointing. Wind, waves, and currents can
+                    cause these values to differ.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- CONSTELLATIONS -->
+
+        <section class="content-section" id="constellations">
+
+            <div class="section-label">GLOBAL SYSTEMS — 05</div>
+
+            <h2>Major Global Navigation Satellite Systems</h2>
+
+            <p>
+                Several independent satellite constellations provide
+                global navigation services. A multi-constellation
+                receiver can use signals from more than one system,
+                subject to receiver compatibility and signal
+                availability.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>System</th>
+                            <th>Operator / Region</th>
+                            <th>Main Characteristics</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>GPS</td>
+                            <td>United States</td>
+                            <td>
+                                Global positioning, navigation,
+                                and timing services.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Galileo</td>
+                            <td>European Union</td>
+                            <td>
+                                European global satellite navigation
+                                constellation.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>GLONASS</td>
+                            <td>Russia</td>
+                            <td>
+                                Global satellite navigation
+                                and positioning services.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>BeiDou</td>
+                            <td>China</td>
+                            <td>
+                                Global navigation satellite system
+                                with regional service capabilities.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Multi-GNSS Receivers</h3>
+
+            <p>
+                Modern receivers may process compatible signals
+                from multiple constellations. This can increase
+                the number of available satellites and improve
+                positioning availability in challenging
+                environments.
+            </p>
+
+            <p>
+                However, using more satellites does not automatically
+                guarantee a more accurate position. Signal quality,
+                satellite geometry, receiver design, measurement
+                errors, and interference must also be considered.
+            </p>
+
+        </section>
+
+
+        <!-- MARITIME APPLICATIONS -->
+
+        <section class="content-section" id="maritime">
+
+            <div class="section-label">PRACTICAL APPLICATIONS — 06</div>
+
+            <h2>GNSS in Maritime Navigation</h2>
+
+            <p>
+                GNSS is a major source of positioning information
+                in modern maritime operations. Its output can be
+                integrated with other navigation systems to
+                support vessel awareness and voyage execution.
+            </p>
+
+            <h3>1. Vessel Positioning</h3>
+
+            <p>
+                GNSS receivers provide geographical coordinates
+                that help bridge teams determine the vessel's
+                estimated location and monitor its movement.
+            </p>
+
+            <h3>2. Electronic Chart Integration</h3>
+
+            <p>
+                Position information can be supplied to an
+                Electronic Chart Display and Information System
+                (ECDIS), allowing the vessel's calculated position
+                to be displayed in relation to charted features,
+                routes, and navigational hazards.
+            </p>
+
+            <h3>3. Route Monitoring</h3>
+
+            <p>
+                GNSS position updates can be compared with a planned
+                route to help identify cross-track deviations,
+                progress, and changes in vessel position.
+            </p>
+
+            <h3>4. Speed and Movement Monitoring</h3>
+
+            <p>
+                GNSS-derived speed over ground and course over
+                ground provide useful movement information.
+                These values can support navigation calculations
+                and situational awareness.
+            </p>
+
+            <h3>5. Vessel Tracking and AIS</h3>
+
+            <p>
+                Many AIS installations use GNSS-derived position
+                information as part of the vessel's transmitted
+                navigation data. This helps other equipped vessels
+                and shore stations build a picture of maritime
+                traffic.
+            </p>
+
+            <h3>6. Surveying and Offshore Operations</h3>
+
+            <p>
+                High-precision GNSS equipment can support marine
+                surveying, offshore construction, hydrographic
+                positioning, and the positioning of surface
+                survey vessels.
+            </p>
+
+            <div class="info-box">
+                <h4>Practical Example</h4>
+
+                <p>
+                    During a coastal voyage, a vessel's GNSS receiver
+                    calculates its position. The position is supplied
+                    to ECDIS, where the bridge team can compare
+                    the vessel's location with the planned route
+                    and charted navigation information. Radar,
+                    visual observations, and other instruments
+                    provide additional information for cross-checking.
+                </p>
+            </div>
+
+            <h3>GNSS and Underwater Vehicles</h3>
+
+            <p>
+                GNSS is useful for surface vessels and for underwater
+                vehicles when they are at the surface and their
+                antenna can receive satellite signals.
+            </p>
+
+            <p>
+                However, conventional GNSS signals do not normally
+                penetrate seawater sufficiently for direct
+                positioning of a submerged vehicle. Underwater
+                platforms therefore use other methods, including
+                inertial navigation, Doppler Velocity Logs,
+                and acoustic positioning.
+            </p>
+
+        </section>
+
+
+        <!-- ACCURACY -->
+
+        <section class="content-section" id="accuracy">
+
+            <div class="section-label">TECHNICAL PERFORMANCE — 07</div>
+
+            <h2>GNSS Accuracy and Sources of Error</h2>
+
+            <p>
+                Position accuracy describes how close the calculated
+                position is to the true position. It depends on
+                satellite signals, receiver capabilities, the
+                surrounding environment, and the quality of
+                measurement processing.
+            </p>
+
+            <h3>1. Satellite Clock Errors</h3>
+
+            <p>
+                Small timing differences between the satellite's
+                clock and the reference time can introduce errors
+                into the estimated signal travel time and therefore
+                the calculated distance.
+            </p>
+
+            <h3>2. Orbit Errors</h3>
+
+            <p>
+                If the satellite's estimated orbital position differs
+                from its actual position, the receiver's distance
+                calculations may be affected.
+            </p>
+
+            <h3>3. Ionospheric Delay</h3>
+
+            <p>
+                The ionosphere contains charged particles that
+                affect the propagation of radio signals. This can
+                introduce frequency-dependent delays into GNSS
+                measurements.
+            </p>
+
+            <h3>4. Tropospheric Delay</h3>
+
+            <p>
+                Atmospheric conditions in the lower atmosphere,
+                including temperature, pressure, and water vapor,
+                can change the propagation time of satellite signals.
+            </p>
+
+            <h3>5. Multipath Effects</h3>
+
+            <p>
+                Multipath occurs when a signal reaches the receiver
+                through reflected paths in addition to the direct
+                path. Reflections from nearby structures or surfaces
+                can distort measurements.
+            </p>
+
+            <h3>6. Poor Satellite Geometry</h3>
+
+            <p>
+                When satellites are concentrated in similar
+                directions, the position solution may become
+                more sensitive to measurement errors.
+            </p>
+
+            <h3>7. Receiver and Antenna Limitations</h3>
+
+            <p>
+                Receiver quality, antenna placement, signal tracking
+                performance, interference protection, and processing
+                algorithms all influence the final position solution.
+            </p>
+
+            <div class="warning-box">
+                <h4>Accuracy Is Not a Single Universal Number</h4>
+
+                <p>
+                    A receiver's accuracy cannot be guaranteed
+                    simply by knowing which GNSS constellation
+                    it uses. Actual performance depends on
+                    operating conditions, receiver specifications,
+                    satellite geometry, and the correction methods
+                    available.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- AUGMENTATION -->
+
+        <section class="content-section" id="augmentation">
+
+            <div class="section-label">PRECISION TECHNOLOGIES — 08</div>
+
+            <h2>Methods for Improving GNSS Accuracy</h2>
+
+            <p>
+                Several techniques can improve GNSS positioning
+                performance by correcting or reducing measurement
+                errors.
+            </p>
+
+            <h3>Differential GNSS (DGNSS)</h3>
+
+            <p>
+                DGNSS uses reference stations at known locations
+                to estimate common GNSS errors. Corrections are
+                transmitted to nearby receivers so they can
+                improve their position calculations.
+            </p>
+
+            <h3>Real-Time Kinematic (RTK)</h3>
+
+            <p>
+                RTK uses carrier-phase measurements and correction
+                data from reference stations to provide high
+                precision positioning. It can achieve centimeter-level
+                results under suitable conditions, including
+                adequate correction communication and reliable
+                satellite tracking.
+            </p>
+
+            <h3>Precise Point Positioning (PPP)</h3>
+
+            <p>
+                PPP uses precise satellite orbit and clock products,
+                together with detailed measurement processing,
+                to improve positioning without requiring a nearby
+                local reference station in the same way as
+                conventional RTK.
+            </p>
+
+            <h3>Satellite-Based Augmentation Systems (SBAS)</h3>
+
+            <p>
+                SBAS uses ground monitoring networks and
+                geostationary satellite broadcasts to distribute
+                correction and integrity information over
+                supported service regions.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Principle</th>
+                            <th>Important Consideration</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>DGNSS</td>
+                            <td>Reference-station corrections</td>
+                            <td>Correction coverage and quality</td>
+                        </tr>
+
+                        <tr>
+                            <td>RTK</td>
+                            <td>Carrier-phase positioning</td>
+                            <td>Correction link and ambiguity resolution</td>
+                        </tr>
+
+                        <tr>
+                            <td>PPP</td>
+                            <td>Precise orbit and clock products</td>
+                            <td>Convergence and correction availability</td>
+                        </tr>
+
+                        <tr>
+                            <td>SBAS</td>
+                            <td>Satellite-broadcast corrections</td>
+                            <td>Service coverage and system compatibility</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h4>Engineering Distinction</h4>
+
+                <p>
+                    Higher positioning precision and navigation
+                    integrity are related but different concepts.
+                    Precision describes the quality of the position
+                    estimate. Integrity concerns whether the system
+                    can provide timely warnings when its information
+                    should not be trusted.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- CHALLENGES -->
+
+        <section class="content-section" id="challenges">
+
+            <div class="section-label">TECHNICAL CHALLENGES — 09</div>
+
+            <h2>GNSS Vulnerabilities and Maritime Reliability</h2>
+
+            <p>
+                Satellite signals arrive at the Earth's surface
+                with very low power. This makes GNSS receivers
+                vulnerable to interference and other disruptions.
+                A ship must therefore avoid treating GNSS as an
+                infallible source of navigation information.
+            </p>
+
+            <h3>Jamming</h3>
+
+            <p>
+                Jamming occurs when interference overwhelms or
+                disrupts GNSS signals, preventing the receiver
+                from obtaining reliable measurements.
+            </p>
+
+            <h3>Spoofing</h3>
+
+            <p>
+                Spoofing involves transmitting deceptive signals
+                intended to make a receiver calculate an incorrect
+                position or time.
+            </p>
+
+            <div class="warning-box">
+                <h4>Jamming vs Spoofing</h4>
+
+                <p>
+                    Jamming disrupts the ability to receive usable
+                    satellite signals. Spoofing attempts to deceive
+                    the receiver by presenting false navigation
+                    signals. The two threats require different
+                    detection and response strategies.
+                </p>
+            </div>
+
+            <h3>Operational Consequences</h3>
+
+            <ul>
+                <li>Incorrect vessel position information.</li>
+                <li>Loss of satellite-derived speed or timing data.</li>
+                <li>Incorrect position display on connected equipment.</li>
+                <li>Navigation alarms and degraded system performance.</li>
+                <li>Potential disruption to systems that depend on GNSS time.</li>
+            </ul>
+
+            <h3>Resilience and Cross-Checking</h3>
+
+            <p>
+                A reliable maritime navigation arrangement should
+                not depend on a single source of position information.
+                Bridge teams and system designers should use
+                independent information sources where appropriate.
+            </p>
+
+            <ul>
+                <li>
+                    Compare GNSS position with radar and visual
+                    observations where possible.
+                </li>
+                <li>
+                    Monitor receiver integrity and signal-quality
+                    indicators.
+                </li>
+                <li>
+                    Use alternative positioning methods when
+                    satellite information becomes unreliable.
+                </li>
+                <li>
+                    Maintain operational procedures for GNSS
+                    degradation or loss.
+                </li>
+                <li>
+                    Investigate inconsistent data rather than
+                    assuming the displayed position is correct.
+                </li>
+            </ul>
+
+            <h3>Cybersecurity Considerations</h3>
+
+            <p>
+                GNSS receivers and their connected interfaces are
+                part of a larger electronic navigation environment.
+                System design should consider secure configuration,
+                software maintenance, access control, data validation,
+                and the protection of navigation equipment from
+                unauthorized changes.
+            </p>
+
+        </section>
+
+
+        <!-- FUTURE -->
+
+        <section class="content-section" id="future">
+
+            <div class="section-label">FUTURE DEVELOPMENTS — 10</div>
+
+            <h2>The Future of Satellite Navigation</h2>
+
+            <p>
+                Satellite navigation continues to evolve through
+                new signals, advanced receiver architectures,
+                improved correction services, and integration
+                with other positioning technologies.
+            </p>
+
+            <h3>Multi-Constellation and Multi-Frequency Receivers</h3>
+
+            <p>
+                Receivers capable of using several constellations
+                and signal frequencies can improve availability
+                and help reduce certain measurement errors.
+            </p>
+
+            <h3>Sensor Fusion</h3>
+
+            <p>
+                Combining GNSS with inertial sensors, speed logs,
+                radar observations, and other independent sources
+                can help maintain a more consistent navigation
+                solution when individual sensors become unreliable.
+            </p>
+
+            <h3>Intelligent Integrity Monitoring</h3>
+
+            <p>
+                Advanced algorithms can analyze signal behavior,
+                receiver measurements, and independent sensor
+                information to identify anomalies that may indicate
+                degraded or deceptive GNSS data.
+            </p>
+
+            <h3>Resilient Positioning, Navigation and Timing</h3>
+
+            <p>
+                Future maritime systems are expected to emphasize
+                resilience: maintaining safe operations when
+                satellite signals are unavailable, inaccurate,
+                or potentially manipulated.
+            </p>
+
+            <div class="info-box">
+                <h4>Key Engineering Perspective</h4>
+
+                <p>
+                    The future of maritime positioning is not simply
+                    about making GNSS more accurate. It is also about
+                    knowing when satellite data can be trusted,
+                    detecting when it cannot, and maintaining safe
+                    navigation through complementary systems.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- LEARNING REVIEW -->
+
+        <section class="content-section">
+
+            <div class="section-label">LEARNING REVIEW</div>
+
+            <h2>Key Knowledge to Remember</h2>
+
+            <ul>
+                <li>
+                    GNSS is the general family of global satellite
+                    navigation systems; GPS is one member of it.
+                </li>
+
+                <li>
+                    GNSS receivers calculate position using satellite
+                    signals, timing measurements, and known orbital data.
+                </li>
+
+                <li>
+                    A typical standalone three-dimensional solution
+                    needs at least four satellite measurements to
+                    estimate position and receiver clock offset.
+                </li>
+
+                <li>
+                    Satellite geometry, atmospheric effects,
+                    multipath, and interference can affect accuracy.
+                </li>
+
+                <li>
+                    DGNSS, RTK, PPP, and SBAS are different methods
+                    for improving positioning performance.
+                </li>
+
+                <li>
+                    Jamming disrupts signals, while spoofing
+                    attempts to deceive the receiver.
+                </li>
+
+                <li>
+                    GNSS signals do not normally provide direct
+                    positioning to submerged underwater vehicles.
+                </li>
+
+                <li>
+                    Reliable maritime navigation requires cross-checking
+                    and alternative sources of information.
+                </li>
+            </ul>
+
+        </section>
+
+
+        <!-- QUIZ -->
+
+        <section class="quiz-section" id="quiz">
+
+            <div class="quiz-heading">
+
+                <div class="section-label">
+                    KNOWLEDGE ASSESSMENT
+                </div>
+
+                <h2>Test Your Understanding</h2>
+
+                <p>
+                    Answer all 10 questions to evaluate your
+                    understanding of Satellite Navigation & GNSS.
+                    Each question has one correct answer.
+                </p>
+
+            </div>
+
+            <div class="quiz-progress">
+                <div class="quiz-progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="quiz-actions">
+
+                <button
+                    class="quiz-button"
+                    id="submitQuiz"
+                    type="button"
+                >
+                    SUBMIT ANSWERS
+                </button>
+
+                <button
+                    class="quiz-button secondary"
+                    id="resetQuiz"
+                    type="button"
+                >
+                    RESET QUIZ
+                </button>
+
+            </div>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite">
+
+                <h3 id="resultTitle">Your Result</h3>
+
+                <p id="resultScore"></p>
+
+                <p id="resultMessage"></p>
+
+            </div>
+
+            <div class="quiz-status" id="quizStatus">
+                0 of 10 questions answered.
+            </div>
+
+        </section>
+
+
+        <!-- REFERENCES -->
+
+        <section class="references">
+
+            <h2>Technical References & Further Reading</h2>
+
+            <a
+                href="https://www.gps.gov/gps"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                01. GPS.gov — Official GPS System Overview
+            </a>
+
+            <a
+                href="https://www.gps.gov/gps-accuracy"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                02. GPS.gov — GPS Accuracy and Performance
+            </a>
+
+            <a
+                href="https://geodesy.noaa.gov/research/gnss-satellite/index.shtml"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                03. NOAA — GNSS Technology Research
+            </a>
+
+            <a
+                href="https://oceanservice.noaa.gov/facts/gps.html"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                04. NOAA Ocean Service — What Is GPS?
+            </a>
+
+            <a
+                href="https://www.esa.int/Applications/Satellite_navigation/How_satellite_navigation_works"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                05. European Space Agency — How Satellite Navigation Works
+            </a>
+
+            <a
+                href="https://www.gov.uk/government/publications/mgn-719-mf-operating-in-gnss-denied-and-degraded-environments/mgn-719-mf-operating-in-gnss-denied-and-degraded-environments"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                06. UK Maritime Guidance — Operating in GNSS-Denied and Degraded Environments
+            </a>
+
+            <p>
+                These references provide additional technical
+                information about satellite navigation, positioning
+                accuracy, GNSS infrastructure, and maritime resilience.
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <h3>MARITERRA</h3>
+
+    <p>
+        Exploring the Technologies Shaping the Maritime World
+    </p>
+
+    <p>
+        Designed & Developed by
+        <strong>Engineer Zeinab Mohamed</strong>
+    </p>
+
+    <a href="smart-navigation.html">
+        ← Back to Smart Navigation
+    </a>
+
+</footer>
+
+
+<!-- QUIZ JAVASCRIPT -->
+
+<script>
+
+const questions = [
+    {
+        question: "What does GNSS stand for?",
+        options: [
+            "Global Navigation Satellite System",
+            "General Network Signal Service",
+            "Global Nautical Sensor System",
+            "Geographical Navigation Software Service"
+        ],
+        answer: 0,
+        explanation:
+            "GNSS means Global Navigation Satellite System. It is the general term for satellite navigation constellations such as GPS, Galileo, GLONASS, and BeiDou."
+    },
+
+    {
+        question: "Which statement correctly describes the relationship between GPS and GNSS?",
+        options: [
+            "GPS and GNSS are exactly the same system.",
+            "GNSS is one satellite operated by the United States.",
+            "GPS is one system within the broader GNSS family.",
+            "GPS operates only in maritime environments."
+        ],
+        answer: 2,
+        explanation:
+            "GPS is the United States' satellite navigation system. GNSS is the broader category that includes GPS and other global constellations."
+    },
+
+    {
+        question: "Why does a typical standalone GNSS receiver use at least four satellites for a three-dimensional position fix?",
+        options: [
+            "To calculate vessel engine speed.",
+            "To estimate three position coordinates and receiver clock offset.",
+            "To measure ocean depth.",
+            "To calculate wind direction."
+        ],
+        answer: 1,
+        explanation:
+            "The receiver needs to estimate latitude, longitude, height, and its clock offset. Four independent satellite measurements normally provide the basic observations for these unknowns."
+    },
+
+    {
+        question: "What is trilateration in satellite navigation?",
+        options: [
+            "Measuring water temperature at three locations.",
+            "Calculating position using estimated distances from known points.",
+            "Measuring the direction of a ship's bow.",
+            "Transmitting radar signals between vessels."
+        ],
+        answer: 1,
+        explanation:
+            "Trilateration determines a position from distances to known reference points. GNSS uses satellite positions and measured signal travel times to estimate those distances."
+    },
+
+    {
+        question: "Which GNSS segment is responsible for monitoring satellites and maintaining navigation data?",
+        options: [
+            "User segment",
+            "Space segment",
+            "Control segment",
+            "Antenna segment"
+        ],
+        answer: 2,
+        explanation:
+            "The control segment uses ground infrastructure to monitor satellite health, estimate orbital and clock information, and upload updated navigation data."
+    },
+
+    {
+        question: "Which factor can reduce GNSS positioning accuracy?",
+        options: [
+            "Poor satellite geometry",
+            "Multipath reflections",
+            "Atmospheric signal delays",
+            "All of the above"
+        ],
+        answer: 3,
+        explanation:
+            "Satellite geometry, multipath, and atmospheric delays can all contribute to positioning errors."
+    },
+
+    {
+        question: "What is the main difference between jamming and spoofing?",
+        options: [
+            "Jamming improves accuracy while spoofing reduces it.",
+            "Jamming disrupts signals while spoofing provides deceptive signals.",
+            "Both are methods for correcting satellite clocks.",
+            "Neither affects satellite navigation."
+        ],
+        answer: 1,
+        explanation:
+            "Jamming interferes with reception of usable GNSS signals. Spoofing attempts to deceive the receiver using false navigation signals."
+    },
+
+    {
+        question: "Which technique uses carrier-phase measurements to achieve high-precision positioning?",
+        options: [
+            "RTK",
+            "Radar plotting",
+            "Standard AIS transmission",
+            "Echo sounding"
+        ],
+        answer: 0,
+        explanation:
+            "Real-Time Kinematic positioning uses carrier-phase measurements and correction information to achieve high precision under suitable conditions."
+    },
+
+    {
+        question: "Why can a submerged AUV not normally rely on direct GNSS positioning?",
+        options: [
+            "GNSS satellites stop transmitting at night.",
+            "GNSS receivers cannot calculate latitude.",
+            "Satellite radio signals do not normally penetrate seawater sufficiently.",
+            "AUVs do not have onboard computers."
+        ],
+        answer: 2,
+        explanation:
+            "GNSS signals do not normally penetrate seawater sufficiently for direct positioning. Submerged vehicles use technologies such as INS, DVL, and acoustic positioning."
+    },
+
+    {
+        question: "Which approach supports reliable maritime navigation when GNSS information becomes unreliable?",
+        options: [
+            "Trusting the GNSS display without checking it.",
+            "Using GNSS as the only source of navigation information.",
+            "Ignoring all navigation alarms.",
+            "Cross-checking with independent sensors and alternative positioning methods."
+        ],
+        answer: 3,
+        explanation:
+            "Resilient navigation uses cross-checking, independent information sources, monitoring, and alternative methods rather than relying on a single potentially disrupted signal."
+    }
+];
+
+const questionContainer =
+    document.getElementById("questionContainer");
+
+const progressFill =
+    document.getElementById("progressFill");
+
+const quizStatus =
+    document.getElementById("quizStatus");
+
+const quizResult =
+    document.getElementById("quizResult");
+
+const submitButton =
+    document.getElementById("submitQuiz");
+
+const resetButton =
+    document.getElementById("resetQuiz");
+
+
+function renderQuiz() {
+
+    questionContainer.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const questionElement =
+            document.createElement("div");
+
+        questionElement.className = "question";
+
+        const title =
+            document.createElement("h3");
+
+        title.innerHTML =
+            `<span class="question-number">
+                Q${index + 1}.
+            </span>${question.question}`;
+
+        questionElement.appendChild(title);
+
+        question.options.forEach((option, optionIndex) => {
+
+            const label =
+                document.createElement("label");
+
+            label.className = "option";
+
+            const input =
+                document.createElement("input");
+
+            input.type = "radio";
+            input.name = `question-${index}`;
+            input.value = optionIndex;
+
+            input.addEventListener("change", updateProgress);
+
+            const text =
+                document.createElement("span");
+
+            text.textContent = option;
+
+            label.appendChild(input);
+            label.appendChild(text);
+
+            questionElement.appendChild(label);
+
+        });
+
+        const explanation =
+            document.createElement("div");
+
+        explanation.className = "explanation";
+        explanation.id = `explanation-${index}`;
+
+        explanation.textContent = question.explanation;
+
+        questionElement.appendChild(explanation);
+
+        questionContainer.appendChild(questionElement);
+
+    });
+
+    updateProgress();
+
+}
+
+
+function updateProgress() {
+
+    const answered =
+        questions.filter((question, index) => {
+
+            return document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+        }).length;
+
+    const percentage =
+        (answered / questions.length) * 100;
+
+    progressFill.style.width = `${percentage}%`;
+
+    quizStatus.textContent =
+        `${answered} of ${questions.length} questions answered.`;
+
+}
+
+
+function submitQuiz() {
+
+    const answers = [];
+
+    for (let index = 0; index < questions.length; index++) {
+
+        const selected =
+            document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+        if (!selected) {
+
+            quizStatus.textContent =
+                "Please answer all 10 questions before submitting.";
+
+            const missingQuestion =
+                document.querySelectorAll(".question")[index];
+
+            missingQuestion.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            return;
+        }
+
+        answers.push(Number(selected.value));
+
+    }
+
+    let score = 0;
+
+    questions.forEach((question, index) => {
+
+        const selectedAnswer = answers[index];
+
+        const questionElement =
+            document.querySelectorAll(".question")[index];
+
+        const options =
+            questionElement.querySelectorAll(".option");
+
+        options.forEach((option, optionIndex) => {
+
+            const input = option.querySelector("input");
+
+            input.disabled = true;
+
+            if (optionIndex === question.answer) {
+                option.classList.add("correct");
+            }
+
+            if (
+                optionIndex === selectedAnswer &&
+                selectedAnswer !== question.answer
+            ) {
+                option.classList.add("incorrect");
+            }
+
+        });
+
+        if (selectedAnswer === question.answer) {
+            score++;
+        }
+
+        const explanation =
+            document.getElementById(`explanation-${index}`);
+
+        explanation.classList.add("show");
+
+    });
+
+    const percentage =
+        (score / questions.length) * 100;
+
+    document.getElementById("resultScore").textContent =
+        `Your score: ${score} / ${questions.length} (${percentage}%).`;
+
+    let message = "";
+
+    if (score === 10) {
+        message =
+            "Excellent! You demonstrated a strong understanding of satellite navigation and GNSS.";
+    } else if (score >= 8) {
+        message =
+            "Very good! You have a strong understanding of the main engineering concepts.";
+    } else if (score >= 6) {
+        message =
+            "Good effort. Review the explanations to strengthen your understanding.";
+    } else {
+        message =
+            "You should review the topic and focus on the positioning principles, accuracy, and system architecture.";
+    }
+
+    document.getElementById("resultTitle").textContent =
+        "Assessment Completed";
+
+    document.getElementById("resultMessage").textContent =
+        message;
+
+    quizResult.classList.add("show");
+
+    submitButton.disabled = true;
+
+    quizStatus.textContent =
+        "Assessment submitted. Review the explanations below each question.";
+
+    quizResult.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+function resetQuiz() {
+
+    renderQuiz();
+
+    quizResult.classList.remove("show");
+
+    document.getElementById("resultScore").textContent = "";
+    document.getElementById("resultMessage").textContent = "";
+
+    submitButton.disabled = false;
+
+    quizStatus.textContent =
+        "0 of 10 questions answered.";
+
+    document.getElementById("quiz").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+submitButton.addEventListener("click", submitQuiz);
+
+resetButton.addEventListener("click", resetQuiz);
+
+renderQuiz();
+
+</script>
+
+</body>
+</html>

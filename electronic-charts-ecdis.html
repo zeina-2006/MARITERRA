@@ -1,0 +1,2036 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore Electronic Navigational Charts, ECDIS architecture, chart standards, route planning, safety monitoring, and maritime navigation challenges.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Electronic Charts & ECDIS</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: rgba(7, 8, 22, 0.94);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            padding: 100px 8% 75px;
+            background:
+                radial-gradient(circle at 85% 15%, rgba(147, 51, 234, 0.19), transparent 32%),
+                radial-gradient(circle at 10% 90%, rgba(37, 99, 235, 0.10), transparent 30%),
+                var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.3rem, 5vw, 4.2rem);
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 780px;
+            font-size: 1.05rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--purple-light);
+            border-radius: 30px;
+            padding: 7px 16px;
+            font-size: 0.8rem;
+        }
+
+        .container {
+            width: min(1100px, 84%);
+            margin: auto;
+        }
+
+        .content-section {
+            padding: 75px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.10);
+        }
+
+        .section-label {
+            color: var(--purple-light);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            color: var(--white);
+            font-size: clamp(1.7rem, 3vw, 2.4rem);
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            max-width: 850px;
+            margin-bottom: 35px;
+        }
+
+        .content-section h3 {
+            color: var(--purple-light);
+            font-size: 1.2rem;
+            margin: 30px 0 12px;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+        }
+
+        .content-section ul,
+        .content-section ol {
+            padding-left: 25px;
+            margin: 14px 0 22px;
+            color: var(--text-muted);
+        }
+
+        .content-section li {
+            margin-bottom: 9px;
+            padding-left: 5px;
+        }
+
+        .content-section li strong {
+            color: var(--text);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+        }
+
+        .info-card p {
+            margin-bottom: 0;
+        }
+
+        .highlight-box {
+            background: rgba(147, 51, 234, 0.08);
+            border-left: 3px solid var(--purple);
+            padding: 22px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+        }
+
+        .technical-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .technical-table th,
+        .technical-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .technical-table th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        .technical-table td {
+            color: var(--text-muted);
+        }
+
+        .technical-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .standard-item {
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 13px;
+            background: rgba(13, 16, 38, 0.7);
+        }
+
+        .standard-item strong {
+            color: var(--purple-light);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .scenario {
+            background: rgba(37, 99, 235, 0.07);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 14px;
+            padding: 24px;
+            margin: 25px 0;
+        }
+
+        .scenario h3 {
+            margin-top: 0;
+            color: var(--blue-light);
+        }
+
+        .quiz-section {
+            padding: 80px 0;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(147, 51, 234, 0.12), transparent 30%),
+                var(--bg-light);
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: auto;
+            width: 84%;
+        }
+
+        .quiz-header {
+            margin-bottom: 35px;
+        }
+
+        .quiz-header p {
+            color: var(--text-muted);
+        }
+
+        .quiz-progress {
+            height: 7px;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple-light));
+            transition: var(--transition);
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .question-card h3 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            display: block;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 9px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            color: var(--white);
+            background: rgba(147, 51, 234, 0.06);
+        }
+
+        .option input {
+            margin-right: 10px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+            color: #86efac;
+        }
+
+        .option.wrong {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fca5a5;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 13px 15px;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-button {
+            border: none;
+            background: linear-gradient(120deg, var(--purple-dark), var(--purple));
+            color: var(--white);
+            padding: 13px 28px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 10px 10px 10px 0;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .quiz-button.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--purple-light);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 25px;
+            margin-top: 25px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .quiz-result p {
+            color: var(--text-muted);
+        }
+
+        .references {
+            padding: 60px 0;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .references li {
+            margin-bottom: 13px;
+            color: var(--text-muted);
+        }
+
+        footer {
+            padding: 30px 8%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        .back-top {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 16px 6%;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 75px 7% 55px;
+            }
+
+            .container,
+            .quiz-container {
+                width: 88%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .technical-table {
+                font-size: 0.85rem;
+            }
+
+            .technical-table th,
+            .technical-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html">Technology Integration</a>
+            <a href="smart-navigation.html">Smart Navigation</a>
+            <a href="#quiz">Knowledge Test</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">Smart Navigation & Digital Maritime Navigation / Topic 02</div>
+
+            <h1>Electronic Charts <span>& ECDIS</span></h1>
+
+            <p>
+                Understand how Electronic Navigational Charts and Electronic Chart
+                Display and Information Systems support voyage planning, route
+                monitoring, navigational awareness, and safer maritime operations.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">TOPIC 02</span>
+                <span class="meta-item">Digital Navigation</span>
+                <span class="meta-item">Advanced Maritime Systems</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- SECTION 01 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">01 / Foundations</div>
+                <h2 class="section-title">Understanding Electronic Charts</h2>
+
+                <p class="section-intro">
+                    Electronic charts are digital representations of maritime
+                    geographical and navigational information. They provide
+                    information about coastlines, water depths, navigation
+                    channels, hazards, landmarks, and maritime infrastructure.
+                </p>
+
+                <h3>What Is an Electronic Navigational Chart?</h3>
+
+                <p>
+                    An <strong>Electronic Navigational Chart (ENC)</strong> is an
+                    officially produced digital chart containing navigational
+                    information. It is created under the authority of a government
+                    Hydrographic Office or another authorized organization.
+                </p>
+
+                <p>
+                    Unlike a simple digital picture of a paper chart, a vector ENC
+                    stores information as structured geographic objects. Each
+                    object can have a position, geometry, classification, and
+                    associated attributes.
+                </p>
+
+                <p>
+                    For example, a lighthouse can be represented as a geographic
+                    object with attributes describing its name, light
+                    characteristics, and other relevant information.
+                </p>
+
+                <h3>Raster Charts vs. Vector Charts</h3>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Raster Navigational Charts (RNC)</h3>
+                        <p>
+                            Raster charts are digital images of existing paper
+                            charts. They preserve the visual appearance of the
+                            original chart and are displayed as a fixed image.
+                        </p>
+                        <p>
+                            Their information is not normally stored as individually
+                            selectable geographic objects in the same way as vector
+                            charts.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Electronic Navigational Charts (ENC)</h3>
+                        <p>
+                            Vector charts store navigational information as
+                            structured objects. Users and compatible systems can
+                            select objects, inspect attributes, and control the
+                            display of different information layers.
+                        </p>
+                        <p>
+                            ECDIS can use ENC data for safety-related functions,
+                            including certain route-checking and warning functions.
+                        </p>
+                    </div>
+                </div>
+
+                <table class="technical-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Raster Chart</th>
+                            <th>Vector ENC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Data structure</td>
+                            <td>Pixel-based chart image</td>
+                            <td>Structured geographic objects</td>
+                        </tr>
+                        <tr>
+                            <td>Object selection</td>
+                            <td>Generally limited</td>
+                            <td>Individual objects can be selected</td>
+                        </tr>
+                        <tr>
+                            <td>Display control</td>
+                            <td>Mostly fixed chart image</td>
+                            <td>Flexible information layers</td>
+                        </tr>
+                        <tr>
+                            <td>Safety checking</td>
+                            <td>Limited compared with vector ENC functions</td>
+                            <td>Supports ENC-based safety checking</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Important distinction:</strong> A raster chart is
+                        not automatically equivalent to an ENC. Their data
+                        structures and the functions available to navigation
+                        systems are different.
+                    </p>
+                </div>
+
+                <h3>What Information Does an ENC Contain?</h3>
+
+                <p>
+                    ENC data can contain multiple categories of navigational
+                    information, including:
+                </p>
+
+                <ul>
+                    <li><strong>Bathymetry:</strong> Depth information and underwater terrain features.</li>
+                    <li><strong>Coastlines:</strong> Shore boundaries and coastal geographical features.</li>
+                    <li><strong>Navigation aids:</strong> Buoys, beacons, lights, and other aids to navigation.</li>
+                    <li><strong>Hazards:</strong> Wrecks, obstructions, rocks, and dangerous underwater features.</li>
+                    <li><strong>Navigation routes:</strong> Channels, traffic separation schemes, and restricted areas.</li>
+                    <li><strong>Landmarks:</strong> Structures and geographical objects useful for navigation.</li>
+                    <li><strong>Port information:</strong> Harbours, terminals, berthing areas, and maritime facilities.</li>
+                </ul>
+
+                <p>
+                    The available information depends on the chart's coverage,
+                    production quality, scale, survey data, and update status.
+                    An electronic chart should never be assumed to contain every
+                    detail about the surrounding maritime environment.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 02 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">02 / System Architecture</div>
+                <h2 class="section-title">What Is ECDIS?</h2>
+
+                <p class="section-intro">
+                    ECDIS is a navigation information system that combines
+                    electronic chart data with navigational sensor inputs and
+                    software functions to support voyage planning and monitoring.
+                </p>
+
+                <h3>Electronic Chart Display and Information System</h3>
+
+                <p>
+                    <strong>ECDIS</strong> stands for Electronic Chart Display and
+                    Information System. It is a specialized maritime navigation
+                    system designed to display official electronic navigational
+                    charts and support navigational tasks.
+                </p>
+
+                <p>
+                    ECDIS can combine chart information with the vessel's
+                    position, heading, speed, route, and other sensor information.
+                    This allows the bridge team to monitor the ship in relation
+                    to charted geographical features and navigational hazards.
+                </p>
+
+                <h3>Main ECDIS Components</h3>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>1. Display Unit</h3>
+                        <p>
+                            Presents chart information, vessel position, planned
+                            routes, navigational objects, alerts, and system
+                            information to the bridge team.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>2. ECDIS Software</h3>
+                        <p>
+                            Processes chart data, manages display settings,
+                            supports route planning, and performs safety-related
+                            monitoring functions.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>3. ENC Database</h3>
+                        <p>
+                            Stores electronic chart information and applicable
+                            chart updates used by the ECDIS.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>4. Navigation Sensors</h3>
+                        <p>
+                            Supply information such as position, heading, and
+                            speed. The quality and reliability of these inputs
+                            directly affect navigation.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>5. Alarm and Monitoring Functions</h3>
+                        <p>
+                            Provide warnings and indications related to selected
+                            safety settings, route monitoring, and system
+                            conditions.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>6. Backup Arrangements</h3>
+                        <p>
+                            Provide an independent means of navigation if the
+                            primary ECDIS becomes unavailable, according to
+                            applicable requirements and vessel arrangements.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>How ECDIS Receives Navigation Information</h3>
+
+                <p>
+                    ECDIS may receive data from several onboard systems through
+                    suitable interfaces and communication networks.
+                </p>
+
+                <ul>
+                    <li><strong>GNSS receiver:</strong> Supplies geographical position and timing information.</li>
+                    <li><strong>Gyrocompass:</strong> Supplies heading information.</li>
+                    <li><strong>Speed log:</strong> Supplies vessel speed information.</li>
+                    <li><strong>Radar:</strong> Can provide radar information or an overlay when properly integrated.</li>
+                    <li><strong>AIS:</strong> Supplies information about transmitting vessels and other AIS targets.</li>
+                    <li><strong>Echo sounder:</strong> Provides measured water depth beneath the vessel.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Engineering concept:</strong> ECDIS does not
+                        independently measure every aspect of vessel movement.
+                        It depends on external data sources. A wrong sensor input
+                        can therefore produce a misleading display even when the
+                        chart itself is correct.
+                    </p>
+                </div>
+
+                <h3>ECDIS vs. ECS</h3>
+
+                <p>
+                    An <strong>Electronic Chart System (ECS)</strong> is a broad
+                    term for systems that display electronic chart information.
+                    However, not every ECS meets the IMO performance standards
+                    required for an approved ECDIS.
+                </p>
+
+                <p>
+                    A system being able to display an electronic map does not
+                    automatically make it suitable for meeting a vessel's
+                    statutory chart-carriage requirements.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 03 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">03 / International Standards</div>
+                <h2 class="section-title">ENC and ECDIS Standards</h2>
+
+                <p class="section-intro">
+                    International standards help ensure that electronic
+                    navigational data is structured, displayed, protected,
+                    exchanged, and used consistently across compatible maritime
+                    systems.
+                </p>
+
+                <h3>International Hydrographic Organization (IHO)</h3>
+
+                <p>
+                    The <strong>International Hydrographic Organization (IHO)</strong>
+                    develops standards and specifications that support the
+                    production and use of hydrographic information, including
+                    electronic navigational charts.
+                </p>
+
+                <div class="standard-item">
+                    <strong>IHO S-57 — Transfer Standard for Digital Hydrographic Data</strong>
+                    Defines the traditional data structure and encoding used
+                    for exchanging digital hydrographic information, including
+                    S-57 Electronic Navigational Charts.
+                </div>
+
+                <div class="standard-item">
+                    <strong>IHO S-52 — Chart Content and Display Aspects of ECDIS</strong>
+                    Specifies important aspects of how chart information is
+                    presented in ECDIS, including symbols, colours, and display
+                    conventions.
+                </div>
+
+                <div class="standard-item">
+                    <strong>IHO S-63 — Data Protection Scheme</strong>
+                    Defines a protection framework used for the secure
+                    distribution and handling of ENC data.
+                </div>
+
+                <div class="standard-item">
+                    <strong>IHO S-101 — Electronic Navigational Chart Product Specification</strong>
+                    Defines the next-generation ENC product specification
+                    developed within the IHO S-100 framework.
+                </div>
+
+                <div class="standard-item">
+                    <strong>IHO S-100 — Universal Hydrographic Data Model</strong>
+                    Provides a framework for developing and exchanging a wider
+                    range of digital hydrographic and maritime information
+                    products.
+                </div>
+
+                <h3>The Transition Toward S-100</h3>
+
+                <p>
+                    Traditional S-57 ENCs remain important in current maritime
+                    operations. The S-100 framework introduces a more flexible
+                    approach that supports multiple types of marine information
+                    products.
+                </p>
+
+                <p>
+                    These products can include electronic navigational charts,
+                    bathymetric surfaces, water-level information, surface
+                    currents, and navigational warnings.
+                </p>
+
+                <p>
+                    This approach can help navigation systems combine different
+                    maritime data products in a more integrated environment.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Do not confuse the standards:</strong> S-57 and
+                        S-101 describe ENC data specifications. S-52 addresses
+                        chart presentation, while S-63 addresses data protection.
+                        They perform different roles within the electronic
+                        navigation ecosystem.
+                    </p>
+                </div>
+
+                <h3>IMO Performance Standards</h3>
+
+                <p>
+                    The International Maritime Organization (IMO) establishes
+                    performance standards for ECDIS equipment. These standards
+                    describe system capabilities and operational requirements.
+                </p>
+
+                <p>
+                    IMO Resolution <strong>MSC.232(82)</strong> adopted revised
+                    performance standards for ECDIS in 2006. Later standards
+                    also address ECDIS operating with S-100-based information
+                    products.
+                </p>
+
+                <p>
+                    The applicable performance standard depends on the equipment,
+                    its approval and installation history, and the relevant
+                    regulatory requirements.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 04 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">04 / Voyage Planning</div>
+                <h2 class="section-title">Route Planning Using ECDIS</h2>
+
+                <p class="section-intro">
+                    Voyage planning is the process of selecting and evaluating
+                    a safe route between departure and destination while
+                    considering navigational hazards, vessel characteristics,
+                    environmental conditions, and operational restrictions.
+                </p>
+
+                <h3>Route Planning Process</h3>
+
+                <ol>
+                    <li>
+                        <strong>Define the voyage:</strong>
+                        Identify the departure point, destination, expected
+                        operating conditions, and voyage requirements.
+                    </li>
+                    <li>
+                        <strong>Review chart coverage:</strong>
+                        Confirm that appropriate ENC coverage is available
+                        for the complete route.
+                    </li>
+                    <li>
+                        <strong>Identify hazards:</strong>
+                        Examine shallow waters, wrecks, obstructions, restricted
+                        areas, and navigational constraints.
+                    </li>
+                    <li>
+                        <strong>Create waypoints:</strong>
+                        Define the intended route using a sequence of geographical
+                        positions.
+                    </li>
+                    <li>
+                        <strong>Configure safety parameters:</strong>
+                        Set appropriate safety values based on the vessel's
+                        characteristics and operating conditions.
+                    </li>
+                    <li>
+                        <strong>Perform route checking:</strong>
+                        Use available ECDIS safety-checking functions to identify
+                        potential conflicts between the planned route and charted
+                        information.
+                    </li>
+                    <li>
+                        <strong>Review and approve:</strong>
+                        The responsible navigation officers examine the route
+                        before it is used for the voyage.
+                    </li>
+                </ol>
+
+                <h3>Important ECDIS Safety Settings</h3>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Safety Contour</h3>
+                        <p>
+                            Defines the depth boundary used by ECDIS to distinguish
+                            between waters considered safe and unsafe according
+                            to the selected settings.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Safety Depth</h3>
+                        <p>
+                            Highlights depth information relevant to the vessel's
+                            selected safety criteria. It helps officers identify
+                            potentially dangerous depth areas.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Shallow Contour</h3>
+                        <p>
+                            Represents a selected shallow-water boundary and
+                            contributes to the chart's depth presentation.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Deep Contour</h3>
+                        <p>
+                            Provides a depth boundary that helps distinguish
+                            deeper areas from shallower water on the chart.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Cross-Track Distance</h3>
+                        <p>
+                            Defines the permitted distance from the planned route
+                            before an indication or alarm may be generated.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Look-Ahead Function</h3>
+                        <p>
+                            Examines a selected area ahead of the vessel in
+                            relation to charted safety information and configured
+                            monitoring parameters.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>Why Safety Parameters Must Be Correct</h3>
+
+                <p>
+                    Safety settings must reflect the vessel's actual operating
+                    conditions. Relevant factors include:
+                </p>
+
+                <ul>
+                    <li>Vessel draft and expected changes in draft.</li>
+                    <li>Under-keel clearance requirements.</li>
+                    <li>Water-level and tidal conditions.</li>
+                    <li>Squat and vessel speed in shallow water.</li>
+                    <li>Charted depth quality and available survey information.</li>
+                    <li>Company procedures and applicable navigation requirements.</li>
+                </ul>
+
+                <p>
+                    An incorrectly selected safety contour or depth value can
+                    reduce the usefulness of ECDIS warnings. The system can
+                    only evaluate information according to the data and
+                    parameters available to it.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Critical point:</strong> A route-checking function
+                        is an aid to the navigator, not a guarantee that a route
+                        is safe. It cannot identify every possible danger,
+                        especially when chart information is incomplete,
+                        outdated, or inaccurate.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 05 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">05 / Operational Monitoring</div>
+                <h2 class="section-title">Route Monitoring and Navigation Display</h2>
+
+                <p class="section-intro">
+                    After a route has been planned and approved, ECDIS can help
+                    the bridge team monitor the vessel's progress and compare
+                    its actual movement with the intended route.
+                </p>
+
+                <h3>Monitoring the Vessel's Position</h3>
+
+                <p>
+                    During route monitoring, the ECDIS display can show the
+                    vessel's position in relation to the planned route,
+                    charted hazards, and surrounding geographical features.
+                </p>
+
+                <p>
+                    The navigation team must continuously assess whether the
+                    vessel is following the intended track and whether the
+                    available position information is reliable.
+                </p>
+
+                <h3>Display Modes and Information Layers</h3>
+
+                <p>
+                    ECDIS provides different chart display options. These
+                    options allow navigators to control the amount and type
+                    of information presented on the screen.
+                </p>
+
+                <ul>
+                    <li><strong>Display base:</strong> Essential chart information that cannot normally be removed.</li>
+                    <li><strong>Standard display:</strong> A standard set of information intended for routine navigation.</li>
+                    <li><strong>All or additional information:</strong> Further chart details that can be displayed when required.</li>
+                    <li><strong>Information layers:</strong> Selected categories of chart objects and supplementary information.</li>
+                </ul>
+
+                <p>
+                    Display settings should support clear interpretation.
+                    Removing too much information can hide important details,
+                    while displaying too many objects can create visual clutter.
+                </p>
+
+                <h3>Chart Scale and Overscaling</h3>
+
+                <p>
+                    Chart scale determines the relationship between distances
+                    shown on the screen and actual geographical distances.
+                    Navigators must use appropriate chart scales for the
+                    navigational task.
+                </p>
+
+                <p>
+                    <strong>Overscaling</strong> occurs when a chart is enlarged
+                    beyond its intended compilation scale. This can make
+                    information appear more detailed than the underlying
+                    survey and chart data actually support.
+                </p>
+
+                <p>
+                    Zooming in does not create new survey information or improve
+                    the original accuracy of the chart.
+                </p>
+
+                <h3>Route Monitoring Alerts</h3>
+
+                <p>
+                    Depending on the equipment and configuration, ECDIS may
+                    provide alerts related to:
+                </p>
+
+                <ul>
+                    <li>Approaching charted dangers.</li>
+                    <li>Crossing a configured safety contour.</li>
+                    <li>Leaving the planned route or exceeding cross-track limits.</li>
+                    <li>Approaching certain restricted or safety-related areas.</li>
+                    <li>Position or sensor input problems.</li>
+                    <li>Chart data and system status conditions.</li>
+                </ul>
+
+                <p>
+                    Officers must understand what each alert means and whether
+                    it requires immediate action. Repeated unnecessary alarms
+                    can create alarm fatigue and reduce attention to important
+                    warnings.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 06 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">06 / Practical Applications</div>
+                <h2 class="section-title">ECDIS in Maritime Operations</h2>
+
+                <p class="section-intro">
+                    Electronic charts and ECDIS are used in different maritime
+                    environments to support navigation, route assessment,
+                    operational awareness, and voyage management.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Commercial Shipping</h3>
+                        <p>
+                            Supports voyage planning and monitoring for cargo
+                            vessels, tankers, container ships, and other
+                            commercial vessels.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Passenger Vessels</h3>
+                        <p>
+                            Helps bridge teams monitor routes, navigational
+                            constraints, and the vessel's progress during
+                            passenger operations.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Offshore Operations</h3>
+                        <p>
+                            Provides chart-based geographical awareness around
+                            offshore installations, subsea infrastructure, and
+                            operational areas.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Port and Harbour Navigation</h3>
+                        <p>
+                            Supports navigation through channels, harbour
+                            approaches, restricted waters, and areas with
+                            complex maritime infrastructure.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>Integration with Other Bridge Systems</h3>
+
+                <p>
+                    ECDIS is one part of a wider bridge navigation environment.
+                    Its information can be used alongside other systems to
+                    improve the bridge team's understanding of the vessel's
+                    surroundings.
+                </p>
+
+                <ul>
+                    <li><strong>Radar:</strong> Helps detect and track surrounding targets using radio waves.</li>
+                    <li><strong>AIS:</strong> Provides identity and voyage-related information transmitted by AIS-equipped targets.</li>
+                    <li><strong>GNSS:</strong> Supplies satellite-derived position information.</li>
+                    <li><strong>Gyrocompass:</strong> Supplies heading information for navigation and display alignment.</li>
+                    <li><strong>Speed log:</strong> Supplies vessel speed measurements.</li>
+                </ul>
+
+                <p>
+                    Radar and AIS overlays can improve situational awareness,
+                    but they must be interpreted correctly. AIS information
+                    depends on transmitted data and does not replace radar
+                    observation or visual lookout.
+                </p>
+
+                <div class="scenario">
+                    <h3>Practical Scenario: Approaching a Shallow Channel</h3>
+
+                    <p>
+                        A cargo vessel is approaching a narrow channel with
+                        limited water depth. The bridge team uses ECDIS to
+                        review the planned route, examine charted depths,
+                        configure safety parameters, and monitor the vessel's
+                        position.
+                    </p>
+
+                    <p>
+                        During the approach, the system indicates that the
+                        vessel is nearing a selected safety boundary.
+                        The officer must evaluate the alert, verify the
+                        vessel's position and sensor inputs, and take
+                        appropriate navigational action.
+                    </p>
+
+                    <p>
+                        <strong>Learning point:</strong> ECDIS supports the
+                        decision-making process, but the bridge team remains
+                        responsible for interpreting information and
+                        maintaining safe navigation.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 07 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">07 / Technical Challenges</div>
+                <h2 class="section-title">Limitations, Risks and System Reliability</h2>
+
+                <p class="section-intro">
+                    Although ECDIS improves access to navigational information,
+                    its effectiveness depends on accurate chart data, reliable
+                    sensor inputs, correct configuration, appropriate training,
+                    and effective operational procedures.
+                </p>
+
+                <h3>1. Outdated or Incomplete Chart Data</h3>
+
+                <p>
+                    Electronic charts require updates to reflect changes in
+                    navigational conditions. New hazards, changes in depth,
+                    modified navigation aids, and updated restricted areas
+                    may not appear in an outdated chart database.
+                </p>
+
+                <p>
+                    Navigators must verify chart coverage and update status
+                    before relying on chart information for a voyage.
+                </p>
+
+                <h3>2. Incorrect Safety Settings</h3>
+
+                <p>
+                    Incorrect safety depths, safety contours, or route-monitoring
+                    parameters can result in unsuitable warnings or missed
+                    indications.
+                </p>
+
+                <p>
+                    The selected settings should be reviewed and checked against
+                    the vessel's characteristics, voyage conditions, and
+                    operating procedures.
+                </p>
+
+                <h3>3. Sensor Input Errors</h3>
+
+                <p>
+                    ECDIS may display incorrect vessel information when its
+                    connected sensors provide inaccurate or unreliable data.
+                    For example, a faulty GNSS input may show a misleading
+                    vessel position.
+                </p>
+
+                <p>
+                    Independent position checks and comparison with other
+                    available navigation sources remain important.
+                </p>
+
+                <h3>4. Human Factors and Over-Reliance</h3>
+
+                <p>
+                    Over-reliance on electronic navigation can reduce
+                    situational awareness if officers stop cross-checking
+                    information or fail to maintain an effective visual
+                    lookout.
+                </p>
+
+                <p>
+                    Proper training, watchkeeping procedures, and regular
+                    verification of system information are essential.
+                </p>
+
+                <h3>5. Display Clutter and Overscaling</h3>
+
+                <p>
+                    Poor display configuration can make important chart
+                    information difficult to identify. Excessive zooming
+                    can also create a false impression of geographical detail.
+                </p>
+
+                <h3>6. Cybersecurity Risks</h3>
+
+                <p>
+                    ECDIS is a computer-based navigation system connected
+                    to other onboard equipment and information sources.
+                    Improper software updates, unauthorized access, infected
+                    removable media, or compromised data sources can affect
+                    system reliability.
+                </p>
+
+                <p>
+                    Cybersecurity measures should include controlled access,
+                    approved update procedures, software maintenance,
+                    network protection, and suitable incident-response plans.
+                </p>
+
+                <h3>7. GNSS Interference and Position Reliability</h3>
+
+                <p>
+                    GNSS jamming can disrupt satellite signals, while spoofing
+                    can provide misleading position or timing information.
+                    If ECDIS receives incorrect position data, the displayed
+                    vessel location may not represent its true position.
+                </p>
+
+                <p>
+                    Navigators should use independent cross-checks and follow
+                    the vessel's procedures for operating in degraded or
+                    GNSS-denied environments.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Key engineering lesson:</strong> ECDIS safety
+                        depends on the complete information chain: chart
+                        production, chart updates, sensor accuracy, system
+                        configuration, software reliability, and human
+                        decision-making.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 08 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">08 / Future Developments</div>
+                <h2 class="section-title">The Future of Digital Chart Systems</h2>
+
+                <p class="section-intro">
+                    The development of digital hydrographic standards and
+                    integrated maritime information systems is expanding
+                    the capabilities of electronic navigation.
+                </p>
+
+                <h3>1. S-100-Based Navigation</h3>
+
+                <p>
+                    The IHO S-100 framework supports a family of interoperable
+                    digital maritime data products. It creates opportunities
+                    to use different types of information within compatible
+                    navigation systems.
+                </p>
+
+                <h3>2. Bathymetric Surface Information</h3>
+
+                <p>
+                    More detailed bathymetric information can help provide
+                    a better understanding of underwater terrain and depth
+                    variations, subject to the quality and availability of
+                    the underlying data.
+                </p>
+
+                <h3>3. Water-Level and Current Information</h3>
+
+                <p>
+                    Digital water-level and surface-current products can
+                    support navigation planning by providing additional
+                    environmental information.
+                </p>
+
+                <h3>4. Improved Data Interoperability</h3>
+
+                <p>
+                    Standardized maritime data products can help different
+                    navigation and information systems exchange information
+                    more consistently.
+                </p>
+
+                <h3>5. Intelligent Navigation Support</h3>
+
+                <p>
+                    Advanced decision-support systems may combine chart data,
+                    sensor information, environmental conditions, and
+                    operational constraints to help identify risks and
+                    support navigational decisions.
+                </p>
+
+                <p>
+                    However, automated recommendations must remain transparent,
+                    verifiable, and subject to appropriate human oversight.
+                    Intelligent systems should support navigators rather than
+                    replace professional responsibility.
+                </p>
+            </div>
+        </section>
+
+        <!-- SECTION 09 -->
+        <section class="content-section">
+            <div class="container">
+                <div class="section-label">09 / Knowledge Summary</div>
+                <h2 class="section-title">Key Concepts to Remember</h2>
+
+                <ul>
+                    <li>Electronic Navigational Charts provide structured digital information about maritime environments.</li>
+                    <li>Raster charts are image-based, while vector ENCs store information as geographic objects.</li>
+                    <li>ECDIS combines electronic chart data with navigation inputs and software functions.</li>
+                    <li>GNSS, gyrocompass, speed log, radar, and AIS can contribute information to the bridge environment.</li>
+                    <li>IHO standards define important aspects of chart data, presentation, and protection.</li>
+                    <li>Route planning includes hazard assessment, waypoint creation, safety settings, and route checking.</li>
+                    <li>Route monitoring helps compare the vessel's movement with its intended route.</li>
+                    <li>Chart scale, data quality, and update status affect the reliability of navigation information.</li>
+                    <li>Incorrect sensor inputs or safety settings can reduce the effectiveness of ECDIS.</li>
+                    <li>Human oversight and independent navigation checks remain essential.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Final concept:</strong> ECDIS is not simply
+                        an electronic map. It is a safety-related navigation
+                        system that integrates chart information, sensor data,
+                        monitoring functions, and human decision-making.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+        <section class="references">
+            <div class="container">
+                <div class="section-label">Further Reading</div>
+                <h2 class="section-title">Technical References</h2>
+
+                <p class="section-intro">
+                    The following international organizations and technical
+                    publications provide additional information about
+                    electronic charts, ECDIS, and maritime navigation standards.
+                </p>
+
+                <ul>
+                    <li>
+                        <a href="https://iho.int/en/enc-ecdis" target="_blank" rel="noopener noreferrer">
+                            International Hydrographic Organization — ENC & ECDIS
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://iho.int/standards-and-specifications" target="_blank" rel="noopener noreferrer">
+                            IHO — Standards and Specifications
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://registry.iho.int/productspec/view.do?idx=214&product_ID=S-101" target="_blank" rel="noopener noreferrer">
+                            IHO Geospatial Information Registry — S-101
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.imo.org/en/ourwork/safety/pages/electroniccharts.aspx" target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization — Electronic Charts and ECDIS
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://wwwcdn.imo.org/localresources/en/KnowledgeCentre/IndexofIMOResolutions/MSCResolutions/MSC.232(82).pdf" target="_blank" rel="noopener noreferrer">
+                            IMO Resolution MSC.232(82) — ECDIS Performance Standards
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://iho.int/standards-in-force" target="_blank" rel="noopener noreferrer">
+                            IHO — Standards in Force
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="quiz-section" id="quiz">
+            <div class="quiz-container">
+
+                <div class="quiz-header">
+                    <div class="section-label">Knowledge Assessment</div>
+                    <h2 class="section-title">Test Your Understanding</h2>
+
+                    <p>
+                        Answer all 10 questions to evaluate your understanding
+                        of electronic charts, ECDIS architecture, route
+                        planning, international standards, and operational risks.
+                    </p>
+
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <form id="quizForm">
+
+                    <div class="question-card" data-question="0">
+                        <div class="question-number">QUESTION 01 / 10</div>
+                        <h3>What is the main difference between a raster chart and a vector ENC?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="0">
+                            Raster charts contain individually selectable geographic objects.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="1">
+                            Vector ENCs store structured geographic objects and attributes.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="2">
+                            Vector ENCs are only scanned images of paper charts.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="3">
+                            There is no difference between them.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Vector ENCs store structured geographic
+                            objects and attributes, while raster charts are
+                            image-based representations.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="1">
+                        <div class="question-number">QUESTION 02 / 10</div>
+                        <h3>What does ECDIS stand for?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="0">
+                            Electronic Communication and Data Information System.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="1">
+                            Electronic Chart Display and Information System.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="2">
+                            Environmental Chart Data Integration Service.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="3">
+                            Electronic Control and Direction Information Software.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: ECDIS means Electronic Chart Display
+                            and Information System.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="2">
+                        <div class="question-number">QUESTION 03 / 10</div>
+                        <h3>Which IHO standard is associated with ENC data protection?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="0">
+                            S-52
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="1">
+                            S-57
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="2">
+                            S-63
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="3">
+                            S-101
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: S-63 defines the IHO data protection
+                            scheme used for ENC data.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="3">
+                        <div class="question-number">QUESTION 04 / 10</div>
+                        <h3>What is the primary purpose of a safety contour in ECDIS?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="0">
+                            To display the vessel's speed.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="1">
+                            To distinguish depth areas according to selected safety criteria.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="2">
+                            To calculate the ship's destination.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="3">
+                            To identify AIS vessel names.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: The safety contour provides a depth
+                            boundary used by ECDIS according to the selected
+                            navigational safety settings.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="4">
+                        <div class="question-number">QUESTION 05 / 10</div>
+                        <h3>Which sensor normally supplies geographical position information to ECDIS?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="0">
+                            Echo sounder
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="1">
+                            Gyrocompass
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="2">
+                            GNSS receiver
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="3">
+                            Speed log
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: A GNSS receiver normally provides
+                            satellite-derived geographical position information.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="5">
+                        <div class="question-number">QUESTION 06 / 10</div>
+                        <h3>What does overscaling mean in electronic chart display?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="0">
+                            Displaying a chart beyond its intended compilation scale.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="1">
+                            Updating an ENC with new information.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="2">
+                            Reducing the vessel's speed.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="3">
+                            Switching from vector to raster data.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Overscaling occurs when the chart is
+                            enlarged beyond its intended compilation scale. It
+                            does not create additional survey detail.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="6">
+                        <div class="question-number">QUESTION 07 / 10</div>
+                        <h3>Why must ENC updates be checked regularly?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="0">
+                            To increase the screen brightness.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="1">
+                            To reflect changes in navigational information and hazards.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="2">
+                            To improve the ship's engine performance.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="3">
+                            To replace the GNSS receiver.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Chart updates help reflect changes
+                            such as new hazards, modified navigation aids, and
+                            updated navigational information.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="7">
+                        <div class="question-number">QUESTION 08 / 10</div>
+                        <h3>What is a major risk of relying on incorrect GNSS data?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="0">
+                            The ENC automatically becomes more accurate.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="1">
+                            The vessel's displayed position may be misleading.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="2">
+                            The safety contour is permanently corrected.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="3">
+                            The chart database is automatically updated.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Incorrect GNSS data can cause ECDIS
+                            to display a position that does not represent the
+                            vessel's true geographical location.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="8">
+                        <div class="question-number">QUESTION 09 / 10</div>
+                        <h3>Which statement correctly describes ECDIS route checking?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="0">
+                            It guarantees that every planned route is safe.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="1">
+                            It replaces the need for bridge officers.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="2">
+                            It helps identify potential conflicts with charted safety information.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="3">
+                            It detects every uncharted underwater object.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Route checking helps identify
+                            potential conflicts using available chart data and
+                            configured parameters, but it cannot guarantee
+                            complete route safety.
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="9">
+                        <div class="question-number">QUESTION 10 / 10</div>
+                        <h3>Why is human oversight essential when using ECDIS?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="0">
+                            Because ECDIS cannot display electronic charts.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="1">
+                            Because the system depends on data quality, sensor inputs, configuration, and correct interpretation.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="2">
+                            Because ECDIS does not support route monitoring.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="3">
+                            Because electronic charts are always inaccurate.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: ECDIS is a decision-support and
+                            navigation system. Its safe use depends on reliable
+                            information, correct configuration, and professional
+                            human judgment.
+                        </div>
+                    </div>
+
+                    <button type="button" class="quiz-button" id="submitQuiz">
+                        Submit Answers
+                    </button>
+
+                    <button type="button" class="quiz-button secondary" id="resetQuiz">
+                        Reset Quiz
+                    </button>
+
+                </form>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite">
+                    <h3 id="resultTitle">Your Result</h3>
+                    <p id="resultScore"></p>
+                    <p id="resultMessage"></p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            MARITERRA — Maritime Technology & Digital Navigation
+        </p>
+
+        <p>
+            Educational project developed by
+            <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+
+        <a href="#" class="back-top">Back to Top ↑</a>
+    </footer>
+
+    <script>
+        const correctAnswers = [1, 1, 2, 1, 2, 0, 1, 1, 2, 1];
+
+        const quizForm = document.getElementById("quizForm");
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+        const progressBar = document.getElementById("progressBar");
+        const resultBox = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultScore = document.getElementById("resultScore");
+        const resultMessage = document.getElementById("resultMessage");
+
+        function updateProgress() {
+            let answered = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                    answered++;
+                }
+            }
+
+            progressBar.style.width = `${answered * 10}%`;
+        }
+
+        quizForm.addEventListener("change", updateProgress);
+
+        submitButton.addEventListener("click", function () {
+            let score = 0;
+            let unanswered = [];
+
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+
+                if (!selected) {
+                    unanswered.push(i);
+                }
+            }
+
+            if (unanswered.length > 0) {
+                alert(
+                    "Please answer all questions before submitting.\n" +
+                    "Unanswered questions: " + unanswered.join(", ")
+                );
+
+                const firstUnanswered = document.querySelector(
+                    `.question-card[data-question="${unanswered[0] - 1}"]`
+                );
+
+                firstUnanswered.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            document.querySelectorAll(".question-card").forEach((card, index) => {
+                const questionNumber = index + 1;
+                const selected = document.querySelector(
+                    `input[name="q${questionNumber}"]:checked`
+                );
+
+                const options = card.querySelectorAll(".option");
+                const explanation = card.querySelector(".explanation");
+
+                options.forEach((option, optionIndex) => {
+                    option.classList.remove("correct", "wrong");
+
+                    if (optionIndex === correctAnswers[index]) {
+                        option.classList.add("correct");
+                    }
+                });
+
+                if (Number(selected.value) === correctAnswers[index]) {
+                    score++;
+                } else {
+                    selected.closest(".option").classList.add("wrong");
+                }
+
+                explanation.classList.add("show");
+            });
+
+            resultTitle.textContent =
+                score >= 8 ? "Excellent Performance!" :
+                score >= 6 ? "Good Work!" :
+                "Keep Learning!";
+
+            resultScore.textContent = `Your score: ${score} / 10`;
+
+            if (score >= 8) {
+                resultMessage.textContent =
+                    "You have a strong understanding of electronic charts and ECDIS. Review the explanations to strengthen your technical knowledge.";
+            } else if (score >= 6) {
+                resultMessage.textContent =
+                    "You understand several important concepts. Review the sections related to your incorrect answers and try again.";
+            } else {
+                resultMessage.textContent =
+                    "Review the learning material carefully, especially ECDIS architecture, chart standards, and route safety functions.";
+            }
+
+            resultBox.style.display = "block";
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            submitButton.disabled = true;
+            submitButton.style.opacity = "0.5";
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            document.querySelectorAll(".option").forEach(option => {
+                option.classList.remove("correct", "wrong");
+            });
+
+            document.querySelectorAll(".explanation").forEach(explanation => {
+                explanation.classList.remove("show");
+            });
+
+            resultBox.style.display = "none";
+            progressBar.style.width = "0%";
+
+            submitButton.disabled = false;
+            submitButton.style.opacity = "1";
+
+            document.getElementById("quiz").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>

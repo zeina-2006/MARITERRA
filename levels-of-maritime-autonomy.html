@@ -1,0 +1,1858 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore the four degrees of Maritime Autonomous Surface Ship autonomy used in the IMO regulatory scoping exercise, including onboard automation, remote control, crew arrangements, operational examples, and regulatory context.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Levels of Maritime Autonomy</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101126;
+            --surface-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a8a8c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+            --green: #4ade80;
+            --orange: #fb923c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 8%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.82rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            padding: 100px 0 75px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(147, 51, 234, 0.22);
+            border-radius: 50%;
+            right: -130px;
+            top: 30px;
+            box-shadow: 0 0 80px rgba(147, 51, 234, 0.08);
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            max-width: 900px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 780px;
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.025);
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: var(--purple-light);
+            font-size: 0.78rem;
+        }
+
+        .content-section {
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            margin-bottom: 22px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: var(--purple-light);
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .note {
+            margin: 25px 0;
+            padding: 20px 23px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .warning-note {
+            border-left-color: var(--orange);
+            background: rgba(251, 146, 60, 0.07);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--surface-light), var(--surface));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(147, 51, 234, 0.65);
+        }
+
+        .card-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .degree-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .degree-card::after {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 1px solid rgba(147, 51, 234, 0.15);
+            border-radius: 50%;
+            right: -55px;
+            bottom: -55px;
+        }
+
+        .degree-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            color: var(--blue);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 30px;
+            padding: 5px 10px;
+            margin-bottom: 15px;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+            border-radius: 12px;
+        }
+
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        .comparison th,
+        .comparison td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison th {
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-size: 0.85rem;
+        }
+
+        .comparison td {
+            color: var(--muted);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.86rem;
+        }
+
+        .steps {
+            display: grid;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: 18px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            margin-bottom: 5px;
+        }
+
+        .step p {
+            margin: 0;
+        }
+
+        .list {
+            padding-left: 22px;
+            color: var(--muted);
+        }
+
+        .list li {
+            margin-bottom: 10px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .quiz-question {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .quiz-question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 11px 13px;
+            margin-top: 9px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+            flex-shrink: 0;
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 13px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 13px 22px;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .primary-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--purple);
+        }
+
+        #quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--surface-light);
+        }
+
+        #quiz-result h3 {
+            font-size: 1.3rem;
+        }
+
+        #score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--blue);
+            margin: 10px 0;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin-bottom: 16px;
+        }
+
+        footer {
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.78rem;
+            margin: 5px 0;
+        }
+
+        .footer-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .nav {
+                padding: 15px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .hero {
+                padding: 70px 0 55px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 55px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+        <nav class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="autonomous-ships.html">AUTONOMOUS SHIPS</a>
+            <a href="#content">LESSON</a>
+            <a href="#assessment">ASSESSMENT</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow">AUTONOMOUS SHIPS / TOPIC 02</div>
+
+            <h1>
+                Levels of
+                <span class="gradient-text">Maritime Autonomy</span>
+            </h1>
+
+            <p>
+                Explore how maritime vessels perform their functions through
+                onboard automation, remote control, and autonomous decision-making.
+                Understand the four degrees of autonomy identified by the
+                International Maritime Organization for its regulatory scoping exercise.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">IMO FRAMEWORK</span>
+                <span class="meta-item">FOUR DEGREES</span>
+                <span class="meta-item">10 QUESTIONS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="content">
+        <div class="container">
+
+            <div class="section-label">01 / Introduction</div>
+            <h2>Understanding Maritime Autonomy Levels</h2>
+
+            <p>
+                Maritime autonomy describes the extent to which a vessel can
+                perform operational functions independently of direct human
+                interaction. These functions may include navigation, monitoring,
+                machinery control, route planning, and responses to changing
+                operational conditions.
+            </p>
+
+            <p>
+                Not every ship uses the same level of autonomy. Some vessels
+                rely mainly on onboard seafarers while using automated
+                equipment. Others may be controlled remotely, and more
+                advanced systems may make decisions and perform selected
+                actions independently.
+            </p>
+
+            <p>
+                To examine how existing international maritime regulations
+                apply to autonomous vessels, the International Maritime
+                Organization (IMO) identified four degrees of autonomy
+                for its Regulatory Scoping Exercise (RSE).
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Key learning point:</strong> The four degrees
+                    describe different arrangements for human involvement,
+                    remote control, and autonomous decision-making. They
+                    should not be interpreted as a universal technical
+                    certification scale or as four mandatory stages that
+                    every ship must pass through.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">02 / The IMO Framework</div>
+            <h2>The Four Degrees of Autonomy</h2>
+
+            <p>
+                The IMO framework distinguishes between four operational
+                arrangements. The main differences concern whether
+                seafarers are onboard, where control is exercised, and
+                whether the ship's operating system can make decisions
+                independently.
+            </p>
+
+            <div class="grid">
+
+                <article class="card degree-card">
+                    <div class="degree-tag">DEGREE ONE</div>
+                    <div class="card-number">01 / ONBOARD CREW</div>
+                    <h3>Automated Processes and Decision Support</h3>
+                    <p>
+                        Seafarers remain onboard and operate and control
+                        the ship's systems and functions. Some operations
+                        may be automated and may sometimes run without
+                        continuous supervision, while crew members remain
+                        available to take control when necessary.
+                    </p>
+                    <p>
+                        <strong class="highlight">Human role:</strong>
+                        The crew performs the main operational role and
+                        supervises automated functions.
+                    </p>
+                </article>
+
+                <article class="card degree-card">
+                    <div class="degree-tag">DEGREE TWO</div>
+                    <div class="card-number">02 / REMOTE CONTROL + CREW</div>
+                    <h3>Remotely Controlled Ship with Seafarers Onboard</h3>
+                    <p>
+                        The vessel is controlled and operated from another
+                        location. However, seafarers remain onboard and
+                        are available to take control and operate the
+                        shipboard systems and functions.
+                    </p>
+                    <p>
+                        <strong class="highlight">Human role:</strong>
+                        Remote operators control the ship, while onboard
+                        seafarers can intervene and take control.
+                    </p>
+                </article>
+
+                <article class="card degree-card">
+                    <div class="degree-tag">DEGREE THREE</div>
+                    <div class="card-number">03 / REMOTE CONTROL WITHOUT CREW</div>
+                    <h3>Remotely Controlled Ship without Seafarers Onboard</h3>
+                    <p>
+                        The vessel is controlled and operated from another
+                        location, but no seafarers are present onboard.
+                        Remote operators are responsible for performing
+                        the relevant control functions from outside the ship.
+                    </p>
+                    <p>
+                        <strong class="highlight">Human role:</strong>
+                        Control is exercised remotely, without onboard
+                        seafarers available to take over.
+                    </p>
+                </article>
+
+                <article class="card degree-card">
+                    <div class="degree-tag">DEGREE FOUR</div>
+                    <div class="card-number">04 / INDEPENDENT DECISION-MAKING</div>
+                    <h3>Fully Autonomous Ship</h3>
+                    <p>
+                        The ship's operating system is able to make
+                        decisions and determine actions by itself.
+                        The system performs its defined functions
+                        autonomously within its designed capabilities
+                        and operating conditions.
+                    </p>
+                    <p>
+                        <strong class="highlight">Human role:</strong>
+                        The system performs autonomous decision-making.
+                        Human oversight and responsibility still require
+                        appropriate arrangements.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Important:</strong> "Fully autonomous" does not
+                    mean that the ship has no legal responsibility, no
+                    safety requirements, or no human accountability.
+                    Autonomous decision-making must operate within a
+                    defined safety and regulatory framework.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">03 / Degree One</div>
+            <h2>Degree One: Automated Processes and Decision Support</h2>
+
+            <p>
+                Degree One describes a vessel where seafarers remain
+                onboard and continue to operate and control shipboard
+                systems. Technology supports their work by automating
+                selected processes and providing information that helps
+                them make operational decisions.
+            </p>
+
+            <h3>How It Works</h3>
+
+            <p>
+                The ship's systems collect information from navigation
+                equipment, sensors, machinery, and monitoring devices.
+                Automated functions process this information and may
+                perform specific tasks according to programmed logic.
+                The crew remains responsible for the overall operation
+                and can take control when required.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Typical Technologies</h3>
+                    <ul class="list">
+                        <li>Autopilot and heading-control systems.</li>
+                        <li>Automatic engine monitoring.</li>
+                        <li>Alarm and monitoring systems.</li>
+                        <li>Electronic Chart Display and Information System (ECDIS).</li>
+                        <li>Decision-support tools for navigation.</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>Human Responsibilities</h3>
+                    <ul class="list">
+                        <li>Maintain navigational watch.</li>
+                        <li>Monitor automated equipment.</li>
+                        <li>Verify important system information.</li>
+                        <li>Respond to alarms and abnormal conditions.</li>
+                        <li>Take manual control when necessary.</li>
+                    </ul>
+                </article>
+
+            </div>
+
+            <h3>Operational Example</h3>
+
+            <p>
+                A conventional cargo ship uses an autopilot to maintain
+                a selected heading. The system makes steering adjustments
+                automatically, but the officer on watch monitors the
+                vessel's position, traffic, weather, and navigation
+                conditions and remains ready to intervene.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Key characteristic:</strong> Automation
+                    supports the crew; it does not replace the crew's
+                    operational role.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">04 / Degree Two</div>
+            <h2>Degree Two: Remote Control with Seafarers Onboard</h2>
+
+            <p>
+                In Degree Two, the vessel is controlled and operated
+                from another location. Unlike Degree Three, seafarers
+                remain onboard and are available to take control of
+                the ship's systems and functions.
+            </p>
+
+            <h3>How It Works</h3>
+
+            <p>
+                A remote operator uses communication links and remote
+                control interfaces to monitor and control selected
+                vessel functions. Data from onboard sensors and
+                navigation systems is transmitted to the remote
+                operating location.
+            </p>
+
+            <p>
+                The onboard crew provides an additional operational
+                capability. If remote control becomes unavailable or
+                an abnormal situation occurs, the crew may take over
+                according to the vessel's operating procedures.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Typical Technologies</h3>
+                    <ul class="list">
+                        <li>Remote-control interfaces.</li>
+                        <li>Ship-to-shore communication systems.</li>
+                        <li>Remote monitoring dashboards.</li>
+                        <li>Navigation data transmission.</li>
+                        <li>Onboard backup control stations.</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>Human Responsibilities</h3>
+                    <ul class="list">
+                        <li>Remote operators control designated functions.</li>
+                        <li>Onboard crew remains available for intervention.</li>
+                        <li>Clear transfer-of-control procedures are required.</li>
+                        <li>Both teams need reliable communication.</li>
+                        <li>Emergency responsibilities must be defined.</li>
+                    </ul>
+                </article>
+
+            </div>
+
+            <h3>Operational Example</h3>
+
+            <p>
+                A vessel is monitored and controlled from a shore-based
+                operations centre during a specific voyage. The ship
+                still carries seafarers who can take over if the remote
+                control link fails or if an onboard intervention becomes
+                necessary.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Key characteristic:</strong> Remote control
+                    is introduced, but onboard seafarers remain available
+                    as an operational backup.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">05 / Degree Three</div>
+            <h2>Degree Three: Remote Control without Seafarers Onboard</h2>
+
+            <p>
+                Degree Three describes a vessel that is controlled and
+                operated from another location without seafarers onboard.
+                Remote operators perform the relevant control functions
+                from a shore-based or other authorized operating location.
+            </p>
+
+            <h3>How It Works</h3>
+
+            <p>
+                The vessel relies on onboard equipment to collect and
+                transmit operational data. Remote operators receive
+                information about navigation, machinery, alarms, and
+                vessel status through communication systems and use
+                remote interfaces to control the ship.
+            </p>
+
+            <p>
+                Because there are no seafarers onboard, the vessel
+                requires carefully designed procedures for equipment
+                failure, communication loss, emergencies, and situations
+                that would normally require direct onboard intervention.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Typical Technologies</h3>
+                    <ul class="list">
+                        <li>Remote Operations Centre infrastructure.</li>
+                        <li>Redundant communication links.</li>
+                        <li>Remote propulsion and steering control.</li>
+                        <li>Automated machinery monitoring.</li>
+                        <li>Remote alarms and fault diagnostics.</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>Major Operational Requirements</h3>
+                    <ul class="list">
+                        <li>Reliable ship-to-shore connectivity.</li>
+                        <li>Defined emergency-response procedures.</li>
+                        <li>Safe behavior during communication failure.</li>
+                        <li>Remote monitoring and fault detection.</li>
+                        <li>Clear responsibility for remote operators.</li>
+                    </ul>
+                </article>
+
+            </div>
+
+            <h3>Operational Example</h3>
+
+            <p>
+                An uncrewed surface vessel conducts a planned survey
+                mission. Its navigation and operational status are
+                monitored from a remote centre, where operators can
+                send commands and respond to alerts.
+            </p>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Important challenge:</strong> Removing
+                    onboard seafarers also removes immediate human
+                    intervention at the location of an emergency.
+                    Fire, flooding, equipment damage, and rescue
+                    situations therefore require dedicated solutions.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">06 / Degree Four</div>
+            <h2>Degree Four: Fully Autonomous Ship</h2>
+
+            <p>
+                Degree Four describes a vessel whose operating system
+                can make decisions and determine actions by itself.
+                The system evaluates information from the ship and its
+                surroundings and performs defined functions without
+                requiring a human command for every individual action.
+            </p>
+
+            <h3>How It Works</h3>
+
+            <p>
+                The ship uses sensors, data-processing technologies,
+                decision-making software, and control systems to
+                understand its operating situation and perform
+                authorized actions.
+            </p>
+
+            <p>
+                For example, an autonomous navigation system may
+                detect nearby traffic, estimate the movement of
+                surrounding vessels, assess a developing encounter,
+                and select a suitable maneuver within its approved
+                operating conditions.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Typical Technologies</h3>
+                    <ul class="list">
+                        <li>Advanced sensor-fusion systems.</li>
+                        <li>Artificial intelligence and decision-support software.</li>
+                        <li>Autonomous navigation and control.</li>
+                        <li>Automated fault detection.</li>
+                        <li>Independent operational response functions.</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <h3>Critical Requirements</h3>
+                    <ul class="list">
+                        <li>Reliable perception and decision-making.</li>
+                        <li>Safe responses to unexpected situations.</li>
+                        <li>Defined operating limits.</li>
+                        <li>Robust cybersecurity protection.</li>
+                        <li>Clear human accountability and oversight arrangements.</li>
+                    </ul>
+                </article>
+
+            </div>
+
+            <h3>Operational Example</h3>
+
+            <p>
+                A vessel operating within a defined and approved
+                environment uses autonomous navigation functions
+                to follow a planned route, monitor surrounding
+                traffic, and perform selected navigation actions
+                without continuous human commands.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Key characteristic:</strong> The operating
+                    system can make decisions and determine actions
+                    by itself within its designed capabilities.
+                    This does not remove the need for safety
+                    requirements or human accountability.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">07 / Comparative Analysis</div>
+            <h2>Comparing the Four Degrees</h2>
+
+            <p>
+                The following table summarizes the main differences
+                between the four degrees used in the IMO Regulatory
+                Scoping Exercise.
+            </p>
+
+            <div class="comparison-wrap">
+                <table class="comparison">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Degree One</th>
+                            <th>Degree Two</th>
+                            <th>Degree Three</th>
+                            <th>Degree Four</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Seafarers onboard</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                            <td>Not required by the degree definition</td>
+                        </tr>
+
+                        <tr>
+                            <td>Remote control</td>
+                            <td>Not defining feature</td>
+                            <td>Yes</td>
+                            <td>Yes</td>
+                            <td>Not defining feature</td>
+                        </tr>
+
+                        <tr>
+                            <td>Automated functions</td>
+                            <td>Yes</td>
+                            <td>May be used</td>
+                            <td>May be used</td>
+                            <td>Used as part of autonomous operation</td>
+                        </tr>
+
+                        <tr>
+                            <td>Independent decisions</td>
+                            <td>Limited to automated functions and decision support</td>
+                            <td>Not the defining feature</td>
+                            <td>Not the defining feature</td>
+                            <td>Yes, by the operating system</td>
+                        </tr>
+
+                        <tr>
+                            <td>Human control arrangement</td>
+                            <td>Onboard crew</td>
+                            <td>Remote operator and onboard crew backup</td>
+                            <td>Remote operator</td>
+                            <td>Autonomous operating system within its scope</td>
+                        </tr>
+
+                        <tr>
+                            <td>Main challenge</td>
+                            <td>Human-system coordination</td>
+                            <td>Transfer of control</td>
+                            <td>Remote reliability and emergency response</td>
+                            <td>Safe and reliable autonomous decision-making</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="note warning-note">
+                <p>
+                    This comparison is a learning summary of the IMO
+                    Regulatory Scoping Exercise definitions. It is
+                    not a substitute for the detailed operating modes,
+                    approval conditions, and safety requirements of
+                    a particular vessel.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">08 / Human Element</div>
+            <h2>The Role of Humans Across Autonomy Levels</h2>
+
+            <p>
+                Maritime autonomy changes how people interact with ships,
+                but it does not make human expertise irrelevant.
+                The location and nature of human involvement may change
+                from direct onboard operation to remote supervision
+                and oversight.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Onboard Seafarers</h3>
+                    <p>
+                        In Degree One and Degree Two, onboard seafarers
+                        remain available to operate systems, monitor
+                        conditions, and intervene when necessary.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Remote Operators</h3>
+                    <p>
+                        Remote operators monitor vessel information
+                        and may control designated functions from
+                        an authorized operating centre.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Masters and Operational Responsibility</h3>
+                    <p>
+                        The master's responsibilities and the
+                        relationship between onboard and remote
+                        personnel must be clearly established under
+                        the applicable regulatory and operational framework.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Engineers and Technical Specialists</h3>
+                    <p>
+                        Engineering teams maintain, test, monitor,
+                        and troubleshoot propulsion, electrical,
+                        communication, automation, and control systems.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="note">
+                <p>
+                    The human element includes training, workload,
+                    situational awareness, decision-making, fatigue,
+                    communication, and the ability to intervene
+                    effectively during abnormal conditions.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">09 / Operational Flexibility</div>
+            <h2>Can One Ship Operate at More Than One Degree?</h2>
+
+            <p>
+                Yes. The IMO's original framework noted that a MASS
+                could operate at one or more degrees of autonomy
+                during a single voyage.
+            </p>
+
+            <p>
+                This means the operational arrangement may change
+                depending on the vessel's location, task, operating
+                conditions, and available systems.
+            </p>
+
+            <h3>Illustrative Voyage Scenario</h3>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h3>Departure from Port</h3>
+                        <p>
+                            The vessel uses onboard personnel and
+                            automated navigation support while
+                            operating in a complex port environment.
+                            This resembles a Degree One arrangement.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h3>Remote Supervision at Sea</h3>
+                        <p>
+                            During a suitable voyage segment,
+                            selected vessel functions may be
+                            controlled remotely while seafarers
+                            remain onboard. This resembles Degree Two.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h3>Uncrewed Remote Operation</h3>
+                        <p>
+                            A vessel specifically designed and
+                            approved for uncrewed remote operation
+                            may perform a defined mission without
+                            seafarers onboard. This resembles Degree Three.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h3>Autonomous Functions</h3>
+                        <p>
+                            Within a suitable operating environment,
+                            the vessel's operating system may make
+                            decisions and determine actions independently.
+                            This resembles Degree Four.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Scenario limitation:</strong> This is an
+                    illustrative teaching example, not a claim that
+                    every vessel can freely switch between all four
+                    degrees. Any change in operating mode must be
+                    supported by the vessel's design, approvals,
+                    procedures, and applicable regulations.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">10 / Safety and Regulation</div>
+            <h2>Regulatory Context: From the RSE to the MASS Code</h2>
+
+            <p>
+                The IMO Regulatory Scoping Exercise examined how
+                existing international maritime instruments apply
+                to ships operating with different degrees of autonomy.
+                It helped identify provisions that could apply,
+                create barriers, require clarification, or need
+                further regulatory consideration.
+            </p>
+
+            <p>
+                The four degrees described in this topic belong to
+                that regulatory scoping framework. They are useful
+                for understanding the differences in crew presence,
+                remote control, and autonomous decision-making.
+            </p>
+
+            <p>
+                In May 2026, the IMO adopted the non-mandatory
+                International Code of Safety for Maritime Autonomous
+                Surface Ships (MASS Code). It entered into effect
+                on 1 July 2026.
+            </p>
+
+            <p>
+                The MASS Code establishes a goal-based safety
+                framework for covered cargo ships using remote
+                control or autonomous functions. It addresses
+                matters such as design, operation, risk assessment,
+                connectivity, remote operations, and human oversight.
+            </p>
+
+            <p>
+                The Code also requires a description of the different
+                modes of operation for which a MASS is designed.
+                This functional approach is important because a
+                ship may use different arrangements for different
+                functions or operational situations.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Regulatory distinction:</strong> Do not
+                    assume that the four RSE degrees are identical
+                    to every operational mode or approval category
+                    under the 2026 MASS Code. The Code and its
+                    applicable requirements must be read directly
+                    when assessing a particular vessel.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">11 / Key Takeaways</div>
+            <h2>What You Should Remember</h2>
+
+            <ul class="list">
+                <li>
+                    The IMO identified four degrees of autonomy
+                    for its Regulatory Scoping Exercise.
+                </li>
+                <li>
+                    Degree One involves onboard seafarers and
+                    automated processes or decision support.
+                </li>
+                <li>
+                    Degree Two involves remote control while
+                    seafarers remain onboard.
+                </li>
+                <li>
+                    Degree Three involves remote control without
+                    seafarers onboard.
+                </li>
+                <li>
+                    Degree Four describes a ship whose operating
+                    system can make decisions and determine actions
+                    by itself.
+                </li>
+                <li>
+                    A vessel may operate at more than one degree
+                    during a voyage, depending on its operational
+                    arrangements.
+                </li>
+                <li>
+                    Remote control and autonomous decision-making
+                    are different concepts.
+                </li>
+                <li>
+                    Safety, cybersecurity, human responsibility,
+                    and regulatory compliance remain essential.
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+    <section class="content-section" id="assessment">
+        <div class="container">
+
+            <div class="section-label">Knowledge Assessment</div>
+            <h2>Test Your Understanding</h2>
+
+            <p class="quiz-intro">
+                Answer all 10 questions to evaluate your understanding
+                of the four degrees of maritime autonomy. Your answers
+                will be corrected automatically, with explanations
+                provided after submission.
+            </p>
+
+            <form id="quiz-form">
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>1. What was the main purpose of identifying four degrees of autonomy in the IMO Regulatory Scoping Exercise?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="a">
+                        To create four mandatory ship construction categories.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="b">
+                        To assess how existing maritime regulations apply to ships with different autonomy arrangements.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="c">
+                        To eliminate the role of human operators.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="d">
+                        To classify ships according to their cargo capacity.
+                    </label>
+
+                    <div class="explanation">
+                        The IMO used the four degrees to examine how existing maritime instruments apply to ships with different levels and arrangements of autonomy.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>2. Which statement correctly describes Degree One?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="a">
+                        The ship has no seafarers onboard and is controlled remotely.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="b">
+                        The ship's operating system makes all decisions independently.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="c">
+                        Seafarers are onboard, while some processes may be automated.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="d">
+                        The ship is controlled only from a shore-based centre.
+                    </label>
+
+                    <div class="explanation">
+                        Degree One involves onboard seafarers who operate and control shipboard functions, with some operations supported by automation and decision-support systems.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>3. What distinguishes Degree Two from Degree Three?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="a">
+                        Seafarers remain onboard in Degree Two, but not in Degree Three.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="b">
+                        Degree Two uses no communication systems.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="c">
+                        Degree Three always requires a fully autonomous operating system.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="d">
+                        Degree Two does not involve remote control.
+                    </label>
+
+                    <div class="explanation">
+                        Both degrees involve remote control. The key difference is that Degree Two retains seafarers onboard, while Degree Three has no seafarers onboard.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>4. Which degree describes a ship whose operating system can make decisions and determine actions by itself?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="a">
+                        Degree One
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="b">
+                        Degree Two
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="c">
+                        Degree Three
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="d">
+                        Degree Four
+                    </label>
+
+                    <div class="explanation">
+                        Degree Four is the fully autonomous category in the IMO Regulatory Scoping Exercise framework.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>5. A ship uses an autopilot while an onboard officer monitors navigation and remains ready to intervene. Which degree does this most closely represent?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="a">
+                        Degree Three
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="b">
+                        Degree One
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="c">
+                        Degree Four
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="d">
+                        Degree Two
+                    </label>
+
+                    <div class="explanation">
+                        This example represents automated processes and decision support with seafarers onboard and available to take control.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>6. Why is communication reliability especially important for Degree Three vessels?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="a">
+                        Because these ships do not use navigation sensors.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="b">
+                        Because communication systems replace all propulsion equipment.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="c">
+                        Because remote operators control the vessel and no seafarers are onboard to take over.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="d">
+                        Because Degree Three ships cannot operate at sea.
+                    </label>
+
+                    <div class="explanation">
+                        Degree Three vessels have no onboard seafarers, so reliable remote communication and safe failure-response procedures are especially important.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>7. Which statement about the four IMO degrees is correct?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="a">
+                        A ship may operate at one or more degrees during a single voyage.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="b">
+                        Every ship must use all four degrees in order.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="c">
+                        The degrees are four mandatory construction stages.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="d">
+                        A ship can never change its operating arrangement.
+                    </label>
+
+                    <div class="explanation">
+                        The IMO framework recognizes that a MASS may operate at one or more degrees during a voyage, depending on its operational arrangement.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>8. What is a major operational challenge for a remotely controlled ship without seafarers onboard?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="a">
+                        The absence of any electronic equipment.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="b">
+                        The inability to use automated monitoring.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="c">
+                        The requirement to have a full crew onboard at all times.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="d">
+                        The lack of immediate onboard human intervention during emergencies.
+                    </label>
+
+                    <div class="explanation">
+                        Without seafarers onboard, emergencies such as fire, flooding, or equipment damage require specially designed detection, response, and support arrangements.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>9. What is the correct relationship between the four RSE degrees and the 2026 IMO MASS Code?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="a">
+                        They are exactly the same classification system for every approval purpose.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="b">
+                        The four degrees belong to the regulatory scoping framework, while the MASS Code requires attention to the vessel's designed modes of operation and applicable requirements.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="c">
+                        The MASS Code removed the need to assess operating modes.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="d">
+                        The four degrees apply only to underwater vehicles.
+                    </label>
+
+                    <div class="explanation">
+                        The RSE degrees are a framework for regulatory analysis. The MASS Code has its own requirements, including describing the modes of operation for which a vessel is designed.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>10. Which statement best reflects the role of humans in maritime autonomous operations?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="a">
+                        Human expertise becomes unnecessary at every degree.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="b">
+                        Remote operators have no operational responsibilities.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="c">
+                        Human roles may change, but training, oversight, responsibility, and emergency arrangements remain important.
+                    </label>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="d">
+                        Autonomous systems eliminate all human accountability.
+                    </label>
+
+                    <div class="explanation">
+                        Maritime autonomy changes where and how humans participate, but safe operation still requires appropriate training, responsibility, oversight, and emergency planning.
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button type="button" class="primary-btn" onclick="submitQuiz()">
+                        Submit Answers
+                    </button>
+
+                    <button type="button" class="secondary-btn" onclick="resetQuiz()">
+                        Reset Quiz
+                    </button>
+                </div>
+
+            </form>
+
+            <div id="quiz-result" aria-live="polite">
+                <h3>Assessment Result</h3>
+                <div id="score"></div>
+                <p id="result-message"></p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container references">
+
+            <div class="section-label">Further Reading</div>
+            <h2>Technical References</h2>
+
+            <p>
+                The following sources provide authoritative information
+                about the IMO autonomy framework and current international
+                developments in autonomous shipping.
+            </p>
+
+            <ul class="list">
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/08-msc-99-mass-scoping.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — IMO Takes First Steps to Address Autonomous Ships
+                    </a>
+                    <p>
+                        Introduces the four degrees of autonomy used
+                        for the regulatory scoping exercise.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/massrse2021.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — Autonomous Ships: Regulatory Scoping Exercise Completed
+                    </a>
+                    <p>
+                        Explains the regulatory scoping exercise and
+                        the four degrees considered in the assessment.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/hottopics/pages/autonomous-shipping.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — FAQ: Autonomous Shipping
+                    </a>
+                    <p>
+                        Provides current information about MASS,
+                        operational modes, and the 2026 MASS Code.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/imo-adopts-mass-code.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — IMO Adopts First Global Code for Autonomous Ships
+                    </a>
+                    <p>
+                        Covers the adoption, scope, and implementation
+                        timeline of the non-mandatory MASS Code.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.dnv.com/maritime/autonomous-remotely-operated-ships/" target="_blank" rel="noopener">
+                        DNV — Autonomous and Remotely Operated Ships
+                    </a>
+                    <p>
+                        Provides industry context on autonomous
+                        technologies and remote ship operations.
+                    </p>
+                </li>
+
+            </ul>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p class="footer-brand">MARITERRA</p>
+        <p>Maritime Knowledge. Engineering Innovation. Future Navigation.</p>
+        <p>DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED</p>
+    </div>
+</footer>
+
+<script>
+    function submitQuiz() {
+        const questions = document.querySelectorAll(".quiz-question");
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector("input:checked");
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach((option) => {
+                option.classList.remove("correct", "incorrect");
+            });
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === correctAnswer) {
+                score++;
+            }
+
+            options.forEach((option) => {
+                const input = option.querySelector("input");
+
+                if (input.value === correctAnswer) {
+                    option.classList.add("correct");
+                } else if (selected && input.checked) {
+                    option.classList.add("incorrect");
+                }
+            });
+
+            explanation.style.display = "block";
+        });
+
+        const result = document.getElementById("quiz-result");
+        const scoreDisplay = document.getElementById("score");
+        const message = document.getElementById("result-message");
+
+        scoreDisplay.textContent = `${score} / ${questions.length}`;
+
+        if (unanswered > 0) {
+            message.textContent =
+                `You left ${unanswered} question(s) unanswered. Unanswered questions receive zero points. Review the highlighted answers and explanations.`;
+        } else if (score === 10) {
+            message.textContent =
+                "Excellent work! You have demonstrated an excellent understanding of the four degrees of maritime autonomy.";
+        } else if (score >= 7) {
+            message.textContent =
+                "Good performance! Review the explanations to strengthen your understanding of the IMO framework.";
+        } else if (score >= 5) {
+            message.textContent =
+                "You have a basic understanding of the topic. Revisit the lesson and try again.";
+        } else {
+            message.textContent =
+                "More revision is recommended. Review the four degrees carefully before retaking the assessment.";
+        }
+
+        result.style.display = "block";
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+    function resetQuiz() {
+        document.getElementById("quiz-form").reset();
+
+        document.querySelectorAll(".option").forEach((option) => {
+            option.classList.remove("correct", "incorrect");
+        });
+
+        document.querySelectorAll(".explanation").forEach((item) => {
+            item.style.display = "none";
+        });
+
+        document.getElementById("quiz-result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

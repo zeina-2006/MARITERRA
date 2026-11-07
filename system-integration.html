@@ -1,0 +1,1552 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore maritime system integration, interoperability, communication protocols, network architecture, data exchange, and system validation.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | System Integration & Interoperability</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --si-bg: #070816;
+            --si-card: rgba(13, 16, 38, .88);
+            --si-purple: #9333ea;
+            --si-light: #c084fc;
+            --si-white: #fff;
+            --si-text: #e5e7eb;
+            --si-muted: #9ca3af;
+            --si-border: rgba(192, 132, 252, .2);
+        }
+
+        body.integration-detail-page {
+            background: var(--si-bg);
+            color: var(--si-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .si-container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .si-hero {
+            min-height: 390px;
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+            background:
+                radial-gradient(circle at 80% 45%, rgba(147,51,234,.22), transparent 35%),
+                linear-gradient(120deg, #070816, #10102b 65%, #101a37);
+            border-bottom: 1px solid var(--si-border);
+        }
+
+        .si-hero-content {
+            max-width: 800px;
+        }
+
+        .si-label {
+            color: var(--si-light);
+            letter-spacing: 3px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .si-hero h1 {
+            font-size: clamp(36px, 6vw, 66px);
+            line-height: 1.1;
+            margin: 20px 0;
+            color: var(--si-white);
+        }
+
+        .si-hero h1 span {
+            color: var(--si-light);
+        }
+
+        .si-hero p {
+            color: var(--si-muted);
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .si-breadcrumb {
+            padding: 22px 0;
+            color: var(--si-muted);
+            font-size: 13px;
+        }
+
+        .si-breadcrumb a {
+            color: var(--si-light);
+            text-decoration: none;
+        }
+
+        .si-section {
+            padding: 65px 0;
+            border-bottom: 1px solid var(--si-border);
+        }
+
+        .si-heading {
+            margin-bottom: 30px;
+        }
+
+        .si-heading small {
+            color: var(--si-light);
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .si-heading h2 {
+            color: var(--si-white);
+            font-size: clamp(25px, 4vw, 36px);
+            margin: 12px 0;
+        }
+
+        .si-section p {
+            color: var(--si-muted);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .si-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        .si-card {
+            background: var(--si-card);
+            border: 1px solid var(--si-border);
+            border-radius: 14px;
+            padding: 25px;
+        }
+
+        .si-card h3 {
+            color: var(--si-light);
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .si-card p {
+            margin: 0;
+        }
+
+        .si-highlight {
+            background: rgba(147, 51, 234, .08);
+            border-left: 3px solid var(--si-purple);
+            padding: 22px;
+            border-radius: 8px;
+            margin: 25px 0;
+            color: var(--si-muted);
+            line-height: 1.9;
+        }
+
+        .si-highlight strong {
+            color: var(--si-white);
+        }
+
+        .si-list {
+            padding-left: 22px;
+            color: var(--si-muted);
+            line-height: 2;
+        }
+
+        .si-list li {
+            margin-bottom: 9px;
+        }
+
+        .si-table-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+        }
+
+        .si-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+        }
+
+        .si-table th,
+        .si-table td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--si-border);
+            color: var(--si-muted);
+            line-height: 1.7;
+        }
+
+        .si-table th {
+            color: var(--si-light);
+            background: rgba(147, 51, 234, .1);
+        }
+
+        .si-steps {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .si-step {
+            padding: 22px 15px;
+            background: var(--si-card);
+            border: 1px solid var(--si-border);
+            border-radius: 12px;
+        }
+
+        .si-step span {
+            display: block;
+            color: var(--si-light);
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .si-step h3 {
+            color: var(--si-white);
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .si-step p {
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .si-question {
+            background: var(--si-card);
+            border: 1px solid var(--si-border);
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .si-question h3 {
+            color: var(--si-white);
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .si-question-number {
+            display: block;
+            color: var(--si-light);
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .si-option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 13px;
+            border: 1px solid var(--si-border);
+            border-radius: 9px;
+            margin: 10px 0;
+            cursor: pointer;
+            color: var(--si-muted);
+            line-height: 1.6;
+            transition: .2s;
+        }
+
+        .si-option:hover {
+            border-color: var(--si-purple);
+            background: rgba(147, 51, 234, .07);
+        }
+
+        .si-option input {
+            margin-top: 5px;
+            accent-color: var(--si-purple);
+        }
+
+        .si-option:has(input:checked) {
+            border-color: var(--si-light);
+            color: var(--si-white);
+        }
+
+        .si-explanation {
+            display: none;
+            margin-top: 18px;
+            padding: 17px;
+            border-radius: 9px;
+            line-height: 1.8;
+            background: rgba(147, 51, 234, .09);
+            border: 1px solid var(--si-border);
+            color: var(--si-muted);
+        }
+
+        .si-explanation.show {
+            display: block;
+        }
+
+        .si-explanation strong {
+            color: var(--si-light);
+        }
+
+        .si-correct {
+            border-left: 3px solid #22c55e;
+        }
+
+        .si-incorrect {
+            border-left: 3px solid #ef4444;
+        }
+
+        .si-button {
+            background: linear-gradient(110deg, var(--si-purple), #6b21a8);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 15px 8px 0 0;
+            transition: .25s;
+        }
+
+        .si-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, .25);
+        }
+
+        .si-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .si-result {
+            display: none;
+            padding: 28px;
+            border: 1px solid var(--si-border);
+            background: var(--si-card);
+            border-radius: 14px;
+            margin-top: 25px;
+        }
+
+        .si-result.show {
+            display: block;
+        }
+
+        .si-result h3 {
+            color: var(--si-light);
+            margin-bottom: 12px;
+        }
+
+        .si-result-score {
+            font-size: 38px;
+            color: var(--si-white);
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .si-references a {
+            color: var(--si-light);
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .si-references li {
+            margin-bottom: 18px;
+        }
+
+        .si-footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--si-muted);
+            font-size: 13px;
+        }
+
+        .si-footer strong {
+            color: var(--si-light);
+        }
+
+        @media (max-width: 750px) {
+            .si-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .si-steps {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .si-section {
+                padding: 45px 0;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .si-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .si-hero {
+                min-height: 340px;
+                padding: 55px 0;
+            }
+
+            .si-question {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body class="integration-detail-page">
+
+    <!-- HERO -->
+
+    <header class="si-hero">
+        <div class="si-container">
+            <div class="si-hero-content">
+
+                <span class="si-label">
+                    MARITERRA / TECHNOLOGY INTEGRATION
+                </span>
+
+                <h1>
+                    System Integration
+                    <span>& Interoperability</span>
+                </h1>
+
+                <p>
+                    Discover how maritime equipment, software,
+                    communication networks, and operational
+                    platforms work together through compatible
+                    interfaces and reliable information exchange.
+                </p>
+
+            </div>
+        </div>
+    </header>
+
+    <main class="si-container">
+
+        <nav class="si-breadcrumb">
+            <a href="index.html">Home</a>
+            /
+            <a href="technology.html">Maritime Technology</a>
+            /
+            <a href="technology-integration.html">Technology Integration</a>
+            /
+            System Integration
+        </nav>
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>01 / INTRODUCTION</small>
+                <h2>What Is Maritime System Integration?</h2>
+            </div>
+
+            <p>
+                Maritime system integration is the engineering
+                process of connecting different equipment,
+                software applications, communication networks,
+                and operational systems so they can exchange
+                information and perform coordinated functions.
+            </p>
+
+            <p>
+                A modern vessel may contain navigation equipment,
+                engine monitoring systems, automation platforms,
+                communication devices, safety equipment, and
+                shore-connected services. These systems may be
+                supplied by different manufacturers and designed
+                for different purposes.
+            </p>
+
+            <p>
+                Integration allows selected information from
+                these independent systems to be shared with
+                other applications when the interfaces,
+                formats, and operational requirements are compatible.
+            </p>
+
+            <div class="si-highlight">
+                <strong>Important distinction:</strong>
+                Connecting two devices physically does not mean
+                they are fully integrated. Reliable integration
+                requires compatible interfaces, correct data
+                interpretation, testing, security controls,
+                and clearly defined system responsibilities.
+            </div>
+
+        </section>
+
+        <!-- 02 INTEROPERABILITY -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>02 / INTEROPERABILITY</small>
+                <h2>Understanding Interoperability</h2>
+            </div>
+
+            <p>
+                Interoperability is the ability of systems,
+                devices, or applications to exchange information
+                and use the exchanged information effectively
+                for their intended purposes.
+            </p>
+
+            <p>
+                Two devices may have compatible physical
+                connections but still fail to interoperate
+                if they use different message formats,
+                incompatible data definitions, or inconsistent
+                interpretations of the same information.
+            </p>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Technical Interoperability</h3>
+                    <p>
+                        Concerns physical connections, network
+                        access, communication protocols, and
+                        the ability to transmit and receive data.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Syntactic Interoperability</h3>
+                    <p>
+                        Concerns the structure and format
+                        of exchanged messages, including
+                        fields, encoding, and data organization.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Semantic Interoperability</h3>
+                    <p>
+                        Concerns whether different systems
+                        interpret exchanged information
+                        with the same intended meaning.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Organizational Interoperability</h3>
+                    <p>
+                        Concerns compatible procedures,
+                        responsibilities, policies, and
+                        information-sharing arrangements
+                        between organizations.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="si-highlight">
+                <strong>Example:</strong>
+                Two systems may successfully exchange a numerical
+                value, but if one interprets it as knots and
+                the other interprets it as meters per second,
+                the systems do not share the correct operational
+                meaning.
+            </div>
+
+        </section>
+
+        <!-- 03 SYSTEM COMPONENTS -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>03 / SYSTEM COMPONENTS</small>
+                <h2>What Makes Up an Integrated Maritime System?</h2>
+            </div>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Input Devices</h3>
+                    <p>
+                        Sensors and instruments provide
+                        measurements such as position, speed,
+                        depth, temperature, and pressure.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Communication Interfaces</h3>
+                    <p>
+                        Physical and logical interfaces
+                        enable systems to exchange information
+                        through suitable communication methods.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Processing Units</h3>
+                    <p>
+                        Computers, controllers, and software
+                        applications receive and process
+                        information according to their
+                        defined functions.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Data Management Systems</h3>
+                    <p>
+                        Databases and data services organize,
+                        store, retrieve, and distribute
+                        information where required.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Human-Machine Interfaces</h3>
+                    <p>
+                        Displays and control interfaces present
+                        information to operators and support
+                        human interaction with the system.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Security Components</h3>
+                    <p>
+                        Access controls, monitoring systems,
+                        network boundaries, and security
+                        configurations protect connected
+                        environments.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 04 ARCHITECTURE -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>04 / SYSTEM ARCHITECTURE</small>
+                <h2>Maritime Integration Architecture</h2>
+            </div>
+
+            <p>
+                An integration architecture defines how
+                equipment and applications connect,
+                exchange information, and interact.
+                The architecture must reflect the vessel's
+                operational needs, safety requirements,
+                equipment capabilities, and security boundaries.
+            </p>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Point-to-Point Integration</h3>
+                    <p>
+                        Two systems communicate directly
+                        through a defined connection.
+                        This can be suitable for simple
+                        arrangements but may become difficult
+                        to maintain as the number of systems grows.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Gateway-Based Integration</h3>
+                    <p>
+                        A gateway connects different
+                        communication environments and may
+                        perform protocol conversion, message
+                        filtering, or controlled data forwarding.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Centralized Integration</h3>
+                    <p>
+                        A central platform collects and
+                        distributes information from multiple
+                        systems. Its design must consider
+                        capacity, availability, and failure impact.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Distributed Integration</h3>
+                    <p>
+                        Processing and information exchange
+                        occur across multiple connected
+                        components rather than depending
+                        entirely on one central unit.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="si-highlight">
+                <strong>Architecture warning:</strong>
+                A central integration platform may simplify
+                information management, but it can also become
+                a critical point of failure if redundancy,
+                recovery, and system isolation are not designed
+                appropriately.
+            </div>
+
+        </section>
+
+        <!-- 05 PROTOCOLS -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>05 / INTERFACES AND PROTOCOLS</small>
+                <h2>Communication Standards and Protocols</h2>
+            </div>
+
+            <p>
+                Protocols and standards define how devices
+                structure, transmit, receive, and interpret
+                information. Selecting the correct interface
+                is a key part of successful integration.
+            </p>
+
+            <div class="si-table-wrap">
+                <table class="si-table">
+
+                    <thead>
+                        <tr>
+                            <th>Technology / Standard</th>
+                            <th>Primary Role</th>
+                            <th>Integration Consideration</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>IEC 61162-1</td>
+                            <td>Serial data interface</td>
+                            <td>Single talker and multiple listeners arrangement.</td>
+                        </tr>
+
+                        <tr>
+                            <td>IEC 61162-450</td>
+                            <td>High-speed Ethernet communication</td>
+                            <td>Network and message interoperability requirements.</td>
+                        </tr>
+
+                        <tr>
+                            <td>NMEA 0183</td>
+                            <td>Maritime serial data exchange</td>
+                            <td>Message structure, interface, and device compatibility.</td>
+                        </tr>
+
+                        <tr>
+                            <td>NMEA 2000</td>
+                            <td>Marine electronic network</td>
+                            <td>Device compatibility and network configuration.</td>
+                        </tr>
+
+                        <tr>
+                            <td>TCP/IP</td>
+                            <td>General network communication</td>
+                            <td>Addressing, routing, and transport behavior.</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="si-highlight">
+                <strong>Important:</strong>
+                A protocol being available on two devices does
+                not guarantee complete interoperability.
+                Supported message types, versions, configuration,
+                units, and application behavior must also be checked.
+            </div>
+
+        </section>
+
+        <!-- 06 DATA EXCHANGE -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>06 / DATA EXCHANGE</small>
+                <h2>How Do Integrated Systems Exchange Information?</h2>
+            </div>
+
+            <p>
+                Information exchange allows one system to
+                make selected data available to another system.
+                The process may include message generation,
+                transmission, validation, transformation,
+                and interpretation.
+            </p>
+
+            <div class="si-steps">
+
+                <article class="si-step">
+                    <span>STAGE 01</span>
+                    <h3>Data Generation</h3>
+                    <p>
+                        A sensor or application creates
+                        information based on measurements
+                        or operational inputs.
+                    </p>
+                </article>
+
+                <article class="si-step">
+                    <span>STAGE 02</span>
+                    <h3>Data Transmission</h3>
+                    <p>
+                        Information is sent through
+                        a compatible communication interface.
+                    </p>
+                </article>
+
+                <article class="si-step">
+                    <span>STAGE 03</span>
+                    <h3>Data Processing</h3>
+                    <p>
+                        The receiving system checks and
+                        may transform the incoming information.
+                    </p>
+                </article>
+
+                <article class="si-step">
+                    <span>STAGE 04</span>
+                    <h3>Data Utilization</h3>
+                    <p>
+                        The receiving application interprets
+                        and uses the information for its
+                        intended operational function.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 07 EXAMPLE -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>07 / PRACTICAL EXAMPLE</small>
+                <h2>Example: Integrated Navigation Information</h2>
+            </div>
+
+            <p>
+                Consider a vessel whose navigation display
+                receives information from multiple instruments.
+            </p>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>GNSS Receiver</h3>
+                    <p>
+                        Supplies position and time information
+                        to compatible connected systems.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Gyrocompass</h3>
+                    <p>
+                        Supplies heading information that
+                        can be used by navigation applications.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Speed Log</h3>
+                    <p>
+                        Provides speed measurements for
+                        supported navigation functions.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Navigation Display</h3>
+                    <p>
+                        Combines selected information
+                        and presents it to the bridge team.
+                    </p>
+                </article>
+
+            </div>
+
+            <div class="si-highlight">
+                <strong>Engineering challenge:</strong>
+                The display must receive the correct data,
+                identify its source, understand its format,
+                and handle missing or conflicting inputs
+                appropriately. Integration does not remove
+                the need for operator judgment.
+            </div>
+
+        </section>
+
+        <!-- 08 TESTING -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>08 / VALIDATION AND TESTING</small>
+                <h2>Testing an Integrated System</h2>
+            </div>
+
+            <p>
+                Integration testing checks whether connected
+                components work together according to their
+                defined requirements. Testing should examine
+                normal operation, abnormal conditions,
+                communication loss, recovery, and security.
+            </p>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Interface Testing</h3>
+                    <p>
+                        Verifies that devices can exchange
+                        information through the expected
+                        physical and logical interfaces.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Functional Testing</h3>
+                    <p>
+                        Checks whether integrated features
+                        perform their intended functions.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Data Validation Testing</h3>
+                    <p>
+                        Checks message structure, units,
+                        timestamps, completeness, and
+                        interpretation.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Failure and Recovery Testing</h3>
+                    <p>
+                        Evaluates how the system behaves
+                        when devices, links, or services
+                        become unavailable.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Performance Testing</h3>
+                    <p>
+                        Evaluates throughput, latency,
+                        capacity, and behavior under
+                        expected workloads.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Security Testing</h3>
+                    <p>
+                        Evaluates access controls, network
+                        exposure, configuration, and
+                        protection of exchanged information.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 09 CHALLENGES -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>09 / TECHNICAL CHALLENGES</small>
+                <h2>Common System Integration Problems</h2>
+            </div>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Protocol Incompatibility</h3>
+                    <p>
+                        Devices may use different protocols
+                        or incompatible implementations,
+                        preventing successful communication.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Semantic Mismatch</h3>
+                    <p>
+                        Systems may interpret the same value
+                        differently because of different
+                        units, definitions, or reference systems.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Legacy Equipment</h3>
+                    <p>
+                        Older devices may have limited
+                        communication capabilities or
+                        lack support for newer interfaces.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Single Points of Failure</h3>
+                    <p>
+                        Dependence on one central component
+                        may interrupt several integrated
+                        functions if that component fails.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Data Synchronization</h3>
+                    <p>
+                        Different system clocks and update
+                        intervals can cause incorrect event
+                        correlation or inconsistent displays.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Configuration Errors</h3>
+                    <p>
+                        Incorrect addressing, settings,
+                        message selection, or network
+                        configuration can prevent correct
+                        data exchange.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 10 CYBERSECURITY -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>10 / CYBERSECURITY</small>
+                <h2>Securing Integrated Maritime Systems</h2>
+            </div>
+
+            <p>
+                Every connection between systems creates
+                a potential communication path that should
+                be evaluated. An integration design must
+                consider both operational functionality
+                and cybersecurity.
+            </p>
+
+            <ul class="si-list">
+                <li>Identify connected devices, applications, and communication paths.</li>
+                <li>Separate networks according to operational and security requirements.</li>
+                <li>Limit unnecessary connections between critical and non-critical systems.</li>
+                <li>Use appropriate authentication and access controls.</li>
+                <li>Validate incoming information and monitor unexpected changes.</li>
+                <li>Control remote access and third-party connections.</li>
+                <li>Maintain backups, logs, and tested recovery procedures.</li>
+                <li>Assess the security impact of gateways and protocol converters.</li>
+            </ul>
+
+            <div class="si-highlight">
+                <strong>Security principle:</strong>
+                A gateway may improve interoperability, but it
+                can also create a bridge between previously
+                separated networks. Its permissions and
+                communication rules must therefore be carefully
+                designed and tested.
+            </div>
+
+        </section>
+
+        <!-- 11 FUTURE -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>11 / FUTURE DEVELOPMENTS</small>
+                <h2>The Future of Maritime System Integration</h2>
+            </div>
+
+            <div class="si-grid">
+
+                <article class="si-card">
+                    <h3>Greater Data Standardization</h3>
+                    <p>
+                        More consistent information models
+                        and exchange approaches can reduce
+                        incompatibility between equipment
+                        and digital services.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Intelligent Integration Platforms</h3>
+                    <p>
+                        Advanced software may help organize
+                        large amounts of operational data
+                        and support analysis across connected
+                        systems.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Digital Twins</h3>
+                    <p>
+                        Integrated operational data can
+                        support digital representations
+                        of vessels and equipment for
+                        monitoring and simulation.
+                    </p>
+                </article>
+
+                <article class="si-card">
+                    <h3>Resilient Architecture</h3>
+                    <p>
+                        Greater attention to redundancy,
+                        segmentation, fault isolation,
+                        and recovery can improve system
+                        resilience.
+                    </p>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- 12 KNOWLEDGE CHECK -->
+
+        <section class="si-section" id="knowledge-check">
+
+            <div class="si-heading">
+                <small>12 / KNOWLEDGE ASSESSMENT</small>
+                <h2>Advanced Knowledge Check</h2>
+            </div>
+
+            <p>
+                Evaluate your understanding through ten
+                technical questions covering interoperability,
+                protocols, architecture, testing, and security.
+            </p>
+
+            <div class="si-highlight">
+                <strong>Instructions:</strong>
+                Select one answer for every question.
+                After submission, each question will display
+                the correct answer and its engineering explanation.
+            </div>
+
+            <form id="siQuiz">
+
+                <div id="siQuestions"></div>
+
+                <button type="submit" class="si-button" id="siSubmit">
+                    Submit Assessment
+                </button>
+
+                <button type="button" class="si-button" id="siReset">
+                    Reset Assessment
+                </button>
+
+            </form>
+
+            <div class="si-result" id="siResult" aria-live="polite">
+                <h3>Assessment Results</h3>
+                <div class="si-result-score" id="siScore"></div>
+                <p id="siFeedback"></p>
+            </div>
+
+        </section>
+
+        <!-- 13 REFERENCES -->
+
+        <section class="si-section">
+
+            <div class="si-heading">
+                <small>13 / SCIENTIFIC REFERENCES</small>
+                <h2>References & Further Learning</h2>
+            </div>
+
+            <ul class="si-list si-references">
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    E-navigation and maritime information integration.<br>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/enavigation.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IMO E-navigation
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Electrotechnical Commission (IEC)</strong><br>
+                    IEC 61162-1:2024 — Single talker and multiple listeners.<br>
+                    <a href="https://webstore.iec.ch/en/publication/72729"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IEC Publication
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Electrotechnical Commission (IEC)</strong><br>
+                    IEC 61162-450:2024 — Ethernet interconnection.<br>
+                    <a href="https://webstore.iec.ch/en/publication/72731"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IEC Publication
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Maritime Organization (IMO)</strong><br>
+                    Maritime Cyber Risk Management.<br>
+                    <a href="https://www.imo.org/en/ourwork/security/pages/cyber-security.aspx"
+                       target="_blank" rel="noopener noreferrer">
+                        Official IMO Cybersecurity Reference
+                    </a>
+                </li>
+
+                <li>
+                    <strong>International Organization for Standardization (ISO)</strong><br>
+                    ISO/IEC 25010 — Systems and software quality models.<br>
+                    <a href="https://www.iso.org/standard/78176.html"
+                       target="_blank" rel="noopener noreferrer">
+                        Official ISO Publication
+                    </a>
+                </li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+    <footer class="si-footer">
+        <p>MARITERRA — Maritime Knowledge & Technology</p>
+        <p>
+            Developed by <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "Two maritime systems exchange a numerical value successfully, but one interprets it as knots and the other as meters per second. Which interoperability problem is most directly involved?",
+                options: [
+                    "Physical interoperability.",
+                    "Semantic interoperability.",
+                    "Network availability.",
+                    "Hardware redundancy."
+                ],
+                answer: 1,
+                explanation: "The message can be transmitted and its structure may be understood, but the systems assign different meanings to the value because of the unit mismatch. This is a semantic interoperability problem. Physical connectivity alone cannot guarantee correct interpretation."
+            },
+            {
+                question: "A gateway successfully converts messages between two protocols, but the receiving application assigns an incorrect meaning to one of the fields. What is the most accurate conclusion?",
+                options: [
+                    "The protocol conversion proves complete interoperability.",
+                    "The systems have a semantic mapping problem even though communication is functioning.",
+                    "The network cable must be physically damaged.",
+                    "The gateway should automatically discard every message."
+                ],
+                answer: 1,
+                explanation: "Protocol conversion may solve communication and syntax differences, but it does not guarantee that the receiving application understands the intended meaning of each field. Semantic mapping must be checked separately."
+            },
+            {
+                question: "A vessel connects twelve devices through separate point-to-point links. As the system grows, configuration and maintenance become increasingly difficult. Which explanation best describes the issue?",
+                options: [
+                    "Point-to-point integration always prevents data transmission.",
+                    "The number of interfaces and dependencies can grow rapidly, increasing complexity.",
+                    "Point-to-point links cannot exchange digital information.",
+                    "Adding devices automatically increases semantic interoperability."
+                ],
+                answer: 1,
+                explanation: "As devices and connections increase, the number of interfaces, configurations, and dependencies can become difficult to manage. This does not mean point-to-point connections never work; their suitability depends on scale and architecture."
+            },
+            {
+                question: "A centralized integration platform fails, causing multiple connected applications to lose access to shared data. Which architectural risk has been demonstrated?",
+                options: [
+                    "Semantic equivalence.",
+                    "A single point of failure.",
+                    "Excessive sensor accuracy.",
+                    "Protocol standardization."
+                ],
+                answer: 1,
+                explanation: "When several applications depend on one central component, its failure may affect all dependent functions. Redundancy, recovery planning, and fault isolation can reduce this risk."
+            },
+            {
+                question: "A receiving system accepts a message that follows the correct syntax, but the timestamp is old and the measurement is no longer suitable for the intended operation. Which validation was insufficient?",
+                options: [
+                    "Syntax validation only was treated as sufficient; freshness and application-specific validity were not checked.",
+                    "The Ethernet cable was necessarily incompatible.",
+                    "The message must have been encrypted incorrectly.",
+                    "The sending device must be a different manufacturer."
+                ],
+                answer: 0,
+                explanation: "A syntactically valid message may still contain stale or operationally unsuitable information. Reliable validation also considers timestamps, source quality, plausibility, and the requirements of the receiving application."
+            },
+            {
+                question: "An engineer places a gateway between a navigation network and a business network. What is the most important security design consideration?",
+                options: [
+                    "Allow unrestricted forwarding so every device can communicate.",
+                    "Control permitted traffic, access, direction, and monitoring across the gateway.",
+                    "Remove all network logs to improve performance.",
+                    "Assume protocol conversion automatically encrypts information."
+                ],
+                answer: 1,
+                explanation: "A gateway can create a path between previously separated environments. Restricting allowed traffic and monitoring the connection helps reduce unnecessary exposure. Protocol conversion does not automatically provide encryption or access control."
+            },
+            {
+                question: "A navigation system receives position and heading information from two devices. Both messages are correctly formatted, but their timestamps are not synchronized. What is the main integration concern?",
+                options: [
+                    "The system may combine measurements from different moments and create misleading operational information.",
+                    "The messages become physically disconnected.",
+                    "The heading measurement automatically changes units.",
+                    "The network becomes immune to interference."
+                ],
+                answer: 0,
+                explanation: "Even correctly formatted messages may be inconsistent in time. Combining measurements from different moments can produce misleading results, particularly when the underlying values change rapidly."
+            },
+            {
+                question: "Which test most directly determines whether a connected application behaves safely when its primary data source becomes unavailable?",
+                options: [
+                    "A visual design review.",
+                    "A failure and recovery test.",
+                    "A check of the application's color scheme.",
+                    "A test of unrelated storage capacity only."
+                ],
+                answer: 1,
+                explanation: "Failure and recovery testing examines how a system behaves when a device or communication path becomes unavailable and whether it can recover appropriately. Functional and interface tests alone may not expose these failure behaviors."
+            },
+            {
+                question: "A ship receives a data message from a device using a supported protocol, but the device implements only a limited subset of the expected message types. What should the integration engineer verify?",
+                options: [
+                    "Only the protocol name printed on the equipment.",
+                    "The exact supported message types, versions, configuration, and application requirements.",
+                    "The device's external color and dimensions.",
+                    "Whether all connected systems were made by the same manufacturer."
+                ],
+                answer: 1,
+                explanation: "Sharing a protocol name does not guarantee identical capabilities. Supported message types, implementation versions, configurations, and application expectations must be verified. Manufacturer identity alone is not proof of compatibility."
+            },
+            {
+                question: "A vessel is planning a new integrated architecture for navigation and machinery systems. Which design principle offers the strongest foundation?",
+                options: [
+                    "Connect every system to a single unrestricted network.",
+                    "Prioritize the number of connected devices over reliability.",
+                    "Define requirements, interfaces, data meaning, security boundaries, redundancy, and validation before deployment.",
+                    "Assume standardized protocols eliminate all integration testing."
+                ],
+                answer: 2,
+                explanation: "A dependable architecture starts with defined operational requirements and addresses interfaces, data semantics, security, fault tolerance, and testing. Standards help, but they do not remove the need for system-level verification."
+            }
+        ];
+
+        const questionsContainer = document.getElementById("siQuestions");
+        const quizForm = document.getElementById("siQuiz");
+        const resultBox = document.getElementById("siResult");
+        const scoreElement = document.getElementById("siScore");
+        const feedbackElement = document.getElementById("siFeedback");
+        const submitButton = document.getElementById("siSubmit");
+        const resetButton = document.getElementById("siReset");
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = "";
+
+            questions.forEach((item, index) => {
+                const questionElement = document.createElement("article");
+                questionElement.className = "si-question";
+
+                const number = document.createElement("span");
+                number.className = "si-question-number";
+                number.textContent =
+                    `QUESTION ${String(index + 1).padStart(2, "0")}`;
+
+                const title = document.createElement("h3");
+                title.textContent = item.question;
+
+                questionElement.append(number, title);
+
+                item.options.forEach((option, optionIndex) => {
+                    const label = document.createElement("label");
+                    label.className = "si-option";
+
+                    const input = document.createElement("input");
+                    input.type = "radio";
+                    input.name = `question-${index}`;
+                    input.value = optionIndex;
+
+                    const text = document.createElement("span");
+                    text.textContent = option;
+
+                    label.append(input, text);
+                    questionElement.appendChild(label);
+                });
+
+                const explanation = document.createElement("div");
+                explanation.className = "si-explanation";
+                explanation.id = `explanation-${index}`;
+
+                questionElement.appendChild(explanation);
+                questionsContainer.appendChild(questionElement);
+            });
+        }
+
+        function submitAssessment(event) {
+            event.preventDefault();
+
+            const answers = [];
+
+            for (let i = 0; i < questions.length; i++) {
+                const selected = document.querySelector(
+                    `input[name="question-${i}"]:checked`
+                );
+
+                if (!selected) {
+                    alert(
+                        `Please answer Question ${i + 1} before submitting.`
+                    );
+
+                    document.querySelectorAll(".si-question")[i]
+                        .scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+
+                    return;
+                }
+
+                answers.push(Number(selected.value));
+            }
+
+            let score = 0;
+
+            questions.forEach((item, index) => {
+                const isCorrect = answers[index] === item.answer;
+
+                if (isCorrect) score++;
+
+                const explanation = document.getElementById(
+                    `explanation-${index}`
+                );
+
+                explanation.classList.add("show");
+                explanation.classList.add(
+                    isCorrect ? "si-correct" : "si-incorrect"
+                );
+
+                const status = document.createElement("strong");
+                status.textContent = isCorrect
+                    ? "Correct Answer"
+                    : "Incorrect Answer";
+
+                const correctText = document.createElement("p");
+                const correctLabel = document.createElement("strong");
+                correctLabel.textContent = "Correct choice: ";
+
+                correctText.append(
+                    correctLabel,
+                    document.createTextNode(item.options[item.answer])
+                );
+
+                const reasonText = document.createElement("p");
+                const reasonLabel = document.createElement("strong");
+                reasonLabel.textContent = "Engineering explanation: ";
+
+                reasonText.append(
+                    reasonLabel,
+                    document.createTextNode(item.explanation)
+                );
+
+                explanation.replaceChildren(
+                    status,
+                    correctText,
+                    reasonText
+                );
+
+                document.querySelectorAll(
+                    `input[name="question-${index}"]`
+                ).forEach(input => {
+                    input.disabled = true;
+                });
+            });
+
+            scoreElement.textContent = `${score} / 10`;
+
+            if (score >= 9) {
+                feedbackElement.textContent =
+                    "Excellent performance. You demonstrated strong understanding of system integration, interoperability, and engineering design.";
+            } else if (score >= 7) {
+                feedbackElement.textContent =
+                    "Very good performance. Review the explanations to strengthen your understanding of architecture and validation.";
+            } else if (score >= 5) {
+                feedbackElement.textContent =
+                    "Developing understanding. Revisit semantic interoperability, gateways, testing, and security boundaries.";
+            } else {
+                feedbackElement.textContent =
+                    "Further study is recommended. Review the complete topic before attempting the assessment again.";
+            }
+
+            resultBox.classList.add("show");
+            submitButton.disabled = true;
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function resetAssessment() {
+            quizForm.reset();
+
+            document.querySelectorAll(".si-explanation").forEach(element => {
+                element.className = "si-explanation";
+                element.replaceChildren();
+            });
+
+            document.querySelectorAll(".si-option input").forEach(input => {
+                input.disabled = false;
+            });
+
+            resultBox.classList.remove("show");
+            scoreElement.textContent = "";
+            feedbackElement.textContent = "";
+            submitButton.disabled = false;
+
+            document.getElementById("knowledge-check").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        quizForm.addEventListener("submit", submitAssessment);
+        resetButton.addEventListener("click", resetAssessment);
+
+        renderQuestions();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,2915 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#070816">
+
+    <title>AI-Based Predictive Maintenance | MARITERRA</title>
+    <meta name="description" content="Explore AI-based predictive maintenance in marine engineering, including machinery condition monitoring, anomaly detection, remaining useful life estimation and intelligent maintenance planning.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-soft: #0d1023;
+            --panel: rgba(18, 20, 43, 0.88);
+            --panel-light: rgba(28, 30, 61, 0.72);
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f5f3ff;
+            --muted: #a5a4c2;
+            --border: rgba(196, 181, 253, 0.15);
+            --success: #4ade80;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(147, 51, 234, 0.12), transparent 30%),
+                radial-gradient(circle at 90% 35%, rgba(56, 189, 248, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .ambient {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .ambient::before,
+        .ambient::after {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.13;
+            animation: ambientMove 13s ease-in-out infinite alternate;
+        }
+
+        .ambient::before {
+            background: var(--purple);
+            top: 10%;
+            left: -180px;
+        }
+
+        .ambient::after {
+            background: var(--blue);
+            right: -180px;
+            bottom: 5%;
+            animation-delay: 3s;
+        }
+
+        @keyframes ambientMove {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(70px, 50px) scale(1.2); }
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            min-height: 76px;
+            padding: 14px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: rgba(7, 8, 22, 0.86);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(18px);
+        }
+
+        .brand {
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: white;
+        }
+
+        .brand span {
+            color: var(--purple-light);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border: 1px solid rgba(196, 181, 253, 0.28);
+            border-radius: 30px;
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.08);
+            font-size: 0.82rem;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(147, 51, 234, 0.2);
+            border-color: var(--purple);
+            transform: translateX(-4px);
+        }
+
+        .hero {
+            min-height: 590px;
+            padding: 100px 8% 90px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            width: min(750px, 100%);
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 28px;
+            height: 2px;
+            background: var(--blue);
+        }
+
+        h1, h2, h3 {
+            font-family: "Orbitron", sans-serif;
+            line-height: 1.3;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.3rem, 6vw, 4.6rem);
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(100deg, #c4b5fd, #9333ea, #38bdf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 690px;
+            color: var(--muted);
+            font-size: 1.03rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hero-tags span {
+            padding: 8px 13px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--purple-light);
+            font-size: 0.75rem;
+        }
+
+        .maintenance-orbit {
+            position: absolute;
+            width: 390px;
+            height: 390px;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 1px solid rgba(147, 51, 234, 0.35);
+            border-radius: 50%;
+            animation: rotateOrbit 28s linear infinite;
+        }
+
+        .maintenance-orbit::before,
+        .maintenance-orbit::after {
+            content: "";
+            position: absolute;
+            inset: 35px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 50%;
+        }
+
+        .maintenance-orbit::after {
+            inset: 85px;
+            border-color: rgba(196, 181, 253, 0.22);
+        }
+
+        @keyframes rotateOrbit {
+            to { transform: translateY(-50%) rotate(360deg); }
+        }
+
+        .orbit-core {
+            position: absolute;
+            width: 125px;
+            height: 125px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.45), rgba(56, 189, 248, 0.08));
+            box-shadow: 0 0 60px rgba(147, 51, 234, 0.35);
+            font-size: 2.6rem;
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 20px var(--blue);
+        }
+
+        .orbit-dot.one { top: 40px; left: 80px; }
+        .orbit-dot.two { right: 25px; top: 190px; background: var(--purple-light); }
+        .orbit-dot.three { bottom: 45px; left: 110px; }
+
+        .layout {
+            width: min(1450px, 94%);
+            margin: 65px auto;
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 35px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            padding: 25px 18px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar h3 {
+            font-size: 0.75rem;
+            color: var(--purple-light);
+            letter-spacing: 2px;
+            margin: 0 0 20px 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 11px 12px;
+            margin-bottom: 5px;
+            border-radius: 9px;
+            color: var(--muted);
+            font-size: 0.8rem;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background: rgba(147, 51, 234, 0.15);
+            border-left: 3px solid var(--purple);
+            padding-left: 16px;
+        }
+
+        main {
+            min-width: 0;
+        }
+
+        .section {
+            margin-bottom: 70px;
+            scroll-margin-top: 110px;
+            animation: fadeUp 0.8s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(1.55rem, 3vw, 2.3rem);
+            margin-bottom: 22px;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 900px;
+            margin-bottom: 25px;
+        }
+
+        .content-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 20px;
+            transition: 0.35s;
+        }
+
+        .content-card:hover {
+            border-color: rgba(147, 51, 234, 0.55);
+            transform: translateY(-4px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+        }
+
+        .content-card h3 {
+            font-size: 1rem;
+            color: var(--purple-light);
+            margin-bottom: 13px;
+        }
+
+        .content-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card strong {
+            color: #e9ddff;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .mini-card {
+            padding: 22px;
+            background: var(--panel-light);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .mini-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--blue);
+        }
+
+        .mini-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+
+        .mini-card h3 {
+            font-size: 0.88rem;
+            color: var(--purple-light);
+            margin-bottom: 9px;
+        }
+
+        .mini-card p {
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .process-step {
+            padding: 22px 15px;
+            text-align: center;
+            background: linear-gradient(145deg, rgba(147, 51, 234, 0.12), rgba(56, 189, 248, 0.06));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .process-step .number {
+            width: 33px;
+            height: 33px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 13px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .process-step h3 {
+            font-size: 0.78rem;
+            margin-bottom: 8px;
+            color: var(--purple-light);
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        .formula {
+            padding: 22px;
+            margin: 18px 0;
+            text-align: center;
+            background: rgba(147, 51, 234, 0.1);
+            border: 1px dashed rgba(196, 181, 253, 0.4);
+            border-radius: 14px;
+            color: #e9ddff;
+            font-family: "Orbitron", sans-serif;
+            font-size: clamp(0.85rem, 2vw, 1.1rem);
+            overflow-wrap: anywhere;
+        }
+
+        .note {
+            border-left: 3px solid var(--blue);
+            background: rgba(56, 189, 248, 0.07);
+            padding: 18px 20px;
+            border-radius: 0 12px 12px 0;
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin: 20px 0;
+        }
+
+        .warning {
+            border-left-color: var(--warning);
+            background: rgba(251, 191, 36, 0.06);
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin: 22px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+            background: var(--panel);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .lab {
+            padding: 30px;
+            border: 1px solid rgba(147, 51, 234, 0.4);
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(147, 51, 234, 0.12), rgba(10, 15, 38, 0.85));
+        }
+
+        .lab h3 {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            color: var(--purple-light);
+        }
+
+        .lab-description {
+            color: var(--muted);
+            font-size: 0.87rem;
+            margin-bottom: 25px;
+        }
+
+        .lab-controls {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #e9ddff;
+            font-size: 0.83rem;
+        }
+
+        .control-group output {
+            color: var(--blue);
+            font-weight: 800;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--purple);
+            cursor: pointer;
+        }
+
+        .chart-box {
+            margin-top: 25px;
+            padding: 18px;
+            background: rgba(5, 7, 20, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .chart-title {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 260px;
+            display: block;
+        }
+
+        .lab-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .result-box {
+            padding: 17px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+        }
+
+        .result-box span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.72rem;
+            margin-bottom: 7px;
+        }
+
+        .result-box strong {
+            color: var(--blue);
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.15rem;
+        }
+
+        .lab-disclaimer {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 0.76rem;
+        }
+
+        .status-panel {
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 13px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+        }
+
+        .status-panel h4 {
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .status-panel p {
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 5px 11px;
+            border-radius: 30px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: rgba(74, 222, 128, 0.12);
+            color: var(--success);
+        }
+
+        .status-indicator.medium {
+            background: rgba(251, 191, 36, 0.12);
+            color: var(--warning);
+        }
+
+        .status-indicator.high {
+            background: rgba(251, 113, 133, 0.12);
+            color: var(--danger);
+        }
+
+        .quiz-header {
+            padding: 25px;
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.17), rgba(56, 189, 248, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            margin-bottom: 25px;
+        }
+
+        .quiz-header h3 {
+            color: var(--purple-light);
+            font-size: 1.15rem;
+            margin-bottom: 9px;
+        }
+
+        .quiz-header p {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .quiz-progress {
+            height: 7px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 18px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient);
+            transition: width 0.4s;
+        }
+
+        .question-card {
+            padding: 24px;
+            margin-bottom: 17px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            border-radius: 16px;
+        }
+
+        .question-number {
+            color: var(--blue);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .question-card h3 {
+            font-family: "Inter", sans-serif;
+            font-size: 0.98rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 13px 15px;
+            margin: 9px 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-top: 5px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(74, 222, 128, 0.09);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(251, 113, 133, 0.08);
+            color: #fecdd3;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 14px;
+            padding: 14px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.07);
+            border-left: 3px solid var(--blue);
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--purple-light);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            padding: 13px 24px;
+            border: none;
+            border-radius: 30px;
+            background: var(--gradient);
+            color: white;
+            font-weight: 800;
+            font-size: 0.83rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.25);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 28px;
+            margin-top: 25px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+        }
+
+        .quiz-result.show {
+            display: block;
+            animation: fadeUp 0.5s ease;
+        }
+
+        .score-circle {
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 18px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            border: 5px solid var(--purple);
+            box-shadow: 0 0 35px rgba(147, 51, 234, 0.22);
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.6rem;
+            color: var(--purple-light);
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+        }
+
+        .quiz-result p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .references {
+            counter-reset: reference;
+        }
+
+        .reference-item {
+            counter-increment: reference;
+            display: flex;
+            gap: 14px;
+            padding: 17px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--panel);
+        }
+
+        .reference-item::before {
+            content: "[" counter(reference) "]";
+            color: var(--blue);
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .reference-item a {
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .reference-item a:hover {
+            color: var(--blue);
+            text-decoration: underline;
+        }
+
+        .reference-item p {
+            color: var(--muted);
+            font-size: 0.76rem;
+            margin-top: 4px;
+        }
+
+        footer {
+            padding: 35px 6%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: rgba(5, 6, 18, 0.7);
+        }
+
+        footer p {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+            letter-spacing: 1px;
+        }
+
+        .back-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.8);
+            color: white;
+            cursor: pointer;
+            display: none;
+            z-index: 900;
+            font-size: 1.1rem;
+        }
+
+        .back-top.visible {
+            display: block;
+        }
+
+        @media (max-width: 1050px) {
+            .maintenance-orbit {
+                right: -100px;
+                opacity: 0.35;
+            }
+
+            .layout {
+                grid-template-columns: 210px minmax(0, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .topbar {
+                padding: 13px 4%;
+            }
+
+            .brand {
+                font-size: 0.9rem;
+            }
+
+            .back-btn {
+                padding: 9px 12px;
+                font-size: 0.7rem;
+            }
+
+            .hero {
+                min-height: 500px;
+                padding: 80px 7%;
+            }
+
+            .maintenance-orbit {
+                width: 260px;
+                height: 260px;
+                right: -130px;
+                opacity: 0.2;
+            }
+
+            .layout {
+                display: block;
+                width: 92%;
+                margin-top: 35px;
+            }
+
+            .sidebar {
+                position: relative;
+                top: auto;
+                margin-bottom: 35px;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lab-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .lab-results {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card,
+            .lab {
+                padding: 21px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .hero h1 {
+                font-size: 2.15rem;
+            }
+
+            .process-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar nav {
+                grid-template-columns: 1fr;
+            }
+
+            .question-card {
+                padding: 18px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ambient"></div>
+
+<header class="topbar">
+    <a href="artificial-intelligence.html" class="brand">MARI<span>TERRA</span></a>
+
+    <a href="artificial-intelligence.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Artificial Intelligence</span>
+    </a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Artificial Intelligence / Topic 05</div>
+
+        <h1>
+            AI-Based
+            <span>Predictive Maintenance</span>
+        </h1>
+
+        <p class="hero-description">
+            Explore how artificial intelligence, sensor analytics, and machinery
+            condition monitoring help marine engineers identify early warning signs,
+            estimate equipment deterioration, and plan maintenance before unexpected
+            failures disrupt vessel operations.
+        </p>
+
+        <div class="hero-tags">
+            <span>Condition Monitoring</span>
+            <span>Fault Detection</span>
+            <span>Remaining Useful Life</span>
+            <span>Marine Engineering</span>
+        </div>
+    </div>
+
+    <div class="maintenance-orbit" aria-hidden="true">
+        <div class="orbit-core">⚙️</div>
+        <span class="orbit-dot one"></span>
+        <span class="orbit-dot two"></span>
+        <span class="orbit-dot three"></span>
+    </div>
+</section>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h3>TOPIC NAVIGATION</h3>
+
+        <nav>
+            <a href="#overview">01. Overview</a>
+            <a href="#maintenance">02. Maintenance Strategies</a>
+            <a href="#machinery">03. Marine Machinery</a>
+            <a href="#sensors">04. Sensors & Data</a>
+            <a href="#ai-methods">05. AI Techniques</a>
+            <a href="#workflow">06. System Workflow</a>
+            <a href="#applications">07. Maritime Applications</a>
+            <a href="#rul">08. Remaining Useful Life</a>
+            <a href="#challenges">09. Challenges</a>
+            <a href="#future">10. Future Directions</a>
+            <a href="#lab">11. Interactive Lab</a>
+            <a href="#quiz">12. Knowledge Assessment</a>
+            <a href="#references">13. References</a>
+        </nav>
+    </aside>
+
+    <main>
+
+        <section class="section" id="overview">
+            <div class="section-label">01 / Understanding the Topic</div>
+            <h2 class="section-title">What Is AI-Based Predictive Maintenance?</h2>
+
+            <p class="section-intro">
+                AI-based predictive maintenance uses data collected from machinery
+                and intelligent analytical models to identify patterns associated
+                with equipment deterioration and estimate when maintenance may be
+                required.
+            </p>
+
+            <div class="content-card">
+                <h3>Moving from Reactive Repairs to Data-Driven Maintenance</h3>
+
+                <p>
+                    Marine vessels depend on complex mechanical and electrical
+                    systems. Main engines, auxiliary engines, pumps, compressors,
+                    generators, cooling systems, and propulsion components must
+                    operate reliably, often under demanding environmental conditions.
+                </p>
+
+                <p>
+                    A machinery failure at sea can cause operational delays, expensive
+                    repairs, safety risks, and in serious cases, loss of propulsion
+                    or essential services.
+                </p>
+
+                <p>
+                    Traditional maintenance plans often rely on fixed time intervals,
+                    equipment hours, or inspections. Predictive maintenance adds another
+                    source of information: the actual condition and behavior of the
+                    equipment.
+                </p>
+
+                <p>
+                    AI models analyze measurements such as vibration, temperature,
+                    pressure, oil condition, electrical current, and operating load.
+                    They may detect unusual patterns, classify possible faults, or
+                    estimate how equipment condition is changing.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>The Main Objective</h3>
+
+                <p>
+                    The purpose is not simply to predict that a machine will fail.
+                    A useful predictive maintenance system should help engineers
+                    answer practical questions:
+                </p>
+
+                <p><strong>What is changing?</strong> Is the equipment behaving differently
+                    from its normal operating condition?</p>
+
+                <p><strong>Where is the problem?</strong> Which component or subsystem
+                    may be responsible for the abnormal behavior?</p>
+
+                <p><strong>How serious is it?</strong> Does the observation indicate
+                    a minor deviation or a potentially critical condition?</p>
+
+                <p><strong>What should happen next?</strong> Should the engineer inspect,
+                    monitor, reduce load, or schedule maintenance?</p>
+            </div>
+
+            <div class="note">
+                Predictive maintenance does not eliminate failures or replace
+                engineering inspections. Its value is in improving the timing and
+                quality of maintenance decisions using additional evidence.
+            </div>
+        </section>
+
+        <section class="section" id="maintenance">
+            <div class="section-label">02 / Maintenance Strategies</div>
+            <h2 class="section-title">Understanding the Different Maintenance Approaches</h2>
+
+            <p class="section-intro">
+                Predictive maintenance is easier to understand when compared with
+                other maintenance strategies used in marine engineering.
+            </p>
+
+            <div class="content-card">
+                <h3>1. Reactive Maintenance</h3>
+
+                <p>
+                    Reactive maintenance is performed after equipment fails or
+                    becomes unable to perform its required function.
+                </p>
+
+                <p>
+                    For example, if a seawater cooling pump stops working unexpectedly,
+                    engineers may need to repair or replace the pump after the failure.
+                </p>
+
+                <p>
+                    This approach may be reasonable for low-cost, non-critical items,
+                    but it can be risky when applied to essential vessel systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>2. Preventive Maintenance</h3>
+
+                <p>
+                    Preventive maintenance is performed at predetermined intervals
+                    based on time, operating hours, manufacturer recommendations,
+                    or established maintenance schedules.
+                </p>
+
+                <p>
+                    An auxiliary engine may receive a scheduled inspection after
+                    a specified number of operating hours, even if no abnormal
+                    condition has been detected.
+                </p>
+
+                <p>
+                    Preventive maintenance helps reduce unexpected failures, but
+                    it may lead to unnecessary maintenance if the equipment remains
+                    in good condition.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>3. Condition-Based Maintenance</h3>
+
+                <p>
+                    Condition-based maintenance uses actual equipment condition
+                    information to determine when maintenance should be considered.
+                </p>
+
+                <p>
+                    Engineers may monitor vibration, temperature, pressure, oil
+                    condition, or other measurements and schedule inspection when
+                    the readings indicate deterioration.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>4. Predictive Maintenance</h3>
+
+                <p>
+                    Predictive maintenance uses condition information and analytical
+                    methods to estimate future equipment behavior, potential faults,
+                    or maintenance needs.
+                </p>
+
+                <p>
+                    AI can identify complex patterns that may be difficult to detect
+                    using simple thresholds, particularly when several sensor
+                    measurements interact.
+                </p>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Strategy</th>
+                            <th>When Maintenance Happens</th>
+                            <th>Main Information Used</th>
+                            <th>Typical Limitation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Reactive</td>
+                            <td>After failure</td>
+                            <td>Failure symptoms</td>
+                            <td>Unexpected downtime</td>
+                        </tr>
+                        <tr>
+                            <td>Preventive</td>
+                            <td>At planned intervals</td>
+                            <td>Time or operating hours</td>
+                            <td>May perform unnecessary work</td>
+                        </tr>
+                        <tr>
+                            <td>Condition-Based</td>
+                            <td>When condition indicates a need</td>
+                            <td>Current measurements</td>
+                            <td>Requires suitable monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Predictive</td>
+                            <td>Based on estimated future condition</td>
+                            <td>Historical and live data with models</td>
+                            <td>Depends on model quality and data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section" id="machinery">
+            <div class="section-label">03 / Marine Engineering Systems</div>
+            <h2 class="section-title">Which Ship Systems Can Be Monitored?</h2>
+
+            <p class="section-intro">
+                Predictive maintenance can be applied to many onboard systems.
+                The selected monitoring variables depend on the equipment,
+                its failure modes, operating conditions, and safety importance.
+            </p>
+
+            <div class="info-grid">
+                <div class="mini-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Main Propulsion Engine</h3>
+                    <p>
+                        Monitoring engine temperature, cylinder pressure, vibration,
+                        lubrication, exhaust gas conditions, and operating load.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔌</div>
+                    <h3>Auxiliary Engines & Generators</h3>
+                    <p>
+                        Monitoring generator load, voltage, current, bearing condition,
+                        temperature, and vibration.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">💧</div>
+                    <h3>Pumps & Piping Systems</h3>
+                    <p>
+                        Monitoring flow rate, pressure, motor current, vibration,
+                        and signs of leakage or reduced performance.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">❄️</div>
+                    <h3>Cooling Systems</h3>
+                    <p>
+                        Monitoring inlet and outlet temperatures, pressure differences,
+                        flow rates, and heat exchanger performance.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🌀</div>
+                    <h3>Propulsion & Rotating Equipment</h3>
+                    <p>
+                        Monitoring shaft vibration, bearing temperature, alignment,
+                        rotational speed, and mechanical loads.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🛢️</div>
+                    <h3>Lubrication Systems</h3>
+                    <p>
+                        Monitoring oil pressure, temperature, contamination,
+                        viscosity-related indicators, and wear particles.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>Example: Main Engine Bearing Monitoring</h3>
+
+                <p>
+                    Bearings support rotating shafts and help reduce friction.
+                    Abnormal lubrication, misalignment, excessive load, contamination,
+                    or mechanical wear may contribute to bearing deterioration.
+                </p>
+
+                <p>
+                    A monitoring system may collect vibration and temperature
+                    measurements while the engine operates. An analytical model
+                    can compare the measurements with expected behavior under
+                    similar operating conditions.
+                </p>
+
+                <p>
+                    A persistent abnormal pattern may trigger an inspection
+                    recommendation. Engineers then use additional measurements,
+                    operating history, and physical inspection to determine the
+                    actual condition.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="sensors">
+            <div class="section-label">04 / Data Acquisition</div>
+            <h2 class="section-title">Sensors & Machinery Condition Data</h2>
+
+            <p class="section-intro">
+                Sensors are the foundation of condition monitoring. They transform
+                physical operating conditions into measurable signals that can be
+                analyzed by monitoring systems and predictive models.
+            </p>
+
+            <div class="content-card">
+                <h3>Vibration Sensors</h3>
+
+                <p>
+                    Accelerometers measure vibration and acceleration. Their signals
+                    can help engineers investigate imbalance, misalignment, looseness,
+                    bearing defects, and other mechanical conditions.
+                </p>
+
+                <p>
+                    Frequency-domain analysis, including Fast Fourier Transform (FFT),
+                    can reveal frequency components associated with rotating machinery.
+                    However, interpreting these signals requires knowledge of machine
+                    speed, bearing geometry, installation location, and operating load.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Temperature Sensors</h3>
+
+                <p>
+                    Temperature measurements can reveal overheating, cooling
+                    inefficiency, excessive friction, or abnormal operating conditions.
+                </p>
+
+                <p>
+                    A temperature reading should be interpreted in context. An engine
+                    operating under high load may have a different normal temperature
+                    range from an engine operating at low load.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Pressure & Flow Sensors</h3>
+
+                <p>
+                    Pressure and flow measurements are important for monitoring
+                    lubrication, cooling, fuel delivery, hydraulic, and pumping systems.
+                </p>
+
+                <p>
+                    Unexpected pressure loss or a change in flow rate may indicate
+                    blockage, leakage, pump degradation, or a change in operating
+                    conditions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Oil Condition Monitoring</h3>
+
+                <p>
+                    Lubricating oil can provide information about machinery health.
+                    Oil analysis may identify contamination, changes in properties,
+                    and wear-related particles.
+                </p>
+
+                <p>
+                    Laboratory analysis and onboard oil monitoring methods can
+                    complement sensor-based predictive systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Electrical Measurements</h3>
+
+                <p>
+                    Voltage, current, power, and frequency measurements can support
+                    monitoring of electric motors, generators, and electrical
+                    distribution systems.
+                </p>
+
+                <p>
+                    Motor current signature analysis is one technique that can help
+                    investigate certain motor and mechanical abnormalities.
+                </p>
+            </div>
+
+            <div class="note">
+                Sensor readings are not direct proof of a specific failure.
+                Sensor placement, calibration, sampling rate, environmental noise,
+                and operating conditions all influence the quality of the collected
+                information.
+            </div>
+        </section>
+
+        <section class="section" id="ai-methods">
+            <div class="section-label">05 / Artificial Intelligence Techniques</div>
+            <h2 class="section-title">How AI Detects Machinery Problems</h2>
+
+            <div class="content-card">
+                <h3>1. Anomaly Detection</h3>
+
+                <p>
+                    Anomaly detection identifies measurements or patterns that differ
+                    significantly from expected operating behavior.
+                </p>
+
+                <p>
+                    For example, a pump may normally produce a stable vibration
+                    pattern under a specific operating load. A new abnormal pattern
+                    may indicate a developing problem.
+                </p>
+
+                <p>
+                    Anomaly detection is useful when historical examples of every
+                    possible failure type are not available.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>2. Classification Models</h3>
+
+                <p>
+                    Classification models assign observations to predefined
+                    categories.
+                </p>
+
+                <p>
+                    A trained model may classify machinery data into categories
+                    such as normal operation, possible imbalance, suspected bearing
+                    issue, or abnormal temperature condition.
+                </p>
+
+                <p>
+                    The reliability of the classification depends on the quality,
+                    representativeness, and correct labeling of the training data.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>3. Regression Models</h3>
+
+                <p>
+                    Regression estimates numerical values. In predictive maintenance,
+                    it may be used to estimate remaining useful life, future vibration
+                    levels, or the expected progression of a condition indicator.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>4. Neural Networks</h3>
+
+                <p>
+                    Neural networks can learn complex relationships from sensor
+                    measurements. They may analyze combinations of vibration,
+                    temperature, pressure, and operating load.
+                </p>
+
+                <p>
+                    Deep learning methods can process complex signals, but they
+                    usually require substantial representative data and careful
+                    validation.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>5. Autoencoders</h3>
+
+                <p>
+                    Autoencoders are neural network architectures that learn to
+                    represent and reconstruct input data.
+                </p>
+
+                <p>
+                    In some anomaly detection applications, an autoencoder is trained
+                    primarily on normal operating data. Unusual inputs may produce
+                    larger reconstruction errors.
+                </p>
+
+                <div class="formula">
+                    Reconstruction Error = Difference between Input and Reconstructed Output
+                </div>
+
+                <p>
+                    A high reconstruction error can be a warning signal, but it does
+                    not automatically identify the exact mechanical fault.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>6. Hybrid Diagnostic Systems</h3>
+
+                <p>
+                    A hybrid approach combines engineering knowledge, statistical
+                    analysis, and machine learning.
+                </p>
+
+                <p>
+                    For example, engineering rules may identify unsafe pressure
+                    limits, while an anomaly detection model investigates more
+                    subtle changes in vibration patterns.
+                </p>
+
+                <p>
+                    Combining these approaches can improve practical usefulness,
+                    provided that the system is validated and its outputs are
+                    interpreted correctly.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="workflow">
+            <div class="section-label">06 / Engineering Workflow</div>
+            <h2 class="section-title">Building a Predictive Maintenance System</h2>
+
+            <p class="section-intro">
+                A real predictive maintenance system requires a complete workflow
+                connecting equipment, sensors, data processing, AI models, and
+                engineering decisions.
+            </p>
+
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="number">01</div>
+                    <h3>Equipment Selection</h3>
+                    <p>Identify critical equipment and relevant failure modes.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">02</div>
+                    <h3>Sensor Installation</h3>
+                    <p>Select suitable sensors and measurement locations.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">03</div>
+                    <h3>Data Collection</h3>
+                    <p>Gather operational and condition-monitoring measurements.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">04</div>
+                    <h3>Signal Processing</h3>
+                    <p>Filter noise and extract useful diagnostic features.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">05</div>
+                    <h3>AI Analysis</h3>
+                    <p>Detect anomalies, classify faults, or estimate deterioration.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">06</div>
+                    <h3>Condition Assessment</h3>
+                    <p>Interpret model output with engineering evidence.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">07</div>
+                    <h3>Maintenance Planning</h3>
+                    <p>Plan inspection, repair, or further monitoring.</p>
+                </div>
+
+                <div class="process-step">
+                    <div class="number">08</div>
+                    <h3>Feedback & Improvement</h3>
+                    <p>Compare predictions with actual maintenance findings.</p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:25px;">
+                <h3>Why Maintenance Feedback Matters</h3>
+
+                <p>
+                    After a maintenance activity, engineers should record the actual
+                    findings. For example, a suspected bearing problem may be confirmed
+                    by inspection, or the inspection may reveal that the warning was
+                    caused by a loose sensor.
+                </p>
+
+                <p>
+                    These records help evaluate the model and improve future analysis.
+                    Without feedback, the system may continue producing warnings that
+                    are not useful in practice.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="applications">
+            <div class="section-label">07 / Maritime Applications</div>
+            <h2 class="section-title">Predictive Maintenance Across Ship Operations</h2>
+
+            <div class="content-card">
+                <h3>Main Engine Health Monitoring</h3>
+
+                <p>
+                    AI models may analyze cylinder-related measurements, exhaust gas
+                    temperature, lubrication pressure, vibration, and engine load to
+                    identify abnormal operating patterns.
+                </p>
+
+                <p>
+                    This can help engineers investigate possible combustion,
+                    lubrication, cooling, or mechanical issues.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Auxiliary Generator Monitoring</h3>
+
+                <p>
+                    Generators are essential for supplying electrical power to
+                    onboard equipment. Monitoring electrical and mechanical
+                    measurements can help identify unusual operating conditions
+                    before they lead to unexpected interruptions.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Pump and Cooling System Monitoring</h3>
+
+                <p>
+                    AI-based monitoring can analyze pressure, flow, temperature,
+                    and motor behavior to identify potential deterioration in
+                    pumps and cooling systems.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Propulsion System Monitoring</h3>
+
+                <p>
+                    Rotating components, bearings, shafts, and propulsion equipment
+                    can be monitored through vibration and other condition indicators.
+                </p>
+
+                <p>
+                    Early detection of abnormal behavior may help engineers plan
+                    detailed inspections and reduce the risk of unexpected
+                    operational disruption.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Shipboard Electrical Systems</h3>
+
+                <p>
+                    Electrical monitoring can support the detection of unusual
+                    current, temperature, voltage, and power behavior in selected
+                    motors, generators, and distribution equipment.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Fleet-Wide Maintenance Planning</h3>
+
+                <p>
+                    When information from several vessels is available, fleet
+                    operators may compare equipment performance, maintenance
+                    histories, and recurring problems.
+                </p>
+
+                <p>
+                    This can support maintenance planning and spare-parts
+                    management. However, comparisons must account for differences
+                    in vessel design, equipment configuration, and operating profile.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="rul">
+            <div class="section-label">08 / Prognostics</div>
+            <h2 class="section-title">Remaining Useful Life (RUL) Estimation</h2>
+
+            <div class="content-card">
+                <h3>What Is Remaining Useful Life?</h3>
+
+                <p>
+                    Remaining Useful Life, commonly abbreviated as RUL, is an
+                    estimate of the remaining operating time or usage before an
+                    asset or component reaches a defined failure or end-of-life
+                    condition.
+                </p>
+
+                <p>
+                    For example, a model may estimate that a monitored component
+                    has approximately 500 operating hours remaining before it
+                    reaches a specified maintenance threshold.
+                </p>
+
+                <p>
+                    This estimate is not a guaranteed failure date. It depends
+                    on the definition of failure, the component's condition,
+                    operating conditions, maintenance actions, and model uncertainty.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Degradation-Based Estimation</h3>
+
+                <p>
+                    Some components gradually deteriorate. A model may track a
+                    condition indicator over time and estimate when it will reach
+                    a predefined threshold.
+                </p>
+
+                <div class="formula">
+                    Estimated RUL = Predicted Threshold Time − Current Time
+                </div>
+
+                <p>
+                    This simplified relationship illustrates the concept. Real
+                    RUL estimation may require probabilistic models, degradation
+                    physics, historical failure data, and uncertainty analysis.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Factors Affecting RUL</h3>
+
+                <p><strong>Operating load:</strong> Higher or fluctuating loads may
+                    influence component wear.</p>
+
+                <p><strong>Operating temperature:</strong> Thermal conditions can
+                    affect material behavior and lubrication performance.</p>
+
+                <p><strong>Maintenance history:</strong> Repairs, adjustments, and
+                    replacements change the condition of equipment.</p>
+
+                <p><strong>Environmental conditions:</strong> Corrosion, humidity,
+                    salt exposure, and contamination may influence deterioration.</p>
+
+                <p><strong>Operating profile:</strong> Different vessels and routes
+                    may expose similar components to different stresses.</p>
+            </div>
+
+            <div class="note warning">
+                An RUL estimate must not be treated as permission to continue
+                operating unsafe machinery. Mandatory inspections, alarm limits,
+                manufacturer instructions, and safety procedures remain applicable.
+            </div>
+        </section>
+
+        <section class="section" id="challenges">
+            <div class="section-label">09 / Critical Engineering Issues</div>
+            <h2 class="section-title">Challenges & Limitations</h2>
+
+            <div class="info-grid">
+                <div class="mini-card">
+                    <div class="icon">📂</div>
+                    <h3>Limited Failure Data</h3>
+                    <p>
+                        Critical equipment may fail infrequently, making it difficult
+                        to collect enough labeled failure examples.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🌊</div>
+                    <h3>Harsh Marine Conditions</h3>
+                    <p>
+                        Vibration, humidity, salt exposure, temperature, and motion
+                        can affect sensors and measurement quality.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔧</div>
+                    <h3>Different Equipment Types</h3>
+                    <p>
+                        Similar components may behave differently because of design,
+                        age, load, or maintenance history.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🚨</div>
+                    <h3>False Alarms</h3>
+                    <p>
+                        Excessive incorrect warnings can reduce trust in the system
+                        and waste maintenance resources.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🔐</div>
+                    <h3>Cybersecurity</h3>
+                    <p>
+                        Connected monitoring infrastructure must be protected from
+                        unauthorized access and data manipulation.
+                    </p>
+                </div>
+
+                <div class="mini-card">
+                    <div class="icon">🧠</div>
+                    <h3>Explainability</h3>
+                    <p>
+                        Engineers need understandable evidence behind warnings
+                        and recommendations.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>False Positives and False Negatives</h3>
+
+                <p>
+                    A <strong>false positive</strong> occurs when a system reports
+                    a fault or abnormal condition even though the equipment does
+                    not have the suspected problem.
+                </p>
+
+                <p>
+                    A <strong>false negative</strong> occurs when a real problem
+                    is present but the system fails to identify it.
+                </p>
+
+                <p>
+                    Both can have serious consequences. False positives may lead
+                    to unnecessary inspections and reduced trust, while false
+                    negatives may allow developing faults to remain undetected.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Model Drift and Maintenance Changes</h3>
+
+                <p>
+                    A model trained on one operating profile may become less
+                    reliable after equipment replacement, major repairs, changes
+                    in engine settings, or changes in operating conditions.
+                </p>
+
+                <p>
+                    Predictive maintenance systems therefore require performance
+                    monitoring, engineering review, and controlled model updates.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="future">
+            <div class="section-label">10 / The Next Generation</div>
+            <h2 class="section-title">The Future of Intelligent Marine Maintenance</h2>
+
+            <div class="content-card">
+                <h3>Digital Twins for Marine Machinery</h3>
+
+                <p>
+                    Digital twins can combine equipment models with information
+                    from physical machinery. When connected to appropriate sensor
+                    data, they can help represent equipment condition and explore
+                    possible operating scenarios.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Edge AI Onboard Ships</h3>
+
+                <p>
+                    Edge AI processes data close to the equipment instead of
+                    sending every measurement to a remote server.
+                </p>
+
+                <p>
+                    This can reduce communication delays and support monitoring
+                    when satellite connectivity is limited. However, onboard
+                    hardware, power, reliability, and cybersecurity must be
+                    considered.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Integrated Fleet Intelligence</h3>
+
+                <p>
+                    Future systems may combine machinery health, maintenance
+                    records, vessel operating data, and fleet-level analytics
+                    to support more coordinated maintenance planning.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Human-Centered AI Maintenance</h3>
+
+                <p>
+                    More advanced systems may explain why a warning was generated,
+                    identify the measurements that influenced it, and present
+                    relevant maintenance history to engineers.
+                </p>
+
+                <p>
+                    The objective is to strengthen engineering judgment, not to
+                    remove professional responsibility.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="lab">
+            <div class="section-label">11 / Interactive Learning Experience</div>
+            <h2 class="section-title">Machinery Health Monitoring Lab</h2>
+
+            <p class="section-intro">
+                Experiment with a simplified machinery condition model. Change
+                vibration, temperature, and pressure indicators to see how a
+                monitoring system may respond to different operating conditions.
+            </p>
+
+            <div class="lab">
+                <h3>Marine Engine Condition Simulator</h3>
+
+                <p class="lab-description">
+                    Adjust the three operating indicators below. The educational
+                    simulation combines them into a simplified condition score.
+                    The score is illustrative and is not a real diagnostic model.
+                </p>
+
+                <div class="lab-controls">
+                    <div class="control-group">
+                        <label for="vibration">
+                            Vibration Level
+                            <output id="vibrationValue">35%</output>
+                        </label>
+                        <input type="range" id="vibration" min="0" max="100" value="35">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="temperature">
+                            Temperature Deviation
+                            <output id="temperatureValue">30%</output>
+                        </label>
+                        <input type="range" id="temperature" min="0" max="100" value="30">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="pressure">
+                            Pressure Deviation
+                            <output id="pressureValue">20%</output>
+                        </label>
+                        <input type="range" id="pressure" min="0" max="100" value="20">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="load">
+                            Operating Load
+                            <output id="loadValue">65%</output>
+                        </label>
+                        <input type="range" id="load" min="10" max="100" value="65">
+                    </div>
+                </div>
+
+                <div class="chart-box">
+                    <div class="chart-title">Illustrative Machinery Condition Indicators</div>
+                    <canvas id="healthChart" aria-label="Machinery condition indicators chart"></canvas>
+                </div>
+
+                <div class="lab-results">
+                    <div class="result-box">
+                        <span>Condition Score</span>
+                        <strong id="healthScore">76/100</strong>
+                    </div>
+
+                    <div class="result-box">
+                        <span>Risk Indicator</span>
+                        <strong id="riskLabel">Low</strong>
+                    </div>
+
+                    <div class="result-box">
+                        <span>Monitoring Status</span>
+                        <strong id="monitorStatus">Normal</strong>
+                    </div>
+                </div>
+
+                <div class="status-panel">
+                    <span class="status-indicator" id="statusIndicator">NORMAL CONDITION</span>
+                    <h4>System Interpretation</h4>
+                    <p id="systemInterpretation">
+                        The selected indicators suggest a relatively stable
+                        operating condition in this illustrative model.
+                    </p>
+                </div>
+
+                <p class="lab-disclaimer">
+                    Educational simulation only. The values and scoring weights
+                    are invented for demonstration. This is not a trained AI model,
+                    a certified condition-monitoring system, a failure prediction,
+                    or a substitute for machinery inspection and manufacturer limits.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="quiz">
+            <div class="section-label">12 / Test Your Understanding</div>
+            <h2 class="section-title">Knowledge Assessment</h2>
+
+            <div class="quiz-header">
+                <h3>AI-Based Predictive Maintenance Quiz</h3>
+                <p>
+                    Complete all 20 questions to evaluate your understanding.
+                    After submission, the system displays your score, correct
+                    answers, and explanations.
+                </p>
+
+                <div class="quiz-progress">
+                    <div class="quiz-progress-fill" id="quizProgress"></div>
+                </div>
+            </div>
+
+            <div id="quizContainer"></div>
+
+            <div class="quiz-actions">
+                <button class="action-btn" id="submitQuiz">Submit Assessment</button>
+                <button class="action-btn secondary" id="resetQuiz">Restart Quiz</button>
+            </div>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite">
+                <div class="score-circle" id="scoreCircle">0/20</div>
+                <h3 id="resultTitle">Assessment Complete</h3>
+                <p id="resultMessage"></p>
+            </div>
+        </section>
+
+        <section class="section" id="references">
+            <div class="section-label">13 / Further Reading</div>
+            <h2 class="section-title">References & Learning Resources</h2>
+
+            <p class="section-intro">
+                The following resources provide additional information about
+                machinery condition monitoring, maintenance engineering,
+                reliability, machine learning, and maritime operations.
+            </p>
+
+            <div class="references">
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.iso.org/standard/71194.html" target="_blank" rel="noopener noreferrer">
+                            ISO 17359 – Condition Monitoring and Diagnostics of Machines
+                        </a>
+                        <p>
+                            General guidelines for establishing condition-monitoring
+                            programs for machines.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.iso.org/standard/71193.html" target="_blank" rel="noopener noreferrer">
+                            ISO 13374 – Condition Monitoring and Diagnostics of Machines
+                        </a>
+                        <p>
+                            Guidance on data processing, communication, and presentation
+                            for condition-monitoring systems.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.iso.org/standard/55088.html" target="_blank" rel="noopener noreferrer">
+                            ISO 13381-1 – Prognostics
+                        </a>
+                        <p>
+                            General guidelines for developing and applying
+                            prognostic processes.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.nist.gov/" target="_blank" rel="noopener noreferrer">
+                            National Institute of Standards and Technology (NIST)
+                        </a>
+                        <p>
+                            Research and technical resources related to measurement,
+                            reliability, data analysis, and cybersecurity.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener noreferrer">
+                            Scikit-learn Documentation
+                        </a>
+                        <p>
+                            Machine learning methods for classification, regression,
+                            preprocessing, and model evaluation.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.tensorflow.org/" target="_blank" rel="noopener noreferrer">
+                            TensorFlow Documentation
+                        </a>
+                        <p>
+                            Machine learning and deep learning tools for developing
+                            and evaluating predictive models.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://pytorch.org/" target="_blank" rel="noopener noreferrer">
+                            PyTorch Documentation
+                        </a>
+                        <p>
+                            Deep learning framework documentation, tutorials,
+                            and model development resources.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization (IMO)
+                        </a>
+                        <p>
+                            International maritime safety, ship operations,
+                            environmental protection, and regulatory information.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.dnv.com/" target="_blank" rel="noopener noreferrer">
+                            DNV – Maritime Industry
+                        </a>
+                        <p>
+                            Maritime classification, technical services,
+                            digitalization, and industry developments.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.emsa.europa.eu/" target="_blank" rel="noopener noreferrer">
+                            European Maritime Safety Agency (EMSA)
+                        </a>
+                        <p>
+                            Maritime safety, monitoring, and maritime information
+                            services.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reference-item">
+                    <div>
+                        <a href="https://www.nasa.gov/" target="_blank" rel="noopener noreferrer">
+                            NASA – Prognostics and Health Management Research
+                        </a>
+                        <p>
+                            Research background on system health monitoring,
+                            diagnostics, and prognostics.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="note warning">
+                These resources are starting points for further study. Always
+                consult the full standards and applicable class, manufacturer,
+                flag-state, and vessel safety requirements before using
+                maintenance methods in professional operations.
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <p>MARITERRA | Maritime Knowledge & Technology</p>
+    <p style="margin-top:9px;">
+        DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+    </p>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+
+<script>
+    /* ==========================================
+       MACHINERY HEALTH SIMULATION
+    ========================================== */
+
+    const vibration = document.getElementById("vibration");
+    const temperature = document.getElementById("temperature");
+    const pressure = document.getElementById("pressure");
+    const load = document.getElementById("load");
+
+    const healthCanvas = document.getElementById("healthChart");
+    const healthCtx = healthCanvas.getContext("2d");
+
+    function calculateHealth() {
+        const v = Number(vibration.value);
+        const t = Number(temperature.value);
+        const p = Number(pressure.value);
+        const l = Number(load.value);
+
+        document.getElementById("vibrationValue").textContent = `${v}%`;
+        document.getElementById("temperatureValue").textContent = `${t}%`;
+        document.getElementById("pressureValue").textContent = `${p}%`;
+        document.getElementById("loadValue").textContent = `${l}%`;
+
+        const deviationScore = (v * 0.35) + (t * 0.30) + (p * 0.35);
+        const loadAdjustment = Math.max(0, l - 75) * 0.08;
+
+        const risk = Math.min(
+            100,
+            Math.max(0, deviationScore + loadAdjustment)
+        );
+
+        const health = Math.round(100 - risk);
+
+        let riskText;
+        let statusText;
+        let indicatorText;
+        let interpretation;
+        let indicatorClass;
+
+        if (risk < 30) {
+            riskText = "Low";
+            statusText = "Normal";
+            indicatorText = "NORMAL CONDITION";
+            indicatorClass = "";
+            interpretation =
+                "The selected indicators show relatively low deviations in this illustrative model. Continue routine monitoring and follow the approved maintenance plan.";
+        } else if (risk < 60) {
+            riskText = "Moderate";
+            statusText = "Monitor";
+            indicatorText = "MONITOR CONDITION";
+            indicatorClass = "medium";
+            interpretation =
+                "Some indicators have increased. An engineer should review the operating conditions and compare the readings with equipment-specific historical baselines.";
+        } else {
+            riskText = "High";
+            statusText = "Review";
+            indicatorText = "ATTENTION REQUIRED";
+            indicatorClass = "high";
+            interpretation =
+                "The selected indicators show substantial deviations in this illustrative model. This is not proof of a fault, but it demonstrates why engineering review and appropriate inspection may be necessary.";
+        }
+
+        document.getElementById("healthScore").textContent =
+            `${health}/100`;
+
+        document.getElementById("riskLabel").textContent = riskText;
+        document.getElementById("monitorStatus").textContent = statusText;
+
+        const indicator = document.getElementById("statusIndicator");
+        indicator.textContent = indicatorText;
+        indicator.className = `status-indicator ${indicatorClass}`;
+
+        document.getElementById("systemInterpretation").textContent =
+            interpretation;
+
+        drawHealthChart(v, t, p, l, risk);
+    }
+
+    function drawHealthChart(v, t, p, l, risk) {
+        const rect = healthCanvas.getBoundingClientRect();
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        healthCanvas.width = rect.width * pixelRatio;
+        healthCanvas.height = 260 * pixelRatio;
+
+        healthCtx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+        const width = rect.width;
+        const height = 260;
+
+        healthCtx.clearRect(0, 0, width, height);
+
+        const items = [
+            { label: "Vibration", value: v },
+            { label: "Temperature", value: t },
+            { label: "Pressure", value: p },
+            { label: "Load", value: l }
+        ];
+
+        const top = 25;
+        const rowHeight = 48;
+        const labelWidth = 100;
+        const barWidth = Math.max(30, width - labelWidth - 60);
+
+        items.forEach((item, index) => {
+            const y = top + index * rowHeight;
+
+            healthCtx.fillStyle = "#a5a4c2";
+            healthCtx.font = "11px Inter";
+            healthCtx.fillText(item.label, 5, y + 13);
+
+            healthCtx.fillStyle = "rgba(255,255,255,0.08)";
+            healthCtx.fillRect(labelWidth, y, barWidth, 12);
+
+            const gradient = healthCtx.createLinearGradient(
+                labelWidth,
+                0,
+                labelWidth + barWidth,
+                0
+            );
+
+            gradient.addColorStop(0, "#9333ea");
+            gradient.addColorStop(1, "#38bdf8");
+
+            healthCtx.fillStyle = gradient;
+            healthCtx.fillRect(
+                labelWidth,
+                y,
+                barWidth * item.value / 100,
+                12
+            );
+
+            healthCtx.fillStyle = "#c4b5fd";
+            healthCtx.fillText(
+                `${item.value}%`,
+                labelWidth + barWidth + 8,
+                y + 11
+            );
+        });
+
+        healthCtx.fillStyle = "#a5a4c2";
+        healthCtx.font = "10px Inter";
+        healthCtx.fillText(
+            `Illustrative risk indicator: ${risk.toFixed(1)}%`,
+            5,
+            height - 12
+        );
+    }
+
+    [vibration, temperature, pressure, load].forEach(input => {
+        input.addEventListener("input", calculateHealth);
+    });
+
+    window.addEventListener("resize", calculateHealth);
+
+    calculateHealth();
+
+
+    /* ==========================================
+       QUIZ DATA - 20 QUESTIONS
+    ========================================== */
+
+    const questions = [
+        {
+            q: "What is the main purpose of predictive maintenance?",
+            options: [
+                "To repair machinery only after complete failure",
+                "To estimate equipment deterioration and maintenance needs using data",
+                "To eliminate all machinery inspections",
+                "To replace every marine engineer"
+            ],
+            answer: 1,
+            explanation: "Predictive maintenance uses condition data and analytical methods to estimate equipment health and support maintenance planning."
+        },
+        {
+            q: "Which maintenance strategy is performed after equipment failure?",
+            options: [
+                "Preventive maintenance",
+                "Predictive maintenance",
+                "Reactive maintenance",
+                "Condition-based maintenance"
+            ],
+            answer: 2,
+            explanation: "Reactive maintenance is performed after equipment fails or cannot perform its required function."
+        },
+        {
+            q: "What is the main basis of preventive maintenance?",
+            options: [
+                "Predetermined time intervals or operating hours",
+                "Only AI anomaly scores",
+                "Random equipment replacement",
+                "Weather forecasts alone"
+            ],
+            answer: 0,
+            explanation: "Preventive maintenance follows planned schedules based on time, operating hours, or manufacturer recommendations."
+        },
+        {
+            q: "What is condition-based maintenance?",
+            options: [
+                "Maintenance performed without measurements",
+                "Maintenance decisions based on actual equipment condition",
+                "Maintenance performed only after total failure",
+                "Maintenance based only on vessel age"
+            ],
+            answer: 1,
+            explanation: "Condition-based maintenance uses measured equipment condition to help determine when maintenance is needed."
+        },
+        {
+            q: "Which sensor is commonly used to monitor machinery vibration?",
+            options: [
+                "Accelerometer",
+                "GPS receiver",
+                "Barcode scanner",
+                "Compass"
+            ],
+            answer: 0,
+            explanation: "Accelerometers measure acceleration and vibration signals that can support mechanical condition analysis."
+        },
+        {
+            q: "What can abnormal bearing vibration indicate?",
+            options: [
+                "Possible imbalance, misalignment, or bearing deterioration",
+                "Guaranteed normal operation",
+                "Improved fuel quality",
+                "A change in website design"
+            ],
+            answer: 0,
+            explanation: "Abnormal vibration may be associated with several mechanical issues, although further diagnosis is needed."
+        },
+        {
+            q: "Why should engine temperature be interpreted alongside operating load?",
+            options: [
+                "Because normal temperature can vary with operating conditions",
+                "Because load has no effect on engine behavior",
+                "Because temperature sensors cannot measure heat",
+                "Because all engine temperatures must be identical"
+            ],
+            answer: 0,
+            explanation: "An engine's expected temperature depends partly on load and operating conditions, so context is essential."
+        },
+        {
+            q: "What is anomaly detection used for?",
+            options: [
+                "Identifying patterns that differ from expected behavior",
+                "Designing ship decorations",
+                "Replacing every sensor",
+                "Guaranteeing the exact failure date"
+            ],
+            answer: 0,
+            explanation: "Anomaly detection identifies unusual observations or patterns that may require further investigation."
+        },
+        {
+            q: "What does a classification model do in predictive maintenance?",
+            options: [
+                "Assigns observations to predefined categories",
+                "Measures ship length directly",
+                "Changes the engine's physical structure",
+                "Automatically repairs machinery"
+            ],
+            answer: 0,
+            explanation: "Classification models may categorize operating conditions or suspected fault types based on learned patterns."
+        },
+        {
+            q: "What is the purpose of an autoencoder in some anomaly detection systems?",
+            options: [
+                "Learning to reconstruct input data",
+                "Measuring sea depth",
+                "Replacing engine lubrication",
+                "Creating navigation charts"
+            ],
+            answer: 0,
+            explanation: "Autoencoders learn to reconstruct input data, and unusual reconstruction errors may indicate abnormal patterns."
+        },
+        {
+            q: "What does Remaining Useful Life (RUL) estimate?",
+            options: [
+                "The remaining operating time before a defined end-of-life condition",
+                "The age of the vessel's crew",
+                "The distance between two ports",
+                "The number of installed sensors"
+            ],
+            answer: 0,
+            explanation: "RUL estimates remaining operating time or usage before an asset reaches a defined failure or end-of-life condition."
+        },
+        {
+            q: "Why is RUL not a guaranteed failure date?",
+            options: [
+                "Because future conditions, maintenance, and model uncertainty affect the estimate",
+                "Because equipment never deteriorates",
+                "Because sensors cannot collect data",
+                "Because all machines have identical lifetimes"
+            ],
+            answer: 0,
+            explanation: "RUL depends on operating conditions, deterioration, maintenance actions, failure definitions, and uncertainty."
+        },
+        {
+            q: "Which information can support predictive maintenance of a pump?",
+            options: [
+                "Pressure, flow rate, vibration, and motor current",
+                "Only the vessel's paint color",
+                "The website's title",
+                "A random passenger list"
+            ],
+            answer: 0,
+            explanation: "These measurements provide information about the pump's mechanical and operational behavior."
+        },
+        {
+            q: "What is a false positive in fault detection?",
+            options: [
+                "A warning is generated when the suspected fault is not present",
+                "A real fault is missed",
+                "A sensor is installed correctly",
+                "A maintenance action is completed"
+            ],
+            answer: 0,
+            explanation: "A false positive is an incorrect warning that identifies a fault or abnormality that is not actually present."
+        },
+        {
+            q: "What is a false negative?",
+            options: [
+                "The system reports a fault that does not exist",
+                "The system fails to detect a real problem",
+                "The model detects every possible fault",
+                "The sensor records a normal value"
+            ],
+            answer: 1,
+            explanation: "A false negative occurs when an actual problem is present but the system does not identify it."
+        },
+        {
+            q: "Why is maintenance feedback useful for AI systems?",
+            options: [
+                "It helps compare predictions with actual inspection findings",
+                "It makes sensors unnecessary",
+                "It guarantees perfect predictions",
+                "It removes the need for data storage"
+            ],
+            answer: 0,
+            explanation: "Actual inspection and repair records help evaluate and improve predictive model performance."
+        },
+        {
+            q: "What can cause model drift in a maintenance system?",
+            options: [
+                "Equipment replacement or changes in operating conditions",
+                "Keeping all data patterns permanently identical",
+                "Using a computer monitor",
+                "Changing the website background"
+            ],
+            answer: 0,
+            explanation: "Changes in equipment, operating conditions, and data relationships can reduce the accuracy of a previously trained model."
+        },
+        {
+            q: "What is one advantage of Edge AI onboard a vessel?",
+            options: [
+                "It can process data close to the equipment",
+                "It eliminates every cybersecurity risk",
+                "It guarantees satellite connectivity",
+                "It removes all hardware requirements"
+            ],
+            answer: 0,
+            explanation: "Edge AI processes data locally, potentially reducing communication delays and dependence on remote connectivity."
+        },
+        {
+            q: "Why must sensor calibration and placement be considered?",
+            options: [
+                "Because measurement quality affects analytical reliability",
+                "Because sensors always produce perfect readings",
+                "Because placement never affects measurements",
+                "Because AI does not use sensor data"
+            ],
+            answer: 0,
+            explanation: "Calibration, location, sampling rate, and environmental noise can significantly influence the quality of sensor measurements."
+        },
+        {
+            q: "What is the correct role of AI in professional marine maintenance?",
+            options: [
+                "Support engineering decisions with additional evidence",
+                "Replace safety procedures and professional responsibility",
+                "Ignore manufacturer requirements",
+                "Guarantee that machinery cannot fail"
+            ],
+            answer: 0,
+            explanation: "AI supports engineers with additional information, while professional judgment, inspections, and safety requirements remain essential."
+        }
+    ];
+
+
+    /* ==========================================
+       QUIZ RENDERING & GRADING
+    ========================================== */
+
+    const quizContainer = document.getElementById("quizContainer");
+    const quizProgress = document.getElementById("quizProgress");
+    const quizResult = document.getElementById("quizResult");
+
+    function renderQuiz() {
+        quizContainer.innerHTML = "";
+
+        questions.forEach((question, index) => {
+            const card = document.createElement("div");
+            card.className = "question-card";
+            card.id = `question-${index}`;
+
+            const number = document.createElement("div");
+            number.className = "question-number";
+            number.textContent =
+                `QUESTION ${String(index + 1).padStart(2, "0")} / 20`;
+
+            const title = document.createElement("h3");
+            title.textContent = question.q;
+
+            card.appendChild(number);
+            card.appendChild(title);
+
+            question.options.forEach((option, optionIndex) => {
+                const label = document.createElement("label");
+                label.className = "option";
+
+                const radio = document.createElement("input");
+                radio.type = "radio";
+                radio.name = `question-${index}`;
+                radio.value = optionIndex;
+
+                radio.addEventListener("change", updateProgress);
+
+                const text = document.createElement("span");
+                text.textContent = option;
+
+                label.appendChild(radio);
+                label.appendChild(text);
+                card.appendChild(label);
+            });
+
+            const explanation = document.createElement("div");
+            explanation.className = "explanation";
+            explanation.id = `explanation-${index}`;
+
+            card.appendChild(explanation);
+            quizContainer.appendChild(card);
+        });
+
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const answered = questions.filter((question, index) => {
+            return document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+        }).length;
+
+        quizProgress.style.width =
+            `${(answered / questions.length) * 100}%`;
+    }
+
+    function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, character => {
+            const entities = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+            };
+
+            return entities[character];
+        });
+    }
+
+    function submitQuiz() {
+        const unanswered = questions.filter((question, index) => {
+            return !document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+        }).length;
+
+        if (unanswered > 0) {
+            alert(`Please answer all questions. Remaining: ${unanswered}.`);
+            return;
+        }
+
+        let score = 0;
+
+        questions.forEach((question, index) => {
+            const selected = document.querySelector(
+                `input[name="question-${index}"]:checked`
+            );
+
+            const options = document.querySelectorAll(
+                `#question-${index} .option`
+            );
+
+            const explanation =
+                document.getElementById(`explanation-${index}`);
+
+            options.forEach((option, optionIndex) => {
+                option.classList.remove("correct", "incorrect");
+
+                if (optionIndex === question.answer) {
+                    option.classList.add("correct");
+                }
+
+                if (
+                    Number(selected.value) === optionIndex &&
+                    Number(selected.value) !== question.answer
+                ) {
+                    option.classList.add("incorrect");
+                }
+            });
+
+            if (Number(selected.value) === question.answer) {
+                score++;
+            }
+
+            const correctText = question.options[question.answer];
+
+            explanation.innerHTML =
+                `<strong>Correct Answer:</strong> ${escapeHTML(correctText)}<br><br>` +
+                `<strong>Explanation:</strong> ${escapeHTML(question.explanation)}`;
+
+            explanation.classList.add("show");
+        });
+
+        document.querySelectorAll(
+            '#quizContainer input[type="radio"]'
+        ).forEach(input => {
+            input.disabled = true;
+        });
+
+        const percentage = Math.round(
+            (score / questions.length) * 100
+        );
+
+        document.getElementById("scoreCircle").textContent =
+            `${score}/20`;
+
+        document.getElementById("resultTitle").textContent =
+            percentage >= 85
+                ? "Excellent Performance"
+                : percentage >= 65
+                    ? "Good Understanding"
+                    : percentage >= 50
+                        ? "Keep Improving"
+                        : "Further Study Recommended";
+
+        document.getElementById("resultMessage").textContent =
+            `You answered ${score} out of ${questions.length} questions correctly. ` +
+            `Your final score is ${percentage}%. Review the explanations to strengthen your understanding.`;
+
+        quizResult.classList.add("show");
+
+        quizResult.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        document.getElementById("submitQuiz").disabled = true;
+        document.getElementById("submitQuiz").style.opacity = "0.5";
+        document.getElementById("submitQuiz").style.cursor = "not-allowed";
+    }
+
+    function resetQuiz() {
+        renderQuiz();
+
+        quizResult.classList.remove("show");
+
+        document.getElementById("submitQuiz").disabled = false;
+        document.getElementById("submitQuiz").style.opacity = "1";
+        document.getElementById("submitQuiz").style.cursor = "pointer";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+    document.getElementById("submitQuiz").addEventListener(
+        "click",
+        submitQuiz
+    );
+
+    document.getElementById("resetQuiz").addEventListener(
+        "click",
+        resetQuiz
+    );
+
+    renderQuiz();
+
+
+    /* ==========================================
+       SIDEBAR ACTIVE SECTION
+    ========================================== */
+
+    const sections = document.querySelectorAll("main .section");
+    const sidebarLinks = document.querySelectorAll(".sidebar a");
+
+    const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                sidebarLinks.forEach(link => {
+                    link.classList.toggle(
+                        "active",
+                        link.getAttribute("href") === `#${entry.target.id}`
+                    );
+                });
+            }
+        });
+    }, {
+        rootMargin: "-25% 0px -65% 0px"
+    });
+
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+
+
+    /* ==========================================
+       BACK TO TOP
+    ========================================== */
+
+    const backTop = document.getElementById("backTop");
+
+    window.addEventListener("scroll", () => {
+        backTop.classList.toggle(
+            "visible",
+            window.scrollY > 500
+        );
+    });
+
+    backTop.addEventListener("click", () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+</script>
+
+</body>
+</html>

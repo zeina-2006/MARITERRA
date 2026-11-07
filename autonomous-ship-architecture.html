@@ -1,0 +1,2120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study the architecture of autonomous ships, including sensing, perception, data processing, decision-making, navigation, control, communication, safety, and remote operations.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Autonomous Ship Architecture</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101126;
+            --surface-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a8a8c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+            --green: #4ade80;
+            --orange: #fb923c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 8%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 10% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.82rem;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            padding: 100px 0 75px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border: 1px solid rgba(147, 51, 234, 0.22);
+            border-radius: 50%;
+            right: -130px;
+            top: 30px;
+            box-shadow: 0 0 80px rgba(147, 51, 234, 0.08);
+        }
+
+        .eyebrow,
+        .section-label {
+            color: var(--blue);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow {
+            margin-bottom: 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            max-width: 900px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 800px;
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.025);
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: var(--purple-light);
+            font-size: 0.78rem;
+        }
+
+        .content-section {
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: clamp(1.45rem, 3vw, 2rem);
+            margin-bottom: 22px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: var(--purple-light);
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .highlight {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .note {
+            margin: 25px 0;
+            padding: 20px 23px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .note p {
+            margin: 0;
+        }
+
+        .warning-note {
+            border-left-color: var(--orange);
+            background: rgba(251, 146, 60, 0.07);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: linear-gradient(145deg, var(--surface-light), var(--surface));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(147, 51, 234, 0.65);
+        }
+
+        .card-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .architecture-flow {
+            display: grid;
+            gap: 12px;
+            margin: 30px 0;
+        }
+
+        .architecture-layer {
+            background: linear-gradient(100deg, rgba(147, 51, 234, 0.16), rgba(56, 189, 248, 0.06));
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .architecture-layer h3 {
+            margin-bottom: 5px;
+        }
+
+        .architecture-layer p {
+            margin: 0;
+            font-size: 0.88rem;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: var(--purple-light);
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+            border-radius: 12px;
+        }
+
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        .comparison th,
+        .comparison td {
+            text-align: left;
+            padding: 16px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .comparison th {
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-size: 0.85rem;
+        }
+
+        .comparison td {
+            color: var(--muted);
+            background: rgba(255,255,255,0.02);
+            font-size: 0.86rem;
+        }
+
+        .steps {
+            display: grid;
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 16px;
+            align-items: start;
+            padding: 18px;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.18);
+            color: var(--purple-light);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+
+        .step h3 {
+            margin-bottom: 5px;
+        }
+
+        .step p {
+            margin: 0;
+        }
+
+        .list {
+            padding-left: 22px;
+            color: var(--muted);
+        }
+
+        .list li {
+            margin-bottom: 10px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 30px;
+        }
+
+        .quiz-question {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        .quiz-question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 11px 13px;
+            margin-top: 9px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+            flex-shrink: 0;
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 13px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .quiz-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            padding: 13px 22px;
+            border-radius: 9px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .primary-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--purple);
+        }
+
+        #quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--surface-light);
+        }
+
+        #quiz-result h3 {
+            font-size: 1.3rem;
+        }
+
+        #score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--blue);
+            margin: 10px 0;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin-bottom: 16px;
+        }
+
+        footer {
+            padding: 35px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.78rem;
+            margin: 5px 0;
+        }
+
+        .footer-brand {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .nav {
+                padding: 15px 0;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .hero {
+                padding: 70px 0 55px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 55px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container nav">
+        <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+        <nav class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="autonomous-ships.html">AUTONOMOUS SHIPS</a>
+            <a href="#content">LESSON</a>
+            <a href="#assessment">ASSESSMENT</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="container">
+            <div class="eyebrow">AUTONOMOUS SHIPS / TOPIC 03</div>
+
+            <h1>
+                Autonomous Ship
+                <span class="gradient-text">Architecture</span>
+            </h1>
+
+            <p>
+                Discover the technical structure that enables an autonomous
+                vessel to perceive its environment, process information,
+                make operational decisions, communicate with external systems,
+                and control its physical equipment.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">SYSTEM ARCHITECTURE</span>
+                <span class="meta-item">INTEGRATED TECHNOLOGIES</span>
+                <span class="meta-item">10 QUESTIONS</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="content">
+        <div class="container">
+
+            <div class="section-label">01 / Introduction</div>
+            <h2>What Is Autonomous Ship Architecture?</h2>
+
+            <p>
+                Autonomous ship architecture refers to the organized
+                structure of hardware, software, sensors, communication
+                networks, control systems, and human interfaces that
+                work together to enable a vessel to perform selected
+                functions with reduced or no continuous human interaction.
+            </p>
+
+            <p>
+                An autonomous ship is not simply a conventional vessel
+                with an autopilot or a collection of advanced sensors.
+                It requires several interconnected systems that can
+                collect information, understand the operating situation,
+                evaluate possible actions, and execute suitable commands.
+            </p>
+
+            <p>
+                These systems must also communicate with one another,
+                monitor their own condition, detect failures, and
+                support safe operation under changing maritime conditions.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Core concept:</strong> Autonomy emerges from
+                    the integration of multiple systems. A highly capable
+                    sensor, navigation computer, or AI model alone cannot
+                    make a vessel safely autonomous.
+                </p>
+            </div>
+
+            <h3>Why Is Architecture Important?</h3>
+
+            <p>
+                A clear architecture defines how information moves
+                through the vessel, how different systems interact,
+                which system has authority over a particular function,
+                and what happens when a component fails.
+            </p>
+
+            <div class="grid">
+                <article class="card">
+                    <h3>System Integration</h3>
+                    <p>
+                        Connects navigation, propulsion, communication,
+                        monitoring, and decision-making systems into
+                        a coordinated operating environment.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Operational Reliability</h3>
+                    <p>
+                        Helps identify dependencies, prevent conflicting
+                        commands, and establish backup arrangements
+                        for critical functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Safety Management</h3>
+                    <p>
+                        Supports monitoring, fault detection, emergency
+                        responses, and defined operating limits.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Scalability</h3>
+                    <p>
+                        Allows new sensors, software, communication
+                        technologies, and control capabilities to be
+                        integrated through a planned system design.
+                    </p>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">02 / Overall Structure</div>
+            <h2>The Main Layers of an Autonomous Ship</h2>
+
+            <p>
+                An autonomous vessel can be understood through a
+                functional architecture. The following model is a
+                simplified educational representation, not a single
+                mandatory architecture prescribed for every ship.
+            </p>
+
+            <div class="architecture-flow">
+
+                <div class="architecture-layer">
+                    <h3>01 — Physical Vessel and Environment</h3>
+                    <p>
+                        Hull, propulsion, steering, machinery, surrounding
+                        vessels, weather, sea conditions, and obstacles.
+                    </p>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="architecture-layer">
+                    <h3>02 — Sensing and Data Acquisition</h3>
+                    <p>
+                        Radar, cameras, GNSS, AIS, LiDAR, sonar,
+                        IMU, and machinery sensors.
+                    </p>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="architecture-layer">
+                    <h3>03 — Perception and Sensor Fusion</h3>
+                    <p>
+                        Data filtering, object detection, sensor
+                        synchronization, and environmental understanding.
+                    </p>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="architecture-layer">
+                    <h3>04 — Decision-Making and Planning</h3>
+                    <p>
+                        Situation assessment, route planning,
+                        collision avoidance, and action selection.
+                    </p>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="architecture-layer">
+                    <h3>05 — Guidance, Navigation and Control</h3>
+                    <p>
+                        Position estimation, trajectory tracking,
+                        steering commands, and speed control.
+                    </p>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="architecture-layer">
+                    <h3>06 — Actuation and Physical Execution</h3>
+                    <p>
+                        Propulsion motors, rudders, thrusters,
+                        and other controlled equipment.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Important:</strong> This diagram shows a
+                    simplified information flow. Real autonomous
+                    ship architectures are not purely linear.
+                    They use continuous feedback, parallel processing,
+                    monitoring, and communication between several layers.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">03 / Sensing Layer</div>
+            <h2>Sensors and Data Acquisition</h2>
+
+            <p>
+                Sensors provide the connection between the physical
+                maritime environment and the vessel's digital systems.
+                They collect measurements about the ship's position,
+                movement, surrounding traffic, obstacles, weather,
+                and machinery condition.
+            </p>
+
+            <p>
+                Sensor data is the foundation of situational awareness.
+                If the input data is inaccurate, delayed, incomplete,
+                or unavailable, later processing and decision-making
+                may also become unreliable.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <div class="card-number">SENSOR 01</div>
+                    <h3>Radar</h3>
+                    <p>
+                        Detects and tracks surrounding objects by
+                        transmitting radio waves and analyzing
+                        reflected signals. It supports traffic
+                        monitoring and collision-risk assessment.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 02</div>
+                    <h3>GNSS</h3>
+                    <p>
+                        Global Navigation Satellite Systems provide
+                        position and timing information using satellite
+                        signals. GNSS supports vessel localization
+                        and route monitoring.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 03</div>
+                    <h3>AIS</h3>
+                    <p>
+                        The Automatic Identification System exchanges
+                        vessel information such as identity, position,
+                        course, and speed with other equipped stations.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 04</div>
+                    <h3>Cameras</h3>
+                    <p>
+                        Optical and infrared cameras provide visual
+                        information that can support object recognition,
+                        situational awareness, and monitoring.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 05</div>
+                    <h3>LiDAR</h3>
+                    <p>
+                        Light Detection and Ranging measures distances
+                        using laser pulses. It can generate detailed
+                        spatial information about nearby objects.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 06</div>
+                    <h3>IMU</h3>
+                    <p>
+                        An Inertial Measurement Unit measures motion
+                        and orientation-related quantities, commonly
+                        including angular rates and acceleration.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 07</div>
+                    <h3>Sonar and Echo Sounders</h3>
+                    <p>
+                        Use acoustic signals to provide information
+                        about underwater objects, water depth,
+                        and the seabed.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">SENSOR 08</div>
+                    <h3>Environmental and Machinery Sensors</h3>
+                    <p>
+                        Monitor parameters such as temperature,
+                        pressure, vibration, fuel condition,
+                        humidity, and equipment performance.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>Why Multiple Sensors Are Necessary</h3>
+
+            <p>
+                Different sensors have different strengths and
+                limitations. Radar can provide useful information
+                in darkness, while cameras can provide visual details.
+                GNSS supports global positioning, whereas IMU data
+                helps estimate short-term motion.
+            </p>
+
+            <p>
+                Combining complementary sources can improve the
+                quality of the vessel's understanding of its
+                surroundings. However, combining sensors does not
+                automatically guarantee accurate information.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Example:</strong> If GNSS positioning
+                    becomes unreliable, an autonomous navigation
+                    system may need to evaluate other available
+                    information sources and determine whether it
+                    can continue safely.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">04 / Perception Layer</div>
+            <h2>Data Processing and Sensor Fusion</h2>
+
+            <p>
+                Sensors produce raw measurements, not a complete
+                understanding of the maritime environment.
+                The perception layer processes these measurements
+                and transforms them into useful information.
+            </p>
+
+            <h3>What Happens During Data Processing?</h3>
+
+            <ul class="list">
+                <li>
+                    <strong class="highlight">Filtering:</strong>
+                    Reduces noise and unwanted measurement variations.
+                </li>
+                <li>
+                    <strong class="highlight">Time synchronization:</strong>
+                    Aligns measurements collected at different times.
+                </li>
+                <li>
+                    <strong class="highlight">Coordinate transformation:</strong>
+                    Converts information into compatible reference frames.
+                </li>
+                <li>
+                    <strong class="highlight">Object detection:</strong>
+                    Identifies relevant objects such as vessels,
+                    buoys, and obstacles.
+                </li>
+                <li>
+                    <strong class="highlight">Tracking:</strong>
+                    Estimates the movement of detected objects over time.
+                </li>
+                <li>
+                    <strong class="highlight">Sensor fusion:</strong>
+                    Combines information from multiple sources
+                    to produce a more consistent representation.
+                </li>
+            </ul>
+
+            <h3>Understanding Sensor Fusion</h3>
+
+            <p>
+                Sensor fusion is the process of combining information
+                from different sensors to improve estimates of the
+                vessel's state and surrounding environment.
+            </p>
+
+            <p>
+                For example, radar may detect a nearby vessel,
+                AIS may provide reported identification and movement
+                information, and a camera may provide visual evidence.
+                The system can compare these sources to build a
+                more complete picture.
+            </p>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Critical limitation:</strong> AIS information
+                    is not a guaranteed representation of reality.
+                    It may be missing, delayed, inaccurate, or unavailable.
+                    An autonomous vessel must not depend on AIS alone
+                    for collision avoidance.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">05 / Intelligence Layer</div>
+            <h2>Decision-Making and Mission Planning</h2>
+
+            <p>
+                The decision-making layer evaluates the information
+                generated by perception systems and determines
+                what the vessel should do next.
+            </p>
+
+            <p>
+                It considers the planned mission, navigational
+                constraints, nearby traffic, environmental conditions,
+                vessel capabilities, and safety requirements.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Mission Planning</h3>
+                    <p>
+                        Defines the vessel's operational objectives,
+                        planned route, destination, and task sequence.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Route Planning</h3>
+                    <p>
+                        Selects a suitable route based on navigational
+                        constraints, weather, traffic, and operational goals.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Collision Avoidance</h3>
+                    <p>
+                        Evaluates potential encounters and selects
+                        suitable actions while considering applicable
+                        collision-prevention requirements.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Predictive Analysis</h3>
+                    <p>
+                        Estimates possible future positions,
+                        trajectories, and operational conditions
+                        to support safer decisions.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>The Role of Artificial Intelligence</h3>
+
+            <p>
+                Artificial intelligence and machine learning can
+                support perception, classification, prediction,
+                anomaly detection, and decision-support functions.
+                Their role depends on the system design and the
+                operational task.
+            </p>
+
+            <p>
+                AI is not the entire autonomous architecture.
+                It depends on sensors, reliable data, computing
+                resources, navigation systems, control equipment,
+                and safety mechanisms.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Design principle:</strong> A decision-making
+                    system must consider not only what action is
+                    desirable, but also whether that action is safe,
+                    feasible, and permitted under the vessel's
+                    operating conditions.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">06 / Navigation and Control</div>
+            <h2>Guidance, Navigation and Control (GNC)</h2>
+
+            <p>
+                Guidance, Navigation and Control is a fundamental
+                engineering function in autonomous vessels.
+                It connects the intended movement of the ship
+                with the commands required to achieve that movement.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <div class="card-number">G — GUIDANCE</div>
+                    <h3>Guidance</h3>
+                    <p>
+                        Determines the desired path, heading,
+                        speed, or trajectory that the vessel
+                        should follow to complete its mission.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">N — NAVIGATION</div>
+                    <h3>Navigation</h3>
+                    <p>
+                        Estimates the vessel's position,
+                        orientation, and movement relative
+                        to a defined reference frame.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">C — CONTROL</div>
+                    <h3>Control</h3>
+                    <p>
+                        Calculates the commands needed to
+                        move the vessel toward its desired
+                        state while accounting for system
+                        dynamics and disturbances.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <div class="card-number">FEEDBACK</div>
+                    <h3>Continuous Correction</h3>
+                    <p>
+                        Compares actual vessel behavior with
+                        the desired behavior and adjusts
+                        commands when necessary.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>Example: Maintaining a Planned Course</h3>
+
+            <p>
+                The guidance function provides a desired route.
+                The navigation function estimates the vessel's
+                current position and heading. The control function
+                calculates steering and propulsion commands to
+                reduce the difference between the desired and
+                actual movement.
+            </p>
+
+            <p>
+                Feedback from sensors and vessel systems allows
+                the controller to adjust its commands as wind,
+                waves, currents, and other disturbances affect
+                the ship.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Important distinction:</strong>
+                    Guidance decides where the vessel should go.
+                    Navigation estimates where it is.
+                    Control determines how to make it move
+                    toward the desired state.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">07 / Physical Execution</div>
+            <h2>Actuation and Shipboard Equipment</h2>
+
+            <p>
+                The actuation layer converts control commands
+                into physical actions. It includes the equipment
+                that directly affects the vessel's movement
+                and operation.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Propulsion Systems</h3>
+                    <p>
+                        Electric motors, diesel engines, propellers,
+                        and other propulsion arrangements generate
+                        the thrust required to move the vessel.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Steering Systems</h3>
+                    <p>
+                        Rudders and steering machinery change
+                        the vessel's direction according to
+                        control commands.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Thrusters</h3>
+                    <p>
+                        Bow and stern thrusters provide additional
+                        maneuvering capability, particularly during
+                        low-speed operations and docking.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Machinery Systems</h3>
+                    <p>
+                        Engine, electrical, cooling, and auxiliary
+                        equipment support the vessel's operation
+                        and may be monitored or controlled automatically.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>Why Actuator Feedback Matters</h3>
+
+            <p>
+                Sending a command does not guarantee that the
+                equipment has executed it correctly. The system
+                must monitor the actual response and compare it
+                with the requested action.
+            </p>
+
+            <p>
+                For example, if a steering command is issued
+                but the rudder does not reach the expected angle,
+                the control system should detect the mismatch
+                and initiate an appropriate response.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">08 / Communication Layer</div>
+            <h2>Communication and Remote Operations</h2>
+
+            <p>
+                Autonomous ships may exchange information with
+                shore-based operating centres, other vessels,
+                ports, traffic services, and external data providers.
+                Communication supports remote monitoring,
+                operational coordination, and selected remote
+                control functions.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Satellite Communication</h3>
+                    <p>
+                        Supports long-distance data exchange
+                        between ships and shore facilities,
+                        including operations outside coastal
+                        communication coverage.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Radio Communication</h3>
+                    <p>
+                        Supports maritime voice and data
+                        communication, including operational
+                        coordination and safety-related exchanges.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Cellular Networks</h3>
+                    <p>
+                        May provide high-data-rate connectivity
+                        in areas where suitable terrestrial
+                        network coverage is available.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Remote Operations Centre</h3>
+                    <p>
+                        A shore-based facility where trained
+                        personnel can monitor vessel status,
+                        support decisions, or perform authorized
+                        remote-control functions.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>What Information May Be Transmitted?</h3>
+
+            <ul class="list">
+                <li>Vessel position, heading, and speed.</li>
+                <li>Navigation and surrounding traffic information.</li>
+                <li>Machinery condition and equipment alarms.</li>
+                <li>System health and diagnostic information.</li>
+                <li>Mission status and operational reports.</li>
+                <li>Authorized commands and control instructions.</li>
+            </ul>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Communication failure:</strong> An
+                    autonomous ship must have a defined response
+                    when communication is interrupted. Depending
+                    on its approved design and operating mode,
+                    it may need to maintain a safe condition,
+                    use local control capabilities, change its
+                    operating mode, or request assistance.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">09 / Safety and Cybersecurity</div>
+            <h2>Safety, Redundancy and Cybersecurity Architecture</h2>
+
+            <p>
+                An autonomous ship depends on interconnected
+                electronic and software-based systems. A failure
+                in one component may affect several other
+                functions if dependencies are not properly managed.
+            </p>
+
+            <h3>Redundancy and Fault Tolerance</h3>
+
+            <p>
+                Redundancy means providing additional components
+                or alternative capabilities so that a critical
+                function can remain available when a primary
+                component fails.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>Hardware Redundancy</h3>
+                    <p>
+                        Alternative computers, sensors, power
+                        supplies, or communication equipment
+                        may support continuity of critical functions.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Software Monitoring</h3>
+                    <p>
+                        Health checks and diagnostic functions
+                        help identify abnormal software behavior
+                        and system faults.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Fail-Safe Design</h3>
+                    <p>
+                        Systems are designed to move toward
+                        a defined safe condition when specified
+                        failures occur.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Cybersecurity Protection</h3>
+                    <p>
+                        Security measures protect systems,
+                        communication links, software, and
+                        operational data against unauthorized
+                        access and malicious interference.
+                    </p>
+                </article>
+
+            </div>
+
+            <h3>Examples of Cybersecurity Risks</h3>
+
+            <ul class="list">
+                <li>Unauthorized access to remote-control interfaces.</li>
+                <li>Malware affecting shipboard computers.</li>
+                <li>Manipulation or disruption of navigation data.</li>
+                <li>Denial-of-service attacks against communication networks.</li>
+                <li>Compromised software updates or external connections.</li>
+            </ul>
+
+            <p>
+                Cybersecurity is not separate from operational
+                safety. If an attacker compromises a navigation
+                or control system, the result may affect the
+                vessel's physical operation.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Engineering principle:</strong> Safety
+                    and cybersecurity should be considered during
+                    system design, integration, testing, operation,
+                    maintenance, and software updates—not added
+                    only after the system has been built.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">10 / System Integration</div>
+            <h2>How All Components Work Together</h2>
+
+            <p>
+                The different architectural layers continuously
+                exchange information. Consider a vessel detecting
+                another ship crossing its planned route.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <h3>Detection</h3>
+                        <p>
+                            Radar and other available sensors
+                            detect an object in the vessel's
+                            surrounding environment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <h3>Data Processing</h3>
+                        <p>
+                            The system filters and processes
+                            measurements, associates relevant
+                            detections, and estimates object movement.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <h3>Situation Assessment</h3>
+                        <p>
+                            The system evaluates the relative
+                            movement of the vessels and estimates
+                            whether a dangerous encounter may develop.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <h3>Decision and Planning</h3>
+                        <p>
+                            A suitable maneuver is evaluated
+                            while considering navigational rules,
+                            surrounding traffic, and vessel limitations.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">05</div>
+                    <div>
+                        <h3>Control Command</h3>
+                        <p>
+                            The control system calculates the
+                            steering and propulsion commands
+                            needed to perform the selected maneuver.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">06</div>
+                    <div>
+                        <h3>Physical Execution</h3>
+                        <p>
+                            The steering and propulsion equipment
+                            responds to the commands, changing
+                            the vessel's movement.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">07</div>
+                    <div>
+                        <h3>Feedback and Verification</h3>
+                        <p>
+                            Sensors monitor the vessel's actual
+                            response. The system checks whether
+                            the maneuver is progressing as expected
+                            and updates its calculations.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="note warning-note">
+                <p>
+                    <strong>Important:</strong> This is a simplified
+                    engineering example. Actual collision avoidance
+                    must comply with applicable navigation rules,
+                    including COLREGs, and must account for the
+                    vessel's approved operational capabilities.
+                    A software-generated maneuver is not automatically
+                    a safe or legally compliant maneuver.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">11 / Engineering Challenges</div>
+            <h2>Challenges in Designing Autonomous Ship Architecture</h2>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>System Complexity</h3>
+                    <p>
+                        Integrating multiple systems from different
+                        manufacturers can create compatibility,
+                        timing, and coordination problems.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Environmental Uncertainty</h3>
+                    <p>
+                        Fog, heavy rain, waves, reflections,
+                        sea spray, and poor visibility may
+                        reduce sensor performance.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Data Quality</h3>
+                    <p>
+                        Incorrect, delayed, inconsistent, or
+                        missing information can affect the
+                        vessel's understanding of its situation.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Communication Limitations</h3>
+                    <p>
+                        Satellite latency, coverage gaps,
+                        interference, and network failures
+                        may affect remote operations.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Cybersecurity Threats</h3>
+                    <p>
+                        Connected systems introduce attack
+                        surfaces that require continuous
+                        protection and monitoring.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Testing and Validation</h3>
+                    <p>
+                        Complex autonomous functions must
+                        be evaluated under normal, abnormal,
+                        and emergency operating conditions.
+                    </p>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">12 / Regulatory Context</div>
+            <h2>Architecture and the IMO MASS Code</h2>
+
+            <p>
+                The International Maritime Organization's MASS Code
+                provides a regulatory framework for the design,
+                approval, and operation of Maritime Autonomous
+                Surface Ships within its scope.
+            </p>
+
+            <p>
+                The non-mandatory International Code of Safety
+                for Maritime Autonomous Surface Ships was adopted
+                in May 2026 and came into effect on 1 July 2026.
+                It applies to cargo ships covered by SOLAS Chapter I,
+                with recommendations concerning smaller vessels.
+            </p>
+
+            <p>
+                Its technical and operational areas include
+                system design, software principles, risk assessment,
+                connectivity, remote operations, navigation safety,
+                machinery, electrical installations, and human
+                oversight.
+            </p>
+
+            <p>
+                The Code emphasizes that a vessel's different
+                modes of operation must be described. This makes
+                system architecture important for understanding
+                which functions are performed onboard, remotely,
+                or autonomously.
+            </p>
+
+            <div class="note">
+                <p>
+                    <strong>Regulatory insight:</strong> A technically
+                    advanced architecture does not automatically
+                    make a ship approved for autonomous operation.
+                    The vessel must satisfy the applicable approval,
+                    safety, operational, and certification requirements.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <div class="section-label">13 / Key Takeaways</div>
+            <h2>What You Should Remember</h2>
+
+            <ul class="list">
+                <li>
+                    Autonomous ship architecture is the organized
+                    integration of hardware, software, sensors,
+                    communication, and control systems.
+                </li>
+                <li>
+                    Sensors collect information about the vessel
+                    and its surrounding environment.
+                </li>
+                <li>
+                    Perception and sensor fusion transform raw
+                    measurements into useful situational information.
+                </li>
+                <li>
+                    Decision-making systems evaluate information
+                    and select suitable operational actions.
+                </li>
+                <li>
+                    Guidance, Navigation and Control connect
+                    planned movement with physical execution.
+                </li>
+                <li>
+                    Actuators convert control commands into
+                    physical actions.
+                </li>
+                <li>
+                    Communication enables information exchange
+                    with shore-based centres and external systems.
+                </li>
+                <li>
+                    Redundancy, fault tolerance, and cybersecurity
+                    are essential architectural considerations.
+                </li>
+                <li>
+                    All components must work together through
+                    continuous feedback and monitoring.
+                </li>
+                <li>
+                    Regulatory approval and operational safety
+                    cannot be replaced by technological capability alone.
+                </li>
+            </ul>
+
+        </div>
+    </section>
+
+    <section class="content-section" id="assessment">
+        <div class="container">
+
+            <div class="section-label">Knowledge Assessment</div>
+            <h2>Test Your Understanding</h2>
+
+            <p class="quiz-intro">
+                Answer all 10 questions to evaluate your understanding
+                of autonomous ship architecture. Submit your answers
+                to receive your score, corrections, and explanations.
+            </p>
+
+            <form id="quiz-form">
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>1. What does autonomous ship architecture describe?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q1" value="a">
+                        The external shape and color of a ship.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="b">
+                        The organized integration of systems that enable autonomous vessel functions.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="c">
+                        The cargo storage arrangement only.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="d">
+                        The vessel's classification by size.
+                    </label>
+
+                    <div class="explanation">
+                        Autonomous ship architecture describes how hardware, software, sensors, communication, decision-making, and control systems work together.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>2. What is the primary role of sensors in an autonomous ship?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q2" value="a">
+                        To make all navigation decisions independently.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="b">
+                        To control the ship's propulsion motors directly in every case.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="c">
+                        To collect information about the vessel and its environment.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="d">
+                        To replace all communication systems.
+                    </label>
+
+                    <div class="explanation">
+                        Sensors collect measurements such as position, movement, nearby objects, environmental conditions, and machinery status.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>3. Which technology is commonly used to detect surrounding vessels using reflected radio waves?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q3" value="a">
+                        Radar
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="b">
+                        GNSS
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="c">
+                        IMU
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="d">
+                        Temperature sensor
+                    </label>
+
+                    <div class="explanation">
+                        Radar transmits radio waves and analyzes their reflections to detect and track surrounding objects.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>4. What is the main purpose of sensor fusion?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q4" value="a">
+                        To disconnect sensors from the navigation system.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="b">
+                        To convert all sensor data into voice messages.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="c">
+                        To replace the vessel's physical equipment.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="d">
+                        To combine information from multiple sources into a more consistent representation.
+                    </label>
+
+                    <div class="explanation">
+                        Sensor fusion combines complementary measurements to improve estimates of the vessel's state and surrounding environment.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>5. Which statement correctly describes the role of the decision-making layer?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q5" value="a">
+                        It only measures the water depth.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="b">
+                        It evaluates information and selects suitable operational actions.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="c">
+                        It physically rotates the rudder without a control system.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="d">
+                        It provides satellite signals.
+                    </label>
+
+                    <div class="explanation">
+                        The decision-making layer evaluates the operating situation and selects actions such as route changes or collision-avoidance maneuvers.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>6. What does the Navigation function in GNC primarily estimate?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q6" value="a">
+                        The vessel's cargo value.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="b">
+                        The ship's maintenance budget.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="c">
+                        The vessel's position, orientation, and movement.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="d">
+                        The identity of the shipowner.
+                    </label>
+
+                    <div class="explanation">
+                        Navigation estimates the vessel's state, including position and movement relative to a reference frame.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="a">
+                    <h3>7. Which components convert control commands into physical movement?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q7" value="a">
+                        Actuators such as propulsion and steering equipment.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="b">
+                        Cameras and radar only.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="c">
+                        AIS messages only.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7" value="d">
+                        Weather forecasting software only.
+                    </label>
+
+                    <div class="explanation">
+                        Actuation systems execute commands through physical equipment such as motors, propellers, rudders, and thrusters.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="d">
+                    <h3>8. Why does an autonomous ship need a defined response to communication failure?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q8" value="a">
+                        Because sensors stop measuring whenever a satellite is unavailable.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="b">
+                        Because the vessel must always stop permanently.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="c">
+                        Because communication failure automatically means the ship has sunk.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q8" value="d">
+                        Because remote monitoring or control may be affected, requiring a safe fallback arrangement.
+                    </label>
+
+                    <div class="explanation">
+                        Communication loss can affect remote functions. The vessel needs a defined, tested response appropriate to its design and approved operating mode.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="b">
+                    <h3>9. Which statement about AIS data is most accurate for autonomous navigation?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q9" value="a">
+                        AIS data is always complete and guaranteed to be correct.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="b">
+                        AIS data is useful, but may be missing, delayed, or inaccurate and should not be the only source for collision avoidance.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="c">
+                        AIS replaces radar and all other sensors.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q9" value="d">
+                        AIS directly controls the ship's rudder.
+                    </label>
+
+                    <div class="explanation">
+                        AIS provides valuable vessel information, but it is not a guaranteed representation of the real environment and must be assessed alongside other sources.
+                    </div>
+                </div>
+
+                <div class="quiz-question" data-answer="c">
+                    <h3>10. Which statement best explains the relationship between architecture and safety?</h3>
+
+                    <label class="option">
+                        <input type="radio" name="q10" value="a">
+                        Safety can be added only after the ship is fully constructed.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="b">
+                        A high number of sensors guarantees safe autonomous operation.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="c">
+                        Safety, redundancy, fault handling, and cybersecurity must be considered throughout system design and operation.
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q10" value="d">
+                        Cybersecurity has no relationship with physical vessel safety.
+                    </label>
+
+                    <div class="explanation">
+                        Safety and cybersecurity must be integrated throughout the system lifecycle because failures or attacks can affect physical vessel operations.
+                    </div>
+                </div>
+
+                <div class="quiz-actions">
+                    <button type="button" class="primary-btn" onclick="submitQuiz()">
+                        Submit Answers
+                    </button>
+
+                    <button type="button" class="secondary-btn" onclick="resetQuiz()">
+                        Reset Quiz
+                    </button>
+                </div>
+
+            </form>
+
+            <div id="quiz-result" aria-live="polite">
+                <h3>Assessment Result</h3>
+                <div id="score"></div>
+                <p id="result-message"></p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container references">
+
+            <div class="section-label">Further Reading</div>
+            <h2>Technical References</h2>
+
+            <p>
+                These references provide further information about
+                autonomous ship architecture, system integration,
+                maritime regulation, and technical design.
+            </p>
+
+            <ul class="list">
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/hottopics/pages/autonomous-shipping.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — FAQ: Autonomous Shipping
+                    </a>
+                    <p>
+                        Official information about MASS, its operational
+                        functions, regulatory framework, and the MASS Code.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/mediacentre/pressbriefings/pages/imo-adopts-mass-code.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — IMO Adopts First Global Code for Autonomous Ships
+                    </a>
+                    <p>
+                        Describes the 2026 MASS Code and its approach
+                        to system design, connectivity, risk assessment,
+                        and remote operations.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.mdpi.com/2077-1312/13/1/122" target="_blank" rel="noopener">
+                        Journal of Marine Science and Engineering — Maritime Autonomous Surface Ships: Architecture for Autonomous Navigation Systems
+                    </a>
+                    <p>
+                        Research review discussing autonomous navigation
+                        architecture, situational awareness, sensor fusion,
+                        decision-making, collision avoidance, and control.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/autonomous-shipping-%28mass%29.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — Autonomous Shipping (MASS)
+                    </a>
+                    <p>
+                        Provides background on IMO work concerning
+                        autonomous and remotely operated ships.
+                    </p>
+                </li>
+
+                <li>
+                    <a href="https://www.imo.org/en/ourwork/safety/pages/shipsrouteing.aspx" target="_blank" rel="noopener">
+                        International Maritime Organization — Ships' Routeing
+                    </a>
+                    <p>
+                        Provides context for maritime routeing
+                        and navigational safety arrangements.
+                    </p>
+                </li>
+
+            </ul>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p class="footer-brand">MARITERRA</p>
+        <p>Maritime Knowledge. Engineering Innovation. Future Navigation.</p>
+        <p>DESIGNED &amp; DEVELOPED BY ENGINEER ZEINAB MOHAMED</p>
+    </div>
+</footer>
+
+<script>
+    function submitQuiz() {
+        const questions = document.querySelectorAll(".quiz-question");
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector("input:checked");
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach((option) => {
+                option.classList.remove("correct", "incorrect");
+            });
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === correctAnswer) {
+                score++;
+            }
+
+            options.forEach((option) => {
+                const input = option.querySelector("input");
+
+                if (input.value === correctAnswer) {
+                    option.classList.add("correct");
+                } else if (selected && input.checked) {
+                    option.classList.add("incorrect");
+                }
+            });
+
+            explanation.style.display = "block";
+        });
+
+        const result = document.getElementById("quiz-result");
+        const scoreDisplay = document.getElementById("score");
+        const message = document.getElementById("result-message");
+
+        scoreDisplay.textContent = `${score} / ${questions.length}`;
+
+        if (unanswered > 0) {
+            message.textContent =
+                `You left ${unanswered} question(s) unanswered. Unanswered questions receive zero points. Review the corrections and explanations.`;
+        } else if (score === 10) {
+            message.textContent =
+                "Excellent work! You have demonstrated an excellent understanding of autonomous ship architecture.";
+        } else if (score >= 7) {
+            message.textContent =
+                "Good performance! Review the explanations to strengthen your engineering knowledge.";
+        } else if (score >= 5) {
+            message.textContent =
+                "You have a basic understanding of the topic. Revisit the lesson and try again.";
+        } else {
+            message.textContent =
+                "More revision is recommended. Review the architecture layers and their functions before retaking the assessment.";
+        }
+
+        result.style.display = "block";
+
+        result.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+    function resetQuiz() {
+        document.getElementById("quiz-form").reset();
+
+        document.querySelectorAll(".option").forEach((option) => {
+            option.classList.remove("correct", "incorrect");
+        });
+
+        document.querySelectorAll(".explanation").forEach((item) => {
+            item.style.display = "none";
+        });
+
+        document.getElementById("quiz-result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

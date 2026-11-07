@@ -1,0 +1,773 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore autonomous ships, maritime autonomy, intelligent vessel operations, remote control, autonomous navigation, and the future of autonomous shipping.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Autonomous Ships</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101329;
+            --surface-light: #171d3b;
+            --purple: #9333ea;
+            --light-purple: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f2ff;
+            --muted: #a7abc7;
+            --border: rgba(196, 181, 253, 0.17);
+            --gradient: linear-gradient(120deg, #9333ea, #38bdf8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 80% 5%, rgba(147, 51, 234, 0.14), transparent 28%),
+                radial-gradient(circle at 5% 55%, rgba(56, 189, 248, 0.06), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--light-purple);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .back-link {
+            color: var(--light-purple);
+            border: 1px solid var(--border);
+            padding: 8px 17px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            background: rgba(147, 51, 234, 0.16);
+            border-color: var(--purple);
+        }
+
+        .hero {
+            min-height: 430px;
+            padding: 90px 8% 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 50% 50%, rgba(147, 51, 234, 0.2), transparent 65%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(34px, 5.5vw, 65px);
+            line-height: 1.3;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 850px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        .hero-labels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .hero-labels span {
+            padding: 7px 15px;
+            border: 1px solid var(--border);
+            background: rgba(16, 19, 41, 0.75);
+            color: var(--light-purple);
+            border-radius: 30px;
+            font-size: 11px;
+        }
+
+        .container {
+            width: min(1180px, 90%);
+            margin: 75px auto;
+        }
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .section-heading .number {
+            display: block;
+            color: var(--blue);
+            font-size: 11px;
+            letter-spacing: 3px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(22px, 3vw, 30px);
+            color: var(--light-purple);
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            max-width: 850px;
+        }
+
+        .intro-card {
+            position: relative;
+            overflow: hidden;
+            padding: 38px;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.13), rgba(16, 19, 41, 0.95) 55%, rgba(56, 189, 248, 0.07));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            margin-bottom: 65px;
+        }
+
+        .intro-card::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -90px;
+            top: -100px;
+            border: 1px solid rgba(196, 181, 253, 0.14);
+            border-radius: 50%;
+            box-shadow: 0 0 0 25px rgba(147, 51, 234, 0.035),
+                        0 0 0 50px rgba(147, 51, 234, 0.025);
+            pointer-events: none;
+        }
+
+        .intro-card h2 {
+            position: relative;
+            z-index: 1;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light-purple);
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .intro-card p {
+            position: relative;
+            z-index: 1;
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .intro-card strong {
+            color: var(--text);
+        }
+
+        .intro-facts {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .fact {
+            background: rgba(7, 8, 22, 0.45);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 17px;
+        }
+
+        .fact h3 {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .fact p {
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .importance {
+            margin-bottom: 70px;
+        }
+
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .importance-item {
+            padding: 22px;
+            background: rgba(16, 19, 41, 0.82);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .importance-item:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+            background: rgba(23, 29, 59, 0.9);
+        }
+
+        .importance-item h3 {
+            color: var(--light-purple);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .importance-item p {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .topics-section {
+            margin-top: 75px;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-top: 32px;
+        }
+
+        .topic-card {
+            position: relative;
+            min-height: 220px;
+            padding: 27px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: linear-gradient(145deg, rgba(23, 29, 59, 0.95), rgba(12, 15, 34, 0.95));
+            transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
+        }
+
+        .topic-card::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: -60px;
+            bottom: -70px;
+            border: 1px solid rgba(147, 51, 234, 0.28);
+            border-radius: 50%;
+            box-shadow: 0 0 0 18px rgba(147, 51, 234, 0.04),
+                        0 0 0 36px rgba(56, 189, 248, 0.025);
+            transition: 0.4s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(147, 51, 234, 0.8);
+            box-shadow: 0 15px 40px rgba(80, 35, 130, 0.16);
+        }
+
+        .topic-card:hover::before {
+            transform: scale(1.2) rotate(25deg);
+        }
+
+        .topic-top {
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .topic-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light-purple);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .topic-card p {
+            color: var(--muted);
+            font-size: 12px;
+            max-width: 95%;
+        }
+
+        .topic-bottom {
+            position: relative;
+            z-index: 1;
+            margin-top: 25px;
+        }
+
+        .explore-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+
+        .topic-card:hover .explore-link {
+            color: var(--light-purple);
+            gap: 15px;
+        }
+
+        .learning-note {
+            margin-top: 30px;
+            padding: 20px 23px;
+            background: rgba(147, 51, 234, 0.08);
+            border-left: 3px solid var(--purple);
+            border-radius: 0 12px 12px 0;
+            color: var(--light-purple);
+            font-size: 13px;
+        }
+
+        .footer {
+            padding: 35px 15px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer strong {
+            color: var(--light-purple);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 14px 5%;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .hero {
+                min-height: 360px;
+                padding: 65px 6%;
+            }
+
+            .container {
+                width: 92%;
+                margin: 50px auto;
+            }
+
+            .intro-card {
+                padding: 25px 20px;
+            }
+
+            .intro-facts {
+                grid-template-columns: 1fr;
+            }
+
+            .importance-grid,
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topic-card {
+                min-height: 195px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+    <a href="index.html" class="back-link">← Back to Home</a>
+</header>
+
+<section class="hero">
+    <div class="eyebrow">MARITIME TECHNOLOGY / FIELD 02</div>
+
+    <h1>Autonomous <span>Ships</span></h1>
+
+    <p>
+        Explore the technologies transforming modern vessels into
+        intelligent maritime systems. Discover how autonomy,
+        advanced sensing, digital control, and remote operations
+        are shaping the future of global shipping.
+    </p>
+
+    <div class="hero-labels">
+        <span>Maritime Autonomy</span>
+        <span>Intelligent Vessels</span>
+        <span>Future of Shipping</span>
+    </div>
+</section>
+
+<main class="container">
+
+    <section class="intro-card">
+        <h2>Understanding Autonomous Ships</h2>
+
+        <p>
+            Autonomous Ships represent an important development in
+            modern maritime engineering. They use a combination of
+            sensors, navigation technologies, intelligent software,
+            communication systems, and automated control equipment
+            to perform selected vessel operations with reduced
+            direct human intervention.
+        </p>
+
+        <p>
+            Unlike conventional ships that rely primarily on onboard
+            personnel to observe the environment and control vessel
+            operations, autonomous vessels can process information
+            from different sources, evaluate operational conditions,
+            and perform certain tasks automatically or through
+            remote supervision.
+        </p>
+
+        <p>
+            Autonomous shipping does not simply mean removing the
+            crew from a vessel. It requires a carefully designed
+            operational system that connects <strong>the vessel,
+            its technology, human operators, communication networks,
+            and maritime safety procedures.</strong>
+        </p>
+
+        <p>
+            The level of autonomy can vary significantly. Some ships
+            use advanced automated assistance while maintaining a
+            full onboard crew, whereas other designs may support
+            remote operation or more independent vessel functions.
+        </p>
+
+        <div class="intro-facts">
+            <div class="fact">
+                <h3>INTELLIGENCE</h3>
+                <p>
+                    Processing operational information to support
+                    navigation and vessel decisions.
+                </p>
+            </div>
+
+            <div class="fact">
+                <h3>AUTOMATION</h3>
+                <p>
+                    Performing selected vessel functions through
+                    automated control systems.
+                </p>
+            </div>
+
+            <div class="fact">
+                <h3>CONNECTIVITY</h3>
+                <p>
+                    Connecting vessels with remote operators
+                    and maritime infrastructure.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="importance">
+        <div class="section-heading">
+            <span class="number">WHY IT MATTERS</span>
+            <h2>The Importance of Autonomous Shipping</h2>
+            <p>
+                Autonomous technologies are changing how maritime
+                operations are planned, monitored, and controlled.
+                Their value extends beyond automation to include
+                operational efficiency, safety engineering,
+                environmental awareness, and new maritime services.
+            </p>
+        </div>
+
+        <div class="importance-grid">
+
+            <article class="importance-item">
+                <h3>01. Operational Efficiency</h3>
+                <p>
+                    Automated monitoring and selected control functions
+                    can support more consistent operations and help
+                    optimize vessel performance.
+                </p>
+            </article>
+
+            <article class="importance-item">
+                <h3>02. Maritime Safety</h3>
+                <p>
+                    Advanced sensing and decision-support technologies
+                    can improve environmental awareness and help
+                    identify certain operational hazards.
+                </p>
+            </article>
+
+            <article class="importance-item">
+                <h3>03. Remote Operations</h3>
+                <p>
+                    Remote operation centres can allow qualified
+                    personnel to monitor or control vessel functions
+                    from shore, depending on the vessel's design.
+                </p>
+            </article>
+
+            <article class="importance-item">
+                <h3>04. Engineering Innovation</h3>
+                <p>
+                    Autonomous vessels encourage developments in
+                    robotics, control engineering, sensor integration,
+                    software, and digital maritime infrastructure.
+                </p>
+            </article>
+
+            <article class="importance-item">
+                <h3>05. Environmental Monitoring</h3>
+                <p>
+                    Uncrewed and autonomous vessels can support
+                    oceanographic surveys, marine observation,
+                    and environmental data collection.
+                </p>
+            </article>
+
+            <article class="importance-item">
+                <h3>06. Future Maritime Careers</h3>
+                <p>
+                    The field creates demand for knowledge in
+                    autonomous systems, marine engineering,
+                    cybersecurity, data analysis, and remote operations.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+    <section class="topics-section">
+
+        <div class="section-heading">
+            <span class="number">EXPLORE THE FIELD / 08 TOPICS</span>
+            <h2>Autonomous Ships Learning Path</h2>
+            <p>
+                Explore the field through eight specialized topics.
+                Each topic introduces a major part of autonomous
+                vessel technology, from fundamental concepts to
+                advanced operation, safety, and regulation.
+            </p>
+        </div>
+
+        <div class="topics-grid">
+
+            <a href="autonomous-ship-fundamentals.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 01 / FOUNDATIONS</div>
+                    <h3>Autonomous Ship Fundamentals</h3>
+                    <p>
+                        Understand the concept, evolution,
+                        main characteristics, operating principles,
+                        and differences between conventional,
+                        automated, and autonomous vessels.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="levels-of-maritime-autonomy.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 02 / AUTONOMY</div>
+                    <h3>Levels of Maritime Autonomy</h3>
+                    <p>
+                        Explore different autonomy arrangements,
+                        onboard human involvement, remote control,
+                        autonomous functions, and operational modes.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="autonomous-ship-architecture.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 03 / SYSTEM DESIGN</div>
+                    <h3>Autonomous Ship Architecture</h3>
+                    <p>
+                        Discover the main system layers, hardware,
+                        software, data processing, decision-making,
+                        and integration of autonomous vessel systems.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="autonomous-ship-sensors.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 04 / PERCEPTION</div>
+                    <h3>Sensors and Environmental Perception</h3>
+                    <p>
+                        Study radar, LiDAR, cameras, AIS, GNSS,
+                        inertial sensors, sensor fusion, and
+                        environmental awareness.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="autonomous-navigation-collision-avoidance.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 05 / NAVIGATION</div>
+                    <h3>Autonomous Navigation and Collision Avoidance</h3>
+                    <p>
+                        Explore route planning, target tracking,
+                        collision-risk assessment, COLREGs,
+                        and autonomous navigation decisions.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="autonomous-ship-control-systems.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 06 / CONTROL</div>
+                    <h3>Guidance, Navigation and Control Systems</h3>
+                    <p>
+                        Understand steering, propulsion,
+                        feedback control, vessel dynamics,
+                        guidance algorithms, and control reliability.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="remote-ship-operations.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 07 / CONNECTIVITY</div>
+                    <h3>Remote Operations and Communication</h3>
+                    <p>
+                        Learn about remote operations centres,
+                        satellite communication, data links,
+                        operator supervision, latency, and
+                        communication failure management.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+            <a href="autonomous-ships-safety-regulations.html" class="topic-card">
+                <div class="topic-top">
+                    <div class="topic-number">TOPIC 08 / SAFETY</div>
+                    <h3>Safety, Cybersecurity and Maritime Regulations</h3>
+                    <p>
+                        Study risk assessment, system reliability,
+                        cyber threats, emergency response,
+                        international regulations, and the
+                        IMO MASS framework.
+                    </p>
+                </div>
+                <div class="topic-bottom">
+                    <span class="explore-link">Explore Topic <span>→</span></span>
+                </div>
+            </a>
+
+        </div>
+
+        <div class="learning-note">
+            <strong>Learning Structure:</strong>
+            Each topic opens a dedicated learning page containing
+            detailed technical explanations, practical maritime
+            applications, engineering challenges, future developments,
+            a 10-question assessment with automatic correction and
+            answer explanations, and technical references.
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>MARITERRA | Maritime Technology & Engineering</p>
+    <p>DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong></p>
+    <p>© 2026 MARITERRA. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

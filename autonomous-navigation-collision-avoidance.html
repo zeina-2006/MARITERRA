@@ -1,0 +1,1772 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore autonomous maritime navigation, route planning, collision risk assessment, COLREGs, and collision avoidance strategies for autonomous ships.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Autonomous Navigation and Collision Avoidance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --surface: #101226;
+            --surface-light: #171a35;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #aaaac2;
+            --border: rgba(196, 181, 253, 0.16);
+            --success: #4ade80;
+            --danger: #fb7185;
+            --warning: #fbbf24;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 12% 8%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 88% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--blue);
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            font-size: 13px;
+            color: var(--muted);
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--blue);
+        }
+
+        .hero {
+            min-height: 440px;
+            display: flex;
+            align-items: center;
+            padding: 85px 10%;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 430px;
+            height: 430px;
+            right: -100px;
+            top: -120px;
+            border-radius: 50%;
+            background: rgba(147, 51, 234, 0.12);
+            filter: blur(85px);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 17px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(30px, 5vw, 53px);
+            margin-bottom: 22px;
+            max-width: 850px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 27px;
+        }
+
+        .meta-tag {
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 7px 15px;
+            color: var(--purple-light);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        main {
+            width: min(1100px, 88%);
+            margin: auto;
+        }
+
+        section {
+            padding: 65px 0;
+            border-bottom: 1px solid var(--border);
+            scroll-margin-top: 85px;
+        }
+
+        .section-label {
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: clamp(22px, 3vw, 30px);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: var(--purple-light);
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        strong {
+            color: var(--text);
+        }
+
+        .intro-box {
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.13), rgba(56, 189, 248, 0.05));
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 13px;
+            padding: 23px;
+            margin-top: 25px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 17px;
+            margin-top: 25px;
+        }
+
+        .content-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 23px;
+            transition: 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(147, 51, 234, 0.65);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+        }
+
+        .card-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin-bottom: 9px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bullet-list {
+            padding-left: 22px;
+            margin: 15px 0;
+            color: var(--muted);
+        }
+
+        .bullet-list li {
+            padding: 5px 0;
+        }
+
+        .process {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 28px 0;
+        }
+
+        .process-step {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            padding: 18px 12px;
+        }
+
+        .process-step span {
+            display: block;
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .process-step strong {
+            font-size: 13px;
+        }
+
+        .formula-box {
+            background: #0b0d20;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 22px;
+            margin: 22px 0;
+            text-align: center;
+        }
+
+        .formula {
+            display: block;
+            color: var(--purple-light);
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(17px, 3vw, 23px);
+            margin: 12px 0;
+            letter-spacing: 1px;
+        }
+
+        .formula-caption {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin-top: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+            background: var(--surface);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        th {
+            color: var(--purple-light);
+            background: var(--surface-light);
+            font-weight: 700;
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .note {
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: rgba(56, 189, 248, 0.06);
+            border-radius: 12px;
+            padding: 19px;
+            margin-top: 20px;
+        }
+
+        .note.warning {
+            border-color: rgba(251, 191, 36, 0.28);
+            background: rgba(251, 191, 36, 0.05);
+        }
+
+        .note p:last-child {
+            margin-bottom: 0;
+        }
+
+        .scenario {
+            background: linear-gradient(120deg, rgba(147, 51, 234, 0.11), rgba(16, 18, 38, 0.9));
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .scenario ol {
+            padding-left: 22px;
+            color: var(--muted);
+        }
+
+        .scenario li {
+            padding: 6px 0;
+        }
+
+        .takeaways {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .takeaway {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(16, 18, 38, 0.75);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .quiz-intro {
+            margin-bottom: 25px;
+        }
+
+        .question {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            margin-bottom: 17px;
+        }
+
+        .question h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .question-number {
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--muted);
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .option input {
+            margin-top: 5px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.65);
+            background: rgba(74, 222, 128, 0.08);
+            color: var(--success);
+        }
+
+        .option.incorrect {
+            border-color: rgba(251, 113, 133, 0.65);
+            background: rgba(251, 113, 133, 0.08);
+            color: var(--danger);
+        }
+
+        .explanation {
+            display: none;
+            padding: 12px 14px;
+            margin-top: 12px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.06);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 22px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(100deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface-light);
+        }
+
+        #result h3 {
+            font-size: 21px;
+        }
+
+        #result p {
+            margin-bottom: 5px;
+        }
+
+        .references {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .references li {
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .references li:last-child {
+            border-bottom: none;
+        }
+
+        .references a {
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .takeaways {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 65px 7%;
+                min-height: 390px;
+            }
+
+            main {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .topbar {
+                padding: 15px 5%;
+            }
+
+            .brand {
+                font-size: 15px;
+            }
+
+            .back-link {
+                font-size: 11px;
+            }
+
+            .process {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="brand">MARITERRA</a>
+    <a href="autonomous-ships.html" class="back-link">← Back to Autonomous Ships</a>
+</header>
+
+<div class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Autonomous Ships / Topic 05</div>
+        <h1>Autonomous Navigation and <span class="gradient">Collision Avoidance</span></h1>
+        <p>
+            Explore how autonomous ships plan routes, estimate collision risks,
+            interpret maritime traffic situations, and select safe navigation
+            actions while operating under maritime rules and environmental constraints.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-tag">AUTONOMOUS NAVIGATION</span>
+            <span class="meta-tag">COLLISION RISK</span>
+            <span class="meta-tag">COLREGs</span>
+        </div>
+    </div>
+</div>
+
+<main>
+
+    <section id="introduction">
+        <div class="section-label">01 / Introduction</div>
+        <h2>What Is Autonomous Navigation?</h2>
+
+        <p>
+            Autonomous navigation is the ability of a vessel to determine
+            and follow a suitable route while responding to changes in its
+            environment. An autonomous ship uses information from navigation
+            sensors, electronic charts, positioning systems, environmental
+            measurements, and perception technologies to support its decisions.
+        </p>
+
+        <p>
+            Traditional navigation depends heavily on human officers who
+            interpret information and make decisions. Autonomous navigation
+            systems aim to perform selected navigation functions using
+            computer-based sensing, planning, decision-making, and control.
+        </p>
+
+        <p>
+            These systems must consider more than the shortest distance
+            between two points. They must account for navigational safety,
+            traffic density, water depth, weather, vessel manoeuvrability,
+            restricted areas, and applicable maritime regulations.
+        </p>
+
+        <div class="intro-box">
+            <h3>Core Objective</h3>
+            <p>
+                The objective is to navigate from an initial position to a
+                destination while maintaining safe separation from other
+                vessels and obstacles, respecting navigational constraints,
+                and responding appropriately to changing conditions.
+            </p>
+        </div>
+    </section>
+
+    <section id="navigation-system">
+        <div class="section-label">02 / System Architecture</div>
+        <h2>Main Functions of Autonomous Navigation</h2>
+
+        <p>
+            Autonomous navigation is a coordinated process. Different
+            subsystems provide information and perform specific tasks
+            before a navigation action is executed.
+        </p>
+
+        <div class="process">
+            <div class="process-step">
+                <span>STAGE 01</span>
+                <strong>Position Estimation</strong>
+            </div>
+            <div class="process-step">
+                <span>STAGE 02</span>
+                <strong>Route Planning</strong>
+            </div>
+            <div class="process-step">
+                <span>STAGE 03</span>
+                <strong>Risk Assessment</strong>
+            </div>
+            <div class="process-step">
+                <span>STAGE 04</span>
+                <strong>Guidance and Control</strong>
+            </div>
+        </div>
+
+        <h3>1. Position Estimation</h3>
+        <p>
+            The system estimates the ship's current position, heading,
+            speed, and movement. GNSS, inertial sensors, radar observations,
+            and other navigation sources may contribute to this estimate.
+        </p>
+
+        <h3>2. Route Planning</h3>
+        <p>
+            The system determines a route from the departure point to
+            the destination. It considers navigable waters, charted
+            hazards, restricted zones, and voyage requirements.
+        </p>
+
+        <h3>3. Situational Assessment</h3>
+        <p>
+            The ship evaluates nearby traffic, potential obstacles,
+            weather, and other factors that may affect safe navigation.
+        </p>
+
+        <h3>4. Decision-Making</h3>
+        <p>
+            The decision-making system evaluates possible actions,
+            such as maintaining course, reducing speed, or altering
+            course when appropriate.
+        </p>
+
+        <h3>5. Guidance and Control</h3>
+        <p>
+            Guidance determines the desired movement, while control
+            systems translate the required movement into steering,
+            propulsion, and other vessel commands.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Important distinction:</strong> Route planning
+                establishes a suitable voyage path. Collision avoidance
+                responds to immediate or developing hazards. Both are
+                necessary, but they operate at different levels and
+                time scales.
+            </p>
+        </div>
+    </section>
+
+    <section id="route-planning">
+        <div class="section-label">03 / Route Planning</div>
+        <h2>Autonomous Route Planning</h2>
+
+        <p>
+            Route planning is the process of selecting a path between
+            two or more geographic locations. An autonomous ship must
+            select a route that is not only efficient but also suitable
+            for its physical characteristics and the current maritime
+            environment.
+        </p>
+
+        <h3>Factors Affecting Route Planning</h3>
+
+        <div class="grid">
+            <article class="content-card">
+                <div class="card-number">FACTOR 01</div>
+                <h3>Geographical Constraints</h3>
+                <p>
+                    Coastlines, islands, narrow channels, shallow waters,
+                    and other geographical features limit where a ship
+                    can safely navigate.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">FACTOR 02</div>
+                <h3>Electronic Navigational Charts</h3>
+                <p>
+                    Electronic charts provide information about depths,
+                    navigational marks, restricted areas, and other
+                    charted features used during route planning.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">FACTOR 03</div>
+                <h3>Weather and Sea Conditions</h3>
+                <p>
+                    Wind, waves, currents, visibility, and storms can
+                    influence route suitability, speed, fuel consumption,
+                    and vessel safety.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">FACTOR 04</div>
+                <h3>Vessel Characteristics</h3>
+                <p>
+                    Draft, length, beam, turning ability, stopping
+                    distance, propulsion performance, and manoeuvring
+                    limitations affect which routes are appropriate.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">FACTOR 05</div>
+                <h3>Maritime Traffic</h3>
+                <p>
+                    Traffic separation schemes, shipping lanes, port
+                    approaches, and nearby vessels must be considered
+                    during route selection.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">FACTOR 06</div>
+                <h3>Operational Requirements</h3>
+                <p>
+                    Arrival time, fuel efficiency, cargo requirements,
+                    port instructions, and voyage priorities may influence
+                    the final route.
+                </p>
+            </article>
+        </div>
+
+        <h3>Global and Local Route Planning</h3>
+
+        <p>
+            <strong>Global Route Planning:</strong> Determines a broad
+            route from the departure location to the destination. It
+            considers large-scale geographical and navigational constraints.
+        </p>
+
+        <p>
+            <strong>Local Route Planning:</strong> Adjusts the ship's
+            immediate path to respond to nearby vessels, obstacles,
+            changing conditions, and short-term safety requirements.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Example:</strong> A global planner may select a
+                route through a designated shipping corridor. A local
+                planner may then recommend a safe adjustment because
+                another vessel is approaching.
+            </p>
+        </div>
+    </section>
+
+    <section id="planning-algorithms">
+        <div class="section-label">04 / Navigation Algorithms</div>
+        <h2>Algorithms Used in Route Planning</h2>
+
+        <p>
+            Computer algorithms help autonomous vessels search for
+            suitable paths and evaluate alternative navigation options.
+            Different algorithms are appropriate for different planning
+            problems and operating environments.
+        </p>
+
+        <div class="grid">
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 01</div>
+                <h3>Dijkstra's Algorithm</h3>
+                <p>
+                    Dijkstra's algorithm finds a shortest path in a graph
+                    with non-negative edge costs. It can be used when
+                    navigable areas are represented as connected nodes
+                    and route segments.
+                </p>
+                <p>
+                    Its result depends on how the graph and travel costs
+                    are defined. The shortest graph path is not automatically
+                    the safest maritime route.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 02</div>
+                <h3>A* Search</h3>
+                <p>
+                    A* combines the cost already incurred with a heuristic
+                    estimate of the remaining cost. It can search for
+                    efficient paths through a map or planning graph.
+                </p>
+                <p>
+                    Its performance and guarantees depend on the graph,
+                    cost function, and properties of the heuristic.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 03</div>
+                <h3>Artificial Potential Fields</h3>
+                <p>
+                    This method represents the destination as an attractive
+                    influence and obstacles as repulsive influences.
+                    The combined field guides the ship toward a candidate
+                    path.
+                </p>
+                <p>
+                    It can be useful for local planning, but may suffer
+                    from local minima and oscillatory behaviour.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 04</div>
+                <h3>Model Predictive Control (MPC)</h3>
+                <p>
+                    MPC repeatedly predicts future vessel behaviour over
+                    a limited time horizon and optimizes a sequence of
+                    control actions.
+                </p>
+                <p>
+                    It can account for constraints and vessel dynamics,
+                    but depends on model quality, computation, and
+                    reliable input information.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 05</div>
+                <h3>Sampling-Based Planning</h3>
+                <p>
+                    Methods such as rapidly exploring random trees
+                    (RRT) explore possible paths by sampling points
+                    in a planning space.
+                </p>
+                <p>
+                    They can be useful in complex spaces, although
+                    the generated path may require smoothing and
+                    additional safety validation.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">ALGORITHM 06</div>
+                <h3>Learning-Based Planning</h3>
+                <p>
+                    Machine learning and reinforcement learning
+                    approaches can learn navigation policies from
+                    data or simulated experience.
+                </p>
+                <p>
+                    Their use in safety-critical navigation requires
+                    careful validation, robustness testing, and
+                    appropriate safeguards.
+                </p>
+            </article>
+        </div>
+
+        <div class="note warning">
+            <p>
+                <strong>Engineering note:</strong> No single algorithm
+                solves every maritime navigation problem. Practical
+                systems may combine graph search, optimization,
+                prediction, control, and rule-based safety constraints.
+            </p>
+        </div>
+    </section>
+
+    <section id="collision-risk">
+        <div class="section-label">05 / Collision Risk Assessment</div>
+        <h2>Understanding Collision Risk</h2>
+
+        <p>
+            Collision avoidance begins with identifying whether another
+            vessel or obstacle may create a dangerous situation.
+            The system must evaluate relative position, relative motion,
+            distance, time, and the limitations of its own vessel.
+        </p>
+
+        <h3>Relative Motion</h3>
+        <p>
+            Relative motion describes how one vessel moves in relation
+            to another. Instead of considering only the absolute speed
+            of each vessel, the system examines their combined movement
+            and how their separation changes over time.
+        </p>
+
+        <h3>Closest Point of Approach (CPA)</h3>
+        <p>
+            Closest Point of Approach is the predicted minimum separation
+            between two moving vessels if their current courses and
+            speeds remain unchanged.
+        </p>
+
+        <h3>Time to Closest Point of Approach (TCPA)</h3>
+        <p>
+            Time to Closest Point of Approach estimates how long it
+            will take to reach that predicted minimum separation,
+            assuming the current relative motion continues.
+        </p>
+
+        <div class="formula-box">
+            <h3>Basic Relative Motion Model</h3>
+            <span class="formula">r(t) = r₀ + vᵣt</span>
+            <p class="formula-caption">
+                r₀ = initial relative position; vᵣ = relative velocity;
+                t = elapsed time.
+            </p>
+        </div>
+
+        <p>
+            For a simplified constant-velocity model, the time of
+            closest approach can be estimated using:
+        </p>
+
+        <div class="formula-box">
+            <span class="formula">tCPA = − (r₀ · vᵣ) / |vᵣ|²</span>
+            <p class="formula-caption">
+                This expression assumes non-zero relative velocity and
+                a constant-velocity model.
+            </p>
+        </div>
+
+        <p>
+            The predicted relative position at that time can be used
+            to estimate the closest separation:
+        </p>
+
+        <div class="formula-box">
+            <span class="formula">dCPA = |r₀ + vᵣ × tCPA|</span>
+            <p class="formula-caption">
+                The expression represents the magnitude of the predicted
+                relative position at closest approach.
+            </p>
+        </div>
+
+        <h3>How CPA and TCPA Are Used</h3>
+        <ul class="bullet-list">
+            <li>CPA estimates the predicted minimum separation.</li>
+            <li>TCPA estimates when that separation may occur.</li>
+            <li>Small CPA values may indicate a potentially close encounter.</li>
+            <li>Short TCPA values may indicate that a situation is developing quickly.</li>
+            <li>Both values must be interpreted with the operational context and uncertainty.</li>
+        </ul>
+
+        <div class="note warning">
+            <p>
+                <strong>Critical limitation:</strong> CPA and TCPA are
+                predictions based on assumptions about movement. They
+                do not independently determine whether a collision is
+                certain, nor do they replace COLREGs, good seamanship,
+                or a complete risk assessment. A vessel may change
+                course or speed, and sensor estimates may be uncertain.
+            </p>
+        </div>
+    </section>
+
+    <section id="colregs">
+        <div class="section-label">06 / Maritime Regulations</div>
+        <h2>COLREGs and Autonomous Ships</h2>
+
+        <p>
+            The International Regulations for Preventing Collisions
+            at Sea, commonly known as COLREGs, establish internationally
+            recognized rules intended to prevent collisions between vessels.
+        </p>
+
+        <p>
+            Autonomous navigation systems must be designed to support
+            compliance with applicable collision-prevention requirements.
+            This is a complex engineering challenge because the rules
+            involve observation, judgement, interpretation, and appropriate
+            action in changing circumstances.
+        </p>
+
+        <h3>Important COLREG Rules</h3>
+
+        <div class="grid">
+            <article class="content-card">
+                <div class="card-number">RULE 05</div>
+                <h3>Look-out</h3>
+                <p>
+                    Requires a proper look-out by sight and hearing,
+                    as well as all available appropriate means.
+                    Autonomous systems must support effective
+                    observation of the surroundings.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULE 06</div>
+                <h3>Safe Speed</h3>
+                <p>
+                    Requires vessels to proceed at a safe speed so
+                    that appropriate and effective action can be taken
+                    to avoid collision and the vessel can be stopped
+                    within an appropriate distance.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULE 07</div>
+                <h3>Risk of Collision</h3>
+                <p>
+                    Requires appropriate means to determine whether
+                    a risk of collision exists. Systems must not rely
+                    on incomplete or misleading observations.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULE 08</div>
+                <h3>Action to Avoid Collision</h3>
+                <p>
+                    Describes action taken to avoid collision.
+                    Such action should be positive, made in ample
+                    time, and carried out with due regard to
+                    the requirements of the rules.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULES 13–15</div>
+                <h3>Encounter Situations</h3>
+                <p>
+                    These rules address overtaking, head-on situations,
+                    and crossing situations, including the responsibilities
+                    of vessels in those encounters.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULES 16–17</div>
+                <h3>Give-Way and Stand-On Actions</h3>
+                <p>
+                    These rules describe the actions expected from
+                    give-way and stand-on vessels, subject to the
+                    circumstances and other applicable rules.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULE 18</div>
+                <h3>Responsibilities Between Vessels</h3>
+                <p>
+                    Establishes responsibilities between different
+                    vessel categories and their relative obligations
+                    under the collision regulations.
+                </p>
+            </article>
+
+            <article class="content-card">
+                <div class="card-number">RULE 19</div>
+                <h3>Restricted Visibility</h3>
+                <p>
+                    Addresses conduct of vessels in or near areas
+                    of restricted visibility when vessels are not
+                    in sight of one another.
+                </p>
+            </article>
+        </div>
+
+        <h3>Common Encounter Types</h3>
+
+        <p>
+            <strong>Head-On Situation:</strong> Two power-driven vessels
+            meet on reciprocal or nearly reciprocal courses, creating
+            a risk of collision. Rule 14 addresses this situation.
+        </p>
+
+        <p>
+            <strong>Crossing Situation:</strong> Two power-driven vessels
+            cross in a way that may create a risk of collision. Rule 15
+            establishes the give-way responsibility in the applicable
+            circumstances.
+        </p>
+
+        <p>
+            <strong>Overtaking Situation:</strong> A vessel approaches
+            another from a direction more than 22.5 degrees abaft
+            its beam. Rule 13 addresses the overtaking vessel's
+            responsibility.
+        </p>
+
+        <div class="note warning">
+            <p>
+                <strong>Important legal distinction:</strong> These
+                descriptions are introductory summaries, not a substitute
+                for the full wording and interpretation of COLREGs.
+                The rules contain detailed definitions, exceptions,
+                responsibilities, and requirements that must be considered
+                in actual navigation.
+            </p>
+        </div>
+    </section>
+
+    <section id="avoidance">
+        <div class="section-label">07 / Collision Avoidance</div>
+        <h2>Collision Avoidance Strategies</h2>
+
+        <p>
+            Collision avoidance is the process of selecting and carrying
+            out appropriate actions to reduce the risk of collision.
+            The system must evaluate the situation, consider available
+            manoeuvres, and determine whether an action is safe and
+            operationally appropriate.
+        </p>
+
+        <h3>1. Course Alteration</h3>
+        <p>
+            Changing the vessel's heading may create greater separation
+            from another vessel or obstacle. The direction and timing
+            of the alteration must be evaluated in relation to the
+            encounter situation and applicable rules.
+        </p>
+
+        <h3>2. Speed Adjustment</h3>
+        <p>
+            Reducing or otherwise adjusting speed can change the timing
+            and geometry of an encounter. It may also improve the
+            vessel's ability to respond to developing hazards.
+        </p>
+
+        <h3>3. Combined Manoeuvres</h3>
+        <p>
+            Some situations may require coordinated changes in course
+            and speed. The system must evaluate the resulting movement
+            rather than considering each adjustment in isolation.
+        </p>
+
+        <h3>4. Replanning the Local Route</h3>
+        <p>
+            A local planner may generate an alternative path around
+            a detected obstacle while keeping the overall voyage
+            objective in view.
+        </p>
+
+        <h3>5. Monitoring the Manoeuvre</h3>
+        <p>
+            After a manoeuvre is initiated, the system must monitor
+            the resulting motion and reassess the situation. A
+            previously suitable action may become insufficient
+            if another vessel changes course or new information appears.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Key principle:</strong> Avoidance is not complete
+                merely because a command has been issued. The system
+                must verify the vessel's actual response and continue
+                monitoring the developing situation.
+            </p>
+        </div>
+    </section>
+
+    <section id="decision-making">
+        <div class="section-label">08 / Intelligent Decision-Making</div>
+        <h2>How Does an Autonomous Ship Choose an Action?</h2>
+
+        <p>
+            An autonomous navigation system may evaluate several
+            possible actions before selecting one. The decision process
+            should consider safety, regulatory requirements, vessel
+            dynamics, environmental conditions, and the reliability
+            of available information.
+        </p>
+
+        <h3>Decision-Making Inputs</h3>
+        <ul class="bullet-list">
+            <li>Own-ship position, heading, speed, and manoeuvring state.</li>
+            <li>Detected target positions and estimated movement.</li>
+            <li>CPA and TCPA estimates with their uncertainty.</li>
+            <li>Electronic chart information and navigational restrictions.</li>
+            <li>Weather, visibility, wind, waves, and currents.</li>
+            <li>Applicable COLREGs responsibilities and operational instructions.</li>
+            <li>Propulsion, steering, and control-system limitations.</li>
+        </ul>
+
+        <h3>Possible Decision Options</h3>
+        <ul class="bullet-list">
+            <li>Maintain the current course and speed when appropriate.</li>
+            <li>Alter course in accordance with the developing situation.</li>
+            <li>Adjust speed to improve the safety of the encounter.</li>
+            <li>Generate an alternative local route.</li>
+            <li>Request remote operator intervention when required by the system design.</li>
+            <li>Enter a predefined safe state if reliable navigation cannot be maintained.</li>
+        </ul>
+
+        <h3>Safety Constraints</h3>
+        <p>
+            A navigation algorithm should not optimize only for speed,
+            distance, or fuel consumption. Safety-related constraints
+            must limit the actions that the system is allowed to select.
+        </p>
+
+        <p>
+            These constraints may include minimum safe separation
+            requirements, navigable-water boundaries, vessel turning
+            limitations, speed restrictions, and operational procedures.
+            Their exact implementation depends on the vessel and
+            its approved operating concept.
+        </p>
+
+        <div class="note warning">
+            <p>
+                <strong>Critical issue:</strong> A mathematically optimal
+                route is not necessarily a legally compliant or
+                operationally safe route. Navigation algorithms must
+                be evaluated against maritime rules and real vessel
+                behaviour, not just computational performance.
+            </p>
+        </div>
+    </section>
+
+    <section id="practical-example">
+        <div class="section-label">09 / Practical Application</div>
+        <h2>Practical Scenario: Two Vessels Approaching Each Other</h2>
+
+        <p>
+            Imagine an autonomous cargo ship navigating through a busy
+            shipping area. Its perception system detects another vessel
+            approaching from a direction that may create a collision risk.
+        </p>
+
+        <div class="scenario">
+            <h3>Navigation System Response</h3>
+            <ol>
+                <li>
+                    Sensors detect the approaching vessel and estimate
+                    its position, course, and speed.
+                </li>
+                <li>
+                    The tracking system updates the target's movement
+                    using successive observations.
+                </li>
+                <li>
+                    The navigation system estimates relative motion,
+                    CPA, and TCPA.
+                </li>
+                <li>
+                    The system evaluates whether a risk of collision
+                    exists and identifies the applicable encounter
+                    situation.
+                </li>
+                <li>
+                    It considers the relevant COLREGs requirements
+                    and the manoeuvring capabilities of both vessels.
+                </li>
+                <li>
+                    Candidate actions are evaluated, including
+                    course alteration, speed adjustment, or a
+                    combination of actions.
+                </li>
+                <li>
+                    A suitable action is selected and sent to the
+                    guidance and control systems.
+                </li>
+                <li>
+                    The vessel's actual movement is monitored.
+                    The system reassesses the situation as new
+                    information becomes available.
+                </li>
+            </ol>
+        </div>
+
+        <p>
+            If the situation becomes uncertain or the system cannot
+            maintain reliable awareness, the vessel may need to
+            follow its predefined contingency procedures and
+            involve a remote operator when required.
+        </p>
+
+        <div class="note">
+            <p>
+                <strong>Learning point:</strong> Collision avoidance
+                is a continuous process. Detecting another vessel,
+                calculating a predicted closest approach, selecting
+                an action, and verifying the result are all necessary
+                parts of a complete response.
+            </p>
+        </div>
+    </section>
+
+    <section id="challenges">
+        <div class="section-label">10 / Engineering Challenges</div>
+        <h2>Challenges in Autonomous Navigation</h2>
+
+        <h3>1. Complex Maritime Traffic</h3>
+        <p>
+            Busy ports, narrow channels, fishing areas, and shipping
+            lanes may contain many vessels moving in different
+            directions and at different speeds.
+        </p>
+
+        <h3>2. Unpredictable Human Behaviour</h3>
+        <p>
+            Other vessels may change course or speed unexpectedly.
+            Their actions may be influenced by operational needs,
+            weather, local conditions, or human judgement.
+        </p>
+
+        <h3>3. Environmental Uncertainty</h3>
+        <p>
+            Wind, waves, currents, and restricted visibility can
+            affect both vessel motion and the accuracy of navigation
+            information.
+        </p>
+
+        <h3>4. Vessel Manoeuvrability</h3>
+        <p>
+            Large ships may require considerable distance and time
+            to change course or reduce speed. Navigation systems
+            must account for real physical limitations.
+        </p>
+
+        <h3>5. COLREGs Interpretation</h3>
+        <p>
+            Translating collision regulations into software is
+            difficult because encounter situations may be ambiguous
+            or change while a manoeuvre is being carried out.
+        </p>
+
+        <h3>6. Sensor and Positioning Errors</h3>
+        <p>
+            Inaccurate position estimates, delayed measurements,
+            missed detections, or incorrect target tracking can
+            affect collision-risk calculations.
+        </p>
+
+        <h3>7. Verification and Validation</h3>
+        <p>
+            Systems must be tested under many different conditions,
+            including rare and difficult situations. Simulation
+            alone cannot establish that a system is safe in every
+            real-world operating environment.
+        </p>
+
+        <h3>8. Human Oversight and Responsibility</h3>
+        <p>
+            The role of onboard personnel and remote operators
+            depends on the vessel's operating model and applicable
+            requirements. Clear procedures are needed for
+            intervention, communication, and emergency response.
+        </p>
+    </section>
+
+    <section id="future">
+        <div class="section-label">11 / Future Developments</div>
+        <h2>The Future of Autonomous Navigation</h2>
+
+        <h3>AI-Assisted Route Optimization</h3>
+        <p>
+            Advanced algorithms may help evaluate large numbers of
+            route alternatives while considering weather, traffic,
+            fuel efficiency, and navigational constraints.
+        </p>
+
+        <h3>Predictive Collision Avoidance</h3>
+        <p>
+            Future systems may improve the prediction of other
+            vessels' movements and evaluate multiple possible
+            future encounter scenarios.
+        </p>
+
+        <h3>Cooperative Navigation</h3>
+        <p>
+            Better information exchange between vessels and
+            shore-based services may support broader traffic
+            awareness and coordinated navigation.
+        </p>
+
+        <h3>Digital Twins and Simulation</h3>
+        <p>
+            Digital models of ships and maritime environments
+            can help engineers test navigation algorithms,
+            investigate failure scenarios, and evaluate
+            performance before deployment.
+        </p>
+
+        <h3>Explainable Navigation Decisions</h3>
+        <p>
+            More transparent decision systems may help remote
+            operators and safety assessors understand why a
+            navigation action was selected and what information
+            influenced the decision.
+        </p>
+    </section>
+
+    <section id="takeaways">
+        <div class="section-label">12 / Key Takeaways</div>
+        <h2>What You Should Remember</h2>
+
+        <div class="takeaways">
+            <div class="takeaway">Autonomous navigation combines positioning, planning, decision-making, guidance, and control.</div>
+            <div class="takeaway">Route planning selects a suitable path while considering geographical and operational constraints.</div>
+            <div class="takeaway">Global planning and local planning solve different navigation problems.</div>
+            <div class="takeaway">Algorithms such as A*, Dijkstra, and MPC can support navigation planning.</div>
+            <div class="takeaway">CPA estimates predicted minimum separation, while TCPA estimates the time to reach it.</div>
+            <div class="takeaway">COLREGs provide essential international collision-prevention requirements.</div>
+            <div class="takeaway">Collision avoidance requires continuous assessment and monitoring after a manoeuvre.</div>
+            <div class="takeaway">A mathematically optimal action is not automatically safe or compliant.</div>
+            <div class="takeaway">Sensor uncertainty and vessel manoeuvrability must be considered.</div>
+            <div class="takeaway">Testing, validation, and appropriate human oversight are essential to safe operation.</div>
+        </div>
+    </section>
+
+    <section id="quiz">
+        <div class="section-label">Knowledge Assessment</div>
+        <h2>Test Your Understanding</h2>
+        <p class="quiz-intro">
+            Answer the following 10 questions based on the complete topic.
+            Submit your answers to receive your score, corrections, and explanations.
+        </p>
+
+        <form id="quizForm">
+
+            <div class="question" data-answer="b" data-explanation="Autonomous navigation uses sensing, planning, decision-making, and control to guide a vessel safely toward its destination.">
+                <div class="question-number">QUESTION 01</div>
+                <h3>What is the main objective of autonomous navigation?</h3>
+                <label class="option"><input type="radio" name="q1" value="a"> To maximize speed regardless of safety</label>
+                <label class="option"><input type="radio" name="q1" value="b"> To navigate safely while responding to changing conditions</label>
+                <label class="option"><input type="radio" name="q1" value="c"> To eliminate all maritime regulations</label>
+                <label class="option"><input type="radio" name="q1" value="d"> To replace every vessel sensor with a camera</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="Global planning determines a broad voyage route, while local planning adjusts the immediate path to respond to nearby hazards and changing conditions.">
+                <div class="question-number">QUESTION 02</div>
+                <h3>What is the main difference between global and local route planning?</h3>
+                <label class="option"><input type="radio" name="q2" value="a"> Global planning only controls the engine</label>
+                <label class="option"><input type="radio" name="q2" value="b"> Local planning only calculates fuel prices</label>
+                <label class="option"><input type="radio" name="q2" value="c"> Global planning selects the broad voyage route, while local planning handles immediate adjustments</label>
+                <label class="option"><input type="radio" name="q2" value="d"> They are exactly the same process</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="a" data-explanation="A* uses the cost already incurred and a heuristic estimate of the remaining cost to search for a path.">
+                <div class="question-number">QUESTION 03</div>
+                <h3>Which algorithm combines accumulated path cost with a heuristic estimate?</h3>
+                <label class="option"><input type="radio" name="q3" value="a"> A* Search</label>
+                <label class="option"><input type="radio" name="q3" value="b"> AIS</label>
+                <label class="option"><input type="radio" name="q3" value="c"> GNSS</label>
+                <label class="option"><input type="radio" name="q3" value="d"> Echo sounding</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="d" data-explanation="CPA estimates the predicted minimum separation between two vessels if their current relative motion continues.">
+                <div class="question-number">QUESTION 04</div>
+                <h3>What does Closest Point of Approach (CPA) estimate?</h3>
+                <label class="option"><input type="radio" name="q4" value="a"> The ship's fuel consumption</label>
+                <label class="option"><input type="radio" name="q4" value="b"> The destination port's water depth</label>
+                <label class="option"><input type="radio" name="q4" value="c"> The time required to start an engine</label>
+                <label class="option"><input type="radio" name="q4" value="d"> The predicted minimum separation between two moving vessels</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="b" data-explanation="TCPA estimates how long it will take to reach the predicted closest point of approach under the assumed relative motion.">
+                <div class="question-number">QUESTION 05</div>
+                <h3>What does TCPA represent?</h3>
+                <label class="option"><input type="radio" name="q5" value="a"> The ship's total cargo capacity</label>
+                <label class="option"><input type="radio" name="q5" value="b"> The estimated time until closest approach</label>
+                <label class="option"><input type="radio" name="q5" value="c"> The maximum radar range</label>
+                <label class="option"><input type="radio" name="q5" value="d"> The vessel's turning radius only</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="COLREGs are the International Regulations for Preventing Collisions at Sea. They establish rules intended to prevent collisions between vessels.">
+                <div class="question-number">QUESTION 06</div>
+                <h3>What is the purpose of COLREGs?</h3>
+                <label class="option"><input type="radio" name="q6" value="a"> To regulate international cargo prices</label>
+                <label class="option"><input type="radio" name="q6" value="b"> To establish satellite communication frequencies</label>
+                <label class="option"><input type="radio" name="q6" value="c"> To establish international collision-prevention rules for vessels</label>
+                <label class="option"><input type="radio" name="q6" value="d"> To control shipbuilding materials</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="a" data-explanation="Rule 07 addresses the determination of whether a risk of collision exists, using appropriate available means.">
+                <div class="question-number">QUESTION 07</div>
+                <h3>Which COLREG rule specifically addresses risk of collision?</h3>
+                <label class="option"><input type="radio" name="q7" value="a"> Rule 07</label>
+                <label class="option"><input type="radio" name="q7" value="b"> Rule 02</label>
+                <label class="option"><input type="radio" name="q7" value="c"> Rule 25</label>
+                <label class="option"><input type="radio" name="q7" value="d"> Rule 35</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="d" data-explanation="Collision avoidance may involve course alteration, speed adjustment, or combined manoeuvres, depending on the situation and applicable rules.">
+                <div class="question-number">QUESTION 08</div>
+                <h3>Which of the following may be used as a collision avoidance action?</h3>
+                <label class="option"><input type="radio" name="q8" value="a"> Ignoring detected targets</label>
+                <label class="option"><input type="radio" name="q8" value="b"> Disabling all navigation sensors</label>
+                <label class="option"><input type="radio" name="q8" value="c"> Maintaining maximum speed in every situation</label>
+                <label class="option"><input type="radio" name="q8" value="d"> Course alteration or speed adjustment when appropriate</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="b" data-explanation="A mathematically optimal route may still be unsafe or non-compliant. Safety constraints and applicable maritime regulations must be considered.">
+                <div class="question-number">QUESTION 09</div>
+                <h3>Why is the shortest calculated route not always the best maritime route?</h3>
+                <label class="option"><input type="radio" name="q9" value="a"> Because shorter routes always use more fuel</label>
+                <label class="option"><input type="radio" name="q9" value="b"> Because safety, regulations, water depth, traffic, and vessel limitations must also be considered</label>
+                <label class="option"><input type="radio" name="q9" value="c"> Because route planning does not use geographical information</label>
+                <label class="option"><input type="radio" name="q9" value="d"> Because autonomous ships cannot calculate distances</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="question" data-answer="c" data-explanation="After a manoeuvre, the system must monitor the vessel's actual response and reassess the situation using updated information.">
+                <div class="question-number">QUESTION 10</div>
+                <h3>What should an autonomous ship do after initiating a collision avoidance manoeuvre?</h3>
+                <label class="option"><input type="radio" name="q10" value="a"> Stop monitoring the surrounding vessels</label>
+                <label class="option"><input type="radio" name="q10" value="b"> Assume the collision risk has disappeared</label>
+                <label class="option"><input type="radio" name="q10" value="c"> Monitor the actual movement and reassess the situation</label>
+                <label class="option"><input type="radio" name="q10" value="d"> Ignore new sensor information</label>
+                <div class="explanation"></div>
+            </div>
+
+            <div class="quiz-actions">
+                <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                <button type="button" class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+            </div>
+
+        </form>
+
+        <div id="result" aria-live="polite">
+            <h3 id="scoreTitle"></h3>
+            <p id="scoreText"></p>
+            <p id="scoreFeedback"></p>
+        </div>
+    </section>
+
+    <section id="references">
+        <div class="section-label">Technical Resources</div>
+        <h2>References and Further Reading</h2>
+
+        <p>
+            The following official and technical resources provide
+            further information about collision-prevention regulations,
+            autonomous shipping, and maritime navigation.
+        </p>
+
+        <ul class="references">
+            <li>
+                <strong>1. International Maritime Organization — Convention on the International Regulations for Preventing Collisions at Sea (COLREG)</strong><br>
+                Official information about the international collision-prevention convention.
+                <br>
+                <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener noreferrer">Visit the IMO COLREG page →</a>
+            </li>
+
+            <li>
+                <strong>2. International Maritime Organization — Autonomous Shipping</strong><br>
+                Official information about Maritime Autonomous Surface Ships and regulatory developments.
+                <br>
+                <a href="https://www.imo.org/en/MediaCentre/HotTopics/Pages/Autonomous-shipping.aspx" target="_blank" rel="noopener noreferrer">Explore IMO autonomous shipping →</a>
+            </li>
+
+            <li>
+                <strong>3. International Maritime Organization — Maritime Safety</strong><br>
+                Information about international maritime safety work and related conventions.
+                <br>
+                <a href="https://www.imo.org/en/OurWork/Safety/Pages/Default.aspx" target="_blank" rel="noopener noreferrer">Explore maritime safety →</a>
+            </li>
+
+            <li>
+                <strong>4. International Association of Marine Aids to Navigation and Lighthouse Authorities (IALA)</strong><br>
+                Technical information and guidance related to marine aids to navigation and vessel traffic services.
+                <br>
+                <a href="https://www.iala-aism.org/" target="_blank" rel="noopener noreferrer">Visit the IALA website →</a>
+            </li>
+
+            <li>
+                <strong>5. U.S. Coast Guard — Navigation Rules</strong><br>
+                Reference material for understanding navigation rules and collision-prevention practices.
+                <br>
+                <a href="https://www.navcen.uscg.gov/navigation-rules-amalgamated" target="_blank" rel="noopener noreferrer">Read the navigation rules →</a>
+            </li>
+        </ul>
+
+        <div class="note">
+            <p>
+                <strong>Study recommendation:</strong> Review the differences
+                between route planning and collision avoidance, understand
+                CPA and TCPA, and study the relevant COLREGs rules.
+                Pay particular attention to how an autonomous system
+                must monitor and reassess its actions.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    DESIGNED &amp; DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong>
+    <p style="margin-top: 9px; font-size: 10px; letter-spacing: 1px;">
+        MARITERRA — MARITIME KNOWLEDGE &amp; TECHNOLOGY
+    </p>
+</footer>
+
+<script>
+    function submitQuiz() {
+        const questions = document.querySelectorAll(".question");
+        let score = 0;
+        let unanswered = 0;
+
+        questions.forEach((question, index) => {
+            const correctAnswer = question.dataset.answer;
+            const selected = question.querySelector(
+                `input[name="q${index + 1}"]:checked`
+            );
+
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach(option => {
+                option.classList.remove("correct", "incorrect");
+            });
+
+            const correctOption = question.querySelector(
+                `input[value="${correctAnswer}"]`
+            ).closest(".option");
+
+            correctOption.classList.add("correct");
+
+            if (!selected) {
+                unanswered++;
+            } else if (selected.value === correctAnswer) {
+                score++;
+            } else {
+                selected.closest(".option").classList.add("incorrect");
+            }
+
+            explanation.textContent =
+                "Correct answer: " +
+                correctOption.textContent.trim() +
+                ". " +
+                question.dataset.explanation;
+
+            explanation.classList.add("show");
+        });
+
+        const percentage = Math.round((score / questions.length) * 100);
+        const result = document.getElementById("result");
+
+        document.getElementById("scoreTitle").textContent =
+            `Your Score: ${score} / ${questions.length}`;
+
+        document.getElementById("scoreText").textContent =
+            `Final Result: ${percentage}%`;
+
+        let feedback = "";
+
+        if (percentage >= 90) {
+            feedback = "Excellent! You have a strong understanding of this topic.";
+        } else if (percentage >= 70) {
+            feedback = "Good work! Review the explanations to strengthen your knowledge.";
+        } else if (percentage >= 50) {
+            feedback = "Fair attempt. Revisit the technical sections and try again.";
+        } else {
+            feedback = "You need more revision. Study the topic again before retaking the quiz.";
+        }
+
+        if (unanswered > 0) {
+            feedback += ` You left ${unanswered} question(s) unanswered; unanswered questions count as incorrect.`;
+        }
+
+        document.getElementById("scoreFeedback").textContent = feedback;
+        result.style.display = "block";
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function resetQuiz() {
+        document.getElementById("quizForm").reset();
+
+        document.querySelectorAll(".option").forEach(option => {
+            option.classList.remove("correct", "incorrect");
+        });
+
+        document.querySelectorAll(".explanation").forEach(explanation => {
+            explanation.textContent = "";
+            explanation.classList.remove("show");
+        });
+
+        document.getElementById("result").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

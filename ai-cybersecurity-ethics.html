@@ -1,0 +1,3979 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070816">
+
+<title>Cybersecurity, Ethics & Future Challenges | MARITERRA</title>
+
+<meta name="description" content="Explore maritime cybersecurity, AI threats, ethical artificial intelligence, cyber resilience, and the future of secure maritime technology.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --bg:#070816;
+    --bg2:#0b0c20;
+    --panel:#111229;
+    --panel2:#191a38;
+    --purple:#9333ea;
+    --purple2:#7c3aed;
+    --light-purple:#c4b5fd;
+    --blue:#38bdf8;
+    --cyan:#67e8f9;
+    --text:#f5f2ff;
+    --muted:#a7a5c2;
+    --line:rgba(196,181,253,.16);
+    --green:#4ade80;
+    --red:#fb7185;
+    --amber:#fbbf24;
+    --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.75;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
+    background:
+        radial-gradient(circle at 15% 10%,rgba(147,51,234,.12),transparent 28%),
+        radial-gradient(circle at 90% 55%,rgba(56,189,248,.07),transparent 28%),
+        radial-gradient(circle at 45% 100%,rgba(147,51,234,.08),transparent 35%);
+}
+
+a{
+    color:var(--light-purple);
+    text-decoration:none;
+}
+
+button,input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+::selection{
+    background:var(--purple);
+    color:white;
+}
+
+/* =========================
+   READING PROGRESS
+========================= */
+
+.reading-progress{
+    position:fixed;
+    top:0;
+    left:0;
+    width:0%;
+    height:3px;
+    background:linear-gradient(90deg,var(--purple),var(--blue),var(--light-purple));
+    z-index:1000;
+    box-shadow:0 0 15px var(--purple);
+}
+
+/* =========================
+   BACKGROUND EFFECTS
+========================= */
+
+.ambient-light{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.13;
+    pointer-events:none;
+    z-index:-1;
+    animation:ambientMove 14s ease-in-out infinite alternate;
+}
+
+.ambient-one{
+    background:var(--purple);
+    top:15%;
+    left:-180px;
+}
+
+.ambient-two{
+    background:var(--blue);
+    right:-180px;
+    top:55%;
+    animation-delay:3s;
+}
+
+@keyframes ambientMove{
+    from{transform:translate(0,0) scale(1)}
+    to{transform:translate(100px,80px) scale(1.25)}
+}
+
+.particles{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
+    overflow:hidden;
+}
+
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:var(--light-purple);
+    border-radius:50%;
+    opacity:.35;
+    animation:particleFloat linear infinite;
+}
+
+@keyframes particleFloat{
+    from{transform:translateY(110vh);opacity:0}
+    15%{opacity:.5}
+    85%{opacity:.4}
+    to{transform:translateY(-10vh);opacity:0}
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 5%;
+    background:rgba(7,8,22,.91);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--line);
+}
+
+.logo{
+    font-family:'Orbitron',sans-serif;
+    font-weight:900;
+    font-size:1.15rem;
+    letter-spacing:3px;
+}
+
+.logo span{
+    color:var(--light-purple);
+    text-shadow:0 0 15px rgba(147,51,234,.7);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.topic-label{
+    color:var(--muted);
+    font-size:.72rem;
+    letter-spacing:2px;
+}
+
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(196,181,253,.35);
+    padding:9px 17px;
+    border-radius:30px;
+    color:white;
+    font-size:.8rem;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:var(--purple);
+    border-color:var(--purple);
+    box-shadow:0 0 25px rgba(147,51,234,.4);
+    transform:translateY(-2px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:650px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:100px 8%;
+    overflow:hidden;
+    isolation:isolate;
+    border-bottom:1px solid var(--line);
+}
+
+.hero-image{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+}
+
+.hero-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    opacity:.38;
+    transform:scale(1.08);
+    animation:heroZoom 22s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom{
+    from{transform:scale(1.08)}
+    to{transform:scale(1.2)}
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:-1;
+    background:
+        linear-gradient(90deg,rgba(7,8,22,.98) 0%,rgba(7,8,22,.82) 48%,rgba(7,8,22,.45) 100%),
+        linear-gradient(0deg,var(--bg),transparent 40%);
+}
+
+.hero-content{
+    max-width:850px;
+    position:relative;
+    z-index:2;
+    animation:heroEnter 1.1s ease both;
+}
+
+@keyframes heroEnter{
+    from{opacity:0;transform:translateY(35px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.eyebrow{
+    color:var(--light-purple);
+    font-size:.75rem;
+    font-weight:800;
+    letter-spacing:4px;
+    text-transform:uppercase;
+}
+
+.hero h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(2.3rem,5.2vw,4.5rem);
+    line-height:1.2;
+    margin:25px 0;
+    letter-spacing:-1px;
+}
+
+.hero h1 span{
+    display:block;
+    color:var(--light-purple);
+    text-shadow:0 0 30px rgba(147,51,234,.65);
+}
+
+.hero-description{
+    color:#d0cde3;
+    font-size:1.04rem;
+    max-width:700px;
+}
+
+.hero-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:30px;
+}
+
+.hero-tags span{
+    border:1px solid rgba(196,181,253,.32);
+    background:rgba(147,51,234,.15);
+    backdrop-filter:blur(10px);
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:.75rem;
+    color:#e8ddff;
+    transition:.3s;
+}
+
+.hero-tags span:hover{
+    background:var(--purple);
+    transform:translateY(-4px);
+}
+
+.hero-actions{
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap;
+    margin-top:35px;
+}
+
+.hero-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:13px 22px;
+    border-radius:9px;
+    font-weight:700;
+    font-size:.85rem;
+    transition:.3s;
+}
+
+.hero-button.primary{
+    background:linear-gradient(100deg,var(--purple),#6d28d9);
+    color:white;
+    box-shadow:0 8px 25px rgba(147,51,234,.25);
+}
+
+.hero-button.secondary{
+    border:1px solid rgba(196,181,253,.4);
+    color:white;
+    background:rgba(255,255,255,.04);
+}
+
+.hero-button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(147,51,234,.35);
+}
+
+.hero-orbit{
+    position:absolute;
+    right:12%;
+    top:25%;
+    width:250px;
+    height:250px;
+    border:1px solid rgba(196,181,253,.3);
+    border-radius:50%;
+    animation:orbitRotate 25s linear infinite;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.hero-orbit::before,
+.hero-orbit::after{
+    content:"";
+    position:absolute;
+    border:1px dashed rgba(56,189,248,.35);
+    border-radius:50%;
+}
+
+.hero-orbit::before{
+    inset:25px;
+}
+
+.hero-orbit::after{
+    inset:55px;
+}
+
+.orbit-core{
+    width:80px;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(147,51,234,.2);
+    border:1px solid var(--purple);
+    box-shadow:0 0 40px rgba(147,51,234,.5);
+    font-size:2rem;
+    animation:corePulse 3s ease-in-out infinite;
+}
+
+@keyframes orbitRotate{
+    to{transform:rotate(360deg)}
+}
+
+@keyframes corePulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.12);box-shadow:0 0 60px rgba(147,51,234,.8)}
+}
+
+/* =========================
+   QUICK STATS
+========================= */
+
+.stats-strip{
+    width:min(1250px,90%);
+    margin:-35px auto 50px;
+    position:relative;
+    z-index:5;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    background:rgba(17,18,41,.92);
+    border:1px solid var(--line);
+    border-radius:18px;
+    backdrop-filter:blur(15px);
+    box-shadow:var(--shadow);
+}
+
+.stat-item{
+    padding:25px 15px;
+    text-align:center;
+    border-right:1px solid var(--line);
+}
+
+.stat-item:last-child{border-right:0}
+
+.stat-number{
+    font-family:'Orbitron';
+    color:var(--light-purple);
+    font-size:1.6rem;
+    font-weight:800;
+}
+
+.stat-label{
+    font-size:.72rem;
+    color:var(--muted);
+    letter-spacing:1px;
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.layout{
+    width:min(1500px,94%);
+    margin:50px auto;
+    display:grid;
+    grid-template-columns:255px minmax(0,1fr);
+    gap:32px;
+}
+
+.sidebar{
+    align-self:start;
+    position:sticky;
+    top:90px;
+    background:rgba(16,17,38,.9);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    max-height:calc(100vh - 110px);
+    overflow:auto;
+    scrollbar-width:thin;
+    scrollbar-color:var(--purple) transparent;
+}
+
+.sidebar h3{
+    font-family:'Orbitron';
+    font-size:.82rem;
+    color:var(--light-purple);
+    letter-spacing:2px;
+    margin-bottom:18px;
+}
+
+.sidebar a{
+    display:block;
+    color:var(--muted);
+    font-size:.78rem;
+    padding:9px 11px;
+    border-radius:8px;
+    margin:3px 0;
+    transition:.25s;
+    border-left:2px solid transparent;
+}
+
+.sidebar a:hover,
+.sidebar a.active{
+    color:white;
+    background:rgba(147,51,234,.15);
+    border-left-color:var(--purple);
+    transform:translateX(4px);
+}
+
+.content{min-width:0}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section{
+    margin-bottom:85px;
+    scroll-margin-top:105px;
+}
+
+.section-heading{
+    margin-bottom:27px;
+}
+
+.section-number{
+    color:var(--light-purple);
+    font-family:'Orbitron';
+    font-size:.72rem;
+    letter-spacing:3px;
+}
+
+.section-heading h2{
+    font-family:'Orbitron';
+    font-size:clamp(1.4rem,3vw,2.15rem);
+    line-height:1.4;
+    margin:10px 0;
+}
+
+.section-heading p{
+    color:var(--muted);
+    max-width:850px;
+}
+
+p{
+    color:#c9c6dc;
+    margin:13px 0;
+}
+
+h3{color:#f1edff}
+
+strong{color:white}
+
+.section-divider{
+    height:1px;
+    background:linear-gradient(90deg,var(--purple),transparent);
+    margin:35px 0;
+    opacity:.45;
+}
+
+/* =========================
+   IMAGE BLOCKS
+========================= */
+
+.feature-image{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    margin:25px 0;
+    min-height:280px;
+    background:var(--panel);
+}
+
+.feature-image img{
+    width:100%;
+    height:340px;
+    object-fit:cover;
+    transition:transform .8s;
+    opacity:.8;
+}
+
+.feature-image:hover img{
+    transform:scale(1.06);
+}
+
+.image-caption{
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:35px 25px 20px;
+    background:linear-gradient(0deg,rgba(7,8,22,.98),transparent);
+}
+
+.image-caption span{
+    color:var(--light-purple);
+    font-size:.7rem;
+    letter-spacing:2px;
+}
+
+.image-caption h3{
+    font-family:'Orbitron';
+    font-size:1.2rem;
+    margin-top:5px;
+}
+
+.image-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin:25px 0;
+}
+
+.image-card{
+    position:relative;
+    height:230px;
+    overflow:hidden;
+    border-radius:15px;
+    border:1px solid var(--line);
+    background:var(--panel);
+}
+
+.image-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:.72;
+    transition:.7s;
+}
+
+.image-card:hover img{
+    transform:scale(1.12);
+    opacity:1;
+}
+
+.image-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg,rgba(7,8,22,.9),transparent 65%);
+}
+
+.image-card span{
+    position:absolute;
+    bottom:15px;
+    left:15px;
+    z-index:2;
+    font-weight:700;
+    font-size:.85rem;
+    color:white;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid-2{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:17px;
+}
+
+.grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:17px;
+}
+
+.info-card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(145deg,rgba(24,24,54,.95),rgba(13,14,32,.95));
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:23px;
+    transition:.35s;
+}
+
+.info-card::before{
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    right:-60px;
+    top:-60px;
+    background:var(--purple);
+    opacity:0;
+    filter:blur(65px);
+    transition:.4s;
+}
+
+.info-card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(196,181,253,.55);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+.info-card:hover::before{opacity:.4}
+
+.card-icon{
+    font-size:1.9rem;
+    margin-bottom:13px;
+    display:inline-block;
+    transition:.4s;
+}
+
+.info-card:hover .card-icon{
+    transform:rotate(-10deg) scale(1.15);
+}
+
+.info-card h3{
+    font-size:1rem;
+    margin-bottom:9px;
+}
+
+.info-card p{
+    font-size:.87rem;
+    margin:0;
+}
+
+.card-tag{
+    display:inline-block;
+    margin-top:15px;
+    font-size:.65rem;
+    color:var(--light-purple);
+    border:1px solid rgba(196,181,253,.2);
+    border-radius:30px;
+    padding:4px 10px;
+}
+
+/* =========================
+   CALLOUTS
+========================= */
+
+.callout{
+    position:relative;
+    padding:23px;
+    border-left:3px solid var(--purple);
+    background:linear-gradient(90deg,rgba(147,51,234,.13),rgba(147,51,234,.025));
+    border-radius:0 13px 13px 0;
+    margin:25px 0;
+}
+
+.callout strong{color:var(--light-purple)}
+
+/* =========================
+   DIAGRAMS
+========================= */
+
+.diagram{
+    padding:27px;
+    background:rgba(12,13,31,.85);
+    border:1px solid var(--line);
+    border-radius:18px;
+    margin:25px 0;
+    overflow-x:auto;
+}
+
+.flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    min-width:650px;
+}
+
+.flow-node{
+    flex:1;
+    text-align:center;
+    padding:18px 10px;
+    border-radius:12px;
+    border:1px solid rgba(196,181,253,.4);
+    background:linear-gradient(145deg,rgba(147,51,234,.18),rgba(56,189,248,.05));
+    font-size:.82rem;
+    color:#eee9ff;
+    position:relative;
+    animation:nodeGlow 3s ease-in-out infinite alternate;
+}
+
+.flow-node:nth-child(3){animation-delay:.4s}
+.flow-node:nth-child(5){animation-delay:.8s}
+.flow-node:nth-child(7){animation-delay:1.2s}
+
+@keyframes nodeGlow{
+    from{box-shadow:0 0 0 rgba(147,51,234,0)}
+    to{box-shadow:0 0 22px rgba(147,51,234,.2)}
+}
+
+.flow-arrow{
+    color:var(--light-purple);
+    font-size:1.3rem;
+    animation:arrowPulse 1.5s infinite;
+}
+
+@keyframes arrowPulse{
+    50%{transform:translateX(5px);opacity:.5}
+}
+
+/* =========================
+   LISTS & TABLES
+========================= */
+
+.clean-list{
+    padding-left:22px;
+    color:#c9c6dc;
+}
+
+.clean-list li{
+    margin:10px 0;
+    padding-left:5px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:14px;
+    margin:22px 0;
+}
+
+table{
+    width:100%;
+    min-width:650px;
+    border-collapse:collapse;
+}
+
+th,td{
+    text-align:left;
+    padding:14px;
+    border-bottom:1px solid var(--line);
+    font-size:.85rem;
+}
+
+th{
+    background:rgba(147,51,234,.17);
+    color:var(--light-purple);
+}
+
+td{color:#c9c6dc}
+
+tr:last-child td{border-bottom:0}
+
+/* =========================
+   INTERACTIVE LAB
+========================= */
+
+.lab{
+    padding:30px;
+    background:
+        radial-gradient(circle at 100% 0%,rgba(147,51,234,.12),transparent 35%),
+        rgba(16,17,38,.95);
+    border:1px solid rgba(196,181,253,.25);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.lab-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:15px;
+}
+
+.lab-badge{
+    font-size:.68rem;
+    letter-spacing:2px;
+    color:var(--green);
+    border:1px solid rgba(74,222,128,.3);
+    border-radius:30px;
+    padding:6px 12px;
+}
+
+.lab-intro{
+    color:var(--muted);
+    font-size:.88rem;
+}
+
+.control{
+    margin:23px 0;
+}
+
+.control label{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    font-size:.85rem;
+    margin-bottom:10px;
+}
+
+.control label strong{
+    color:var(--light-purple);
+    font-family:'Orbitron';
+    font-size:.8rem;
+}
+
+.control input{
+    width:100%;
+    accent-color:var(--purple);
+    cursor:pointer;
+}
+
+.lab-grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:25px;
+    margin-top:20px;
+}
+
+.result-panel{
+    padding:24px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:rgba(7,8,22,.65);
+    text-align:center;
+    align-self:start;
+}
+
+.result-number{
+    font-family:'Orbitron';
+    font-size:2.7rem;
+    font-weight:800;
+    color:var(--light-purple);
+    margin:10px 0;
+    text-shadow:0 0 25px rgba(147,51,234,.35);
+}
+
+.result-bar{
+    height:12px;
+    background:#292744;
+    border-radius:30px;
+    overflow:hidden;
+    margin:16px 0;
+}
+
+.result-bar span{
+    display:block;
+    height:100%;
+    width:0;
+    border-radius:30px;
+    background:linear-gradient(90deg,var(--purple),var(--blue));
+    transition:width .7s ease;
+}
+
+.result-status{
+    display:inline-block;
+    padding:6px 13px;
+    border-radius:30px;
+    font-size:.75rem;
+    font-weight:800;
+    background:rgba(196,181,253,.1);
+    color:var(--light-purple);
+}
+
+.primary-btn{
+    background:linear-gradient(100deg,var(--purple),#6d28d9);
+    color:white;
+    border:0;
+    padding:13px 22px;
+    border-radius:9px;
+    font-weight:700;
+    font-size:.85rem;
+    transition:.3s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(147,51,234,.35);
+    filter:brightness(1.1);
+}
+
+.secondary-btn{
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--line);
+    color:white;
+    padding:12px 20px;
+    border-radius:9px;
+    font-size:.82rem;
+}
+
+.lab-output{
+    margin-top:18px;
+    text-align:left;
+    font-size:.8rem;
+    color:var(--muted);
+}
+
+.lab-output div{
+    padding:7px 0;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz-box{
+    padding:30px;
+    background:linear-gradient(145deg,rgba(20,20,48,.96),rgba(10,11,27,.98));
+    border:1px solid var(--line);
+    border-radius:19px;
+}
+
+.quiz-top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+    color:var(--muted);
+    font-size:.76rem;
+    letter-spacing:1px;
+}
+
+.quiz-progress{
+    height:7px;
+    background:#292744;
+    border-radius:30px;
+    overflow:hidden;
+    margin:17px 0 27px;
+}
+
+.quiz-progress span{
+    display:block;
+    height:100%;
+    width:0;
+    background:linear-gradient(90deg,var(--purple),var(--blue));
+    transition:.4s;
+}
+
+.question{
+    font-size:1.1rem;
+    font-weight:700;
+    margin:20px 0;
+    line-height:1.6;
+}
+
+.option{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding:14px 16px;
+    margin:10px 0;
+    border:1px solid var(--line);
+    border-radius:11px;
+    background:rgba(255,255,255,.025);
+    color:#d8d5e9;
+    transition:.25s;
+}
+
+.option:hover:not(:disabled){
+    border-color:var(--light-purple);
+    background:rgba(147,51,234,.12);
+    transform:translateX(4px);
+}
+
+.option.correct{
+    border-color:var(--green);
+    background:rgba(74,222,128,.1);
+}
+
+.option.wrong{
+    border-color:var(--red);
+    background:rgba(251,113,133,.1);
+}
+
+.option:disabled{cursor:default}
+
+.feedback{
+    display:none;
+    padding:16px;
+    border-radius:11px;
+    margin-top:17px;
+    font-size:.88rem;
+}
+
+.feedback.show{display:block}
+
+.quiz-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-top:22px;
+}
+
+.quiz-score{
+    display:none;
+    text-align:center;
+    padding:35px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:rgba(147,51,234,.08);
+}
+
+.quiz-score .result-number{
+    font-size:3.6rem;
+}
+
+.quiz-score h2{
+    font-family:'Orbitron';
+    margin:10px 0;
+}
+
+/* =========================
+   REFERENCES
+========================= */
+
+.references{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
+}
+
+.reference-card{
+    padding:18px;
+    border:1px solid var(--line);
+    background:rgba(17,18,41,.85);
+    border-radius:13px;
+    transition:.3s;
+}
+
+.reference-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--purple);
+    background:rgba(147,51,234,.09);
+}
+
+.reference-card a{
+    color:var(--light-purple);
+    font-weight:700;
+    font-size:.88rem;
+}
+
+.reference-card p{
+    font-size:.78rem;
+    margin:7px 0 0;
+    color:var(--muted);
+}
+
+/* =========================
+   REVEAL ANIMATION
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    padding:65px 20px 35px;
+    border-top:1px solid var(--line);
+    background:linear-gradient(0deg,rgba(147,51,234,.08),transparent);
+}
+
+.footer-logo{
+    font-family:'Orbitron';
+    font-size:1.7rem;
+    font-weight:900;
+    letter-spacing:5px;
+    margin-bottom:15px;
+}
+
+.footer-logo span{color:var(--light-purple)}
+
+footer p{
+    color:var(--muted);
+    font-size:.8rem;
+    letter-spacing:1px;
+}
+
+footer strong{color:var(--light-purple)}
+
+.footer-line{
+    width:100px;
+    height:2px;
+    margin:20px auto;
+    background:linear-gradient(90deg,transparent,var(--purple),transparent);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1050px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:relative;
+        top:auto;
+        max-height:none;
+    }
+
+    .sidebar nav{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:3px;
+    }
+
+    .hero-orbit{
+        right:2%;
+        opacity:.3;
+    }
+}
+
+@media(max-width:750px){
+
+    .hero{
+        min-height:590px;
+        padding:75px 7%;
+    }
+
+    .hero-orbit{display:none}
+
+    .stats-strip{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stat-item:nth-child(2){border-right:0}
+    .stat-item:nth-child(1),
+    .stat-item:nth-child(2){border-bottom:1px solid var(--line)}
+
+    .grid-2,
+    .grid-3,
+    .image-grid,
+    .references,
+    .lab-grid{
+        grid-template-columns:1fr;
+    }
+
+    .image-card{height:250px}
+
+    .sidebar nav{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .layout{
+        width:92%;
+        margin:30px auto;
+    }
+
+    .topic-label{display:none}
+}
+
+@media(max-width:480px){
+
+    .logo{font-size:.95rem}
+
+    .back-btn{
+        padding:8px 11px;
+        font-size:.7rem;
+    }
+
+    .hero h1{font-size:2.1rem}
+
+    .hero-description{font-size:.9rem}
+
+    .sidebar nav{grid-template-columns:1fr}
+
+    .lab,.quiz-box{padding:19px}
+
+    .result-number{font-size:2.1rem}
+
+    .hero-actions{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+
+<body>
+
+<div class="reading-progress" id="readingProgress"></div>
+<div class="ambient-light ambient-one"></div>
+<div class="ambient-light ambient-two"></div>
+<div class="particles" id="particles"></div>
+
+<!-- NAVIGATION -->
+
+<header class="topbar">
+    <div class="logo">MARI<span>TERRA</span></div>
+
+    <div class="nav-right">
+        <span class="topic-label">TECHNOLOGY HUB / AI / 15</span>
+        <a class="back-btn" href="artificial-intelligence.html">
+            ← Back to AI Hub
+        </a>
+    </div>
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-image">
+        <img
+            src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=2000&q=85"
+            alt="Large commercial ship navigating at sea"
+        >
+    </div>
+
+    <div class="hero-orbit">
+        <div class="orbit-core">⌘</div>
+    </div>
+
+    <div class="hero-content">
+
+        <div class="eyebrow">MARITERRA / TECHNOLOGY HUB / TOPIC 15</div>
+
+        <h1>
+            CYBERSECURITY,
+            <span>ETHICS & FUTURE CHALLENGES</span>
+        </h1>
+
+        <p class="hero-description">
+            Discover how cybersecurity, responsible artificial intelligence,
+            data protection, and digital resilience are shaping the future
+            of maritime operations. Explore the threats behind connected ships
+            and the technologies protecting the next generation of shipping.
+        </p>
+
+        <div class="hero-tags">
+            <span>Maritime Cybersecurity</span>
+            <span>AI Security</span>
+            <span>Digital Resilience</span>
+            <span>AI Ethics</span>
+            <span>Future Technology</span>
+        </div>
+
+        <div class="hero-actions">
+            <a href="#overview" class="hero-button primary">Explore the Topic ↓</a>
+            <a href="#lab" class="hero-button secondary">Enter Cyber Lab ↗</a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- STATS -->
+
+<div class="stats-strip">
+
+    <div class="stat-item">
+        <div class="stat-number" data-count="15">0</div>
+        <div class="stat-label">LEARNING MODULES</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number" data-count="20">0</div>
+        <div class="stat-label">QUIZ QUESTIONS</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number" data-count="5">0</div>
+        <div class="stat-label">RISK FACTORS</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-number">AI+</div>
+        <div class="stat-label">CYBER INTELLIGENCE</div>
+    </div>
+
+</div>
+
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <h3>CYBER KNOWLEDGE MAP</h3>
+
+    <nav id="sideNav">
+        <a href="#overview">01. Overview</a>
+        <a href="#digital">02. Digital Maritime Systems</a>
+        <a href="#fundamentals">03. Cybersecurity Fundamentals</a>
+        <a href="#threats">04. Cyber Threat Landscape</a>
+        <a href="#attack-surface">05. Maritime Attack Surface</a>
+        <a href="#ai-attacks">06. Attacks Against AI</a>
+        <a href="#data">07. Data Security</a>
+        <a href="#networks">08. Network Protection</a>
+        <a href="#defense">09. AI Cyber Defense</a>
+        <a href="#resilience">10. Cyber Resilience</a>
+        <a href="#ethics">11. AI Ethics</a>
+        <a href="#explainability">12. Explainable AI</a>
+        <a href="#privacy">13. Privacy & Governance</a>
+        <a href="#human">14. Human Responsibility</a>
+        <a href="#standards">15. Global Standards</a>
+        <a href="#future">16. Future Challenges</a>
+        <a href="#lab">Interactive Cyber Lab</a>
+        <a href="#quiz">Knowledge Assessment</a>
+        <a href="#references">References</a>
+    </nav>
+
+</aside>
+
+
+<main class="content">
+
+
+<!-- 01 OVERVIEW -->
+
+<section class="section reveal" id="overview">
+
+    <div class="section-heading">
+        <div class="section-number">01 / INTRODUCTION</div>
+        <h2>The New Cybersecurity Era of Maritime AI</h2>
+        <p>
+            Understanding why security and ethics are essential
+            to the digital transformation of the maritime industry.
+        </p>
+    </div>
+
+    <p>
+        The maritime industry is experiencing a major digital transformation.
+        Modern vessels, ports, shipping companies, and offshore facilities
+        increasingly rely on connected technologies to monitor operations,
+        communicate information, and improve efficiency.
+    </p>
+
+    <p>
+        Artificial Intelligence introduces new capabilities into this
+        environment. AI can predict equipment failures, analyze navigation
+        information, identify unusual behavior, optimize routes, and support
+        operational decisions.
+    </p>
+
+    <p>
+        However, greater connectivity also creates new risks. A vulnerable
+        system, compromised dataset, manipulated AI model, or unauthorized
+        connection may affect more than a computer. Depending on the system
+        involved, an incident could influence business continuity,
+        operational safety, and environmental protection.
+    </p>
+
+    <div class="feature-image">
+        <img
+            src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1600&q=85"
+            alt="Ocean waves representing the maritime environment"
+            loading="lazy"
+        >
+        <div class="image-caption">
+            <span>THE CONNECTED MARITIME WORLD</span>
+            <h3>Technology, Intelligence & Digital Trust</h3>
+        </div>
+    </div>
+
+    <div class="grid-3">
+
+        <div class="info-card">
+            <div class="card-icon">🔐</div>
+            <h3>Cybersecurity</h3>
+            <p>
+                Protecting maritime systems, networks, applications,
+                and operational information from digital threats.
+            </p>
+            <span class="card-tag">SYSTEM PROTECTION</span>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">⚖️</div>
+            <h3>AI Ethics</h3>
+            <p>
+                Ensuring that intelligent systems are transparent,
+                fair, accountable, and appropriately supervised.
+            </p>
+            <span class="card-tag">RESPONSIBLE AI</span>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🌐</div>
+            <h3>Digital Resilience</h3>
+            <p>
+                Preparing maritime organizations to respond to
+                cyber incidents and recover essential operations.
+            </p>
+            <span class="card-tag">FUTURE READINESS</span>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Core principle:</strong>
+        A powerful AI model is not automatically a trustworthy system.
+        Security, reliable data, testing, transparency, and human oversight
+        must be considered throughout its entire lifecycle.
+    </div>
+
+</section>
+
+
+<!-- 02 DIGITAL SYSTEMS -->
+
+<section class="section reveal" id="digital">
+
+    <div class="section-heading">
+        <div class="section-number">02 / MARITIME DIGITAL INFRASTRUCTURE</div>
+        <h2>Understanding Digital Maritime Systems</h2>
+        <p>
+            Exploring the technologies that connect ships, ports,
+            offshore facilities, and shore-based operations.
+        </p>
+    </div>
+
+    <p>
+        A modern vessel is not a single isolated machine. It is an environment
+        containing multiple electronic, software, communication, and control
+        systems. These systems have different purposes and different
+        operational consequences if they become unavailable or compromised.
+    </p>
+
+    <div class="image-grid">
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=900&q=80"
+                alt="Shipping containers at a commercial port"
+                loading="lazy"
+            >
+            <span>Smart Ports</span>
+        </div>
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80"
+                alt="Data center server infrastructure"
+                loading="lazy"
+            >
+            <span>Data Infrastructure</span>
+        </div>
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+                alt="Electronic circuit board"
+                loading="lazy"
+            >
+            <span>Electronic Systems</span>
+        </div>
+
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Operational Technology (OT)</h3>
+            <p>
+                OT includes hardware and software that monitor or control
+                physical processes. Examples include machinery automation,
+                propulsion-related monitoring, power generation, and
+                selected cargo or ballast systems.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Information Technology (IT)</h3>
+            <p>
+                IT supports information processing and business operations,
+                including email, administration, databases, document systems,
+                fleet management, and corporate communication.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Navigation & Communication</h3>
+            <p>
+                Electronic chart systems, radar, AIS, GNSS, satellite
+                communication, and other technologies help support
+                navigation and maritime communication.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Cloud & Remote Platforms</h3>
+            <p>
+                Shore-based services may collect vessel information,
+                support remote monitoring, provide analytics, and
+                coordinate maintenance across fleets.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>How the Digital Maritime Environment Works</h3>
+
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Sensors &<br>Equipment</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Shipboard<br>Networks</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Data & AI<br>Platforms</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Human<br>Decisions</div>
+        </div>
+    </div>
+
+    <p>
+        Each connection creates a potential communication path.
+        Secure architecture should define which systems are allowed
+        to communicate, what information they exchange, and how
+        access is authenticated and monitored.
+    </p>
+
+</section>
+
+
+<!-- 03 FUNDAMENTALS -->
+
+<section class="section reveal" id="fundamentals">
+
+    <div class="section-heading">
+        <div class="section-number">03 / CYBERSECURITY PRINCIPLES</div>
+        <h2>The Foundations of Cybersecurity</h2>
+        <p>
+            Confidentiality, integrity, and availability form a
+            fundamental model for information security.
+        </p>
+    </div>
+
+    <p>
+        Cybersecurity protects systems, networks, applications,
+        and information against unauthorized access, misuse,
+        damage, and disruption.
+    </p>
+
+    <div class="grid-3">
+
+        <div class="info-card">
+            <div class="metric">C</div>
+            <h3>Confidentiality</h3>
+            <p>
+                Information should only be accessible to authorized
+                individuals and systems.
+            </p>
+            <span class="card-tag">ACCESS PROTECTION</span>
+        </div>
+
+        <div class="info-card">
+            <div class="metric">I</div>
+            <h3>Integrity</h3>
+            <p>
+                Information should remain accurate, complete,
+                and protected against unauthorized modification.
+            </p>
+            <span class="card-tag">DATA TRUST</span>
+        </div>
+
+        <div class="info-card">
+            <div class="metric">A</div>
+            <h3>Availability</h3>
+            <p>
+                Systems and information should remain accessible
+                when legitimately required.
+            </p>
+            <span class="card-tag">OPERATIONAL CONTINUITY</span>
+        </div>
+
+    </div>
+
+    <h3>Why the CIA Triad Matters at Sea</h3>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Principle</th>
+                    <th>Maritime Example</th>
+                    <th>Potential Consequence</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Confidentiality</td>
+                    <td>Protecting commercial voyage information</td>
+                    <td>Preventing unauthorized disclosure</td>
+                </tr>
+
+                <tr>
+                    <td>Integrity</td>
+                    <td>Protecting sensor and navigation information</td>
+                    <td>Reducing misleading operational data</td>
+                </tr>
+
+                <tr>
+                    <td>Availability</td>
+                    <td>Maintaining access to essential monitoring systems</td>
+                    <td>Supporting operational continuity</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="callout">
+        <strong>Maritime perspective:</strong>
+        Cybersecurity must consider the operational role of each asset.
+        An incident affecting an office application may have different
+        consequences from an incident affecting a critical control system.
+    </div>
+
+</section>
+
+
+<!-- 04 THREATS -->
+
+<section class="section reveal" id="threats">
+
+    <div class="section-heading">
+        <div class="section-number">04 / THREAT INTELLIGENCE</div>
+        <h2>The Maritime Cyber Threat Landscape</h2>
+        <p>
+            Recognizing common threats that can affect shipping companies,
+            vessels, ports, and maritime service providers.
+        </p>
+    </div>
+
+    <div class="feature-image">
+        <img
+            src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=85"
+            alt="Cybersecurity technology and digital network visualization"
+            loading="lazy"
+        >
+        <div class="image-caption">
+            <span>CYBER THREAT INTELLIGENCE</span>
+            <h3>Protecting Connected Maritime Operations</h3>
+        </div>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <div class="card-icon">🦠</div>
+            <h3>Ransomware</h3>
+            <p>
+                Malicious software that can encrypt or disrupt access
+                to systems and information. It may interrupt business
+                operations and complicate recovery.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🎣</div>
+            <h3>Phishing</h3>
+            <p>
+                Deceptive messages designed to manipulate users into
+                revealing credentials, opening malicious files,
+                or taking unauthorized actions.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🔑</div>
+            <h3>Credential Theft</h3>
+            <p>
+                Unauthorized acquisition of passwords, authentication
+                tokens, or other identity information.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🚫</div>
+            <h3>Denial of Service</h3>
+            <p>
+                Attempts to disrupt system availability by overwhelming
+                or interfering with service resources.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🔗</div>
+            <h3>Supply Chain Attacks</h3>
+            <p>
+                Compromise introduced through a trusted supplier,
+                software dependency, service provider, or maintenance
+                connection.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">👤</div>
+            <h3>Insider Threats</h3>
+            <p>
+                Risks caused by authorized users who intentionally
+                or unintentionally misuse their access.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>Potential Maritime Consequences</h3>
+
+    <ul class="clean-list">
+        <li>Loss of access to fleet management systems.</li>
+        <li>Disruption of port and cargo-related digital services.</li>
+        <li>Exposure of sensitive commercial or personal information.</li>
+        <li>Reduced confidence in operational information.</li>
+        <li>Delays in maintenance and technical support.</li>
+        <li>Potential safety consequences when critical systems are affected.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>Remember:</strong>
+        Cyber incidents do not always require sophisticated techniques.
+        Weak passwords, insecure remote access, outdated software,
+        and human error can create significant exposure.
+    </div>
+
+</section>
+
+
+<!-- 05 ATTACK SURFACE -->
+
+<section class="section reveal" id="attack-surface">
+
+    <div class="section-heading">
+        <div class="section-number">05 / MARITIME ATTACK SURFACE</div>
+        <h2>Where Can Maritime Cyber Risks Exist?</h2>
+        <p>
+            Understanding the different technologies and interfaces
+            that may introduce cybersecurity exposure.
+        </p>
+    </div>
+
+    <p>
+        An attack surface is the collection of points where an unauthorized
+        person or process might attempt to interact with a system.
+        In maritime environments, this can include onboard devices,
+        remote services, user accounts, software, and communication links.
+    </p>
+
+    <div class="image-grid">
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?auto=format&fit=crop&w=900&q=80"
+                alt="Commercial vessel"
+                loading="lazy"
+            >
+            <span>Vessel Systems</span>
+        </div>
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=900&q=80"
+                alt="Port infrastructure"
+                loading="lazy"
+            >
+            <span>Port Infrastructure</span>
+        </div>
+
+        <div class="image-card">
+            <img
+                src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=900&q=80"
+                alt="Connected server infrastructure"
+                loading="lazy"
+            >
+            <span>Shore-Based Services</span>
+        </div>
+
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Navigation Data Sources</h3>
+            <p>
+                Navigation-related information may depend on sensors,
+                electronic systems, communication links, and external
+                data sources. Its authenticity and reliability matter.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Remote Maintenance</h3>
+            <p>
+                Remote support can improve maintenance efficiency,
+                but poorly controlled remote connections can increase
+                exposure.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Software Dependencies</h3>
+            <p>
+                Applications may depend on third-party libraries,
+                operating systems, firmware, and external services.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Human Interfaces</h3>
+            <p>
+                User accounts, operator workstations, portable media,
+                and administrative tools require appropriate controls.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Important distinction:</strong>
+        Identifying an attack surface does not mean that every listed
+        system is vulnerable. Actual exposure must be established through
+        authorized assessment and system-specific evidence.
+    </div>
+
+</section>
+
+
+<!-- 06 AI ATTACKS -->
+
+<section class="section reveal" id="ai-attacks">
+
+    <div class="section-heading">
+        <div class="section-number">06 / AI SECURITY</div>
+        <h2>Cyberattacks Against Artificial Intelligence</h2>
+        <p>
+            AI systems create additional security considerations
+            involving datasets, model behavior, training, and deployment.
+        </p>
+    </div>
+
+    <p>
+        Traditional cybersecurity protects infrastructure, applications,
+        and information. AI security also considers the datasets,
+        model architecture, training process, inference services,
+        and software components supporting an AI application.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Data Poisoning</h3>
+            <p>
+                Manipulated or misleading examples are introduced
+                into training data, potentially influencing what
+                the model learns.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Adversarial Inputs</h3>
+            <p>
+                Carefully crafted inputs may cause a model to produce
+                incorrect classifications or unexpected predictions.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Model Theft</h3>
+            <p>
+                Unauthorized extraction or replication of model behavior,
+                architecture, or valuable intellectual property.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Model Evasion</h3>
+            <p>
+                Inputs are designed to avoid detection or cause a security
+                model to misclassify suspicious activity.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>AI Supply Chain Risk</h3>
+            <p>
+                Threats introduced through compromised pretrained models,
+                datasets, libraries, dependencies, or deployment tools.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Prompt Injection</h3>
+            <p>
+                Malicious instructions embedded in untrusted content
+                may manipulate an AI application that processes text
+                or documents.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>Example: Maritime AI Anomaly Detection</h3>
+
+    <p>
+        Imagine an AI system that analyzes vessel network activity.
+        It learns normal behavior from historical data and identifies
+        unusual patterns for investigation.
+    </p>
+
+    <p>
+        If the training data is incomplete, inaccurate, or manipulated,
+        the model may learn misleading patterns. It could miss suspicious
+        activity or generate excessive false alarms.
+    </p>
+
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Training<br>Data</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">AI Model<br>Training</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Model<br>Deployment</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Prediction<br>Monitoring</div>
+        </div>
+    </div>
+
+    <div class="callout">
+        <strong>Security must cover the entire AI lifecycle.</strong>
+        Protecting only the deployed model is insufficient if its training
+        data, development environment, dependencies, or access controls
+        are not also protected.
+    </div>
+
+</section>
+
+
+<!-- 07 DATA SECURITY -->
+
+<section class="section reveal" id="data">
+
+    <div class="section-heading">
+        <div class="section-number">07 / DATA PROTECTION</div>
+        <h2>Maritime Data Security & Integrity</h2>
+        <p>
+            Protecting the information that AI systems use to learn,
+            predict, and support maritime operations.
+        </p>
+    </div>
+
+    <p>
+        Maritime AI systems may process navigation information,
+        engine measurements, maintenance records, cargo data,
+        voyage information, and crew-related information.
+        Different categories require different levels of protection.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Data Classification</h3>
+            <p>
+                Identify whether information is public, internal,
+                confidential, or subject to additional protection
+                requirements.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Encryption</h3>
+            <p>
+                Use appropriate cryptographic protections for
+                information stored on systems and information
+                transmitted between services.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Access Control</h3>
+            <p>
+                Limit access according to verified identity,
+                authorization, role, and operational need.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Data Integrity</h3>
+            <p>
+                Use validation, audit records, controlled updates,
+                and integrity checks to detect unauthorized changes.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Data Retention</h3>
+            <p>
+                Define appropriate retention periods and secure
+                disposal procedures.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Backup & Recovery</h3>
+            <p>
+                Maintain protected backups and test recovery procedures
+                to support continuity after an incident.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>AI data quality is also a security concern.</strong>
+        Incorrect timestamps, altered sensor readings, duplicated records,
+        missing values, or manipulated labels can affect model outputs
+        even if the model's code has not changed.
+    </div>
+
+</section>
+
+
+<!-- 08 NETWORK PROTECTION -->
+
+<section class="section reveal" id="networks">
+
+    <div class="section-heading">
+        <div class="section-number">08 / NETWORK ARCHITECTURE</div>
+        <h2>Securing Shipboard Networks & Connected Systems</h2>
+        <p>
+            Designing controlled communication paths and limiting
+            the impact of compromised devices.
+        </p>
+    </div>
+
+    <p>
+        Shipboard networks may connect systems with different operational
+        purposes and safety requirements. A secure design should not
+        assume that every connected device is equally trusted.
+    </p>
+
+    <div class="feature-image">
+        <img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=85"
+            alt="Electronic circuit board and connected technology"
+            loading="lazy"
+        >
+        <div class="image-caption">
+            <span>SECURE SYSTEM ARCHITECTURE</span>
+            <h3>Controlled Connections. Protected Operations.</h3>
+        </div>
+    </div>
+
+    <h3>Network Segmentation</h3>
+
+    <p>
+        Network segmentation divides an environment into separate
+        security zones or domains. It can reduce unnecessary communication
+        and help contain the impact of an incident.
+    </p>
+
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Corporate<br>IT Zone</div>
+            <div class="flow-arrow">⇄</div>
+            <div class="flow-node">Controlled<br>Boundary</div>
+            <div class="flow-arrow">⇄</div>
+            <div class="flow-node">Operational<br>OT Zone</div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Firewalls & Filtering</h3>
+            <p>
+                Restrict unnecessary network traffic and control
+                permitted communication between security zones.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Secure Remote Access</h3>
+            <p>
+                Use approved access methods, strong authentication,
+                monitoring, and appropriate authorization.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Asset Inventory</h3>
+            <p>
+                Maintain records of devices, software, owners,
+                operational roles, and network connections.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Configuration Management</h3>
+            <p>
+                Control software updates, system settings,
+                and changes through documented procedures.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Engineering note:</strong>
+        The diagram is conceptual. Real shipboard network architecture
+        requires system-specific engineering, risk assessment,
+        documented communication requirements, and appropriate
+        protective controls.
+    </div>
+
+</section>
+
+
+<!-- 09 AI DEFENSE -->
+
+<section class="section reveal" id="defense">
+
+    <div class="section-heading">
+        <div class="section-number">09 / INTELLIGENT DEFENSE</div>
+        <h2>AI-Powered Maritime Cyber Defense</h2>
+        <p>
+            Using machine learning to help security teams identify
+            unusual behavior and prioritize investigations.
+        </p>
+    </div>
+
+    <p>
+        AI can support cybersecurity teams by analyzing large volumes
+        of logs, network events, authentication records, and system alerts.
+        It may identify patterns that would be difficult to recognize
+        manually across many systems.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Anomaly Detection</h3>
+            <p>
+                Identify behavior that differs from an established
+                baseline of expected system activity.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Threat Classification</h3>
+            <p>
+                Help categorize events using known patterns
+                and appropriately labeled security data.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Alert Prioritization</h3>
+            <p>
+                Organize alerts according to severity, context,
+                and potential operational impact.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Security Log Analysis</h3>
+            <p>
+                Correlate information across different systems
+                to support incident investigation.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>AI-Assisted Cyber Defense Workflow</h3>
+
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Log & Event<br>Collection</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">AI-Assisted<br>Analysis</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Human<br>Investigation</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Approved<br>Response</div>
+        </div>
+    </div>
+
+    <p>
+        AI-generated alerts should include supporting context.
+        Analysts need to understand the evidence, uncertainty,
+        and limitations behind a recommendation before deciding
+        how to respond.
+    </p>
+
+    <div class="callout">
+        <strong>Critical distinction:</strong>
+        AI-assisted detection is not the same as autonomous incident response.
+        Automatically blocking connections or changing operational systems
+        can create additional risks if the action is incorrect.
+    </div>
+
+</section>
+
+
+<!-- 10 RESILIENCE -->
+
+<section class="section reveal" id="resilience">
+
+    <div class="section-heading">
+        <div class="section-number">10 / OPERATIONAL CONTINUITY</div>
+        <h2>Cyber Resilience & Incident Recovery</h2>
+        <p>
+            Preparing maritime organizations to withstand, respond to,
+            and recover from cyber incidents.
+        </p>
+    </div>
+
+    <p>
+        Cybersecurity aims to reduce the likelihood and impact of attacks.
+        Cyber resilience goes further by considering how an organization
+        continues essential operations and recovers when preventive
+        controls are not enough.
+    </p>
+
+    <div class="grid-3">
+
+        <div class="info-card">
+            <div class="card-icon">🛡️</div>
+            <h3>Prepare</h3>
+            <p>
+                Identify critical assets, define responsibilities,
+                maintain protected backups, and create response plans.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🚨</div>
+            <h3>Respond</h3>
+            <p>
+                Detect, assess, contain, communicate, and coordinate
+                according to approved procedures.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">♻️</div>
+            <h3>Recover</h3>
+            <p>
+                Restore trusted systems, verify their integrity,
+                and review lessons learned after an incident.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>Incident Response Lifecycle</h3>
+
+    <div class="diagram">
+        <div class="flow">
+            <div class="flow-node">Preparation</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Detection</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Containment</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Recovery</div>
+        </div>
+    </div>
+
+    <p>
+        Recovery must include verification. Restoring a system from backup
+        does not automatically prove that the restored environment is secure
+        or suitable for operational use.
+    </p>
+
+</section>
+
+
+<!-- 11 ETHICS -->
+
+<section class="section reveal" id="ethics">
+
+    <div class="section-heading">
+        <div class="section-number">11 / RESPONSIBLE ARTIFICIAL INTELLIGENCE</div>
+        <h2>Ethical Principles in Maritime AI</h2>
+        <p>
+            Ensuring intelligent systems respect people, safety,
+            privacy, and responsible decision-making.
+        </p>
+    </div>
+
+    <p>
+        AI ethics examines how intelligent systems affect individuals,
+        organizations, and society. In maritime applications, ethical
+        considerations become important when AI influences crew monitoring,
+        safety decisions, employment, environmental reporting,
+        or access to sensitive information.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Fairness</h3>
+            <p>
+                Evaluate whether model behavior creates unjustified
+                differences across people, groups, or operating contexts.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Transparency</h3>
+            <p>
+                Explain the system's purpose, capabilities,
+                limitations, and appropriate use.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Accountability</h3>
+            <p>
+                Define who is responsible for development, deployment,
+                monitoring, and decisions based on AI outputs.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Privacy</h3>
+            <p>
+                Protect personal and sensitive information through
+                proportionate collection and appropriate safeguards.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Safety</h3>
+            <p>
+                Assess foreseeable harms and ensure AI use does not
+                undermine established protective measures.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Human Oversight</h3>
+            <p>
+                Keep qualified people involved in decisions where
+                professional judgment and responsibility are required.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Ethical challenge:</strong>
+        A system may be technically capable of monitoring crew behavior.
+        That does not automatically mean every possible form of monitoring
+        is necessary, fair, proportionate, or justified.
+    </div>
+
+</section>
+
+
+<!-- 12 EXPLAINABILITY -->
+
+<section class="section reveal" id="explainability">
+
+    <div class="section-heading">
+        <div class="section-number">12 / TRUSTWORTHY AI</div>
+        <h2>Explainable AI & Decision Transparency</h2>
+        <p>
+            Understanding why an AI system produced a particular result
+            and how much confidence should be placed in it.
+        </p>
+    </div>
+
+    <p>
+        Some advanced machine learning models are difficult to interpret.
+        In safety-related maritime applications, users need more than
+        a prediction. They need context about the information used,
+        uncertainty, and model limitations.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Feature Importance</h3>
+            <p>
+                Identify which input variables contributed most
+                to a prediction under a selected explanation method.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Local Explanations</h3>
+            <p>
+                Explain factors associated with an individual prediction
+                rather than describing only overall model behavior.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Confidence & Uncertainty</h3>
+            <p>
+                Communicate when evidence is incomplete or a prediction
+                may be unreliable.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Auditability</h3>
+            <p>
+                Maintain records of model versions, data sources,
+                decisions, and relevant changes.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>Example: Explaining a Cybersecurity Alert</h3>
+
+    <p>
+        Instead of displaying only "HIGH RISK", an AI security system
+        could provide supporting observations:
+    </p>
+
+    <ul class="clean-list">
+        <li>An unusual login time compared with the account's established pattern.</li>
+        <li>An access attempt from an unfamiliar network location.</li>
+        <li>Multiple failed authentication attempts within a short period.</li>
+        <li>A connection pattern that differs from the system baseline.</li>
+    </ul>
+
+    <p>
+        These observations are evidence for investigation, not proof
+        that an attack has occurred. Explainability should help people
+        question and verify AI outputs rather than simply persuade them
+        to trust the model.
+    </p>
+
+    <div class="callout">
+        <strong>Important limitation:</strong>
+        An explanation is not necessarily a complete description of
+        a model's internal reasoning. Explanation methods can be
+        approximate and should be evaluated for reliability.
+    </div>
+
+</section>
+
+
+<!-- 13 PRIVACY -->
+
+<section class="section reveal" id="privacy">
+
+    <div class="section-heading">
+        <div class="section-number">13 / PRIVACY & GOVERNANCE</div>
+        <h2>Privacy, Data Governance & Responsible Deployment</h2>
+        <p>
+            Managing the information lifecycle of maritime AI systems.
+        </p>
+    </div>
+
+    <p>
+        Maritime AI projects may process personal information about
+        crew members, contractors, passengers, or other individuals.
+        They may also use commercially sensitive information about
+        vessels, voyages, customers, and operations.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Purpose Limitation</h3>
+            <p>
+                Collect and use data for clearly defined
+                and legitimate purposes.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Data Minimization</h3>
+            <p>
+                Avoid collecting more personal or sensitive information
+                than necessary for the intended task.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Retention Policies</h3>
+            <p>
+                Define appropriate retention periods and secure
+                disposal procedures.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Access Governance</h3>
+            <p>
+                Document who can access information and under
+                which conditions.
+            </p>
+        </div>
+
+    </div>
+
+    <p>
+        For example, a crew safety monitoring system should have a clearly
+        documented purpose, appropriate access restrictions, proportionate
+        data collection, and transparent procedures.
+    </p>
+
+</section>
+
+
+<!-- 14 HUMAN -->
+
+<section class="section reveal" id="human">
+
+    <div class="section-heading">
+        <div class="section-number">14 / HUMAN FACTORS</div>
+        <h2>Human Oversight & Professional Responsibility</h2>
+        <p>
+            Keeping qualified people responsible for decisions
+            that affect maritime operations.
+        </p>
+    </div>
+
+    <p>
+        AI can support analysis and recommendations, but maritime
+        operations involve legal responsibilities, professional standards,
+        and safety obligations. These cannot be transferred to an algorithm
+        simply because it generates a prediction.
+    </p>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Human-in-the-Loop</h3>
+            <p>
+                A person reviews and approves relevant AI-supported
+                decisions before action is taken.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Human-on-the-Loop</h3>
+            <p>
+                A person supervises an automated process and can
+                intervene under defined conditions.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Human Authority</h3>
+            <p>
+                Operational authority and professional responsibilities
+                remain clearly assigned.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Training & Competence</h3>
+            <p>
+                Users understand the system's purpose, limitations,
+                warnings, and appropriate fallback procedures.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Human factors matter:</strong>
+        Too many alerts, unclear explanations, poor interface design,
+        and overconfidence in automation can reduce the effectiveness
+        of an otherwise capable AI system.
+    </div>
+
+</section>
+
+
+<!-- 15 STANDARDS -->
+
+<section class="section reveal" id="standards">
+
+    <div class="section-heading">
+        <div class="section-number">15 / INTERNATIONAL FRAMEWORKS</div>
+        <h2>Global Cybersecurity & AI Governance Standards</h2>
+        <p>
+            Recognized frameworks help organizations structure
+            security management and responsible AI deployment.
+        </p>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>IMO Maritime Cyber Risk Guidance</h3>
+            <p>
+                IMO guidance addresses maritime cyber risk management
+                as part of the safety and security management of ships
+                and shipping operations.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>IACS UR E26 & E27</h3>
+            <p>
+                IACS unified requirements address cyber resilience
+                of ships and onboard systems within their applicable
+                scope and implementation arrangements.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>NIST Cybersecurity Framework</h3>
+            <p>
+                Provides a structured approach to understanding,
+                assessing, prioritizing, and managing cybersecurity risk.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>NIST AI Risk Management Framework</h3>
+            <p>
+                Supports trustworthy AI through governance, mapping,
+                measurement, and risk management.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>ISO/IEC 27001</h3>
+            <p>
+                Specifies requirements for an information security
+                management system.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>ISO/IEC 42001</h3>
+            <p>
+                Specifies requirements and guidance for an AI
+                management system within an organization.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Scope matters:</strong>
+        Standards and regulations have different purposes, applicability,
+        and implementation dates. A framework is not automatically a
+        legal requirement for every ship or AI application.
+        Always verify the applicable edition and requirements.
+    </div>
+
+</section>
+
+
+<!-- 16 FUTURE -->
+
+<section class="section reveal" id="future">
+
+    <div class="section-heading">
+        <div class="section-number">16 / THE NEXT MARITIME ERA</div>
+        <h2>The Future of Cybersecurity & Ethical Maritime AI</h2>
+        <p>
+            Preparing for more autonomous, connected,
+            and data-driven maritime operations.
+        </p>
+    </div>
+
+    <div class="feature-image">
+        <img
+            src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=85"
+            alt="Ocean environment representing the future of maritime technology"
+            loading="lazy"
+        >
+        <div class="image-caption">
+            <span>THE NEXT GENERATION</span>
+            <h3>Building a Safer Digital Maritime Future</h3>
+        </div>
+    </div>
+
+    <div class="grid-2">
+
+        <div class="info-card">
+            <h3>Autonomous Maritime Systems</h3>
+            <p>
+                Greater automation will increase the importance of secure
+                control architectures, remote supervision, communication
+                resilience, and clearly defined human authority.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>AI-Generated Cyber Threats</h3>
+            <p>
+                AI tools may help attackers create convincing deceptive
+                content, automate reconnaissance, or adapt malicious activity.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Post-Quantum Cryptography</h3>
+            <p>
+                Organizations will need to assess future cryptographic
+                risks and migration requirements as quantum technologies develop.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Federated Learning</h3>
+            <p>
+                Collaborative model training may allow organizations
+                to learn from distributed data without centralizing
+                all raw records.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Digital Twins & Connected Fleets</h3>
+            <p>
+                Connected digital models will increase the importance
+                of data integrity, identity management, and secure interfaces.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <h3>Trustworthy AI Assurance</h3>
+            <p>
+                More structured testing, assurance, documentation,
+                and governance may become important for safety-related
+                AI deployments.
+            </p>
+        </div>
+
+    </div>
+
+    <h3>What Responsible Maritime AI Should Aim For</h3>
+
+    <ul class="clean-list">
+        <li>Secure system design from the beginning of development.</li>
+        <li>Reliable and traceable data sources.</li>
+        <li>Continuous monitoring of model performance and drift.</li>
+        <li>Transparent limitations and uncertainty communication.</li>
+        <li>Human oversight appropriate to operational risk.</li>
+        <li>Tested incident response and recovery arrangements.</li>
+        <li>Compliance with applicable maritime and information security requirements.</li>
+    </ul>
+
+    <div class="callout">
+        <strong>Final perspective:</strong>
+        The future of maritime AI will not be determined only by how
+        intelligent models become. It will also depend on how securely,
+        fairly, transparently, and responsibly they are designed and operated.
+    </div>
+
+</section>
+
+
+<!-- INTERACTIVE LAB -->
+
+<section class="section reveal" id="lab">
+
+    <div class="section-heading">
+        <div class="section-number">INTERACTIVE CYBERSECURITY LAB</div>
+        <h2>Maritime AI Cyber Risk Assessment Simulator</h2>
+        <p>
+            Experiment with different security conditions and observe
+            how weaknesses influence an illustrative cyber risk indicator.
+        </p>
+    </div>
+
+    <div class="lab">
+
+        <div class="lab-header">
+            <h3>CYBER RISK CONTROL PANEL</h3>
+            <span class="lab-badge">● SIMULATION MODE</span>
+        </div>
+
+        <p class="lab-intro">
+            Adjust the security factors below. Higher values represent
+            greater weaknesses in the selected scenario.
+        </p>
+
+        <div class="lab-grid">
+
+            <div>
+
+                <div class="control">
+                    <label for="access">
+                        Weak Access Control
+                        <strong id="accessValue">40%</strong>
+                    </label>
+                    <input id="access" type="range" min="0" max="100" value="40">
+                </div>
+
+                <div class="control">
+                    <label for="network">
+                        Network Exposure
+                        <strong id="networkValue">55%</strong>
+                    </label>
+                    <input id="network" type="range" min="0" max="100" value="55">
+                </div>
+
+                <div class="control">
+                    <label for="data">
+                        Data Integrity Weakness
+                        <strong id="dataValue">30%</strong>
+                    </label>
+                    <input id="data" type="range" min="0" max="100" value="30">
+                </div>
+
+                <div class="control">
+                    <label for="updates">
+                        Unpatched Software Exposure
+                        <strong id="updatesValue">45%</strong>
+                    </label>
+                    <input id="updates" type="range" min="0" max="100" value="45">
+                </div>
+
+                <div class="control">
+                    <label for="monitoring">
+                        Insufficient Security Monitoring
+                        <strong id="monitoringValue">35%</strong>
+                    </label>
+                    <input id="monitoring" type="range" min="0" max="100" value="35">
+                </div>
+
+                <button class="primary-btn" id="analyzeBtn">
+                    Analyze Cyber Risk →
+                </button>
+
+                <button class="secondary-btn" id="resetLabBtn">
+                    Reset Scenario
+                </button>
+
+            </div>
+
+            <div class="result-panel">
+
+                <div class="small-note">ILLUSTRATIVE RISK INDICATOR</div>
+
+                <div class="result-number" id="riskScore">--</div>
+
+                <div class="result-bar">
+                    <span id="riskBar"></span>
+                </div>
+
+                <div class="result-status" id="riskStatus">
+                    WAITING FOR ANALYSIS
+                </div>
+
+                <p id="riskDescription">
+                    Adjust the scenario factors and run the assessment.
+                </p>
+
+                <div class="lab-output" id="riskBreakdown">
+                    No assessment has been performed yet.
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="callout">
+            <strong>Educational limitation:</strong>
+            This simulator uses a synthetic weighted formula.
+            It is not a penetration test, security audit, certified
+            maritime risk assessment, or operational security rating.
+            Real risk requires asset criticality, threat capability,
+            vulnerabilities, existing controls, exposure, and consequences.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section class="section reveal" id="quiz">
+
+    <div class="section-heading">
+        <div class="section-number">KNOWLEDGE ASSESSMENT</div>
+        <h2>Test Your Cybersecurity Knowledge</h2>
+        <p>
+            Complete all 20 questions to evaluate your understanding
+            of maritime cybersecurity, AI threats, and responsible AI.
+        </p>
+    </div>
+
+    <div class="quiz-box" id="quizContainer">
+
+        <div class="quiz-top">
+            <span id="questionCounter">QUESTION 1 OF 20</span>
+            <span id="answeredCount">ANSWERED: 0 / 20</span>
+        </div>
+
+        <div class="quiz-progress">
+            <span id="quizProgress"></span>
+        </div>
+
+        <div class="question" id="questionText"></div>
+
+        <div id="optionsContainer"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="quiz-controls">
+            <span class="small-note">Choose one correct answer.</span>
+            <button class="primary-btn" id="nextBtn" disabled>
+                Next Question →
+            </button>
+        </div>
+
+    </div>
+
+    <div class="quiz-score" id="scorePanel">
+
+        <div class="eyebrow">ASSESSMENT COMPLETED</div>
+
+        <div class="result-number" id="finalScore">0/20</div>
+
+        <h2 id="scoreMessage">Your Result</h2>
+
+        <p id="scoreDescription"></p>
+
+        <button class="primary-btn" id="retryBtn">
+            Retry Assessment ↻
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- REFERENCES -->
+
+<section class="section reveal" id="references">
+
+    <div class="section-heading">
+        <div class="section-number">RESEARCH & FURTHER LEARNING</div>
+        <h2>References & Official Resources</h2>
+        <p>
+            Explore official organizations, cybersecurity frameworks,
+            AI governance resources, and maritime publications.
+        </p>
+    </div>
+
+    <div class="references">
+
+        <div class="reference-card">
+            <a href="https://www.imo.org/" target="_blank" rel="noopener">
+                International Maritime Organization ↗
+            </a>
+            <p>
+                International maritime safety, security,
+                conventions, and environmental protection.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.imo.org/en/OurWork/Security/Pages/Cyber-security.aspx" target="_blank" rel="noopener">
+                IMO – Maritime Cyber Risk ↗
+            </a>
+            <p>
+                IMO information and guidance related to
+                maritime cyber risk management.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.iacs.org.uk/" target="_blank" rel="noopener">
+                International Association of Classification Societies ↗
+            </a>
+            <p>
+                Classification society information and unified
+                requirements, including cyber resilience.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.nist.gov/cyberframework" target="_blank" rel="noopener">
+                NIST Cybersecurity Framework ↗
+            </a>
+            <p>
+                A structured framework for understanding
+                and managing cybersecurity risks.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.nist.gov/itl/ai-risk-management-framework" target="_blank" rel="noopener">
+                NIST AI Risk Management Framework ↗
+            </a>
+            <p>
+                Guidance for identifying, assessing,
+                and managing AI-related risks.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://atlas.mitre.org/" target="_blank" rel="noopener">
+                MITRE ATLAS ↗
+            </a>
+            <p>
+                Knowledge base of adversarial threats
+                and techniques targeting AI systems.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.cisa.gov/" target="_blank" rel="noopener">
+                CISA ↗
+            </a>
+            <p>
+                Cybersecurity guidance, alerts, and
+                critical infrastructure resources.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.enisa.europa.eu/" target="_blank" rel="noopener">
+                ENISA ↗
+            </a>
+            <p>
+                European cybersecurity research,
+                guidance, and threat landscape publications.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.iso.org/standard/27001" target="_blank" rel="noopener">
+                ISO/IEC 27001 ↗
+            </a>
+            <p>
+                Information security management system requirements.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.iso.org/standard/81230.html" target="_blank" rel="noopener">
+                ISO/IEC 42001 ↗
+            </a>
+            <p>
+                Artificial intelligence management system requirements.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.oecd.org/en/topics/sub-issues/ai-principles.html" target="_blank" rel="noopener">
+                OECD AI Principles ↗
+            </a>
+            <p>
+                International principles for trustworthy
+                and responsible AI.
+            </p>
+        </div>
+
+        <div class="reference-card">
+            <a href="https://www.nist.gov/" target="_blank" rel="noopener">
+                National Institute of Standards and Technology ↗
+            </a>
+            <p>
+                Research and guidance on cybersecurity,
+                technology, and AI risk management.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="callout">
+        <strong>Research note:</strong>
+        Use official standards and framework publications
+        when making compliance decisions. Educational explanations
+        are not a substitute for the applicable standard,
+        regulation, or professional security assessment.
+    </div>
+
+</section>
+
+</main>
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-logo">MARI<span>TERRA</span></div>
+
+    <div class="footer-line"></div>
+
+    <p>EXPLORING THE FUTURE OF MARITIME TECHNOLOGY</p>
+
+    <p>
+        DESIGNED & DEVELOPED BY
+        <strong>ENGINEER ZEINAB MOHAMED</strong>
+    </p>
+
+    <p>Artificial Intelligence / Cybersecurity / Responsible Innovation</p>
+
+</footer>
+
+
+<script>
+
+/* =====================================
+   FLOATING PARTICLES
+===================================== */
+
+const particleContainer=document.getElementById("particles");
+
+for(let i=0;i<35;i++){
+
+    const particle=document.createElement("span");
+
+    particle.className="particle";
+
+    particle.style.left=Math.random()*100+"%";
+    particle.style.animationDuration=(8+Math.random()*15)+"s";
+    particle.style.animationDelay=(Math.random()*12)+"s";
+    particle.style.opacity=(.15+Math.random()*.35).toString();
+
+    particleContainer.appendChild(particle);
+}
+
+
+/* =====================================
+   READING PROGRESS
+===================================== */
+
+window.addEventListener("scroll",()=>{
+
+    const scrollTop=window.scrollY;
+
+    const totalHeight=
+        document.documentElement.scrollHeight-window.innerHeight;
+
+    const progress=totalHeight>0
+        ?(scrollTop/totalHeight)*100
+        :0;
+
+    document.getElementById("readingProgress").style.width=
+        progress+"%";
+
+});
+
+
+/* =====================================
+   REVEAL ANIMATIONS
+===================================== */
+
+const revealObserver=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("visible");
+
+            revealObserver.unobserve(entry.target);
+        }
+
+    });
+
+},{threshold:.1});
+
+document.querySelectorAll(".reveal").forEach(element=>{
+    revealObserver.observe(element);
+});
+
+
+/* =====================================
+   SIDEBAR ACTIVE SECTION
+===================================== */
+
+const pageSections=document.querySelectorAll(".content .section");
+const navLinks=document.querySelectorAll("#sideNav a");
+
+const sectionObserver=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            navLinks.forEach(link=>{
+                link.classList.remove("active");
+
+                if(link.getAttribute("href")==="#"+entry.target.id){
+                    link.classList.add("active");
+                }
+            });
+
+        }
+
+    });
+
+},{rootMargin:"-20% 0px -65% 0px"});
+
+pageSections.forEach(section=>{
+    sectionObserver.observe(section);
+});
+
+
+/* =====================================
+   ANIMATED STAT COUNTERS
+===================================== */
+
+const statObserver=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(!entry.isIntersecting)return;
+
+        const element=entry.target;
+        const target=Number(element.dataset.count);
+
+        if(!target)return;
+
+        let current=0;
+        const duration=1200;
+        const step=Math.max(1,Math.ceil(target/35));
+
+        const timer=setInterval(()=>{
+
+            current+=step;
+
+            if(current>=target){
+                current=target;
+                clearInterval(timer);
+            }
+
+            element.textContent=current;
+
+        },duration/35);
+
+        statObserver.unobserve(element);
+
+    });
+
+},{threshold:.7});
+
+document.querySelectorAll("[data-count]").forEach(element=>{
+    statObserver.observe(element);
+});
+
+
+/* =====================================
+   MARITIME CYBER RISK SIMULATOR
+===================================== */
+
+const riskControls=[
+    {
+        id:"access",
+        name:"Weak Access Control",
+        weight:.25
+    },
+    {
+        id:"network",
+        name:"Network Exposure",
+        weight:.20
+    },
+    {
+        id:"data",
+        name:"Data Integrity Weakness",
+        weight:.20
+    },
+    {
+        id:"updates",
+        name:"Unpatched Software Exposure",
+        weight:.20
+    },
+    {
+        id:"monitoring",
+        name:"Insufficient Monitoring",
+        weight:.15
+    }
+];
+
+riskControls.forEach(item=>{
+
+    const input=document.getElementById(item.id);
+    const output=document.getElementById(item.id+"Value");
+
+    input.addEventListener("input",()=>{
+
+        output.textContent=input.value+"%";
+
+    });
+
+});
+
+
+function runRiskAssessment(){
+
+    let score=0;
+    let breakdown="";
+
+    riskControls.forEach(item=>{
+
+        const value=Number(
+            document.getElementById(item.id).value
+        );
+
+        const contribution=value*item.weight;
+
+        score+=contribution;
+
+        breakdown+=`
+            <div>
+                ${item.name}:
+                <strong>${contribution.toFixed(1)} points</strong>
+            </div>
+        `;
+
+    });
+
+    score=Math.round(score);
+
+    let status;
+    let description;
+
+    if(score<25){
+
+        status="LOW INDICATOR";
+
+        description=
+        "The selected weaknesses produce a relatively low illustrative indicator. This does not prove that the environment is secure.";
+
+    }else if(score<50){
+
+        status="MODERATE INDICATOR";
+
+        description=
+        "Some security weaknesses may require review. Verify actual exposure, controls, and asset criticality.";
+
+    }else if(score<75){
+
+        status="HIGH INDICATOR";
+
+        description=
+        "Several weaknesses are elevated. A qualified security team should prioritize assessment and remediation.";
+
+    }else{
+
+        status="VERY HIGH INDICATOR";
+
+        description=
+        "The selected scenario indicates substantial combined weaknesses. Formal risk assessment and response planning are important.";
+
+    }
+
+    document.getElementById("riskScore").textContent=
+        score+"/100";
+
+    document.getElementById("riskBar").style.width=
+        score+"%";
+
+    document.getElementById("riskStatus").textContent=
+        status;
+
+    document.getElementById("riskDescription").textContent=
+        description;
+
+    document.getElementById("riskBreakdown").innerHTML=
+        "<strong>FACTOR CONTRIBUTIONS</strong>"+breakdown;
+
+}
+
+document.getElementById("analyzeBtn").addEventListener(
+    "click",
+    runRiskAssessment
+);
+
+
+document.getElementById("resetLabBtn").addEventListener("click",()=>{
+
+    const defaults={
+        access:40,
+        network:55,
+        data:30,
+        updates:45,
+        monitoring:35
+    };
+
+    Object.entries(defaults).forEach(([id,value])=>{
+
+        document.getElementById(id).value=value;
+
+        document.getElementById(id+"Value").textContent=
+            value+"%";
+
+    });
+
+    document.getElementById("riskScore").textContent="--";
+
+    document.getElementById("riskBar").style.width="0%";
+
+    document.getElementById("riskStatus").textContent=
+        "WAITING FOR ANALYSIS";
+
+    document.getElementById("riskDescription").textContent=
+        "Adjust the scenario factors and run the assessment.";
+
+    document.getElementById("riskBreakdown").textContent=
+        "No assessment has been performed yet.";
+
+});
+
+
+/* =====================================
+   QUIZ DATABASE - 20 QUESTIONS
+===================================== */
+
+const questions=[
+
+{
+q:"1. What is the primary purpose of cybersecurity?",
+o:[
+"To make every computer faster",
+"To protect systems, networks, and information against unauthorized access and disruption",
+"To replace all software",
+"To remove the need for backups"
+],
+a:1,
+e:"Cybersecurity protects systems, networks, applications, and information against unauthorized access, misuse, damage, and disruption."
+},
+
+{
+q:"2. What does confidentiality mean in the CIA triad?",
+o:[
+"Information is available to everyone",
+"Information is accessible only to authorized users",
+"Information is always deleted",
+"Systems never require maintenance"
+],
+a:1,
+e:"Confidentiality ensures that information is accessed only by authorized people and systems."
+},
+
+{
+q:"3. Which principle focuses on preventing unauthorized modification of data?",
+o:[
+"Availability",
+"Integrity",
+"Confidentiality",
+"Scalability"
+],
+a:1,
+e:"Integrity concerns the accuracy and trustworthiness of information and protection against unauthorized modification."
+},
+
+{
+q:"4. What is Operational Technology (OT)?",
+o:[
+"Technology used only for office documents",
+"Systems that monitor or control physical processes and equipment",
+"A social media platform",
+"A type of satellite image"
+],
+a:1,
+e:"OT includes systems that monitor or control physical processes, such as industrial equipment and ship machinery."
+},
+
+{
+q:"5. Which is an example of a maritime cyber threat?",
+o:[
+"Ransomware",
+"Normal engine cooling",
+"Routine chart updates",
+"Approved maintenance"
+],
+a:0,
+e:"Ransomware can disrupt access to systems and information, potentially affecting maritime business and operational continuity."
+},
+
+{
+q:"6. What is phishing?",
+o:[
+"A method of measuring water depth",
+"Deceptive communication designed to manipulate users into unsafe actions",
+"A navigation calculation",
+"A marine engine component"
+],
+a:1,
+e:"Phishing uses deceptive messages to obtain credentials, deliver malicious content, or persuade users to perform unauthorized actions."
+},
+
+{
+q:"7. What is data poisoning in AI?",
+o:[
+"Deleting every training record",
+"Introducing manipulated or misleading data into the training process",
+"Encrypting a backup",
+"Improving data quality"
+],
+a:1,
+e:"Data poisoning can influence what a model learns by contaminating its training data."
+},
+
+{
+q:"8. What are adversarial inputs?",
+o:[
+"Inputs deliberately designed to cause incorrect model behavior",
+"Normal model documentation",
+"Approved backup files",
+"Standard network cables"
+],
+a:0,
+e:"Adversarial inputs are crafted to exploit weaknesses in a model and cause incorrect or unexpected predictions."
+},
+
+{
+q:"9. Why is maritime data integrity important?",
+o:[
+"Because AI and operational decisions depend on trustworthy information",
+"Because all data must be public",
+"Because sensors never fail",
+"Because it removes the need for validation"
+],
+a:0,
+e:"Manipulated, inaccurate, or incomplete data can lead to misleading AI outputs and poor operational decisions."
+},
+
+{
+q:"10. What is network segmentation?",
+o:[
+"Combining every network into one unrestricted zone",
+"Dividing a network into separate zones or security domains",
+"Deleting network equipment",
+"Changing a computer's wallpaper"
+],
+a:1,
+e:"Segmentation separates systems and limits unnecessary communication, helping reduce the spread and impact of incidents."
+},
+
+{
+q:"11. What is a major benefit of AI-assisted anomaly detection?",
+o:[
+"It guarantees that no attack can occur",
+"It helps identify unusual patterns for further investigation",
+"It removes all human analysts",
+"It automatically proves criminal intent"
+],
+a:1,
+e:"Anomaly detection can identify unusual behavior, but unusual activity is not automatically proof of an attack."
+},
+
+{
+q:"12. What is cyber resilience?",
+o:[
+"The ability to prevent every possible attack",
+"The ability to prepare for, withstand, respond to, and recover from cyber incidents",
+"The ability to remove all digital systems",
+"The use of stronger passwords only"
+],
+a:1,
+e:"Cyber resilience considers continuity and recovery as well as preventive cybersecurity controls."
+},
+
+{
+q:"13. Which is an important ethical principle in AI?",
+o:[
+"Uncontrolled data collection",
+"Fairness and accountability",
+"Hidden decision-making in every situation",
+"Removing all human oversight"
+],
+a:1,
+e:"Fairness and accountability are important principles for responsible AI design and deployment."
+},
+
+{
+q:"14. What is Explainable AI?",
+o:[
+"AI that never makes mistakes",
+"Methods that help people understand factors behind model outputs",
+"A method for deleting model data",
+"A replacement for cybersecurity"
+],
+a:1,
+e:"Explainable AI helps users understand predictions, contributing factors, and limitations. Explanations may still be approximate."
+},
+
+{
+q:"15. What does data minimization mean?",
+o:[
+"Collecting as much data as possible",
+"Collecting only the data necessary for a defined purpose",
+"Publishing all personal information",
+"Keeping every record forever"
+],
+a:1,
+e:"Data minimization reduces unnecessary collection and processing of personal or sensitive information."
+},
+
+{
+q:"16. Why is human oversight important in safety-related AI?",
+o:[
+"Because AI outputs may be uncertain or incorrect and professional responsibility remains important",
+"Because AI always produces random results",
+"Because humans cannot use technology",
+"Because it removes the need for model testing"
+],
+a:0,
+e:"Human oversight helps ensure AI outputs are interpreted in context and that operational responsibilities remain clear."
+},
+
+{
+q:"17. What is the purpose of the NIST AI Risk Management Framework?",
+o:[
+"To provide a structured approach to managing AI risks",
+"To define ship engine dimensions",
+"To replace maritime regulations",
+"To guarantee that every AI model is accurate"
+],
+a:0,
+e:"The NIST AI RMF supports organizations in identifying, assessing, and managing risks associated with AI systems."
+},
+
+{
+q:"18. What is a supply chain cyber risk?",
+o:[
+"A threat introduced through a supplier, software component, or service provider",
+"A change in ocean currents",
+"A normal cargo inspection",
+"A change in fuel temperature"
+],
+a:0,
+e:"Supply chain risk can arise when a trusted supplier, product, dependency, or service is compromised."
+},
+
+{
+q:"19. Why should AI-generated security alerts be reviewed?",
+o:[
+"Because alerts may contain false positives or incomplete context",
+"Because AI alerts are always malicious",
+"Because all alerts should be ignored",
+"Because reviewing alerts reduces data integrity"
+],
+a:0,
+e:"Human review helps distinguish genuine threats from false alarms and assess the context and impact of an event."
+},
+
+{
+q:"20. What is the most responsible approach to maritime AI?",
+o:[
+"Use AI without testing",
+"Allow models to override all safety procedures",
+"Combine security, validation, governance, transparency, and appropriate human oversight",
+"Collect all available personal information"
+],
+a:2,
+e:"Responsible maritime AI requires secure design, validated performance, appropriate governance, transparent limitations, and human oversight."
+}
+
+];
+
+
+/* =====================================
+   QUIZ ENGINE
+===================================== */
+
+let currentQuestion=0;
+let score=0;
+let answered=0;
+let selected=false;
+
+const questionText=document.getElementById("questionText");
+const optionsContainer=document.getElementById("optionsContainer");
+const feedback=document.getElementById("feedback");
+const nextBtn=document.getElementById("nextBtn");
+
+
+function renderQuestion(){
+
+    selected=false;
+
+    const q=questions[currentQuestion];
+
+    document.getElementById("questionCounter").textContent=
+        `QUESTION ${currentQuestion+1} OF ${questions.length}`;
+
+    document.getElementById("quizProgress").style.width=
+        `${(currentQuestion/questions.length)*100}%`;
+
+    document.getElementById("answeredCount").textContent=
+        `ANSWERED: ${answered} / ${questions.length}`;
+
+    questionText.textContent=q.q;
+
+    optionsContainer.innerHTML="";
+
+    feedback.className="feedback";
+    feedback.textContent="";
+
+    nextBtn.disabled=true;
+
+    nextBtn.textContent=
+        currentQuestion===questions.length-1
+        ?"Finish Assessment"
+        :"Next Question →";
+
+    q.o.forEach((option,index)=>{
+
+        const button=document.createElement("button");
+
+        button.className="option";
+
+        button.textContent=
+            String.fromCharCode(65+index)+". "+option;
+
+        button.addEventListener("click",()=>{
+            selectAnswer(index);
+        });
+
+        optionsContainer.appendChild(button);
+
+    });
+
+}
+
+
+function selectAnswer(index){
+
+    if(selected)return;
+
+    selected=true;
+    answered++;
+
+    const q=questions[currentQuestion];
+
+    const buttons=[
+        ...optionsContainer.querySelectorAll(".option")
+    ];
+
+    const isCorrect=index===q.a;
+
+    if(isCorrect)score++;
+
+    buttons.forEach((button,i)=>{
+
+        button.disabled=true;
+
+        if(i===q.a){
+            button.classList.add("correct");
+        }
+
+        if(i===index&&!isCorrect){
+            button.classList.add("wrong");
+        }
+
+    });
+
+    feedback.className="feedback show";
+
+    feedback.style.border=
+        "1px solid "+
+        (isCorrect
+            ?"rgba(74,222,128,.4)"
+            :"rgba(251,113,133,.4)");
+
+    feedback.style.background=
+        isCorrect
+            ?"rgba(74,222,128,.08)"
+            :"rgba(251,113,133,.08)";
+
+    feedback.innerHTML=
+        `<strong>${isCorrect?"Correct!":"Not quite."}</strong><br>${q.e}`;
+
+    document.getElementById("answeredCount").textContent=
+        `ANSWERED: ${answered} / ${questions.length}`;
+
+    nextBtn.disabled=false;
+
+}
+
+
+function showResults(){
+
+    document.getElementById("quizContainer").style.display="none";
+
+    document.getElementById("scorePanel").style.display="block";
+
+    document.getElementById("finalScore").textContent=
+        `${score}/20`;
+
+    const percentage=(score/questions.length)*100;
+
+    let message;
+    let description;
+
+    if(percentage>=90){
+
+        message="Outstanding Performance!";
+
+        description=
+        "You demonstrate a strong understanding of maritime cybersecurity, AI security, ethical principles, and responsible technology deployment.";
+
+    }else if(percentage>=75){
+
+        message="Very Good Work!";
+
+        description=
+        "You understand most of the key concepts. Review the questions you missed to strengthen your knowledge.";
+
+    }else if(percentage>=60){
+
+        message="Good Progress!";
+
+        description=
+        "You have a useful foundation. Revisit the cybersecurity, AI threats, and governance sections before trying again.";
+
+    }else{
+
+        message="Keep Learning!";
+
+        description=
+        "Review the topic carefully, especially the CIA triad, AI-specific threats, network protection, and responsible AI principles.";
+
+    }
+
+    document.getElementById("scoreMessage").textContent=message;
+
+    document.getElementById("scoreDescription").textContent=
+        description;
+
+    document.getElementById("scorePanel").scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+
+nextBtn.addEventListener("click",()=>{
+
+    if(!selected)return;
+
+    if(currentQuestion<questions.length-1){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }else{
+
+        showResults();
+
+    }
+
+});
+
+
+document.getElementById("retryBtn").addEventListener("click",()=>{
+
+    currentQuestion=0;
+    score=0;
+    answered=0;
+    selected=false;
+
+    document.getElementById("scorePanel").style.display="none";
+
+    document.getElementById("quizContainer").style.display="block";
+
+    renderQuestion();
+
+    document.getElementById("quiz").scrollIntoView({
+        behavior:"smooth"
+    });
+
+});
+
+
+renderQuestion();
+
+</script>
+
+</body>
+</html>

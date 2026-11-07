@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="MARITERRA - Explore the world of maritime knowledge, marine sciences, and advanced maritime technology.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Maritime Knowledge & Technology</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* TECHNOLOGY PREVIEW IMAGE */
+
+        .technology-preview-hero {
+            position: relative;
+            min-height: 420px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .technology-preview-hero-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .technology-preview-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(7, 8, 22, 0.96) 0%,
+                rgba(7, 8, 22, 0.78) 48%,
+                rgba(7, 8, 22, 0.25) 100%
+            );
+        }
+
+        .technology-preview-heading {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 760px;
+            padding: 65px;
+            margin: 0;
+        }
+
+        .technology-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        @media (max-width: 900px) {
+            .technology-preview-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 650px) {
+            .technology-preview-hero {
+                min-height: 390px;
+            }
+
+            .technology-preview-heading {
+                padding: 35px 25px;
+            }
+
+            .technology-preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <header class="main-header">
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                MARITERRA<span>.</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="academics.html">Academics</a></li>
+                <li><a href="technology.html">Technology</a></li>
+                <li><a href="maritime-world.html">Maritime World</a></li>
+                <li><a href="environment.html">Environment</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+
+            <!-- AUTHENTICATION BUTTONS -->
+            <div class="auth-buttons">
+
+                <a href="signin.html" class="auth-btn sign-in-btn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/>
+                        <path d="M4 21a8 8 0 0 1 16 0"/>
+                    </svg>
+                    <span>Sign In</span>
+                </a>
+
+                <a href="login.html" class="auth-btn log-in-btn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M10 17l5-5-5-5"/>
+                        <path d="M15 12H3"/>
+                        <path d="M12 3h6a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-6"/>
+                    </svg>
+                    <span>Log In</span>
+                </a>
+
+            </div>
+
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    <span class="label-line"></span>
+                    EXPLORE THE MARITIME WORLD
+                </span>
+
+                <h1>
+                    Discover the
+                    <span>Future</span>
+                    of Maritime.
+                </h1>
+
+                <p class="hero-description">
+                    Explore the knowledge, science, and technology
+                    shaping the future of the maritime world.
+                    One platform. Endless possibilities.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#explore" class="hero-btn primary-btn">
+                        Explore Platform
+                        <span>↗</span>
+                    </a>
+
+                    <a href="academics.html" class="hero-btn secondary-btn">
+                        Discover Maritime
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="hero-bottom">
+
+                <div class="hero-scroll">
+                    <span class="scroll-line"></span>
+                    SCROLL TO EXPLORE
+                </div>
+
+                <div class="hero-index">
+                    <span>01</span> / 06
+                </div>
+
+            </div>
+
+            <div class="hero-glow"></div>
+
+        </section>
+
+        <!-- INTRODUCTION SECTION -->
+        <section class="introduction" id="explore">
+
+            <div class="intro-container">
+
+                <div class="intro-heading">
+
+                    <span class="intro-label">
+                        <span class="label-line"></span>
+                        WELCOME TO MARITERRA
+                    </span>
+
+                    <h2>
+                        Beyond the Horizon of
+                        <span>Maritime Knowledge.</span>
+                    </h2>
+
+                </div>
+
+                <div class="intro-content">
+
+                    <div class="intro-main-text">
+
+                        <p class="intro-lead">
+                            The maritime world is more than oceans
+                            and ships. It is a vast field of knowledge,
+                            innovation, science, and discovery.
+                        </p>
+
+                        <p class="intro-description">
+                            MARITERRA is a digital knowledge platform
+                            dedicated to exploring the maritime world.
+                            It brings together maritime academic
+                            disciplines, emerging technologies, and
+                            marine environmental knowledge in one
+                            organized and accessible space.
+                        </p>
+
+                        <p class="intro-description">
+                            From understanding the science behind
+                            marine engineering to discovering the
+                            technologies shaping modern maritime
+                            industries, MARITERRA opens the door to
+                            a deeper understanding of our connected
+                            maritime world.
+                        </p>
+
+                    </div>
+
+                    <div class="intro-side-text">
+
+                        <span class="intro-number">01 / INTRODUCTION</span>
+
+                        <p>
+                            Explore knowledge.
+                            Understand technology.
+                            Discover the maritime world.
+                        </p>
+
+                        <span class="intro-decoration"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="intro-features">
+
+                    <article class="intro-card">
+
+                        <span class="intro-card-number">01</span>
+
+                        <div class="intro-card-content">
+
+                            <span class="intro-card-tag">KNOWLEDGE</span>
+
+                            <h3>Maritime Knowledge</h3>
+
+                            <p>
+                                Discover the academic disciplines,
+                                sciences, and professional fields
+                                that shape the maritime sector.
+                            </p>
+
+                        </div>
+
+                        <span class="intro-card-arrow">↗</span>
+
+                    </article>
+
+                    <article class="intro-card">
+
+                        <span class="intro-card-number">02</span>
+
+                        <div class="intro-card-content">
+
+                            <span class="intro-card-tag">INNOVATION</span>
+
+                            <h3>Advanced Technology</h3>
+
+                            <p>
+                                Explore modern maritime technologies,
+                                intelligent systems, robotics, and
+                                digital innovation.
+                            </p>
+
+                        </div>
+
+                        <span class="intro-card-arrow">↗</span>
+
+                    </article>
+
+                    <article class="intro-card">
+
+                        <span class="intro-card-number">03</span>
+
+                        <div class="intro-card-content">
+
+                            <span class="intro-card-tag">SUSTAINABILITY</span>
+
+                            <h3>Marine Environment</h3>
+
+                            <p>
+                                Understand marine ecosystems,
+                                environmental challenges, and
+                                the importance of ocean protection.
+                            </p>
+
+                        </div>
+
+                        <span class="intro-card-arrow">↗</span>
+
+                    </article>
+
+                </div>
+
+                <div class="intro-footer">
+
+                    <span>MARITERRA — KNOWLEDGE WITHOUT LIMITS</span>
+
+                    <span class="intro-footer-line"></span>
+
+                    <span>EXPLORE. LEARN. DISCOVER.</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ABOUT THE PLATFORM SECTION -->
+        <section class="platform-overview" id="about-platform">
+
+            <div class="platform-container">
+
+                <div class="platform-heading">
+
+                    <span class="platform-label">
+                        <span class="label-line"></span>
+                        THE PURPOSE BEHIND MARITERRA
+                    </span>
+
+                    <h2>
+                        One Platform.
+                        <span>Multiple Horizons.</span>
+                    </h2>
+
+                    <p>
+                        Bringing maritime knowledge, scientific
+                        understanding, and technological innovation
+                        together in one connected learning experience.
+                    </p>
+
+                </div>
+
+                <div class="platform-content">
+
+                    <article class="platform-block">
+
+                        <span class="platform-number">01 / MISSION</span>
+
+                        <h3>Our Mission</h3>
+
+                        <p>
+                            To make maritime knowledge easier to explore
+                            by presenting academic disciplines,
+                            technological developments, and marine
+                            environmental topics in a clear and
+                            organized digital space.
+                        </p>
+
+                    </article>
+
+                    <article class="platform-block">
+
+                        <span class="platform-number">02 / VISION</span>
+
+                        <h3>Our Vision</h3>
+
+                        <p>
+                            To build a connected knowledge space that
+                            encourages curiosity, supports learning,
+                            and helps people discover the growing
+                            relationship between maritime science
+                            and modern technology.
+                        </p>
+
+                    </article>
+
+                    <article class="platform-block">
+
+                        <span class="platform-number">03 / EXPERIENCE</span>
+
+                        <h3>What You Can Explore</h3>
+
+                        <p>
+                            Explore maritime academic fields,
+                            discover emerging marine technologies,
+                            learn about the maritime world, and
+                            understand the importance of protecting
+                            marine environments.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="platform-statement">
+                    <p>
+                        A wider perspective on the maritime world
+                        starts with knowledge.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ACADEMIC FIELDS PREVIEW SECTION -->
+        <section class="academic-preview" id="academic-fields">
+
+            <div class="academic-preview-container">
+
+                <div class="academic-preview-hero">
+
+                    <img
+                        src="images/academic-hero.png"
+                        alt="MARITERRA futuristic maritime technology and global marine navigation"
+                        class="academic-preview-hero-image"
+                    >
+
+                    <div class="academic-preview-hero-overlay"></div>
+
+                    <div class="academic-preview-heading">
+
+                        <span class="academic-preview-label">
+                            <span class="label-line"></span>
+                            EXPLORE OUR ACADEMIC FIELDS
+                        </span>
+
+                        <h2>
+                            Explore the
+                            <span>Maritime Disciplines.</span>
+                        </h2>
+
+                        <p>
+                            Discover the diverse academic fields that
+                            contribute to understanding, developing,
+                            and advancing the maritime world.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="academic-preview-grid">
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">01</span>
+                        <h3>Marine Engineering</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">02</span>
+                        <h3>Maritime Navigation</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">03</span>
+                        <h3>Naval Architecture</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">04</span>
+                        <h3>Maritime Transport</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">05</span>
+                        <h3>Marine Environment</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                    <a href="academics.html" class="academic-preview-card">
+                        <span class="academic-preview-number">06</span>
+                        <h3>Maritime Law</h3>
+                        <span class="academic-preview-arrow">↗</span>
+                    </a>
+
+                </div>
+
+                <div class="academic-preview-footer">
+
+                    <p>
+                        Six fields. One connected maritime world.
+                    </p>
+
+                    <a href="academics.html" class="academic-preview-link">
+                        Explore All Academic Fields
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- MARITIME TECHNOLOGY PREVIEW SECTION -->
+        <section class="technology-preview" id="maritime-technology">
+
+            <div class="technology-preview-container">
+
+                <!-- TECHNOLOGY HERO IMAGE -->
+                <div class="technology-preview-hero">
+
+                    <img
+                        src="images/technology-hero.png"
+                        alt="Advanced maritime technology and futuristic marine systems"
+                        class="technology-preview-hero-image"
+                    >
+
+                    <div class="technology-preview-hero-overlay"></div>
+
+                    <div class="technology-preview-heading">
+
+                        <span class="technology-preview-label">
+                            <span class="label-line"></span>
+                            INNOVATION BEYOND THE HORIZON
+                        </span>
+
+                        <h2>
+                            The Future of
+                            <span>Maritime Technology.</span>
+                        </h2>
+
+                        <p>
+                            Discover how advanced engineering,
+                            intelligent systems, and emerging innovations
+                            are transforming the maritime industry.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- TECHNOLOGY CARDS -->
+                <div class="technology-preview-grid">
+
+                    <a href="technology.html" class="technology-preview-card">
+
+                        <span class="technology-preview-number">01</span>
+
+                        <span class="technology-preview-category">SYSTEMS</span>
+
+                        <h3>Technology Integration</h3>
+
+                        <p>
+                            Discover how connected digital systems
+                            coordinate vessel operations and exchange
+                            maritime information.
+                        </p>
+
+                        <span class="technology-preview-arrow">↗</span>
+
+                    </a>
+
+                    <a href="technology.html" class="technology-preview-card">
+
+                        <span class="technology-preview-number">02</span>
+
+                        <span class="technology-preview-category">ROBOTICS</span>
+
+                        <h3>Marine Robotics</h3>
+
+                        <p>
+                            Explore underwater robots, remotely
+                            operated vehicles, and autonomous
+                            marine systems.
+                        </p>
+
+                        <span class="technology-preview-arrow">↗</span>
+
+                    </a>
+
+                    <a href="technology.html" class="technology-preview-card">
+
+                        <span class="technology-preview-number">03</span>
+
+                        <span class="technology-preview-category">NAVIGATION</span>
+
+                        <h3>Smart Navigation</h3>
+
+                        <p>
+                            Understand modern navigation systems,
+                            digital instruments, and intelligent
+                            maritime route planning.
+                        </p>
+
+                        <span class="technology-preview-arrow">↗</span>
+
+                    </a>
+
+                    <a href="technology.html" class="technology-preview-card">
+
+                        <span class="technology-preview-number">04</span>
+
+                        <span class="technology-preview-category">AUTONOMY</span>
+
+                        <h3>Autonomous Ships</h3>
+
+                        <p>
+                            Discover vessels that use sensors,
+                            control systems, and automation
+                            for maritime operations.
+                        </p>
+
+                        <span class="technology-preview-arrow">↗</span>
+
+                    </a>
+
+                    <a href="technology.html" class="technology-preview-card">
+
+                        <span class="technology-preview-number">05</span>
+
+                        <span class="technology-preview-category">INTELLIGENCE</span>
+
+                        <h3>Artificial Intelligence</h3>
+
+                        <p>
+                            Explore machine learning, predictive
+                            analytics, and intelligent systems
+                            in the maritime industry.
+                        </p>
+
+                        <span class="technology-preview-arrow">↗</span>
+
+                    </a>
+
+                </div>
+
+                <div class="technology-preview-footer">
+
+                    <p>
+                        Engineering today. Transforming the maritime future.
+                    </p>
+
+                    <a href="technology.html" class="technology-preview-link">
+                        Explore Maritime Technology
+                        <span>↗</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- MARITIME WORLD AND ENVIRONMENT PREVIEW -->
+        <section class="maritime-world-preview" id="maritime-world">
+
+            <div class="maritime-world-preview-container">
+
+                <div class="maritime-world-preview-heading">
+
+                    <span class="maritime-world-preview-label">
+                        <span class="label-line"></span>
+                        DISCOVER OUR CONNECTED WORLD
+                    </span>
+
+                    <h2>
+                        Explore the
+                        <span>Maritime World.</span>
+                    </h2>
+
+                    <p>
+                        From global shipping routes and major waterways
+                        to marine ecosystems and ocean conservation,
+                        discover the many dimensions of our maritime world.
+                    </p>
+
+                </div>
+
+                <div class="maritime-world-preview-grid">
+
+                    <a href="maritime-world.html" class="maritime-world-card">
+
+                        <span class="maritime-world-card-number">01</span>
+
+                        <span class="maritime-world-card-category">
+                            GLOBAL CONNECTIONS
+                        </span>
+
+                        <h3>Maritime World</h3>
+
+                        <p>
+                            Explore ships, international shipping routes,
+                            major ports, waterways, and the global
+                            maritime network.
+                        </p>
+
+                        <span class="maritime-world-card-link">
+                            Explore Maritime World ↗
+                        </span>
+
+                    </a>
+
+                    <a href="environment.html" class="maritime-world-card">
+
+                        <span class="maritime-world-card-number">02</span>
+
+                        <span class="maritime-world-card-category">
+                            OCEAN SCIENCE
+                        </span>
+
+                        <h3>Marine Environment</h3>
+
+                        <p>
+                            Discover marine ecosystems, ocean science,
+                            environmental challenges, and sustainable
+                            approaches to protecting our seas.
+                        </p>
+
+                        <span class="maritime-world-card-link">
+                            Explore Marine Environment ↗
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="maritime-world-preview-footer">
+
+                    <p>
+                        Understand the oceans. Explore the connections.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- SUEZ CANAL SECTION -->
+        <section class="suez-section" id="suez">
+
+            <div class="suez-overlay"></div>
+
+            <div class="suez-content">
+
+                <span class="suez-label">
+                    <span class="label-line"></span>
+                    06 / MARITIME LANDMARKS
+                </span>
+
+                <span class="suez-location">
+                    SUEZ CANAL / EGYPT
+                </span>
+
+                <h2>
+                    ONE CANAL.
+                    <span>A WORLD OF CONNECTIONS.</span>
+                </h2>
+
+                <p>
+                    Discover the engineering achievement and strategic
+                    importance of the Suez Canal — one of the world's
+                    most significant maritime waterways, connecting
+                    international trade routes and shaping global
+                    maritime transportation.
+                </p>
+
+                <a href="suez-canal.html" class="suez-link">
+                    Explore Its Significance
+                    <span>↗</span>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- FOUNDER AND OWNER SECTION -->
+        <section class="founder-section" id="founder">
+
+            <div class="founder-container">
+
+                <div class="founder-heading">
+
+                    <span class="founder-label">
+                        <span class="label-line"></span>
+                        THE PERSON BEHIND THE PLATFORM
+                    </span>
+
+                    <h2>
+                        Built with Vision.
+                        <span>Driven by Knowledge.</span>
+                    </h2>
+
+                </div>
+
+                <div class="founder-content">
+
+                    <div class="founder-number">
+                        07
+                    </div>
+
+                    <div class="founder-information">
+
+                        <span class="founder-role">
+                            FOUNDER & DEVELOPER
+                        </span>
+
+                        <h3>
+                            Engineer Zeinab Mohamed
+                        </h3>
+
+                        <p>
+                            MARITERRA is an independent digital platform
+                            built to bring maritime knowledge, academic
+                            exploration, and technological innovation
+                            together in one connected space.
+                        </p>
+
+                        <p>
+                            Created with a vision to make the maritime
+                            world more accessible through knowledge,
+                            curiosity, and continuous discovery.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="footer-logo">
+                    MARITERRA<span>.</span>
+                </a>
+
+                <p>
+                    The Future of Maritime Knowledge.
+                </p>
+
+            </div>
+
+            <div class="footer-navigation">
+
+                <a href="index.html">Home</a>
+                <a href="academics.html">Academics</a>
+                <a href="technology.html">Technology</a>
+                <a href="maritime-world.html">Maritime World</a>
+                <a href="environment.html">Environment</a>
+                <a href="suez-canal.html">Suez Canal</a>
+                <a href="about.html">About</a>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 MARITERRA. All rights reserved.
+                </p>
+
+                <p>
+                    Designed & Developed by
+                    <span>Engineer Zeinab Mohamed</span>.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>

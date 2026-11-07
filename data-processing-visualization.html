@@ -1,0 +1,1796 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore maritime data processing, data quality, analytics, visualization, and decision-support systems.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | Data Processing & Visualization</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --card: rgba(13, 16, 38, 0.9);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --blue: #2563eb;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.2);
+            --transition: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 22, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 76px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--muted);
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 105px 0 90px;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 25%, rgba(147, 51, 234, 0.2), transparent 35%),
+                radial-gradient(circle at 15% 80%, rgba(37, 99, 235, 0.13), transparent 30%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            max-width: 850px;
+            font-size: clamp(2.4rem, 6vw, 4.6rem);
+            line-height: 1.13;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero-description {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(13, 16, 38, 0.7);
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 0.83rem;
+            color: var(--text);
+        }
+
+        /* CONTENT LAYOUT */
+
+        main {
+            padding: 65px 0 90px;
+        }
+
+        .content-section {
+            margin-bottom: 65px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: clamp(1.65rem, 4vw, 2.25rem);
+            color: var(--white);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 850px;
+            margin-bottom: 25px;
+        }
+
+        .content-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 27px;
+            margin-bottom: 20px;
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: var(--text);
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 23px;
+            margin-top: 12px;
+        }
+
+        .content-card li {
+            margin-bottom: 9px;
+            color: var(--text);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .small-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 23px;
+            border-radius: 13px;
+            transition: var(--transition);
+        }
+
+        .small-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--purple);
+        }
+
+        .small-card h3 {
+            color: var(--purple-light);
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+        }
+
+        .small-card p {
+            color: var(--muted);
+            font-size: 0.94rem;
+        }
+
+        .highlight {
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+            padding: 19px 22px;
+            border-radius: 0 10px 10px 0;
+            margin: 22px 0;
+        }
+
+        .highlight strong {
+            color: var(--purple-light);
+        }
+
+        .process-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            counter-reset: process;
+        }
+
+        .process-step {
+            position: relative;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 22px;
+            counter-increment: process;
+        }
+
+        .process-step::before {
+            content: "0" counter(process);
+            display: block;
+            color: var(--purple-light);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .process-step h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* DATA PIPELINE */
+
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 25px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        .pipeline-node {
+            padding: 13px 17px;
+            background: rgba(147, 51, 234, 0.12);
+            border: 1px solid rgba(192, 132, 252, 0.4);
+            border-radius: 9px;
+            color: var(--white);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .pipeline-arrow {
+            color: var(--purple-light);
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 620px;
+            background: var(--card);
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        /* EXAMPLE */
+
+        .scenario {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.13), rgba(37, 99, 235, 0.08));
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 28px;
+        }
+
+        .scenario h3 {
+            color: var(--purple-light);
+            margin-bottom: 14px;
+        }
+
+        .scenario p {
+            margin-bottom: 12px;
+        }
+
+        /* QUIZ */
+
+        .quiz-container {
+            background: rgba(13, 16, 38, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 30px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        .question {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question h3 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            margin-right: 7px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 11px 13px;
+            margin: 8px 0;
+            border: 1px solid rgba(156, 163, 175, 0.17);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option span {
+            color: var(--text);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 23px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--purple);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7e22ce;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            background: #20243a;
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple);
+        }
+
+        .result {
+            display: none;
+            margin-top: 28px;
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .score-number {
+            font-size: 2.7rem;
+            color: var(--purple-light);
+            font-weight: 800;
+        }
+
+        .answer-review {
+            padding: 18px;
+            margin-bottom: 13px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .answer-review.correct {
+            border-left: 4px solid #22c55e;
+        }
+
+        .answer-review.incorrect {
+            border-left: 4px solid #ef4444;
+        }
+
+        .answer-review h4 {
+            margin-bottom: 9px;
+        }
+
+        .answer-review p {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .correct-text {
+            color: #4ade80 !important;
+        }
+
+        .incorrect-text {
+            color: #f87171 !important;
+        }
+
+        /* REFERENCES & FOOTER */
+
+        .references li {
+            overflow-wrap: anywhere;
+            margin-bottom: 13px;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 750px) {
+            .grid,
+            .process-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 75px 0 65px;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 20px;
+            }
+
+            .nav-content {
+                min-height: 66px;
+            }
+
+            .logo {
+                font-size: 1.05rem;
+            }
+
+            .back-link {
+                font-size: 0.85rem;
+            }
+
+            .pipeline {
+                flex-direction: column;
+            }
+
+            .pipeline-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">MARITERRA<span>.</span></a>
+            <a href="technology-integration.html" class="back-link">
+                ← Back to Technology Integration
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="eyebrow">Topic 06 · Technology Integration</div>
+
+            <h1>
+                Data Processing <span>& Visualization</span>
+            </h1>
+
+            <p class="hero-description">
+                Discover how raw maritime data is collected, validated,
+                processed, analyzed, and transformed into meaningful
+                information that supports monitoring, planning, and
+                operational decision-making.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">Maritime Data</span>
+                <span class="meta-item">Data Quality</span>
+                <span class="meta-item">Analytics</span>
+                <span class="meta-item">Visualization</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="content-section">
+            <div class="section-number">01 — INTRODUCTION</div>
+            <h2 class="section-title">Understanding Maritime Data Processing</h2>
+
+            <p class="section-intro">
+                Modern ships, ports, and maritime facilities generate
+                large amounts of information through sensors, navigation
+                equipment, machinery monitoring systems, weather services,
+                and digital communication networks.
+            </p>
+
+            <div class="content-card">
+                <h3>What is Data Processing?</h3>
+                <p>
+                    Data processing is the set of operations used to convert
+                    collected data into an organized, consistent, and useful
+                    form. It may involve validation, cleaning, transformation,
+                    filtering, integration, calculation, and storage.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>What is Data Visualization?</h3>
+                <p>
+                    Data visualization is the presentation of information
+                    through visual formats such as charts, maps, graphs,
+                    dashboards, and indicators. It helps users identify
+                    patterns, compare values, understand changes, and
+                    recognize situations that may require attention.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <strong>Important distinction:</strong>
+                Processing changes or organizes data. Visualization
+                communicates selected information visually. A clear chart
+                cannot compensate for inaccurate or incomplete source data.
+            </div>
+        </section>
+
+        <!-- 02 DATA SOURCES -->
+
+        <section class="content-section">
+            <div class="section-number">02 — DATA SOURCES</div>
+            <h2 class="section-title">Sources of Maritime Data</h2>
+
+            <p class="section-intro">
+                Maritime data comes from multiple independent sources.
+                Each source measures or reports a different aspect of
+                vessel, port, or environmental conditions.
+            </p>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Navigation Systems</h3>
+                    <p>
+                        GNSS receivers, gyrocompasses, speed logs, and
+                        electronic chart systems provide information
+                        about position, heading, speed, and route.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Environmental Sensors</h3>
+                    <p>
+                        Instruments measure wind, temperature, pressure,
+                        water depth, sea conditions, and other environmental
+                        parameters.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Machinery Monitoring</h3>
+                    <p>
+                        Engine and equipment sensors provide readings such
+                        as temperature, pressure, vibration, fuel consumption,
+                        and operating status.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Communication Systems</h3>
+                    <p>
+                        Digital messages and external information services
+                        provide weather updates, operational reports,
+                        and information exchanged with shore facilities.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Port and Terminal Systems</h3>
+                    <p>
+                        Port Community Systems and terminal platforms
+                        may provide berth schedules, cargo status,
+                        vessel movements, and service information.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Human Data Entry</h3>
+                    <p>
+                        Crew members and operators may enter inspection
+                        records, maintenance reports, operational notes,
+                        and other manually recorded information.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 DATA TYPES -->
+
+        <section class="content-section">
+            <div class="section-number">03 — DATA TYPES</div>
+            <h2 class="section-title">Types of Maritime Data</h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data Type</th>
+                            <th>Examples</th>
+                            <th>Possible Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Position Data</td>
+                            <td>Latitude and longitude</td>
+                            <td>Vessel location mapping</td>
+                        </tr>
+                        <tr>
+                            <td>Motion Data</td>
+                            <td>Speed, heading, course</td>
+                            <td>Movement monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Environmental Data</td>
+                            <td>Wind, pressure, temperature</td>
+                            <td>Weather awareness</td>
+                        </tr>
+                        <tr>
+                            <td>Machinery Data</td>
+                            <td>Vibration, pressure, temperature</td>
+                            <td>Equipment condition monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Operational Data</td>
+                            <td>Schedules, cargo status, fuel use</td>
+                            <td>Operational planning</td>
+                        </tr>
+                        <tr>
+                            <td>Time-Series Data</td>
+                            <td>Repeated readings over time</td>
+                            <td>Trend analysis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight">
+                <strong>Time-series data</strong> consists of measurements
+                associated with timestamps. For example, recording engine
+                temperature every minute makes it possible to examine
+                how the temperature changes over time.
+            </div>
+        </section>
+
+        <!-- 04 DATA PIPELINE -->
+
+        <section class="content-section">
+            <div class="section-number">04 — PROCESSING PIPELINE</div>
+            <h2 class="section-title">The Maritime Data Processing Workflow</h2>
+
+            <p class="section-intro">
+                Data usually passes through several stages before it becomes
+                suitable for analysis or presentation.
+            </p>
+
+            <div class="pipeline">
+                <div class="pipeline-node">Data Collection</div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-node">Validation</div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-node">Cleaning</div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-node">Transformation</div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-node">Analysis</div>
+                <div class="pipeline-arrow">→</div>
+                <div class="pipeline-node">Visualization</div>
+            </div>
+
+            <div class="process-list" style="margin-top:25px;">
+                <div class="process-step">
+                    <h3>Collection</h3>
+                    <p>
+                        Obtain readings and records from sensors,
+                        systems, databases, and external services.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <h3>Validation</h3>
+                    <p>
+                        Check whether incoming values follow expected
+                        formats, ranges, and rules.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <h3>Cleaning</h3>
+                    <p>
+                        Identify missing values, duplicates,
+                        inconsistent records, and suspicious readings.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <h3>Transformation</h3>
+                    <p>
+                        Convert units, standardize formats, align
+                        timestamps, and organize data structures.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <h3>Analysis</h3>
+                    <p>
+                        Calculate indicators, compare measurements,
+                        and identify trends or unusual patterns.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <h3>Presentation</h3>
+                    <p>
+                        Display the results using charts, maps,
+                        reports, and operational dashboards.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 DATA QUALITY -->
+
+        <section class="content-section">
+            <div class="section-number">05 — DATA QUALITY</div>
+            <h2 class="section-title">Data Validation and Quality Control</h2>
+
+            <p class="section-intro">
+                Data quality is essential because incorrect measurements
+                may produce misleading analysis and poor operational
+                decisions.
+            </p>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Accuracy</h3>
+                    <p>
+                        How close a recorded value is to the actual
+                        or accepted reference value.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Completeness</h3>
+                    <p>
+                        Whether the required information is present
+                        without important missing records.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Consistency</h3>
+                    <p>
+                        Whether values and formats agree across
+                        related systems and records.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Timeliness</h3>
+                    <p>
+                        Whether data is available at a suitable time
+                        for the intended operational use.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Validity</h3>
+                    <p>
+                        Whether a value follows the expected format,
+                        range, and defined rules.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Uniqueness</h3>
+                    <p>
+                        Whether duplicate records have been detected
+                        and handled appropriately.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:22px;">
+                <h3>Example: Detecting an Invalid Sensor Reading</h3>
+                <p>
+                    Imagine an engine temperature sensor normally reports
+                    values around 70–95°C under a particular operating
+                    condition. A sudden reading of 900°C should trigger
+                    a validation check.
+                </p>
+                <ul>
+                    <li>Check whether the value is within the configured range.</li>
+                    <li>Check the sensor status and timestamp.</li>
+                    <li>Compare the reading with related measurements.</li>
+                    <li>Flag the reading for investigation rather than silently accepting it.</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <strong>Critical point:</strong> An unusual value is not
+                automatically false. It may represent a genuine dangerous
+                condition. A system should flag and investigate suspicious
+                readings instead of automatically deleting them.
+            </div>
+        </section>
+
+        <!-- 06 ANALYSIS -->
+
+        <section class="content-section">
+            <div class="section-number">06 — DATA ANALYSIS</div>
+            <h2 class="section-title">Processing and Analytical Techniques</h2>
+
+            <div class="content-card">
+                <h3>1. Filtering</h3>
+                <p>
+                    Filtering selects data that meets specific conditions.
+                    For example, a system may display only engine readings
+                    from a selected time period or equipment unit.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>2. Aggregation</h3>
+                <p>
+                    Aggregation combines multiple measurements into
+                    summary values such as averages, totals, minimums,
+                    or maximums.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>3. Trend Analysis</h3>
+                <p>
+                    Trend analysis examines how a value changes over time.
+                    It may reveal increasing vibration, rising fuel
+                    consumption, or gradual temperature changes.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>4. Anomaly Detection</h3>
+                <p>
+                    Anomaly detection identifies observations that differ
+                    significantly from expected patterns. These observations
+                    may require investigation, but they are not necessarily
+                    evidence of a fault.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>5. Data Integration</h3>
+                <p>
+                    Data from different systems can be combined to provide
+                    a broader operational picture. This requires compatible
+                    formats, meaningful identifiers, timestamps, and
+                    suitable data definitions.
+                </p>
+            </div>
+        </section>
+
+        <!-- 07 VISUALIZATION -->
+
+        <section class="content-section">
+            <div class="section-number">07 — VISUALIZATION METHODS</div>
+            <h2 class="section-title">Maritime Data Visualization</h2>
+
+            <p class="section-intro">
+                Different visual formats answer different questions.
+                Selecting the wrong chart can make accurate data difficult
+                to interpret.
+            </p>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Line Charts</h3>
+                    <p>
+                        Useful for displaying changes over time,
+                        such as engine temperature, speed, or fuel
+                        consumption.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Bar Charts</h3>
+                    <p>
+                        Useful for comparing categories, such as
+                        monthly cargo volumes or equipment downtime.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Geographical Maps</h3>
+                    <p>
+                        Display spatial information such as vessel
+                        positions, port locations, and hydrographic
+                        features.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Dashboards</h3>
+                    <p>
+                        Combine indicators, charts, alerts, and
+                        operational summaries in one interface.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Tables</h3>
+                    <p>
+                        Present detailed records when exact values,
+                        timestamps, or identifiers are important.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Heatmaps</h3>
+                    <p>
+                        Use color intensity to show the distribution
+                        or concentration of values across a defined
+                        dataset or area.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 08 DASHBOARDS -->
+
+        <section class="content-section">
+            <div class="section-number">08 — OPERATIONAL DASHBOARDS</div>
+            <h2 class="section-title">Maritime Monitoring Dashboards</h2>
+
+            <div class="content-card">
+                <h3>What is a Dashboard?</h3>
+                <p>
+                    A dashboard is a visual interface that presents selected
+                    information from one or more data sources. It allows
+                    operators and managers to monitor important indicators
+                    without examining every raw record individually.
+                </p>
+            </div>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Navigation Dashboard</h3>
+                    <p>
+                        May present position, speed, heading, route
+                        information, and selected navigation data.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Engine Monitoring Dashboard</h3>
+                    <p>
+                        May show equipment temperatures, pressure,
+                        vibration, and operating trends.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Port Operations Dashboard</h3>
+                    <p>
+                        May display berth schedules, vessel arrivals,
+                        cargo status, and service coordination data.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Environmental Dashboard</h3>
+                    <p>
+                        May display weather observations, emissions
+                        indicators, and environmental measurements.
+                    </p>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <strong>Design principle:</strong> A dashboard should
+                prioritize relevant information, use understandable units,
+                identify timestamps and data sources, and avoid overwhelming
+                users with unnecessary indicators.
+            </div>
+        </section>
+
+        <!-- 09 DECISION SUPPORT -->
+
+        <section class="content-section">
+            <div class="section-number">09 — DECISION SUPPORT</div>
+            <h2 class="section-title">From Data to Operational Decisions</h2>
+
+            <p class="section-intro">
+                Processed information can support decisions, but the
+                quality of a decision still depends on context, system
+                limitations, and professional judgment.
+            </p>
+
+            <div class="content-card">
+                <h3>Examples of Decision Support</h3>
+                <ul>
+                    <li>Identifying unusual equipment behavior for maintenance investigation.</li>
+                    <li>Comparing fuel consumption across different operating periods.</li>
+                    <li>Reviewing vessel movement patterns and route information.</li>
+                    <li>Monitoring port schedules and identifying possible delays.</li>
+                    <li>Examining environmental measurements and operational trends.</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h3>Descriptive, Diagnostic, Predictive, and Prescriptive Analytics</h3>
+                <ul>
+                    <li><strong>Descriptive:</strong> What happened?</li>
+                    <li><strong>Diagnostic:</strong> Why might it have happened?</li>
+                    <li><strong>Predictive:</strong> What may happen next?</li>
+                    <li><strong>Prescriptive:</strong> What action could be considered?</li>
+                </ul>
+                <p style="margin-top:12px;">
+                    Predictive and prescriptive methods depend on suitable
+                    data, validated models, and appropriate operational
+                    safeguards. They do not guarantee future outcomes.
+                </p>
+            </div>
+        </section>
+
+        <!-- 10 TECHNOLOGIES -->
+
+        <section class="content-section">
+            <div class="section-number">10 — TECHNOLOGIES</div>
+            <h2 class="section-title">Technologies Used in Maritime Data Systems</h2>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Databases</h3>
+                    <p>
+                        Store structured records, historical measurements,
+                        equipment information, and operational data.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Time-Series Databases</h3>
+                    <p>
+                        Designed to store and retrieve timestamped
+                        measurements efficiently.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Cloud Computing</h3>
+                    <p>
+                        Provides remote computing and storage resources
+                        for suitable maritime applications, subject to
+                        connectivity and security requirements.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Geographic Information Systems</h3>
+                    <p>
+                        Support the management, analysis, and presentation
+                        of geographically referenced maritime information.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        Can support pattern recognition, anomaly detection,
+                        forecasting, and selected analytical tasks.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Data Visualization Software</h3>
+                    <p>
+                        Converts processed datasets into interactive
+                        charts, reports, maps, and dashboards.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11 STANDARDS -->
+
+        <section class="content-section">
+            <div class="section-number">11 — STANDARDS AND DATA GOVERNANCE</div>
+            <h2 class="section-title">Standards, Interoperability, and Governance</h2>
+
+            <div class="content-card">
+                <h3>IHO S-100 Universal Hydrographic Data Model</h3>
+                <p>
+                    The International Hydrographic Organization's S-100
+                    framework provides a foundation for developing
+                    standardized digital hydrographic products and services.
+                    It supports the management, processing, analysis,
+                    presentation, and exchange of hydrographic information.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>ISO 19848:2024</h3>
+                <p>
+                    This standard defines requirements for standardized
+                    data structures and identifiers for shipboard machinery
+                    and equipment. It supports more consistent access to,
+                    and exchange of, shipboard equipment data.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Data Governance</h3>
+                <p>
+                    Data governance establishes responsibilities and rules
+                    for data ownership, access, quality, security, retention,
+                    and appropriate use. It helps ensure that information
+                    remains understandable and trustworthy throughout
+                    its lifecycle.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <strong>Remember:</strong> A data standard does not
+                automatically guarantee accurate measurements. Data
+                quality also depends on sensors, configuration,
+                maintenance, transmission, and processing practices.
+            </div>
+        </section>
+
+        <!-- 12 CYBERSECURITY -->
+
+        <section class="content-section">
+            <div class="section-number">12 — SECURITY AND RELIABILITY</div>
+            <h2 class="section-title">Protecting Maritime Data Systems</h2>
+
+            <div class="content-card">
+                <h3>Data Integrity</h3>
+                <p>
+                    Data integrity means protecting information against
+                    unauthorized or accidental alteration. Incorrect
+                    values can affect reports, monitoring, and analysis.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Access Control</h3>
+                <p>
+                    Systems should restrict access according to user roles
+                    and operational responsibilities. Sensitive information
+                    should not be available to every user by default.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Secure Transmission and Storage</h3>
+                <p>
+                    Appropriate security measures can protect information
+                    while it is transmitted between systems and while it
+                    is stored. These may include encryption, authentication,
+                    access monitoring, and secure backups.
+                </p>
+            </div>
+
+            <div class="content-card">
+                <h3>Availability and Recovery</h3>
+                <p>
+                    Data systems should be designed with suitable backup,
+                    recovery, and continuity arrangements. Critical
+                    operational decisions should not depend on a single
+                    unprotected data source.
+                </p>
+            </div>
+        </section>
+
+        <!-- 13 PRACTICAL CASE -->
+
+        <section class="content-section">
+            <div class="section-number">13 — PRACTICAL APPLICATION</div>
+            <h2 class="section-title">Practical Case: Monitoring Engine Temperature</h2>
+
+            <div class="scenario">
+                <h3>Scenario</h3>
+
+                <p>
+                    A ship's engine monitoring system receives temperature
+                    readings from several sensors at regular intervals.
+                    The readings are stored with timestamps and equipment
+                    identifiers.
+                </p>
+
+                <p>
+                    The data processing platform checks the values,
+                    identifies missing readings, compares the measurements
+                    with configured limits, and calculates trends.
+                </p>
+
+                <p>
+                    A dashboard displays the temperature history in a
+                    line chart. If a reading exceeds a defined warning
+                    threshold, the system can flag it for review.
+                </p>
+
+                <p>
+                    The engineering team then examines the reading,
+                    sensor condition, equipment status, and related
+                    information before deciding what action is appropriate.
+                </p>
+            </div>
+
+            <div class="content-card" style="margin-top:20px;">
+                <h3>What Does This Example Demonstrate?</h3>
+                <ul>
+                    <li>Sensors provide the original measurements.</li>
+                    <li>Validation checks the readings.</li>
+                    <li>Processing organizes and calculates information.</li>
+                    <li>Visualization makes changes easier to understand.</li>
+                    <li>Human expertise supports the final operational decision.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 14 CHALLENGES -->
+
+        <section class="content-section">
+            <div class="section-number">14 — CHALLENGES AND FUTURE DEVELOPMENTS</div>
+            <h2 class="section-title">Challenges in Maritime Data Processing</h2>
+
+            <div class="grid">
+                <div class="small-card">
+                    <h3>Disconnected Systems</h3>
+                    <p>
+                        Different equipment may use different formats,
+                        identifiers, and communication methods.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Unreliable Connectivity</h3>
+                    <p>
+                        Ship-to-shore communication may be limited by
+                        coverage, bandwidth, cost, or interruptions.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Large Data Volumes</h3>
+                    <p>
+                        Continuous measurements can create significant
+                        storage, processing, and transmission demands.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Inconsistent Data Quality</h3>
+                    <p>
+                        Sensor faults, missing values, and inconsistent
+                        timestamps may affect analysis.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Cybersecurity Risks</h3>
+                    <p>
+                        Unauthorized access or manipulation may threaten
+                        the confidentiality and integrity of data.
+                    </p>
+                </div>
+
+                <div class="small-card">
+                    <h3>Human Factors</h3>
+                    <p>
+                        Poor dashboard design or misunderstood indicators
+                        may lead to incorrect interpretation.
+                    </p>
+                </div>
+            </div>
+
+            <div class="content-card" style="margin-top:22px;">
+                <h3>Future Developments</h3>
+                <ul>
+                    <li>More standardized maritime data models.</li>
+                    <li>Advanced analytics and machine learning applications.</li>
+                    <li>Improved integration of hydrographic and operational data.</li>
+                    <li>More capable digital twins and condition-monitoring systems.</li>
+                    <li>Improved data governance and secure information exchange.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section class="content-section">
+            <div class="section-number">15 — SCIENTIFIC REFERENCES</div>
+            <h2 class="section-title">References and Further Reading</h2>
+
+            <div class="content-card references">
+                <ol>
+                    <li>
+                        International Hydrographic Organization (IHO).
+                        <strong>S-100 Universal Hydrographic Data Model.</strong>
+                        <br>
+                        <a href="https://iho.int/en/s-100-universal-hydrographic-data-model"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IHO S-100 Framework
+                        </a>
+                    </li>
+
+                    <li>
+                        International Hydrographic Organization (IHO).
+                        <strong>ENC & ECDIS Standards.</strong>
+                        <br>
+                        <a href="https://iho.int/en/enc-ecdis"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IHO ENC and ECDIS Standards
+                        </a>
+                    </li>
+
+                    <li>
+                        International Organization for Standardization.
+                        <strong>ISO 19848:2024 — Standard data for shipboard machinery and equipment.</strong>
+                        <br>
+                        <a href="https://www.iso.org/standard/78024.html"
+                           target="_blank" rel="noopener noreferrer">
+                            ISO Standards Catalogue
+                        </a>
+                    </li>
+
+                    <li>
+                        International Maritime Organization (IMO).
+                        <strong>Maritime Digitalization and Electronic Information Exchange.</strong>
+                        <br>
+                        <a href="https://www.imo.org/en/ourwork/facilitation/pages/imocompendium.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO Compendium on Facilitation and Electronic Business
+                        </a>
+                    </li>
+
+                    <li>
+                        International Maritime Organization (IMO).
+                        <strong>Maritime Single Window.</strong>
+                        <br>
+                        <a href="https://www.imo.org/en/ourwork/facilitation/pages/maritimesinglewindow-default.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IMO Maritime Single Window
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ASSESSMENT -->
+
+        <section class="content-section" id="assessment">
+            <div class="section-number">FINAL ASSESSMENT</div>
+            <h2 class="section-title">Knowledge Assessment</h2>
+
+            <p class="section-intro">
+                Test your understanding of maritime data processing
+                and visualization. The assessment contains 10 questions
+                covering the main concepts discussed in this topic.
+            </p>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    Select one answer for each question, then submit
+                    your assessment to review your score and explanations.
+                </p>
+
+                <form id="quizForm">
+                    <div id="questionsContainer"></div>
+
+                    <div class="quiz-actions">
+                        <button type="submit" class="btn btn-primary">
+                            Submit Assessment
+                        </button>
+
+                        <button type="button" class="btn btn-secondary" id="resetQuiz">
+                            Reset Assessment
+                        </button>
+                    </div>
+                </form>
+
+                <div class="result" id="result" aria-live="polite">
+                    <div class="score-box">
+                        <div class="score-number" id="scoreNumber">0/10</div>
+                        <h3 id="scoreMessage"></h3>
+                        <p id="scoreDetails"></p>
+                    </div>
+
+                    <h3 style="margin-bottom:18px;color:var(--purple-light);">
+                        Answer Review & Explanations
+                    </h3>
+
+                    <div id="reviewContainer"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                MARITERRA — Maritime Technology & Knowledge Platform
+            </p>
+            <p>
+                Designed and Developed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What is the primary purpose of data processing?",
+                options: [
+                    "To delete all collected information",
+                    "To convert raw data into organized and useful information",
+                    "To replace all sensors on a ship",
+                    "To prevent systems from communicating"
+                ],
+                answer: 1,
+                explanation: "Data processing organizes, validates, transforms, and analyzes collected data so it can be used meaningfully."
+            },
+            {
+                question: "Which of the following is an example of time-series data?",
+                options: [
+                    "A ship's name",
+                    "A port's country",
+                    "Engine temperature recorded every minute",
+                    "A static equipment identification number"
+                ],
+                answer: 2,
+                explanation: "Time-series data consists of measurements associated with timestamps, allowing changes to be examined over time."
+            },
+            {
+                question: "What is the main purpose of data validation?",
+                options: [
+                    "To check whether data follows expected rules and conditions",
+                    "To make every value identical",
+                    "To remove all unusual measurements automatically",
+                    "To convert charts into maps"
+                ],
+                answer: 0,
+                explanation: "Validation checks formats, ranges, and rules. Suspicious values should be investigated rather than automatically discarded."
+            },
+            {
+                question: "Which technique combines multiple measurements into summary values?",
+                options: [
+                    "Encryption",
+                    "Aggregation",
+                    "Authentication",
+                    "Transmission"
+                ],
+                answer: 1,
+                explanation: "Aggregation combines multiple records into values such as averages, totals, minimums, and maximums."
+            },
+            {
+                question: "Which visualization is most suitable for showing engine temperature changes over time?",
+                options: [
+                    "Line chart",
+                    "Static text label",
+                    "Pie chart",
+                    "Organizational chart"
+                ],
+                answer: 0,
+                explanation: "A line chart is useful for showing how a continuous measurement changes across time."
+            },
+            {
+                question: "What is the purpose of a maritime operational dashboard?",
+                options: [
+                    "To replace every operational system",
+                    "To present selected information and indicators in one interface",
+                    "To guarantee that no equipment will fail",
+                    "To remove the need for human judgment"
+                ],
+                answer: 1,
+                explanation: "Dashboards bring selected information together to support monitoring and understanding. They do not replace underlying systems or professional judgment."
+            },
+            {
+                question: "What does anomaly detection attempt to identify?",
+                options: [
+                    "Only missing user accounts",
+                    "Observations that differ from expected patterns",
+                    "Every normal measurement",
+                    "The physical location of every sensor"
+                ],
+                answer: 1,
+                explanation: "Anomaly detection identifies unusual observations. An anomaly may indicate a fault, a real event, or a data-quality issue."
+            },
+            {
+                question: "What is the main purpose of the IHO S-100 framework?",
+                options: [
+                    "To define engine maintenance schedules",
+                    "To provide a framework for digital hydrographic data products and services",
+                    "To replace maritime communication networks",
+                    "To control ship propulsion"
+                ],
+                answer: 1,
+                explanation: "IHO S-100 is a framework for developing digital hydrographic products and services, including the management, processing, presentation, and exchange of information."
+            },
+            {
+                question: "Why is data integrity important in maritime systems?",
+                options: [
+                    "It makes all data publicly accessible",
+                    "It protects information against unauthorized or accidental alteration",
+                    "It increases the size of every database",
+                    "It removes the need for backups"
+                ],
+                answer: 1,
+                explanation: "Data integrity helps ensure that information has not been improperly changed, which is important for trustworthy monitoring and decisions."
+            },
+            {
+                question: "A sensor reports an unusually high engine temperature. What is the most appropriate response?",
+                options: [
+                    "Delete the reading immediately",
+                    "Ignore the reading because it is unusual",
+                    "Flag it and investigate the sensor, context, and related measurements",
+                    "Assume that the engine has definitely failed"
+                ],
+                answer: 2,
+                explanation: "An unusual reading may be a sensor fault or a real dangerous condition. It should be investigated using related evidence and operational context."
+            }
+        ];
+
+        const questionsContainer = document.getElementById("questionsContainer");
+        const quizForm = document.getElementById("quizForm");
+        const result = document.getElementById("result");
+        const reviewContainer = document.getElementById("reviewContainer");
+
+        function renderQuestions() {
+            questionsContainer.innerHTML = quizQuestions.map((q, index) => `
+                <div class="question">
+                    <h3>
+                        <span class="question-number">Q${index + 1}.</span>
+                        ${q.question}
+                    </h3>
+
+                    ${q.options.map((option, optionIndex) => `
+                        <label class="option">
+                            <input
+                                type="radio"
+                                name="question${index}"
+                                value="${optionIndex}"
+                            >
+                            <span>${option}</span>
+                        </label>
+                    `).join("")}
+                </div>
+            `).join("");
+        }
+
+        quizForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const answers = quizQuestions.map((q, index) => {
+                const selected = document.querySelector(
+                    `input[name="question${index}"]:checked`
+                );
+
+                return selected ? Number(selected.value) : null;
+            });
+
+            const unanswered = answers.filter(answer => answer === null).length;
+
+            if (unanswered > 0) {
+                alert(`Please answer all questions. Remaining: ${unanswered}`);
+                const firstMissing = answers.findIndex(answer => answer === null);
+                document.querySelectorAll(".question")[firstMissing].scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+                return;
+            }
+
+            let score = 0;
+
+            quizQuestions.forEach((q, index) => {
+                if (answers[index] === q.answer) {
+                    score++;
+                }
+            });
+
+            document.getElementById("scoreNumber").textContent =
+                `${score}/${quizQuestions.length}`;
+
+            let message = "";
+
+            if (score === 10) {
+                message = "Excellent — Outstanding Performance!";
+            } else if (score >= 8) {
+                message = "Very Good — Strong Understanding!";
+            } else if (score >= 6) {
+                message = "Good — Keep Improving!";
+            } else if (score >= 4) {
+                message = "Fair — Review the Topic Again.";
+            } else {
+                message = "More Study Needed — Try Again.";
+            }
+
+            document.getElementById("scoreMessage").textContent = message;
+
+            document.getElementById("scoreDetails").textContent =
+                `You answered ${score} questions correctly and ${quizQuestions.length - score} incorrectly.`;
+
+            reviewContainer.innerHTML = quizQuestions.map((q, index) => {
+                const isCorrect = answers[index] === q.answer;
+
+                const selectedAnswer = q.options[answers[index]];
+                const correctAnswer = q.options[q.answer];
+
+                return `
+                    <div class="answer-review ${isCorrect ? "correct" : "incorrect"}">
+                        <h4>
+                            Question ${index + 1} —
+                            <span class="${isCorrect ? "correct-text" : "incorrect-text"}">
+                                ${isCorrect ? "Correct" : "Incorrect"}
+                            </span>
+                        </h4>
+
+                        <p><strong>Question:</strong> ${q.question}</p>
+
+                        <p>
+                            <strong>Your answer:</strong>
+                            ${selectedAnswer}
+                        </p>
+
+                        <p>
+                            <strong>Correct answer:</strong>
+                            <span class="correct-text">${correctAnswer}</span>
+                        </p>
+
+                        <p>
+                            <strong>Explanation:</strong>
+                            ${q.explanation}
+                        </p>
+                    </div>
+                `;
+            }).join("");
+
+            result.style.display = "block";
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+
+        document.getElementById("resetQuiz").addEventListener("click", function() {
+            quizForm.reset();
+            result.style.display = "none";
+            reviewContainer.innerHTML = "";
+
+            document.getElementById("assessment").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+
+        renderQuestions();
+    </script>
+
+</body>
+</html>

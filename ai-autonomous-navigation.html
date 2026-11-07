@@ -1,0 +1,1761 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore artificial intelligence and autonomous navigation in maritime operations, including perception, decision-making, autonomous vessel levels, sensors, safety, cybersecurity, and human oversight.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+    <title>MARITERRA | AI & Autonomous Navigation</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --panel: #101126;
+            --panel-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a5a5c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 5% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.91);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.88rem;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            min-height: 410px;
+            padding: 100px 8% 85px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(110deg, rgba(7, 8, 22, 0.98), rgba(22, 13, 48, 0.83)),
+                radial-gradient(circle at 80% 45%, rgba(147, 51, 234, 0.3), transparent 38%);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: 7%;
+            top: 5%;
+            border: 1px solid rgba(196, 181, 253, 0.12);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 35px rgba(147, 51, 234, 0.035),
+                0 0 0 75px rgba(56, 189, 248, 0.025);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta-tag {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            color: var(--purple-light);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.76rem;
+        }
+
+        .page-layout {
+            width: min(1250px, 88%);
+            margin: 55px auto 90px;
+            display: grid;
+            grid-template-columns: 245px 1fr;
+            gap: 38px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 95px;
+            padding: 24px 19px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: rgba(16, 17, 38, 0.8);
+        }
+
+        .sidebar h3 {
+            font-size: 0.78rem;
+            color: var(--purple-light);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 10px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(147, 51, 234, 0.16);
+            transform: translateX(4px);
+        }
+
+        .content {
+            min-width: 0;
+        }
+
+        .content-section {
+            margin-bottom: 55px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .content-section h2 {
+            font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+            margin-bottom: 19px;
+            color: var(--purple-light);
+        }
+
+        .content-section h3 {
+            font-size: 0.95rem;
+            color: var(--blue);
+            margin: 22px 0 9px;
+        }
+
+        .content-section p {
+            color: var(--muted);
+            font-size: 0.94rem;
+            margin-bottom: 14px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 22px 0;
+        }
+
+        .info-card {
+            padding: 21px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.94), rgba(12, 13, 31, 0.92));
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            border-color: rgba(147, 51, 234, 0.65);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-card h3 {
+            margin: 0 0 9px;
+            font-size: 0.9rem;
+        }
+
+        .info-card p {
+            font-size: 0.84rem;
+            margin: 0;
+        }
+
+        .info-strip {
+            margin: 22px 0;
+            padding: 18px 20px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 10px 10px 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .info-strip strong {
+            color: var(--purple-light);
+        }
+
+        .warning-strip {
+            border-left-color: var(--warning);
+            background: rgba(251, 191, 36, 0.07);
+        }
+
+        .warning-strip strong {
+            color: var(--warning);
+        }
+
+        .danger-strip {
+            border-left-color: var(--danger);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .danger-strip strong {
+            color: var(--danger);
+        }
+
+        .data-list {
+            list-style: none;
+            margin: 15px 0 20px;
+        }
+
+        .data-list li {
+            position: relative;
+            padding: 8px 0 8px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(196, 181, 253, 0.07);
+        }
+
+        .data-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 3px;
+            top: 10px;
+            color: var(--purple);
+            font-size: 0.62rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 17px 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .flow-step span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--blue);
+            font-size: 0.7rem;
+            margin-bottom: 7px;
+        }
+
+        .flow-step strong {
+            display: block;
+            font-size: 0.77rem;
+        }
+
+        .flow-step small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 570px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        th {
+            background: rgba(147, 51, 234, 0.15);
+            color: var(--purple-light);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .quiz-container {
+            padding: 28px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.98), rgba(10, 11, 27, 0.98));
+            border: 1px solid rgba(147, 51, 234, 0.38);
+            border-radius: 17px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 22px;
+        }
+
+        .question {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question:last-of-type {
+            border-bottom: none;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0 0 13px;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 9px 12px;
+            margin: 7px 0;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: rgba(147, 51, 234, 0.08);
+            border-color: var(--border);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.55);
+            background: rgba(74, 222, 128, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: rgba(251, 113, 133, 0.5);
+            background: rgba(251, 113, 133, 0.07);
+            color: #fecdd3;
+        }
+
+        .explanation {
+            display: none;
+            margin: 10px 0 3px;
+            padding: 11px 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            background: rgba(196, 181, 253, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--blue);
+            margin: 0 0 8px;
+        }
+
+        .quiz-result p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .references {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: rgba(16, 17, 38, 0.7);
+        }
+
+        .references a {
+            color: var(--blue);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin: 9px 0;
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        footer {
+            padding: 30px 7%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px 12px;
+            }
+
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 14px 5%;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 75px 6%;
+            }
+
+            .hero::after {
+                right: -180px;
+            }
+
+            .page-layout {
+                width: 90%;
+                margin-top: 35px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar nav {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-container {
+                padding: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+    <a href="smart-navigation.html" class="back-link">← Back to Smart Navigation</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Smart Navigation / Topic 07</div>
+        <h1>AI & <span class="gradient-text">Autonomous Navigation</span></h1>
+        <p>
+            Explore how artificial intelligence, advanced sensors, machine learning,
+            and autonomous control technologies are transforming maritime navigation
+            and supporting the development of intelligent vessels.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-tag">Artificial Intelligence</span>
+            <span class="meta-tag">Autonomous Vessels</span>
+            <span class="meta-tag">Machine Learning</span>
+            <span class="meta-tag">Maritime Technology</span>
+        </div>
+    </div>
+</section>
+
+<div class="page-layout">
+
+    <aside class="sidebar">
+        <h3>TOPIC CONTENTS</h3>
+        <nav>
+            <a href="#introduction">01. Introduction</a>
+            <a href="#concepts">02. Key Concepts</a>
+            <a href="#levels">03. Autonomy Levels</a>
+            <a href="#ai">04. AI in Navigation</a>
+            <a href="#sensors">05. Sensors and Perception</a>
+            <a href="#decision">06. Decision-Making</a>
+            <a href="#control">07. Autonomous Control</a>
+            <a href="#applications">08. Applications</a>
+            <a href="#communication">09. Connectivity</a>
+            <a href="#safety">10. Safety and COLREGs</a>
+            <a href="#challenges">11. Challenges</a>
+            <a href="#cybersecurity">12. Cybersecurity</a>
+            <a href="#future">13. Future Development</a>
+            <a href="#quiz">14. Knowledge Assessment</a>
+            <a href="#references">15. References</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section class="content-section" id="introduction">
+            <div class="section-number">SECTION 01</div>
+            <h2>Introduction to AI and Autonomous Navigation</h2>
+
+            <p>
+                Maritime navigation has traditionally depended on trained officers
+                who interpret navigational information, monitor surrounding traffic,
+                plan routes, and control vessel movements. Modern ships increasingly
+                use digital systems to support these activities through electronic
+                charts, satellite positioning, radar, automated steering, and
+                integrated navigation equipment.
+            </p>
+
+            <p>
+                Recent developments in <strong>Artificial Intelligence (AI)</strong>,
+                machine learning, computer vision, and autonomous control are extending
+                these capabilities. Intelligent systems can analyze large amounts of
+                information, identify patterns, estimate possible risks, and support
+                decisions that were previously performed mainly through human analysis.
+            </p>
+
+            <p>
+                <strong>Autonomous navigation</strong> refers to the ability of a vessel
+                to perform some or many navigation tasks with reduced direct human
+                intervention. Depending on the system design, a vessel may automatically
+                maintain a route, identify obstacles, assess traffic, or execute
+                selected navigation actions.
+            </p>
+
+            <div class="info-strip">
+                <strong>Core idea:</strong> AI can help a vessel interpret information
+                and support navigation decisions. Autonomous control systems can use
+                those decisions to perform actions. These are related technologies,
+                but they are not the same thing.
+            </div>
+        </section>
+
+        <section class="content-section" id="concepts">
+            <div class="section-number">SECTION 02</div>
+            <h2>Understanding the Key Concepts</h2>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        AI is a broad field of computing concerned with systems that
+                        perform tasks associated with capabilities such as perception,
+                        reasoning, prediction, and decision support.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Machine Learning</h3>
+                    <p>
+                        Machine learning is a branch of AI in which models learn
+                        patterns from data and use those patterns to make predictions
+                        or classifications.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Computer Vision</h3>
+                    <p>
+                        Computer vision enables systems to interpret visual information
+                        from cameras, such as identifying objects, detecting boundaries,
+                        and recognizing selected maritime conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Autonomous Control</h3>
+                    <p>
+                        Autonomous control uses software, sensors, and control algorithms
+                        to operate equipment or perform selected vessel actions according
+                        to defined objectives and constraints.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Automation vs. Autonomy</h3>
+
+            <p>
+                Automation and autonomy are often used together, but they describe
+                different capabilities. Automation usually means that a system performs
+                a predefined task automatically. Autonomy involves a greater ability
+                to perceive changing conditions, evaluate alternatives, and select
+                actions within an assigned operational scope.
+            </p>
+
+            <div class="comparison-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Automation</th>
+                            <th>Autonomy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Operation</td>
+                            <td>Performs predefined tasks</td>
+                            <td>Can select actions based on changing conditions</td>
+                        </tr>
+                        <tr>
+                            <td>Decision-making</td>
+                            <td>Often follows fixed rules or settings</td>
+                            <td>May evaluate alternatives within its design limits</td>
+                        </tr>
+                        <tr>
+                            <td>Adaptability</td>
+                            <td>Usually limited to programmed responses</td>
+                            <td>Can use perception and reasoning capabilities</td>
+                        </tr>
+                        <tr>
+                            <td>Human involvement</td>
+                            <td>Depends on the task and system</td>
+                            <td>Depends on the assigned autonomy level and oversight model</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Important:</strong> An automated ship function does not
+                automatically make a vessel autonomous. A system that follows a
+                predefined heading, for example, may be automated without independently
+                understanding the surrounding maritime environment.
+            </div>
+        </section>
+
+        <section class="content-section" id="levels">
+            <div class="section-number">SECTION 03</div>
+            <h2>Levels of Maritime Autonomy</h2>
+
+            <p>
+                The International Maritime Organization (IMO) has described four
+                degrees of autonomy in the context of Maritime Autonomous Surface
+                Ships (MASS). These degrees help explain different operating
+                arrangements and the role of people in controlling the vessel.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Degree One: Automated Processes</h3>
+                    <p>
+                        The ship has automated processes and decision-support systems.
+                        Seafarers remain on board to operate and control the systems
+                        and respond to situations.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Degree Two: Remotely Controlled with Seafarers on Board</h3>
+                    <p>
+                        The ship is controlled remotely from another location, while
+                        seafarers remain on board and may be available to take control
+                        or intervene.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Degree Three: Remotely Controlled without Seafarers on Board</h3>
+                    <p>
+                        The ship is controlled from another location and has no
+                        seafarers on board. Remote operators supervise and control
+                        the vessel according to the system arrangement.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Degree Four: Fully Autonomous Ship</h3>
+                    <p>
+                        The operating system is able to make decisions and determine
+                        actions by itself. Human involvement may be limited to
+                        supervision or other responsibilities outside direct control.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Terminology note:</strong> These are IMO's described degrees
+                of autonomy for MASS, not a universal certification scale for every
+                commercial product. The actual capabilities and operating conditions
+                must be evaluated for each vessel.
+            </div>
+        </section>
+
+        <section class="content-section" id="ai">
+            <div class="section-number">SECTION 04</div>
+            <h2>How Artificial Intelligence Is Used in Maritime Navigation</h2>
+
+            <p>
+                AI can support maritime navigation by processing information from
+                multiple sources and identifying patterns that may be difficult to
+                evaluate manually, especially when large volumes of data are involved.
+            </p>
+
+            <h3>1. Predictive Analysis</h3>
+            <p>
+                AI models can analyze historical and real-time information to estimate
+                future conditions. Examples include predicting equipment problems,
+                estimating traffic patterns, and supporting assessments of changing
+                environmental conditions.
+            </p>
+
+            <h3>2. Object Recognition</h3>
+            <p>
+                Computer vision models can analyze camera images to identify objects
+                such as vessels, buoys, floating obstacles, and selected shoreline
+                features. Their reliability depends on image quality, visibility,
+                training data, and the operating environment.
+            </p>
+
+            <h3>3. Route Optimization</h3>
+            <p>
+                AI-based tools can evaluate possible routes using information about
+                weather, sea conditions, vessel performance, estimated fuel consumption,
+                and operational constraints. Their recommendations must be checked
+                against navigational requirements and reliable information.
+            </p>
+
+            <h3>4. Anomaly Detection</h3>
+            <p>
+                AI can help identify unusual sensor readings, unexpected equipment
+                behavior, or patterns that differ from normal operating conditions.
+                These findings may indicate a fault, a data problem, or a condition
+                that requires further investigation.
+            </p>
+
+            <h3>5. Decision Support</h3>
+            <p>
+                AI-based decision-support tools can compare possible actions and
+                provide recommendations to bridge personnel. The system can help
+                organize information, but it should not be treated as an unquestionable
+                authority.
+            </p>
+
+            <div class="info-strip">
+                <strong>Example:</strong> A navigation support model may analyze
+                vessel position, nearby traffic, weather information, and planned
+                route data to highlight a possible risk. The bridge team must still
+                verify the information and decide on the appropriate response.
+            </div>
+        </section>
+
+        <section class="content-section" id="sensors">
+            <div class="section-number">SECTION 05</div>
+            <h2>Sensors and Environmental Perception</h2>
+
+            <p>
+                An autonomous vessel needs information about its own movement and
+                the environment around it. This process is often called
+                <strong>environmental perception</strong>. Sensors provide the
+                measurements that help the system understand its surroundings.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Radar</h3>
+                    <p>
+                        Detects objects using reflected radio waves and can provide
+                        information about target range and relative movement.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>LiDAR</h3>
+                    <p>
+                        Uses laser pulses to measure distances and create detailed
+                        representations of nearby objects and surfaces.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Cameras</h3>
+                    <p>
+                        Capture visual information that can be analyzed to recognize
+                        objects, navigation marks, and environmental features.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>GNSS</h3>
+                    <p>
+                        Provides satellite-based positioning and, depending on the
+                        receiver, velocity and timing information.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Inertial Sensors</h3>
+                    <p>
+                        Measure acceleration and angular motion, supporting estimates
+                        of vessel movement and orientation.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>AIS</h3>
+                    <p>
+                        Provides transmitted information about participating vessels,
+                        including identity and reported navigational data.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Why Multiple Sensors Are Needed</h3>
+
+            <p>
+                No single sensor can provide a complete and reliable description of
+                every maritime situation. Radar may detect objects in darkness, while
+                cameras provide visual details. GNSS provides positioning information,
+                while inertial sensors can help estimate movement between external
+                position updates.
+            </p>
+
+            <p>
+                Combining different sensor types can improve environmental awareness,
+                but only when their limitations and possible failure conditions are
+                properly understood.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Sensor limitation:</strong> LiDAR and cameras may be affected
+                by rain, fog, spray, darkness, glare, or poor visibility. Radar also
+                has limitations and can be affected by sea clutter, rain clutter,
+                interference, and target characteristics. A robust system must not
+                assume that one sensor will always detect every hazard.
+            </div>
+        </section>
+
+        <section class="content-section" id="decision">
+            <div class="section-number">SECTION 06</div>
+            <h2>Autonomous Decision-Making Process</h2>
+
+            <p>
+                Autonomous navigation requires more than detecting objects. A vessel
+                must interpret the available information, assess possible situations,
+                select an appropriate action, and monitor the result.
+            </p>
+
+            <div class="process-flow">
+                <div class="flow-step">
+                    <span>01</span>
+                    <strong>Perception</strong>
+                    <small>Collect sensor information</small>
+                </div>
+                <div class="flow-step">
+                    <span>02</span>
+                    <strong>Understanding</strong>
+                    <small>Interpret the environment</small>
+                </div>
+                <div class="flow-step">
+                    <span>03</span>
+                    <strong>Planning</strong>
+                    <small>Evaluate possible actions</small>
+                </div>
+                <div class="flow-step">
+                    <span>04</span>
+                    <strong>Execution</strong>
+                    <small>Control vessel systems</small>
+                </div>
+            </div>
+
+            <h3>Perception</h3>
+            <p>
+                The system receives information from sensors and identifies relevant
+                objects, conditions, and changes in the environment.
+            </p>
+
+            <h3>Situation Assessment</h3>
+            <p>
+                The system estimates the vessel's state and interprets the relationship
+                between the vessel, nearby traffic, navigational hazards, and the
+                planned route.
+            </p>
+
+            <h3>Decision and Planning</h3>
+            <p>
+                The system evaluates possible actions within its operating limits.
+                These may include maintaining a course, adjusting speed, or considering
+                a route modification.
+            </p>
+
+            <h3>Control and Monitoring</h3>
+            <p>
+                Selected commands are passed to the relevant control systems. The
+                system then monitors the vessel's response and updates its assessment
+                as new information becomes available.
+            </p>
+
+            <div class="info-strip">
+                <strong>Key concept:</strong> Autonomous navigation is a continuous
+                process. Perception, assessment, planning, and control must repeatedly
+                update as the vessel and its environment change.
+            </div>
+        </section>
+
+        <section class="content-section" id="control">
+            <div class="section-number">SECTION 07</div>
+            <h2>Autonomous Vessel Control Systems</h2>
+
+            <p>
+                After a navigation decision is made, control systems translate the
+                intended action into commands for the vessel's equipment. These
+                functions may include steering, propulsion, and speed regulation.
+            </p>
+
+            <h3>Autopilot and Heading Control</h3>
+            <p>
+                An autopilot can maintain a selected heading by controlling the
+                steering system. More advanced control arrangements may follow a
+                planned track using position and heading information.
+            </p>
+
+            <h3>Track Control</h3>
+            <p>
+                Track control aims to keep the vessel close to a planned path.
+                It uses navigation information to calculate deviations and
+                determine steering corrections within configured operating limits.
+            </p>
+
+            <h3>Propulsion and Speed Control</h3>
+            <p>
+                Automated control may adjust propulsion commands to maintain a
+                selected speed or support a navigation plan. The actual control
+                arrangement depends on the vessel's machinery and safety design.
+            </p>
+
+            <h3>Feedback Control</h3>
+            <p>
+                Feedback control compares the desired vessel state with measured
+                performance. If the vessel deviates from the target, the controller
+                may calculate corrective actions.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Safety requirement:</strong> Steering and propulsion commands
+                must operate within defined limits. A navigation algorithm must not
+                be allowed to issue unsafe commands simply because its calculations
+                suggest a particular action.
+            </div>
+        </section>
+
+        <section class="content-section" id="applications">
+            <div class="section-number">SECTION 08</div>
+            <h2>Practical Applications in the Maritime Industry</h2>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Collision Risk Assessment</h3>
+                    <p>
+                        Intelligent tools can analyze available target information
+                        and highlight situations that may require closer monitoring.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Smart Route Planning</h3>
+                    <p>
+                        AI-supported tools can compare route alternatives using
+                        weather, fuel, vessel performance, and voyage constraints.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Port and Harbor Operations</h3>
+                    <p>
+                        Autonomous and remotely supervised technologies may support
+                        selected operations in controlled port environments.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Unmanned Surface Vessels</h3>
+                    <p>
+                        Uncrewed surface vessels can perform selected missions such
+                        as surveying, monitoring, research, and data collection.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Predictive Maintenance</h3>
+                    <p>
+                        Machine learning can analyze equipment data to identify
+                        patterns that may indicate developing faults.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Environmental Monitoring</h3>
+                    <p>
+                        Autonomous vessels can collect oceanographic and environmental
+                        measurements over extended periods in selected operating areas.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Maritime Research and Development</h3>
+
+            <p>
+                Autonomous navigation is also being studied for specialized vessels
+                used in ocean research, hydrographic surveying, offshore operations,
+                and environmental monitoring. These applications may operate under
+                different conditions from large commercial ships carrying cargo
+                through busy international shipping lanes.
+            </p>
+
+            <div class="info-strip">
+                <strong>Practical perspective:</strong> A successful autonomous
+                demonstration in a controlled environment does not automatically
+                prove that the same system is ready for unrestricted commercial
+                navigation in congested or unpredictable waters.
+            </div>
+        </section>
+
+        <section class="content-section" id="communication">
+            <div class="section-number">SECTION 09</div>
+            <h2>Remote Monitoring and Maritime Connectivity</h2>
+
+            <p>
+                Some autonomous vessel arrangements depend on communication between
+                the ship and a remote operations center. Shore-based personnel may
+                monitor vessel status, receive alerts, review navigation information,
+                or intervene when the system requires assistance.
+            </p>
+
+            <h3>Remote Operations Centers</h3>
+            <p>
+                A remote operations center provides facilities for monitoring and
+                managing vessels from a location outside the ship. Its responsibilities
+                depend on the operational design, assigned personnel, communication
+                arrangements, and applicable requirements.
+            </p>
+
+            <h3>Communication Technologies</h3>
+            <ul class="data-list">
+                <li><strong>Satellite communication:</strong> supports connectivity over long distances and offshore areas.</li>
+                <li><strong>Cellular networks:</strong> may provide communication near coastal areas and ports where coverage is available.</li>
+                <li><strong>Radio communication:</strong> supports maritime communications and operational coordination.</li>
+                <li><strong>Shore-based networks:</strong> can support data exchange in selected coastal and port environments.</li>
+            </ul>
+
+            <h3>Communication Delay and Availability</h3>
+            <p>
+                Communication systems may experience latency, limited coverage,
+                interference, congestion, or temporary outages. A vessel that depends
+                on remote control must be designed to respond safely when communication
+                becomes unreliable or unavailable.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Important:</strong> Remote supervision is not the same as
+                continuous remote control. Some vessels may operate locally and
+                independently for defined periods, while shore personnel monitor
+                status and intervene only when required.
+            </div>
+        </section>
+
+        <section class="content-section" id="safety">
+            <div class="section-number">SECTION 10</div>
+            <h2>Maritime Safety and COLREGs</h2>
+
+            <p>
+                Autonomous navigation must account for the International Regulations
+                for Preventing Collisions at Sea, commonly known as <strong>COLREGs</strong>.
+                These regulations establish rules for avoiding collisions and include
+                requirements related to lookout, safe speed, risk of collision, and
+                conduct in different navigational situations.
+            </p>
+
+            <h3>Rule 5: Look-out</h3>
+            <p>
+                Rule 5 requires every vessel to maintain a proper look-out by sight
+                and hearing, as well as by all available means appropriate to the
+                prevailing circumstances and conditions. Autonomous systems must
+                be assessed in relation to how applicable lookout responsibilities
+                are fulfilled.
+            </p>
+
+            <h3>Rule 6: Safe Speed</h3>
+            <p>
+                Rule 6 requires vessels to proceed at a safe speed so that appropriate
+                and effective action can be taken to avoid collision and stop within
+                an appropriate distance. Visibility, traffic density, maneuverability,
+                and environmental conditions are among the relevant considerations.
+            </p>
+
+            <h3>Rule 7: Risk of Collision</h3>
+            <p>
+                Rule 7 addresses the assessment of collision risk. Available information,
+                including radar information when fitted and properly used, should be
+                considered carefully. Assumptions based on limited information should
+                be avoided.
+            </p>
+
+            <h3>Rule 8: Action to Avoid Collision</h3>
+            <p>
+                Rule 8 addresses action taken to avoid collision. Any action should
+                be positive, made in ample time, and appropriate to the circumstances.
+                Autonomous systems must be designed to account for these principles
+                and the applicable rules.
+            </p>
+
+            <div class="info-strip danger-strip">
+                <strong>Critical safety principle:</strong> AI-generated decisions
+                must not be assumed to comply with COLREGs merely because they are
+                calculated automatically. The system's behavior must be tested and
+                assessed against the applicable rules and operational scenarios.
+            </div>
+
+            <h3>Safety Assessment</h3>
+            <p>
+                Autonomous vessel projects require careful assessment of foreseeable
+                hazards, system failures, operating limitations, human intervention
+                arrangements, and emergency responses. Safety must be considered
+                throughout design, testing, operation, and maintenance.
+            </p>
+        </section>
+
+        <section class="content-section" id="challenges">
+            <div class="section-number">SECTION 11</div>
+            <h2>Technical and Operational Challenges</h2>
+
+            <p>
+                Autonomous maritime navigation faces challenges that cannot be solved
+                by adding AI software alone. Ships operate in dynamic environments
+                involving weather, waves, traffic, equipment failures, and changing
+                navigational conditions.
+            </p>
+
+            <h3>1. Unpredictable Maritime Environments</h3>
+            <p>
+                Waves, strong winds, currents, fog, rain, and changing sea conditions
+                can affect sensors, vessel movement, and system performance.
+            </p>
+
+            <h3>2. Complex Traffic Situations</h3>
+            <p>
+                Busy shipping lanes, narrow channels, fishing vessels, small craft,
+                and vessels with different maneuvering characteristics can create
+                situations that are difficult to interpret and predict.
+            </p>
+
+            <h3>3. Sensor Reliability</h3>
+            <p>
+                Sensor readings may become inaccurate or unavailable because of
+                equipment faults, environmental interference, poor calibration,
+                or incorrect installation.
+            </p>
+
+            <h3>4. AI Model Limitations</h3>
+            <p>
+                AI models learn from training data. If the training data does not
+                represent unusual weather, rare traffic situations, or unfamiliar
+                environments, model performance may be unreliable in those conditions.
+            </p>
+
+            <h3>5. Testing and Validation</h3>
+            <p>
+                Systems must be tested across a wide range of operating scenarios.
+                Successful performance in a limited trial cannot establish reliability
+                in every possible maritime environment.
+            </p>
+
+            <h3>6. Human Factors</h3>
+            <p>
+                Remote operators and onboard personnel need clear information,
+                understandable alerts, appropriate training, and practical ways
+                to intervene when required.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Hidden limitation:</strong> An AI system may perform extremely
+                well in familiar conditions and still fail in an unfamiliar situation.
+                This is why testing, monitoring, fallback procedures, and human
+                oversight remain essential.
+            </div>
+        </section>
+
+        <section class="content-section" id="cybersecurity">
+            <div class="section-number">SECTION 12</div>
+            <h2>Cybersecurity and System Protection</h2>
+
+            <p>
+                Autonomous and remotely monitored vessels rely on software, networks,
+                sensors, and communication links. This creates cybersecurity risks
+                that must be considered as part of the vessel's overall safety design.
+            </p>
+
+            <h3>Possible Cybersecurity Threats</h3>
+            <ul class="data-list">
+                <li><strong>Unauthorized access:</strong> attackers may attempt to access navigation systems or remote services.</li>
+                <li><strong>Data manipulation:</strong> false or altered information may affect system awareness and decisions.</li>
+                <li><strong>Malware:</strong> malicious software may disrupt computers or connected equipment.</li>
+                <li><strong>Communication disruption:</strong> interference or attacks may affect remote monitoring and control links.</li>
+                <li><strong>Software vulnerabilities:</strong> outdated or poorly configured systems may expose weaknesses.</li>
+            </ul>
+
+            <h3>Protection Measures</h3>
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Network Segmentation</h3>
+                    <p>
+                        Separating systems and restricting unnecessary connections
+                        can reduce the spread of a cyber incident.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Access Control</h3>
+                    <p>
+                        Authentication and role-based permissions help ensure that
+                        only authorized personnel can access critical functions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Monitoring and Detection</h3>
+                    <p>
+                        Monitoring network activity and system behavior can help
+                        identify suspicious events and unexpected changes.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Recovery Planning</h3>
+                    <p>
+                        Backup arrangements, tested recovery procedures, and incident
+                        response plans support resilience after a disruption.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-strip danger-strip">
+                <strong>Safety warning:</strong> Cybersecurity is a navigation safety
+                issue. Compromised positioning, sensor data, control software, or
+                communication links can affect the vessel's ability to operate safely.
+            </div>
+        </section>
+
+        <section class="content-section" id="future">
+            <div class="section-number">SECTION 13</div>
+            <h2>The Future of AI and Autonomous Navigation</h2>
+
+            <p>
+                Research and development are continuing in autonomous vessels,
+                intelligent navigation, maritime robotics, and connected shipping
+                infrastructure. Future systems may become more capable of interpreting
+                complex environments and coordinating with other maritime systems.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Advanced AI Models</h3>
+                    <p>
+                        Improved models may support more accurate perception,
+                        prediction, and analysis of complex maritime conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Digital Twins</h3>
+                    <p>
+                        Digital representations of vessels and systems may help
+                        simulate performance, evaluate scenarios, and support
+                        maintenance and operational planning.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Cooperative Navigation</h3>
+                    <p>
+                        Connected vessels may exchange selected information to
+                        support coordination and awareness in shared waterways.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Smarter Ports</h3>
+                    <p>
+                        Intelligent port infrastructure may support traffic
+                        management, berth planning, and coordinated vessel operations.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Advanced Robotics</h3>
+                    <p>
+                        Marine robots and autonomous surface vessels may support
+                        inspection, surveying, research, and offshore activities.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Human-AI Collaboration</h3>
+                    <p>
+                        Future systems may focus on combining machine analysis
+                        with human experience, supervision, and accountability.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                The future of autonomous navigation will depend not only on better
+                algorithms, but also on reliable sensors, safe control systems,
+                cybersecurity, regulation, testing, and clear responsibility
+                arrangements.
+            </p>
+
+            <div class="info-strip">
+                <strong>Final perspective:</strong> The goal is not simply to remove
+                people from ships. It is to develop maritime systems that can operate
+                safely, reliably, and responsibly while using technology to improve
+                navigation and maritime operations.
+            </div>
+        </section>
+
+        <section class="content-section" id="quiz">
+            <div class="section-number">SECTION 14</div>
+            <h2>Knowledge Assessment</h2>
+
+            <p>
+                Test your understanding of AI and Autonomous Navigation.
+                Select one answer for each question. All ten questions are required.
+            </p>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    10 Questions · One correct answer per question · Explanations appear
+                    after submission.
+                </p>
+
+                <form id="quizForm">
+
+                    <div class="question" data-question="0">
+                        <h3>1. What is the main difference between automation and autonomy?</h3>
+                        <label class="option"><input type="radio" name="q0" value="0"> Automation always requires AI, while autonomy never uses software.</label>
+                        <label class="option"><input type="radio" name="q0" value="1"> Automation performs predefined tasks, while autonomy can evaluate conditions and select actions within its limits.</label>
+                        <label class="option"><input type="radio" name="q0" value="2"> They are exactly the same concept.</label>
+                        <div class="explanation">Automation often performs predefined tasks, while autonomy includes greater ability to interpret changing conditions and select actions within defined limits.</div>
+                    </div>
+
+                    <div class="question" data-question="1">
+                        <h3>2. Which IMO autonomy degree describes a ship remotely controlled without seafarers on board?</h3>
+                        <label class="option"><input type="radio" name="q1" value="0"> Degree One</label>
+                        <label class="option"><input type="radio" name="q1" value="1"> Degree Two</label>
+                        <label class="option"><input type="radio" name="q1" value="2"> Degree Three</label>
+                        <div class="explanation">IMO Degree Three describes a remotely controlled ship without seafarers on board.</div>
+                    </div>
+
+                    <div class="question" data-question="2">
+                        <h3>3. What is the main role of computer vision in autonomous navigation?</h3>
+                        <label class="option"><input type="radio" name="q2" value="0"> Interpreting visual information and recognizing objects or environmental features.</label>
+                        <label class="option"><input type="radio" name="q2" value="1"> Measuring engine fuel consumption only.</label>
+                        <label class="option"><input type="radio" name="q2" value="2"> Replacing all communication systems.</label>
+                        <div class="explanation">Computer vision analyzes camera images to identify objects, boundaries, and selected environmental features.</div>
+                    </div>
+
+                    <div class="question" data-question="3">
+                        <h3>4. Why do autonomous vessels use multiple sensor types?</h3>
+                        <label class="option"><input type="radio" name="q3" value="0"> To guarantee that sensors can never fail.</label>
+                        <label class="option"><input type="radio" name="q3" value="1"> To avoid collecting environmental information.</label>
+                        <label class="option"><input type="radio" name="q3" value="2"> To obtain complementary information and reduce dependence on one source.</label>
+                        <div class="explanation">Different sensors have different capabilities and limitations. Combining them can improve perception when their information is properly evaluated.</div>
+                    </div>
+
+                    <div class="question" data-question="4">
+                        <h3>5. What is the correct order of a simplified autonomous navigation process?</h3>
+                        <label class="option"><input type="radio" name="q4" value="0"> Execution, perception, planning, understanding.</label>
+                        <label class="option"><input type="radio" name="q4" value="1"> Perception, situation assessment, planning, execution.</label>
+                        <label class="option"><input type="radio" name="q4" value="2"> Planning, execution, sensor removal, perception.</label>
+                        <div class="explanation">A simplified process begins with perception, followed by understanding or assessment, planning, and execution.</div>
+                    </div>
+
+                    <div class="question" data-question="5">
+                        <h3>6. What is the purpose of feedback control?</h3>
+                        <label class="option"><input type="radio" name="q5" value="0"> To compare actual performance with the desired state and calculate corrections.</label>
+                        <label class="option"><input type="radio" name="q5" value="1"> To disconnect all navigation sensors.</label>
+                        <label class="option"><input type="radio" name="q5" value="2"> To prevent the vessel from receiving new information.</label>
+                        <div class="explanation">Feedback control uses measured performance to determine whether the system needs corrective action.</div>
+                    </div>
+
+                    <div class="question" data-question="6">
+                        <h3>7. Which COLREG rule addresses maintaining a proper look-out?</h3>
+                        <label class="option"><input type="radio" name="q6" value="0"> Rule 5</label>
+                        <label class="option"><input type="radio" name="q6" value="1"> Rule 10</label>
+                        <label class="option"><input type="radio" name="q6" value="2"> Rule 15</label>
+                        <div class="explanation">COLREG Rule 5 addresses the requirement to maintain a proper look-out by all appropriate available means.</div>
+                    </div>
+
+                    <div class="question" data-question="7">
+                        <h3>8. What may happen if communication with a remote operations center is lost?</h3>
+                        <label class="option"><input type="radio" name="q7" value="0"> The vessel automatically becomes fully autonomous.</label>
+                        <label class="option"><input type="radio" name="q7" value="1"> The vessel should rely on a designed safe response or fallback arrangement.</label>
+                        <label class="option"><input type="radio" name="q7" value="2"> All sensors become unnecessary.</label>
+                        <div class="explanation">A remotely operated vessel needs predefined responses and safe fallback arrangements for communication loss or degradation.</div>
+                    </div>
+
+                    <div class="question" data-question="8">
+                        <h3>9. Why can an AI model fail in an unfamiliar maritime situation?</h3>
+                        <label class="option"><input type="radio" name="q8" value="0"> Because AI systems cannot process any sensor information.</label>
+                        <label class="option"><input type="radio" name="q8" value="1"> Because every AI model is guaranteed to work only in darkness.</label>
+                        <label class="option"><input type="radio" name="q8" value="2"> Because the situation may differ significantly from the data and conditions represented during training and validation.</label>
+                        <div class="explanation">AI models may perform poorly when encountering conditions that are not adequately represented in their training or validation data.</div>
+                    </div>
+
+                    <div class="question" data-question="9">
+                        <h3>10. Which statement best describes the role of AI in maritime navigation?</h3>
+                        <label class="option"><input type="radio" name="q9" value="0"> AI removes the need for safety procedures and human responsibility.</label>
+                        <label class="option"><input type="radio" name="q9" value="1"> AI can support perception and decisions, but its outputs require validation and appropriate oversight.</label>
+                        <label class="option"><input type="radio" name="q9" value="2"> AI guarantees that collisions cannot happen.</label>
+                        <div class="explanation">AI can support navigation, but it does not guarantee safety or remove the need for testing, oversight, and compliance with applicable requirements.</div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="quiz-btn submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                        <button type="button" class="quiz-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                    </div>
+
+                    <div class="quiz-result" id="quizResult" aria-live="polite">
+                        <h3 id="resultTitle">Your Result</h3>
+                        <p id="resultText"></p>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <section class="content-section" id="references">
+            <div class="section-number">SECTION 15</div>
+            <h2>Technical References and Further Reading</h2>
+
+            <div class="references">
+                <ul>
+                    <li>
+                        International Maritime Organization (IMO) —
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">Official IMO website</a>.
+                    </li>
+                    <li>
+                        IMO — Maritime Autonomous Surface Ships (MASS) —
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">IMO maritime safety and regulatory information</a>.
+                    </li>
+                    <li>
+                        IMO — Convention on the International Regulations for Preventing Collisions at Sea (COLREGs) —
+                        <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener noreferrer">COLREG Convention information</a>.
+                    </li>
+                    <li>
+                        International Association of Marine Aids to Navigation and Lighthouse Authorities (IALA) —
+                        <a href="https://www.iala-aism.org/" target="_blank" rel="noopener noreferrer">Maritime navigation and digitalization resources</a>.
+                    </li>
+                    <li>
+                        International Electrotechnical Commission (IEC) —
+                        <a href="https://www.iec.ch/" target="_blank" rel="noopener noreferrer">Standards for electrical and electronic technologies</a>.
+                    </li>
+                    <li>
+                        International Maritime Organization (IMO) —
+                        <a href="https://www.imo.org/en/OurWork/Security/Pages/Cyber-security.aspx" target="_blank" rel="noopener noreferrer">Maritime cyber risk management information</a>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Study note:</strong> This educational topic introduces general
+                concepts in AI and autonomous navigation. Specific vessel capabilities,
+                autonomy arrangements, legal responsibilities, safety requirements,
+                and operational permissions must be verified against current IMO
+                publications, applicable regulations, and vessel documentation.
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <p>MARITERRA — Maritime Knowledge & Technology</p>
+    <p>DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong></p>
+</footer>
+
+<script>
+    const correctAnswers = [1, 2, 0, 2, 1, 0, 0, 1, 2, 1];
+
+    function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        const resultBox = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        let score = 0;
+        let unanswered = [];
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+
+            if (!selected) {
+                unanswered.push(i + 1);
+            }
+        }
+
+        if (unanswered.length > 0) {
+            alert("Please answer all 10 questions before submitting. Missing questions: " + unanswered.join(", "));
+            return;
+        }
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const question = document.querySelector(`.question[data-question="${i}"]`);
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach(option => {
+                option.classList.remove("correct", "incorrect");
+                const input = option.querySelector("input");
+
+                if (Number(input.value) === correctAnswers[i]) {
+                    option.classList.add("correct");
+                }
+
+                if (input.checked && Number(input.value) !== correctAnswers[i]) {
+                    option.classList.add("incorrect");
+                }
+
+                input.disabled = true;
+            });
+
+            if (Number(selected.value) === correctAnswers[i]) {
+                score++;
+            }
+
+            explanation.classList.add("show");
+        }
+
+        const percentage = score * 10;
+
+        resultTitle.textContent = `Your Score: ${score} / 10`;
+
+        resultText.textContent =
+            percentage >= 90
+                ? "Excellent work! You have a strong understanding of AI and autonomous maritime navigation."
+                : percentage >= 70
+                ? "Good work! Review the explanations to strengthen your technical understanding."
+                : percentage >= 50
+                ? "You have a basic understanding, but some important concepts need more revision."
+                : "More study is recommended. Review the topic carefully and try the quiz again.";
+
+        resultBox.classList.add("show");
+        resultBox.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        document.querySelector(".submit-btn").disabled = true;
+        document.querySelector(".submit-btn").style.opacity = "0.55";
+    }
+
+    function resetQuiz() {
+        const form = document.getElementById("quizForm");
+
+        form.reset();
+
+        document.querySelectorAll(".option").forEach(option => {
+            option.classList.remove("correct", "incorrect");
+            option.querySelector("input").disabled = false;
+        });
+
+        document.querySelectorAll(".explanation").forEach(explanation => {
+            explanation.classList.remove("show");
+        });
+
+        document.getElementById("quizResult").classList.remove("show");
+
+        const submitButton = document.querySelector(".submit-btn");
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+</script>
+
+</body>
+</html>

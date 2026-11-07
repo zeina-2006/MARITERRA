@@ -1,0 +1,2260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore maritime technology integration, connected ship systems, digital communication, data processing, and intelligent maritime operations.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Technology Integration</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           MARITERRA
+           TECHNOLOGY INTEGRATION PAGE
+        ========================================= */
+
+        /* SCROLL */
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body.integration-page {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #integration-subtopics,
+        #integration-knowledge-check {
+            scroll-margin-top: 90px;
+        }
+
+        /* GENERAL */
+
+        .integration-container {
+            width: min(1200px, 92%);
+            margin: auto;
+        }
+
+        .integration-label {
+            color: var(--purple-light);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .integration-section-title {
+            color: var(--white);
+            font-size: clamp(27px, 4vw, 40px);
+            margin-bottom: 18px;
+        }
+
+        .integration-section-description {
+            max-width: 780px;
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 15px;
+        }
+
+        /* HERO */
+
+        .integration-hero {
+            position: relative;
+            width: 100%;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .integration-hero-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .integration-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(7, 8, 22, 0.96) 0%,
+                rgba(7, 8, 22, 0.82) 48%,
+                rgba(7, 8, 22, 0.30) 100%
+            );
+        }
+
+        .integration-hero-content {
+            position: relative;
+            z-index: 2;
+            width: min(1200px, 92%);
+            margin: auto;
+            padding: 70px 0;
+        }
+
+        .integration-hero-content h1 {
+            max-width: 750px;
+            color: var(--white);
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+
+        .integration-hero-content h1 span {
+            color: var(--purple-light);
+        }
+
+        .integration-hero-content p {
+            max-width: 680px;
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 28px;
+        }
+
+        .integration-breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .integration-breadcrumb a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .integration-breadcrumb a:hover {
+            color: var(--white);
+        }
+
+        .integration-hero-button {
+            display: inline-block;
+            padding: 13px 25px;
+            color: var(--white);
+            border: 1px solid var(--purple);
+            border-radius: 6px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .integration-hero-button:hover {
+            background: var(--purple-dark);
+            transform: translateY(-3px);
+        }
+
+        /* INTRODUCTION */
+
+        .integration-introduction {
+            padding: 90px 0;
+        }
+
+        .integration-introduction-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .integration-introduction-text p {
+            color: var(--text-muted);
+            line-height: 2;
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        .integration-highlight {
+            padding: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .integration-highlight h3 {
+            color: var(--purple-light);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .integration-highlight p {
+            color: var(--text);
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        /* CORE CONCEPTS */
+
+        .integration-concepts {
+            padding: 75px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .integration-concepts-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .integration-concepts-header .integration-section-description {
+            margin: auto;
+        }
+
+        .integration-concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .integration-concept-card {
+            padding: 27px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .integration-concept-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-light);
+        }
+
+        .integration-concept-number {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 17px;
+        }
+
+        .integration-concept-card h3 {
+            color: var(--white);
+            font-size: 19px;
+            margin-bottom: 13px;
+        }
+
+        .integration-concept-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* HOW INTEGRATION WORKS */
+
+        .integration-process {
+            padding: 90px 0;
+        }
+
+        .integration-process-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .integration-process-header .integration-section-description {
+            margin: auto;
+        }
+
+        .integration-process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .integration-process-step {
+            position: relative;
+            padding: 25px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .integration-process-step .step-number {
+            display: inline-flex;
+            width: 42px;
+            height: 42px;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--purple);
+            border-radius: 50%;
+            color: var(--purple-light);
+            margin-bottom: 17px;
+            font-weight: 700;
+        }
+
+        .integration-process-step h3 {
+            color: var(--white);
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .integration-process-step p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* APPLICATIONS */
+
+        .integration-applications {
+            padding: 75px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .integration-applications-header {
+            margin-bottom: 40px;
+        }
+
+        .integration-applications-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .integration-application {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-card);
+        }
+
+        .integration-application h3 {
+            color: var(--white);
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .integration-application p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        /* CHALLENGES */
+
+        .integration-challenges {
+            padding: 85px 0;
+        }
+
+        .integration-challenges-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .integration-challenges-text p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 14px;
+            margin-bottom: 17px;
+        }
+
+        .integration-challenge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .integration-challenge-item {
+            padding: 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .integration-challenge-item h3 {
+            color: var(--purple-light);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .integration-challenge-item p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* FUTURE DEVELOPMENTS */
+
+        .integration-future {
+            padding: 85px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .integration-future-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .integration-future-header .integration-section-description {
+            margin: auto;
+        }
+
+        .integration-future-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .integration-future-card {
+            padding: 27px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            transition: var(--transition);
+        }
+
+        .integration-future-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-light);
+            box-shadow: 0 12px 30px rgba(147, 51, 234, 0.12);
+        }
+
+        .integration-future-number {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+        }
+
+        .integration-future-card h3 {
+            color: var(--white);
+            font-size: 19px;
+            line-height: 1.5;
+            margin-bottom: 13px;
+        }
+
+        .integration-future-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .integration-future-note {
+            margin-top: 30px;
+            padding: 22px 25px;
+            background: rgba(147, 51, 234, 0.07);
+            border-left: 3px solid var(--purple);
+            border-radius: 6px;
+        }
+
+        .integration-future-note p {
+            color: var(--text);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        /* KNOWLEDGE CHECK */
+
+        .integration-quiz {
+            padding: 90px 0;
+        }
+
+        .integration-quiz-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .integration-quiz-header .integration-section-description {
+            margin: auto;
+        }
+
+        .integration-quiz-box {
+            max-width: 900px;
+            margin: auto;
+            padding: 35px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .integration-quiz-question {
+            padding: 25px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .integration-quiz-question:first-child {
+            padding-top: 0;
+        }
+
+        .integration-quiz-question:last-of-type {
+            border-bottom: none;
+        }
+
+        .integration-quiz-question h3 {
+            color: var(--white);
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 17px;
+        }
+
+        .integration-quiz-question h3 span {
+            color: var(--purple-light);
+            margin-right: 7px;
+        }
+
+        .integration-quiz-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .integration-quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 16px;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .integration-quiz-option:hover {
+            border-color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .integration-quiz-option input {
+            accent-color: var(--purple);
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .integration-quiz-option.correct-answer {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+        }
+
+        .integration-quiz-option.wrong-answer {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .integration-quiz-option:has(input:disabled) {
+            cursor: default;
+        }
+
+        .integration-quiz-feedback {
+            display: none;
+            margin-top: 13px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .integration-quiz-feedback.show {
+            display: block;
+        }
+
+        .integration-quiz-feedback.correct {
+            color: #86efac;
+            background: rgba(34, 197, 94, 0.08);
+        }
+
+        .integration-quiz-feedback.incorrect {
+            color: #fca5a5;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+        .integration-quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .integration-quiz-button {
+            padding: 13px 25px;
+            border: 1px solid var(--purple);
+            border-radius: 6px;
+            color: var(--white);
+            background: var(--purple-dark);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .integration-quiz-button:hover {
+            background: var(--purple);
+            transform: translateY(-2px);
+        }
+
+        .integration-quiz-button.secondary {
+            background: transparent;
+            border-color: var(--border);
+        }
+
+        .integration-quiz-button.secondary:hover {
+            border-color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .integration-quiz-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .integration-quiz-result {
+            display: none;
+            margin-top: 25px;
+            padding: 22px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .integration-quiz-result.show {
+            display: block;
+        }
+
+        .integration-quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .integration-quiz-result p {
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .integration-quiz-score {
+            display: block;
+            color: var(--white);
+            font-size: 34px;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+
+        /* SUBTOPICS */
+
+        .integration-subtopics {
+            padding: 90px 0;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .integration-subtopics-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .integration-subtopics-header .integration-section-description {
+            margin: auto;
+        }
+
+        .integration-subtopics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 23px;
+        }
+
+        .integration-subtopic-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: 26px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .integration-subtopic-card:hover {
+            transform: translateY(-7px);
+            border-color: var(--purple-light);
+            box-shadow: 0 12px 30px rgba(147, 51, 234, 0.13);
+        }
+
+        .integration-subtopic-number {
+            color: var(--purple-light);
+            font-size: 13px;
+            letter-spacing: 2px;
+            margin-bottom: 19px;
+        }
+
+        .integration-subtopic-card h3 {
+            color: var(--white);
+            font-size: 19px;
+            line-height: 1.5;
+            margin-bottom: 13px;
+        }
+
+        .integration-subtopic-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 22px;
+            flex: 1;
+        }
+
+        .integration-subtopic-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            color: var(--purple-light);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .integration-subtopic-action span:last-child {
+            font-size: 19px;
+            transition: var(--transition);
+        }
+
+        .integration-subtopic-card:hover
+        .integration-subtopic-action span:last-child {
+            transform: translateX(5px);
+        }
+
+        /* REFERENCES */
+
+        .integration-references {
+            padding: 70px 0;
+        }
+
+        .integration-references-box {
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-card);
+        }
+
+        .integration-references-box h2 {
+            color: var(--white);
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .integration-references-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.9;
+            margin-bottom: 15px;
+        }
+
+        .integration-references-box a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        .integration-references-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* FOOTER */
+
+        .integration-footer {
+            padding: 35px 20px;
+            text-align: center;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .integration-footer h3 {
+            color: var(--white);
+            font-size: 22px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .integration-footer p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .integration-footer .footer-owner {
+            color: var(--purple-light);
+            margin-top: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .integration-concepts-grid,
+            .integration-subtopics-grid,
+            .integration-future-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .integration-process-flow {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .integration-introduction-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .integration-hero {
+                min-height: 420px;
+            }
+
+            .integration-hero-content {
+                padding: 45px 0;
+            }
+
+            .integration-hero-overlay {
+                background: linear-gradient(
+                    90deg,
+                    rgba(7, 8, 22, 0.96),
+                    rgba(7, 8, 22, 0.72)
+                );
+            }
+
+            .integration-concepts-grid,
+            .integration-subtopics-grid,
+            .integration-process-flow,
+            .integration-applications-grid,
+            .integration-challenges-grid,
+            .integration-future-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .integration-introduction,
+            .integration-process,
+            .integration-challenges,
+            .integration-future,
+            .integration-quiz {
+                padding: 60px 0;
+            }
+
+            .integration-concepts,
+            .integration-applications,
+            .integration-subtopics {
+                padding: 60px 0;
+            }
+
+            .integration-references {
+                padding: 50px 0;
+            }
+
+            .integration-quiz-box {
+                padding: 22px 17px;
+            }
+
+            .integration-quiz-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .integration-quiz-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="integration-page">
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                <span>⚓</span>
+
+                <div>
+                    <strong>MARITERRA</strong>
+                    <small>The Future of Maritime Knowledge</small>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="academics.html">Academics</a></li>
+                <li><a href="technology.html" class="active">Technology</a></li>
+                <li><a href="maritime-world.html">Maritime World</a></li>
+                <li><a href="environment.html">Environment</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="integration-hero">
+
+        <img
+            class="integration-hero-image"
+            src="images/technology-integration.png"
+            alt="Technology integration in modern maritime systems"
+        >
+
+        <div class="integration-hero-overlay"></div>
+
+        <div class="integration-hero-content">
+
+            <div class="integration-breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="technology.html">Maritime Technology</a>
+                <span>/</span>
+                <span>Technology Integration</span>
+            </div>
+
+            <div class="integration-label">
+                CONNECTED MARITIME SYSTEMS
+            </div>
+
+            <h1>
+                Technology <span>Integration</span>
+            </h1>
+
+            <p>
+                Discover how maritime technologies, digital systems,
+                communication networks, and intelligent equipment work
+                together to support modern ships, ports, and maritime operations.
+            </p>
+
+            <a href="#integration-subtopics" class="integration-hero-button">
+                Explore the Topics
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <main>
+
+        <!-- INTRODUCTION -->
+
+        <section class="integration-introduction">
+
+            <div class="integration-container">
+
+                <div class="integration-introduction-grid">
+
+                    <div class="integration-introduction-text">
+
+                        <div class="integration-label">
+                            01 / INTRODUCTION
+                        </div>
+
+                        <h2 class="integration-section-title">
+                            What Is Maritime Technology Integration?
+                        </h2>
+
+                        <p>
+                            Maritime technology integration is the process
+                            of connecting different electronic, mechanical,
+                            communication, and digital systems so they can
+                            exchange information and support coordinated
+                            maritime operations.
+                        </p>
+
+                        <p>
+                            Modern vessels may contain navigation equipment,
+                            communication devices, sensors, machinery monitoring
+                            systems, and automation technologies. When these
+                            systems are properly integrated, information from
+                            different sources can be made available to the
+                            appropriate equipment and personnel.
+                        </p>
+
+                        <p>
+                            Integration is not simply installing several
+                            technologies on the same ship. It also involves
+                            compatible interfaces, reliable data exchange,
+                            system configuration, testing, cybersecurity,
+                            and proper human interaction.
+                        </p>
+
+                    </div>
+
+                    <div class="integration-highlight">
+
+                        <h3>The Main Idea</h3>
+
+                        <p>
+                            A connected maritime environment allows different
+                            systems to share useful information instead of
+                            operating as completely isolated units.
+                        </p>
+
+                        <p>
+                            The objective is to support better situational
+                            awareness, operational coordination, efficiency,
+                            and maritime safety.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CORE CONCEPTS -->
+
+        <section class="integration-concepts">
+
+            <div class="integration-container">
+
+                <div class="integration-concepts-header">
+
+                    <div class="integration-label">
+                        02 / CORE CONCEPTS
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        The Foundations of Integration
+                    </h2>
+
+                    <p class="integration-section-description">
+                        Successful integration depends on several connected
+                        technical principles. Each principle contributes
+                        to the reliability and usefulness of the complete system.
+                    </p>
+
+                </div>
+
+                <div class="integration-concepts-grid">
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 01</span>
+                        <h3>Data Collection</h3>
+                        <p>
+                            Sensors and electronic instruments collect
+                            information such as position, speed, depth,
+                            temperature, pressure, and equipment status.
+                        </p>
+                    </article>
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 02</span>
+                        <h3>Communication</h3>
+                        <p>
+                            Communication interfaces and networks transfer
+                            information between compatible equipment,
+                            vessels, shore facilities, and authorized systems.
+                        </p>
+                    </article>
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 03</span>
+                        <h3>Interoperability</h3>
+                        <p>
+                            Different systems must be able to exchange
+                            and interpret information correctly according
+                            to their interfaces and supported data formats.
+                        </p>
+                    </article>
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 04</span>
+                        <h3>Data Processing</h3>
+                        <p>
+                            Collected information can be checked, organized,
+                            combined, and processed to produce useful
+                            operational information.
+                        </p>
+                    </article>
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 05</span>
+                        <h3>System Monitoring</h3>
+                        <p>
+                            Integrated monitoring helps authorized personnel
+                            observe equipment conditions, system status,
+                            and operational information.
+                        </p>
+                    </article>
+
+                    <article class="integration-concept-card">
+                        <span class="integration-concept-number">CONCEPT 06</span>
+                        <h3>Cybersecurity</h3>
+                        <p>
+                            Connected systems require appropriate protection
+                            against unauthorized access, data manipulation,
+                            malware, and communication disruptions.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HOW INTEGRATION WORKS -->
+
+        <section class="integration-process">
+
+            <div class="integration-container">
+
+                <div class="integration-process-header">
+
+                    <div class="integration-label">
+                        03 / SYSTEM WORKFLOW
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        How Does Integration Work?
+                    </h2>
+
+                    <p class="integration-section-description">
+                        A simplified example of how information can move
+                        through a connected maritime system.
+                        Actual system architectures differ depending
+                        on vessel design and equipment.
+                    </p>
+
+                </div>
+
+                <div class="integration-process-flow">
+
+                    <article class="integration-process-step">
+                        <span class="step-number">01</span>
+                        <h3>Data Collection</h3>
+                        <p>
+                            Sensors and instruments measure physical
+                            conditions and collect operational information.
+                        </p>
+                    </article>
+
+                    <article class="integration-process-step">
+                        <span class="step-number">02</span>
+                        <h3>Data Transmission</h3>
+                        <p>
+                            Compatible interfaces and communication
+                            networks transfer the collected information.
+                        </p>
+                    </article>
+
+                    <article class="integration-process-step">
+                        <span class="step-number">03</span>
+                        <h3>Processing & Integration</h3>
+                        <p>
+                            Systems interpret, organize, and combine
+                            relevant information.
+                        </p>
+                    </article>
+
+                    <article class="integration-process-step">
+                        <span class="step-number">04</span>
+                        <h3>Presentation & Action</h3>
+                        <p>
+                            Information is presented to operators or
+                            authorized systems for monitoring and decisions.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPLICATIONS -->
+
+        <section class="integration-applications">
+
+            <div class="integration-container">
+
+                <div class="integration-applications-header">
+
+                    <div class="integration-label">
+                        04 / MARITIME APPLICATIONS
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        Where Is Technology Integration Used?
+                    </h2>
+
+                    <p class="integration-section-description">
+                        Integrated technologies support different activities
+                        throughout the maritime industry.
+                    </p>
+
+                </div>
+
+                <div class="integration-applications-grid">
+
+                    <article class="integration-application">
+                        <h3>Navigation & Bridge Operations</h3>
+                        <p>
+                            Navigation equipment can exchange information
+                            to support route monitoring, position awareness,
+                            and bridge operations. The exact capabilities
+                            depend on the installed equipment.
+                        </p>
+                    </article>
+
+                    <article class="integration-application">
+                        <h3>Engine & Machinery Monitoring</h3>
+                        <p>
+                            Monitoring systems collect equipment measurements
+                            and operational data that help engineers observe
+                            machinery conditions and identify abnormal behavior.
+                        </p>
+                    </article>
+
+                    <article class="integration-application">
+                        <h3>Port Operations</h3>
+                        <p>
+                            Digital platforms allow ships, ports, and
+                            public authorities to exchange operational
+                            and administrative information.
+                        </p>
+                    </article>
+
+                    <article class="integration-application">
+                        <h3>Fleet Management</h3>
+                        <p>
+                            Authorized shore-based teams can use shared
+                            operational information to coordinate vessels,
+                            monitor performance, and support maintenance planning.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHALLENGES -->
+
+        <section class="integration-challenges">
+
+            <div class="integration-container">
+
+                <div class="integration-challenges-grid">
+
+                    <div class="integration-challenges-text">
+
+                        <div class="integration-label">
+                            05 / TECHNICAL LIMITATIONS
+                        </div>
+
+                        <h2 class="integration-section-title">
+                            Challenges of System Integration
+                        </h2>
+
+                        <p>
+                            Connecting maritime technologies creates
+                            opportunities, but it also introduces technical
+                            and operational challenges.
+                        </p>
+
+                        <p>
+                            A system may contain equipment from different
+                            manufacturers, different communication interfaces,
+                            and different generations of technology.
+                            Therefore, compatibility and testing are essential.
+                        </p>
+
+                        <p>
+                            Integration must also consider cybersecurity,
+                            data quality, system availability, and the role
+                            of the human operator.
+                        </p>
+
+                    </div>
+
+                    <div class="integration-challenge-list">
+
+                        <article class="integration-challenge-item">
+                            <h3>System Compatibility</h3>
+                            <p>
+                                Different devices may use different interfaces,
+                                protocols, and data formats.
+                            </p>
+                        </article>
+
+                        <article class="integration-challenge-item">
+                            <h3>Data Reliability</h3>
+                            <p>
+                                Incorrect, delayed, incomplete, or inconsistent
+                                data can affect operational decisions.
+                            </p>
+                        </article>
+
+                        <article class="integration-challenge-item">
+                            <h3>Cybersecurity Risks</h3>
+                            <p>
+                                Connected systems can introduce additional
+                                points that require security protection.
+                            </p>
+                        </article>
+
+                        <article class="integration-challenge-item">
+                            <h3>Maintenance & Training</h3>
+                            <p>
+                                Integrated systems require qualified personnel,
+                                technical maintenance, and appropriate training.
+                            </p>
+                        </article>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FUTURE DEVELOPMENTS -->
+
+        <section class="integration-future">
+
+            <div class="integration-container">
+
+                <div class="integration-future-header">
+
+                    <div class="integration-label">
+                        06 / FUTURE DEVELOPMENTS
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        The Future of Maritime Technology Integration
+                    </h2>
+
+                    <p class="integration-section-description">
+                        Emerging technologies and international digitalization
+                        initiatives are shaping how ships, ports, and maritime
+                        systems may operate in the coming years.
+                    </p>
+
+                </div>
+
+                <div class="integration-future-grid">
+
+                    <article class="integration-future-card">
+
+                        <span class="integration-future-number">
+                            DEVELOPMENT 01
+                        </span>
+
+                        <h3>AI-Assisted Maritime Operations</h3>
+
+                        <p>
+                            Artificial intelligence can analyze large amounts
+                            of navigation, weather, machinery, and operational
+                            data. AI-based tools may help identify unusual
+                            patterns, support predictive maintenance, and
+                            provide recommendations to maritime personnel.
+                            Human supervision remains essential for safety-critical
+                            decisions.
+                        </p>
+
+                    </article>
+
+
+                    <article class="integration-future-card">
+
+                        <span class="integration-future-number">
+                            DEVELOPMENT 02
+                        </span>
+
+                        <h3>Digital Twins</h3>
+
+                        <p>
+                            A digital twin is a virtual representation of a
+                            physical asset, such as a ship, engine, or marine
+                            component. When connected to relevant operational
+                            data, it can help engineers study performance,
+                            simulate operating conditions, and evaluate
+                            maintenance scenarios.
+                        </p>
+
+                    </article>
+
+
+                    <article class="integration-future-card">
+
+                        <span class="integration-future-number">
+                            DEVELOPMENT 03
+                        </span>
+
+                        <h3>Autonomous & Remotely Operated Ships</h3>
+
+                        <p>
+                            Autonomous and remotely operated ship technologies
+                            are developing through different levels of human
+                            involvement. The IMO adopted the non-mandatory
+                            MASS Code in May 2026, which came into effect
+                            on 1 July 2026. It provides a safety framework
+                            for applicable maritime autonomous surface ships.
+                        </p>
+
+                    </article>
+
+
+                    <article class="integration-future-card">
+
+                        <span class="integration-future-number">
+                            DEVELOPMENT 04
+                        </span>
+
+                        <h3>Advanced Maritime Data Exchange</h3>
+
+                        <p>
+                            Greater interoperability and standardized data
+                            exchange can improve communication between ships,
+                            ports, and maritime authorities. In March 2026,
+                            the IMO Facilitation Committee approved a global
+                            Strategy on Maritime Digitalization, with further
+                            review and submission for Assembly adoption
+                            planned for 2027.
+                        </p>
+
+                    </article>
+
+
+                    <article class="integration-future-card">
+
+                        <span class="integration-future-number">
+                            DEVELOPMENT 05
+                        </span>
+
+                        <h3>Cybersecurity & Resilient Systems</h3>
+
+                        <p>
+                            As maritime systems become more connected,
+                            cybersecurity will become increasingly important.
+                            Future systems will need stronger access controls,
+                            secure communications, network monitoring,
+                            recovery procedures, and protection for
+                            operational technology.
+                        </p>
+
+                    </article>
+
+                </div>
+
+                <div class="integration-future-note">
+
+                    <p>
+                        <strong>Important distinction:</strong>
+                        These developments do not mean that every ship
+                        currently uses AI, digital twins, or autonomous
+                        navigation. Their adoption depends on technical
+                        readiness, regulation, investment, safety assessment,
+                        and the operational needs of each vessel.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- KNOWLEDGE CHECK -->
+
+        <section class="integration-quiz" id="integration-knowledge-check">
+
+            <div class="integration-container">
+
+                <div class="integration-quiz-header">
+
+                    <div class="integration-label">
+                        07 / TEST YOUR KNOWLEDGE
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        How Much Have You Learned?
+                    </h2>
+
+                    <p class="integration-section-description">
+                        Test your understanding of maritime technology
+                        integration through these five questions.
+                        Choose one answer for each question to see your result.
+                    </p>
+
+                </div>
+
+                <div class="integration-quiz-box">
+
+                    <form id="integrationQuizForm">
+
+                        <!-- QUESTION 01 -->
+
+                        <div class="integration-quiz-question" data-answer="b">
+
+                            <h3>
+                                <span>01.</span>
+                                What is the main purpose of maritime technology integration?
+                            </h3>
+
+                            <div class="integration-quiz-options">
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q1" value="a">
+                                    To replace every human operator with machines.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q1" value="b">
+                                    To connect systems so they can exchange information and support coordinated operations.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q1" value="c">
+                                    To increase the number of devices on a ship without connecting them.
+                                </label>
+
+                            </div>
+
+                            <div class="integration-quiz-feedback"></div>
+
+                        </div>
+
+
+                        <!-- QUESTION 02 -->
+
+                        <div class="integration-quiz-question" data-answer="c">
+
+                            <h3>
+                                <span>02.</span>
+                                Which component collects information such as temperature, pressure, and position?
+                            </h3>
+
+                            <div class="integration-quiz-options">
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q2" value="a">
+                                    Data visualization software only.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q2" value="b">
+                                    A shore-based administrative office.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q2" value="c">
+                                    Sensors and electronic instruments.
+                                </label>
+
+                            </div>
+
+                            <div class="integration-quiz-feedback"></div>
+
+                        </div>
+
+
+                        <!-- QUESTION 03 -->
+
+                        <div class="integration-quiz-question" data-answer="a">
+
+                            <h3>
+                                <span>03.</span>
+                                What does interoperability mean in maritime systems?
+                            </h3>
+
+                            <div class="integration-quiz-options">
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q3" value="a">
+                                    Different systems can exchange and correctly interpret information.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q3" value="b">
+                                    Every system must be manufactured by the same company.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q3" value="c">
+                                    Systems operate independently without exchanging data.
+                                </label>
+
+                            </div>
+
+                            <div class="integration-quiz-feedback"></div>
+
+                        </div>
+
+
+                        <!-- QUESTION 04 -->
+
+                        <div class="integration-quiz-question" data-answer="b">
+
+                            <h3>
+                                <span>04.</span>
+                                What is one important use of a digital twin?
+                            </h3>
+
+                            <div class="integration-quiz-options">
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q4" value="a">
+                                    Replacing all physical equipment with virtual objects.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q4" value="b">
+                                    Studying the performance of a physical asset through a virtual representation.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q4" value="c">
+                                    Sending messages without any communication network.
+                                </label>
+
+                            </div>
+
+                            <div class="integration-quiz-feedback"></div>
+
+                        </div>
+
+
+                        <!-- QUESTION 05 -->
+
+                        <div class="integration-quiz-question" data-answer="c">
+
+                            <h3>
+                                <span>05.</span>
+                                Why is cybersecurity important in connected maritime systems?
+                            </h3>
+
+                            <div class="integration-quiz-options">
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q5" value="a">
+                                    It makes system compatibility unnecessary.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q5" value="b">
+                                    It removes the need for maintenance and training.
+                                </label>
+
+                                <label class="integration-quiz-option">
+                                    <input type="radio" name="q5" value="c">
+                                    It helps protect systems and data against unauthorized access and digital threats.
+                                </label>
+
+                            </div>
+
+                            <div class="integration-quiz-feedback"></div>
+
+                        </div>
+
+
+                        <div class="integration-quiz-actions">
+
+                            <button
+                                type="submit"
+                                class="integration-quiz-button"
+                                id="integrationQuizSubmit"
+                            >
+                                Check Answers
+                            </button>
+
+                            <button
+                                type="button"
+                                class="integration-quiz-button secondary"
+                                id="integrationQuizReset"
+                            >
+                                Try Again
+                            </button>
+
+                        </div>
+
+                    </form>
+
+
+                    <div
+                        class="integration-quiz-result"
+                        id="integrationQuizResult"
+                        aria-live="polite"
+                    >
+                        <h3>Your Quiz Result</h3>
+
+                        <span
+                            class="integration-quiz-score"
+                            id="integrationQuizScore"
+                        >
+                            0 / 5
+                        </span>
+
+                        <p id="integrationQuizMessage"></p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUBTOPICS -->
+
+        <section class="integration-subtopics" id="integration-subtopics">
+
+            <div class="integration-container">
+
+                <div class="integration-subtopics-header">
+
+                    <div class="integration-label">
+                        08 / EXPLORE THE KNOWLEDGE
+                    </div>
+
+                    <h2 class="integration-section-title">
+                        Explore the Main Topics
+                    </h2>
+
+                    <p class="integration-section-description">
+                        Go deeper into each part of maritime technology
+                        integration. Select a topic to explore its
+                        scientific principles, technical components,
+                        practical applications, and challenges.
+                    </p>
+
+                </div>
+
+                <div class="integration-subtopics-grid">
+
+                    <!-- TOPIC 01 -->
+
+                    <a href="data-collection.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 01</span>
+
+                        <h3>Data Collection & Sensors</h3>
+
+                        <p>
+                            Discover how maritime sensors and electronic
+                            instruments collect position, speed, depth,
+                            environmental, and equipment data.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 02 -->
+
+                    <a href="maritime-communication-networks.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 02</span>
+
+                        <h3>Maritime Communication Networks</h3>
+
+                        <p>
+                            Understand how communication systems and
+                            digital networks transfer information
+                            between maritime equipment and shore facilities.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 03 -->
+
+                    <a href="system-integration.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 03</span>
+
+                        <h3>System Integration & Interoperability</h3>
+
+                        <p>
+                            Learn how different electronic systems exchange
+                            information through compatible interfaces,
+                            standards, and communication protocols.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 04 -->
+
+                    <a href="integrated-bridge-systems.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 04</span>
+
+                        <h3>Integrated Bridge Systems (IBS)</h3>
+
+                        <p>
+                            Explore the integration of navigation,
+                            monitoring, and bridge equipment to support
+                            coordinated ship operations.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 05 -->
+
+                    <a href="ship-to-shore-data-exchange.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 05</span>
+
+                        <h3>Ship-to-Shore Data Exchange</h3>
+
+                        <p>
+                            Understand how ships, ports, and maritime
+                            authorities exchange digital information
+                            for operational and administrative purposes.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 06 -->
+
+                    <a href="data-processing-visualization.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 06</span>
+
+                        <h3>Data Processing & Visualization</h3>
+
+                        <p>
+                            Discover how raw maritime data is checked,
+                            processed, organized, and presented
+                            as useful operational information.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 07 -->
+
+                    <a href="maritime-cybersecurity.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 07</span>
+
+                        <h3>Maritime Cybersecurity & Reliability</h3>
+
+                        <p>
+                            Learn about protecting maritime networks,
+                            securing operational technology, and maintaining
+                            reliable digital systems.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+
+                    <!-- TOPIC 08 -->
+
+                    <a href="port-fleet-integration.html" class="integration-subtopic-card">
+
+                        <span class="integration-subtopic-number">TOPIC 08</span>
+
+                        <h3>Integration in Port & Fleet Operations</h3>
+
+                        <p>
+                            Explore how connected digital platforms support
+                            port coordination, fleet management,
+                            and maritime operational information exchange.
+                        </p>
+
+                        <div class="integration-subtopic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REFERENCES -->
+
+        <section class="integration-references">
+
+            <div class="integration-container">
+
+                <div class="integration-references-box">
+
+                    <div class="integration-label">
+                        09 / SCIENTIFIC REFERENCES
+                    </div>
+
+                    <h2>
+                        References & Further Reading
+                    </h2>
+
+                    <p>
+                        <strong>International Maritime Organization (IMO):</strong>
+                        E-navigation — the harmonized collection, integration,
+                        exchange, presentation, and analysis of marine information.
+                        <br>
+                        <a
+                            href="https://www.imo.org/en/ourwork/safety/pages/enavigation.aspx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Visit IMO E-navigation
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>International Electrotechnical Commission (IEC):</strong>
+                        IEC 61162-1:2024 — Maritime navigation and
+                        radiocommunication equipment and systems,
+                        digital interfaces, single talker and multiple listeners.
+                        <br>
+                        <a
+                            href="https://webstore.iec.ch/en/publication/72729"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            View IEC 61162-1:2024
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>International Maritime Organization (IMO):</strong>
+                        Maritime Single Window — digital information exchange
+                        between ships and public authorities.
+                        <br>
+                        <a
+                            href="https://www.imo.org/en/ourwork/facilitation/pages/maritimesinglewindow-default.aspx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Visit IMO Maritime Single Window
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>International Maritime Organization (IMO):</strong>
+                        International Code of Safety for Maritime Autonomous
+                        Surface Ships (MASS Code) — the non-mandatory
+                        international safety framework adopted in May 2026.
+                        <br>
+                        <a
+                            href="https://www.imo.org/en/mediacentre/pressbriefings/pages/imo-adopts-mass-code.aspx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Read about the IMO MASS Code
+                        </a>
+                    </p>
+
+                    <p>
+                        <strong>International Maritime Organization (IMO):</strong>
+                        Strategy on Maritime Digitalization — approved by
+                        the IMO Facilitation Committee in March 2026.
+                        <br>
+                        <a
+                            href="https://www.imo.org/en/mediacentre/pressbriefings/pages/facilitation-committee-approves-digitalization-strategy-cyber-security-measures.aspx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Read the IMO Digitalization Strategy Update
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="integration-footer">
+
+        <h3>MARITERRA</h3>
+
+        <p>
+            The Future of Maritime Knowledge
+        </p>
+
+        <p class="footer-owner">
+            Founded & Developed by Engineer Zeinab Mohamed
+        </p>
+
+        <p>
+            © 2026 MARITERRA. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+    <!-- KNOWLEDGE CHECK SCRIPT -->
+
+    <script>
+
+        const integrationQuizForm =
+            document.getElementById("integrationQuizForm");
+
+        const integrationQuizSubmit =
+            document.getElementById("integrationQuizSubmit");
+
+        const integrationQuizReset =
+            document.getElementById("integrationQuizReset");
+
+        const integrationQuizResult =
+            document.getElementById("integrationQuizResult");
+
+        const integrationQuizScore =
+            document.getElementById("integrationQuizScore");
+
+        const integrationQuizMessage =
+            document.getElementById("integrationQuizMessage");
+
+
+        integrationQuizForm.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const questions = document.querySelectorAll(
+                ".integration-quiz-question"
+            );
+
+            let score = 0;
+            let unanswered = 0;
+
+            questions.forEach(function(question) {
+
+                const correctAnswer = question.dataset.answer;
+
+                const selectedAnswer = question.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+                const options = question.querySelectorAll(
+                    ".integration-quiz-option"
+                );
+
+                const feedback = question.querySelector(
+                    ".integration-quiz-feedback"
+                );
+
+                if (!selectedAnswer) {
+                    unanswered++;
+                    return;
+                }
+
+                const isCorrect =
+                    selectedAnswer.value === correctAnswer;
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                options.forEach(function(option) {
+
+                    const input = option.querySelector("input");
+
+                    input.disabled = true;
+
+                    if (input.value === correctAnswer) {
+                        option.classList.add("correct-answer");
+                    }
+
+                    if (
+                        input.checked &&
+                        input.value !== correctAnswer
+                    ) {
+                        option.classList.add("wrong-answer");
+                    }
+
+                });
+
+                feedback.classList.add("show");
+
+                if (isCorrect) {
+
+                    feedback.classList.add("correct");
+
+                    feedback.textContent =
+                        "Correct! Your answer is right.";
+
+                } else {
+
+                    feedback.classList.add("incorrect");
+
+                    feedback.textContent =
+                        "Incorrect. Review the highlighted correct answer.";
+
+                }
+
+            });
+
+
+            if (unanswered > 0) {
+
+                alert(
+                    "Please answer all questions before checking your result."
+                );
+
+                return;
+
+            }
+
+
+            integrationQuizScore.textContent = score + " / 5";
+
+            if (score === 5) {
+
+                integrationQuizMessage.textContent =
+                    "Excellent! You have a strong understanding of maritime technology integration.";
+
+            } else if (score >= 3) {
+
+                integrationQuizMessage.textContent =
+                    "Good work! Review the questions you missed to strengthen your understanding.";
+
+            } else {
+
+                integrationQuizMessage.textContent =
+                    "Keep learning! Review the main sections and try the quiz again.";
+
+            }
+
+
+            integrationQuizResult.classList.add("show");
+
+            integrationQuizSubmit.disabled = true;
+
+            integrationQuizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+        });
+
+
+        integrationQuizReset.addEventListener("click", function() {
+
+            integrationQuizForm.reset();
+
+            const questions = document.querySelectorAll(
+                ".integration-quiz-question"
+            );
+
+            questions.forEach(function(question) {
+
+                const options = question.querySelectorAll(
+                    ".integration-quiz-option"
+                );
+
+                const feedback = question.querySelector(
+                    ".integration-quiz-feedback"
+                );
+
+                options.forEach(function(option) {
+
+                    option.classList.remove(
+                        "correct-answer",
+                        "wrong-answer"
+                    );
+
+                    const input = option.querySelector("input");
+
+                    input.disabled = false;
+
+                });
+
+                feedback.className =
+                    "integration-quiz-feedback";
+
+                feedback.textContent = "";
+
+            });
+
+
+            integrationQuizResult.classList.remove("show");
+
+            integrationQuizScore.textContent = "0 / 5";
+
+            integrationQuizMessage.textContent = "";
+
+            integrationQuizSubmit.disabled = false;
+
+        });
+
+    </script>
+
+</body>
+</html>

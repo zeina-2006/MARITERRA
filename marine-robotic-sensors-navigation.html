@@ -1,0 +1,3075 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore marine robotic sensors, sonar technologies, underwater cameras, inertial navigation, Doppler velocity logs, acoustic positioning, sensor fusion, and underwater localization.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Marine Robotic Sensors & Navigation</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.12), transparent 30%),
+                radial-gradient(circle at 5% 45%, rgba(37, 99, 235, 0.07), transparent 32%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--purple-light);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--white);
+        }
+
+        .container {
+            width: min(1150px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.93);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(90deg, rgba(7, 8, 22, 0.98), rgba(7, 8, 22, 0.67)),
+                radial-gradient(ellipse at 80% 50%, rgba(147, 51, 234, 0.24), transparent 55%);
+        }
+
+        .hero-content {
+            padding: 85px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.78rem;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.3rem, 5.8vw, 4.5rem);
+            line-height: 1.15;
+            max-width: 950px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 760px;
+            font-size: 1.05rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.08);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.76rem;
+            color: var(--purple-light);
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 85px 0;
+            scroll-margin-top: 85px;
+        }
+
+        .section-heading {
+            margin-bottom: 40px;
+        }
+
+        .section-heading .eyebrow {
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            max-width: 850px;
+            color: var(--text-muted);
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 22px;
+            transition: var(--transition);
+        }
+
+        .content-card:hover {
+            border-color: rgba(192, 132, 252, 0.45);
+            transform: translateY(-3px);
+        }
+
+        .content-card h3 {
+            color: var(--purple-light);
+            font-size: 1.22rem;
+            margin-bottom: 14px;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .content-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .content-card ul,
+        .content-card ol {
+            padding-left: 22px;
+            color: var(--text-muted);
+        }
+
+        .content-card li {
+            margin-bottom: 9px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .number {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--purple-light);
+            font-weight: bold;
+        }
+
+        .note {
+            border-left: 3px solid var(--purple);
+            padding: 18px 22px;
+            margin: 25px 0;
+            background: rgba(147, 51, 234, 0.08);
+            border-radius: 0 10px 10px 0;
+            color: var(--text-muted);
+        }
+
+        .note strong {
+            color: var(--white);
+        }
+
+        /* TABLES */
+
+        .table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        th {
+            background: rgba(147, 51, 234, 0.12);
+            color: var(--purple-light);
+        }
+
+        td:first-child {
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* PROCESS */
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .process-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 14px;
+            text-align: center;
+        }
+
+        .process-step span {
+            display: block;
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .process-step h4 {
+            color: var(--white);
+            font-size: 0.92rem;
+            margin-bottom: 8px;
+        }
+
+        .process-step p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            background: linear-gradient(180deg, rgba(147, 51, 234, 0.06), transparent);
+        }
+
+        .quiz-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        .quiz-progress {
+            height: 7px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0 30px;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple-light));
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            padding: 22px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question h3 {
+            color: var(--white);
+            font-size: 1.04rem;
+            margin-bottom: 16px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            margin-right: 8px;
+        }
+
+        .option {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid rgba(192, 132, 252, 0.12);
+            border-radius: 9px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(34, 197, 94, 0.1);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+            color: #fecaca;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 12px;
+            padding: 13px 16px;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 13px 23px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            color: white;
+            background: linear-gradient(120deg, var(--purple-dark), var(--purple));
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .btn-secondary {
+            color: var(--text);
+            background: transparent;
+            border: 1px solid var(--border);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #quizResult {
+            display: none;
+            margin-top: 25px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        #quizResult h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+        }
+
+        #quizResult p {
+            color: var(--text-muted);
+        }
+
+        /* REFERENCES */
+
+        .reference-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .reference-item {
+            padding: 17px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .reference-item a {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .reference-item p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 35px 0;
+            text-align: center;
+            background: rgba(7, 8, 22, 0.8);
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-content {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            section {
+                padding: 60px 0;
+            }
+
+            .grid-2,
+            .grid-3,
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-card,
+            .quiz-container {
+                padding: 21px;
+            }
+
+            .hero {
+                min-height: 420px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 0.76rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+        <div class="container nav-content">
+
+            <a href="index.html" class="logo">
+                MARI<span>TERRA</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#sonar">Sonar</a></li>
+                <li><a href="#sensors">Sensors</a></li>
+                <li><a href="#navigation">Navigation</a></li>
+                <li><a href="#integration">Integration</a></li>
+                <li><a href="#assessment">Assessment</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <!-- HERO -->
+
+    <header class="hero">
+        <div class="container hero-content">
+
+            <div class="eyebrow">
+                Marine Robotics / Topic 05
+            </div>
+
+            <h1>
+                Marine Robotic <span>Sensors & Navigation</span>
+            </h1>
+
+            <p>
+                Discover how underwater robotic platforms detect their
+                surroundings, collect environmental measurements,
+                estimate their movement, and determine their position
+                in environments where satellite navigation is unavailable.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">UNDERWATER SENSING</span>
+                <span class="meta-item">ACOUSTIC TECHNOLOGY</span>
+                <span class="meta-item">INERTIAL NAVIGATION</span>
+                <span class="meta-item">SENSOR FUSION</span>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- OVERVIEW -->
+
+        <section id="overview">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">01 / Foundations</div>
+                    <h2>Understanding Marine Robotic Sensors & Navigation</h2>
+
+                    <p>
+                        Marine robotic sensors collect information about
+                        the vehicle, the water, and the surrounding
+                        environment. Navigation systems use selected
+                        measurements to estimate position, orientation,
+                        and movement.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Why Are Sensors Essential?</h3>
+
+                    <p>
+                        An underwater robot cannot operate effectively
+                        using mechanical components alone. It needs
+                        information about depth, orientation, movement,
+                        surrounding objects, water conditions, and
+                        system health.
+                    </p>
+
+                    <p>
+                        Sensors convert physical quantities into
+                        measurable signals. These signals are processed
+                        by onboard computers or external systems to
+                        support navigation, control, scientific
+                        measurements, and operational decisions.
+                    </p>
+
+                    <p>
+                        Depending on the mission, a vehicle may carry
+                        sonar systems, cameras, pressure sensors,
+                        inertial measurement units, Doppler velocity
+                        logs, environmental instruments, and acoustic
+                        positioning equipment.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <span class="number">FUNCTION 01</span>
+                        <h3>Environmental Perception</h3>
+
+                        <p>
+                            Detect objects, terrain, obstacles,
+                            seafloor features, and nearby structures
+                            using acoustic and optical instruments.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">FUNCTION 02</span>
+                        <h3>Vehicle State Estimation</h3>
+
+                        <p>
+                            Measure or estimate depth, orientation,
+                            angular motion, acceleration, and velocity
+                            to understand the vehicle's current state.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">FUNCTION 03</span>
+                        <h3>Scientific Data Collection</h3>
+
+                        <p>
+                            Measure temperature, conductivity,
+                            dissolved oxygen, turbidity, currents,
+                            and other environmental properties.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">FUNCTION 04</span>
+                        <h3>Position and Navigation</h3>
+
+                        <p>
+                            Combine inertial, acoustic, velocity,
+                            depth, and other measurements to estimate
+                            where the vehicle is and how it is moving.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="note">
+                    <strong>Important distinction:</strong>
+                    A sensor measurement is not automatically a
+                    complete navigation solution. A pressure sensor
+                    can estimate depth, but it cannot independently
+                    determine the vehicle's full geographic position.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SENSOR CLASSIFICATION -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">02 / Sensor Architecture</div>
+                    <h2>Major Categories of Marine Robotic Sensors</h2>
+
+                    <p>
+                        Sensors are selected according to the
+                        operational task, vehicle architecture,
+                        environmental conditions, and required
+                        measurement quality.
+                    </p>
+                </div>
+
+                <div class="grid-3">
+
+                    <div class="content-card">
+                        <h3>Acoustic Sensors</h3>
+
+                        <p>
+                            Use sound waves to detect objects,
+                            measure distances, map the seafloor,
+                            or support underwater positioning.
+                        </p>
+
+                        <ul>
+                            <li>Multibeam sonar</li>
+                            <li>Side-scan sonar</li>
+                            <li>Imaging sonar</li>
+                            <li>Acoustic transponders</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Optical Sensors</h3>
+
+                        <p>
+                            Use light to capture images and
+                            identify visual characteristics
+                            of nearby objects.
+                        </p>
+
+                        <ul>
+                            <li>Underwater cameras</li>
+                            <li>Video systems</li>
+                            <li>Imaging systems</li>
+                            <li>Optical instruments</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Inertial Sensors</h3>
+
+                        <p>
+                            Measure acceleration and angular
+                            motion to estimate vehicle attitude
+                            and movement.
+                        </p>
+
+                        <ul>
+                            <li>Accelerometers</li>
+                            <li>Gyroscopes</li>
+                            <li>IMUs</li>
+                            <li>Inertial navigation systems</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Depth and Pressure Sensors</h3>
+
+                        <p>
+                            Measure water pressure and help
+                            determine the vehicle's depth
+                            below the surface.
+                        </p>
+
+                        <ul>
+                            <li>Pressure transducers</li>
+                            <li>Depth sensors</li>
+                            <li>Pressure monitoring units</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Velocity Sensors</h3>
+
+                        <p>
+                            Estimate vehicle velocity relative
+                            to the seabed or surrounding water.
+                        </p>
+
+                        <ul>
+                            <li>Doppler Velocity Log</li>
+                            <li>Current profilers</li>
+                            <li>Velocity estimation systems</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Environmental Sensors</h3>
+
+                        <p>
+                            Collect scientific measurements
+                            about physical, chemical, and
+                            biological water properties.
+                        </p>
+
+                        <ul>
+                            <li>CTD instruments</li>
+                            <li>Oxygen sensors</li>
+                            <li>Fluorometers</li>
+                            <li>Turbidity sensors</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SONAR -->
+
+        <section id="sonar">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">03 / Acoustic Sensing</div>
+                    <h2>Sonar Technologies</h2>
+
+                    <p>
+                        Sonar is one of the most important sensing
+                        technologies in underwater robotics because
+                        sound can travel much farther through water
+                        than visible light or conventional radio signals.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What Is Sonar?</h3>
+
+                    <p>
+                        SONAR stands for Sound Navigation and Ranging.
+                        It uses sound waves to detect objects,
+                        measure distances, and investigate underwater
+                        environments.
+                    </p>
+
+                    <p>
+                        An active sonar system transmits an acoustic
+                        pulse and receives the returning echo.
+                        The time between transmission and reception
+                        helps estimate the distance to a reflecting
+                        object when the sound speed is known.
+                    </p>
+
+                    <p>
+                        A passive sonar system listens for sounds
+                        generated by other sources without transmitting
+                        its own acoustic pulse.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <span class="number">SONAR TYPE 01</span>
+                        <h3>Active Sonar</h3>
+
+                        <p>
+                            An active sonar transmits sound into
+                            the water and analyzes the returning
+                            echo.
+                        </p>
+
+                        <ul>
+                            <li>Object detection.</li>
+                            <li>Distance estimation.</li>
+                            <li>Seafloor mapping.</li>
+                            <li>Obstacle detection.</li>
+                        </ul>
+                    </div>
+
+                    <div class="content-card">
+                        <span class="number">SONAR TYPE 02</span>
+                        <h3>Passive Sonar</h3>
+
+                        <p>
+                            A passive sonar system receives
+                            underwater sound without transmitting
+                            its own interrogation pulse.
+                        </p>
+
+                        <ul>
+                            <li>Acoustic monitoring.</li>
+                            <li>Marine mammal observation.</li>
+                            <li>Ambient noise studies.</li>
+                            <li>Listening for machinery and vessels.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="content-card">
+                    <h3>How Does Active Sonar Estimate Distance?</h3>
+
+                    <p>
+                        A simplified range calculation is:
+                    </p>
+
+                    <p class="highlight">
+                        Range = (Sound Speed × Echo Travel Time) / 2
+                    </p>
+
+                    <p>
+                        The division by two is necessary because
+                        the measured time includes both the
+                        outgoing journey and the returning echo.
+                    </p>
+
+                    <p>
+                        Actual sonar processing may require
+                        corrections for sound-speed variation,
+                        transducer geometry, vehicle motion,
+                        refraction, and signal-processing effects.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Sound Speed in Seawater</h3>
+
+                    <p>
+                        The speed of sound in seawater depends
+                        on environmental conditions, particularly
+                        temperature, salinity, and pressure.
+                    </p>
+
+                    <p>
+                        These variables can change with depth
+                        and location. Accurate sonar and acoustic
+                        navigation applications may therefore
+                        require a sound-speed profile or suitable
+                        sound-speed measurements.
+                    </p>
+
+                    <p>
+                        Ignoring sound-speed variation can introduce
+                        errors in range measurements, bathymetry,
+                        and acoustic positioning.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Multibeam Echosounder</h3>
+
+                    <p>
+                        A multibeam echosounder transmits multiple
+                        acoustic beams in a fan-shaped pattern.
+                        It measures the seabed across a wider
+                        area than a conventional single-beam
+                        system.
+                    </p>
+
+                    <p>
+                        Multibeam systems are widely used for
+                        bathymetric mapping, underwater terrain
+                        measurement, and detecting features
+                        on or above the seafloor.
+                    </p>
+
+                    <ul>
+                        <li>Creates swath bathymetry.</li>
+                        <li>Provides depth measurements across multiple beams.</li>
+                        <li>Supports three-dimensional seabed mapping.</li>
+                        <li>Requires suitable motion and sound-speed corrections.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Side-Scan Sonar</h3>
+
+                    <p>
+                        Side-scan sonar produces acoustic images
+                        of the seafloor by transmitting sound
+                        to either side of the sensor and analyzing
+                        the returning echoes.
+                    </p>
+
+                    <p>
+                        Differences in echo strength and acoustic
+                        shadows help reveal objects, seabed
+                        textures, wrecks, and other features.
+                    </p>
+
+                    <ul>
+                        <li>Seafloor imaging.</li>
+                        <li>Shipwreck detection.</li>
+                        <li>Search and survey operations.</li>
+                        <li>Seabed feature identification.</li>
+                    </ul>
+
+                    <p>
+                        Side-scan imagery is valuable for detecting
+                        objects, but conventional side-scan sonar
+                        does not independently provide the same
+                        direct bathymetric measurements as a
+                        multibeam echosounder.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Imaging Sonar</h3>
+
+                    <p>
+                        Imaging sonar creates acoustic images
+                        of nearby objects and structures.
+                        It can be useful when visibility is
+                        poor or when optical cameras cannot
+                        provide reliable images.
+                    </p>
+
+                    <p>
+                        Depending on the system, imaging sonar
+                        can support obstacle detection,
+                        inspection, navigation, and robotic
+                        manipulation.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Single-Beam and Split-Beam Sonar</h3>
+
+                    <p>
+                        Single-beam systems transmit acoustic
+                        pulses in a relatively narrow direction
+                        and measure the returning echo.
+                    </p>
+
+                    <p>
+                        Split-beam systems use divided transducer
+                        elements to obtain additional information
+                        about the direction of returning echoes.
+                        They can be used in applications such
+                        as water-column observation and biological
+                        acoustic measurements.
+                    </p>
+                </div>
+
+                <div class="note">
+                    <strong>Engineering distinction:</strong>
+                    Multibeam sonar is commonly used to measure
+                    bathymetry across a swath. Side-scan sonar
+                    is primarily used to create seafloor imagery.
+                    They may be combined in one survey, but
+                    they do not produce identical information.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CAMERAS -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">04 / Optical Sensing</div>
+                    <h2>Underwater Cameras and Optical Systems</h2>
+
+                    <p>
+                        Optical systems provide visual information
+                        that acoustic sensors cannot always
+                        describe in sufficient detail.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Underwater Cameras</h3>
+
+                    <p>
+                        Underwater cameras capture images and
+                        video of the surrounding environment.
+                        They are commonly installed on ROVs,
+                        AUVs, and other marine robotic platforms.
+                    </p>
+
+                    <p>
+                        Cameras can help operators and automated
+                        systems identify objects, inspect
+                        structures, observe marine organisms,
+                        and document underwater operations.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>High-Definition Cameras</h3>
+
+                        <p>
+                            Provide detailed visual imagery
+                            for close-range inspection,
+                            documentation, and scientific
+                            observation.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Low-Light Cameras</h3>
+
+                        <p>
+                            Designed to capture useful imagery
+                            under limited illumination,
+                            often combined with artificial
+                            underwater lighting.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Stereo Camera Systems</h3>
+
+                        <p>
+                            Use multiple synchronized cameras
+                            to estimate depth and three-dimensional
+                            structure through stereo vision,
+                            when calibration and visibility
+                            permit.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Structured-Light Systems</h3>
+
+                        <p>
+                            Project a known light pattern and
+                            analyze its deformation to estimate
+                            surface geometry at close range.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="content-card">
+                    <h3>Why Is Underwater Imaging Difficult?</h3>
+
+                    <ul>
+                        <li>Light is absorbed and scattered by water.</li>
+                        <li>Suspended particles reduce visibility.</li>
+                        <li>Artificial lighting can produce backscatter.</li>
+                        <li>Color changes with distance and water properties.</li>
+                        <li>Camera housings must withstand external pressure.</li>
+                        <li>Lens ports and underwater optics require appropriate calibration.</li>
+                    </ul>
+
+                    <p>
+                        These limitations mean that an underwater
+                        camera cannot always replace sonar.
+                        Optical and acoustic systems are often
+                        complementary.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ENVIRONMENTAL SENSORS -->
+
+        <section id="sensors">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">05 / Environmental Instrumentation</div>
+                    <h2>Scientific and Environmental Sensors</h2>
+
+                    <p>
+                        Marine robots can carry instruments that
+                        measure the physical and chemical properties
+                        of seawater during a mission.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Pressure and Depth Sensors</h3>
+
+                    <p>
+                        A pressure sensor measures the pressure
+                        exerted by the surrounding water.
+                        Hydrostatic pressure generally increases
+                        with depth.
+                    </p>
+
+                    <p>
+                        Using pressure measurements, sensor
+                        calibration, and appropriate seawater
+                        assumptions, the vehicle can estimate
+                        its depth below the surface.
+                    </p>
+
+                    <p>
+                        Depth measurements support vertical
+                        navigation, mission constraints, and
+                        monitoring of the vehicle's operating
+                        limits.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. CTD Instruments</h3>
+
+                    <p>
+                        CTD stands for Conductivity, Temperature,
+                        and Depth. A CTD instrument measures
+                        conductivity, temperature, and pressure,
+                        which is commonly used to estimate depth.
+                    </p>
+
+                    <p>
+                        Conductivity is used with temperature
+                        and pressure to calculate seawater salinity.
+                        These measurements help researchers
+                        characterize water masses and ocean
+                        circulation.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Dissolved Oxygen Sensors</h3>
+
+                    <p>
+                        Dissolved oxygen sensors measure the
+                        concentration of oxygen in water.
+                        They can support studies of biological
+                        activity, water quality, and oxygen
+                        depletion.
+                    </p>
+
+                    <p>
+                        Sensor technologies may include
+                        electrochemical and optical measurement
+                        approaches, each with specific calibration
+                        and maintenance requirements.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Turbidity and Optical Backscatter Sensors</h3>
+
+                    <p>
+                        Turbidity sensors estimate the cloudiness
+                        of water by measuring how suspended
+                        particles affect transmitted or scattered
+                        light.
+                    </p>
+
+                    <p>
+                        Optical backscatter measurements can
+                        help characterize particles in the water
+                        column. Their interpretation depends
+                        on particle properties, sensor design,
+                        and calibration.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Chlorophyll Fluorometers</h3>
+
+                    <p>
+                        Fluorometers measure fluorescence
+                        associated with substances such as
+                        chlorophyll.
+                    </p>
+
+                    <p>
+                        They can help researchers investigate
+                        phytoplankton distribution and changes
+                        in biological activity.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>6. Acoustic Doppler Current Profilers</h3>
+
+                    <p>
+                        An ADCP uses the Doppler effect to
+                        estimate water velocity at different
+                        distances from the instrument.
+                    </p>
+
+                    <p>
+                        It transmits acoustic signals and
+                        analyzes the frequency shift of echoes
+                        returned by particles moving with the
+                        water.
+                    </p>
+
+                    <p>
+                        ADCPs are used to investigate ocean
+                        currents and water movement. They
+                        should not be confused with a DVL,
+                        even though both can use Doppler
+                        acoustic measurements.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>7. Hydrophones</h3>
+
+                    <p>
+                        A hydrophone is an underwater
+                        acoustic sensor that receives sound
+                        pressure signals.
+                    </p>
+
+                    <p>
+                        Hydrophones can be used for passive
+                        acoustic monitoring, marine mammal
+                        research, underwater noise studies,
+                        and acoustic communication systems
+                        when configured for those purposes.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- NAVIGATION -->
+
+        <section id="navigation">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">06 / Underwater Navigation</div>
+                    <h2>Why Is Underwater Navigation Different?</h2>
+
+                    <p>
+                        A submerged vehicle cannot normally rely
+                        on direct GPS positioning. It must estimate
+                        its movement and position using onboard
+                        sensors, acoustic references, or a combination
+                        of navigation technologies.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>The GPS Limitation</h3>
+
+                    <p>
+                        GPS and other GNSS satellite signals
+                        are not normally available to a submerged
+                        vehicle because radio signals are strongly
+                        attenuated by seawater.
+                    </p>
+
+                    <p>
+                        A vehicle may obtain a GNSS position
+                        when surfaced, or it may receive
+                        acoustic position updates from a
+                        support vessel or deployed transponders.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Inertial Measurement Unit (IMU)</h3>
+
+                    <p>
+                        An IMU measures the vehicle's motion
+                        using inertial sensors.
+                    </p>
+
+                    <p>
+                        A typical IMU includes:
+                    </p>
+
+                    <ul>
+                        <li>Accelerometers to measure linear acceleration.</li>
+                        <li>Gyroscopes to measure angular velocity.</li>
+                        <li>Sometimes magnetometers to measure the local magnetic field.</li>
+                    </ul>
+
+                    <p>
+                        These measurements help estimate
+                        vehicle attitude and motion. An IMU
+                        does not automatically provide an
+                        accurate geographic position by itself.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Inertial Navigation System (INS)</h3>
+
+                    <p>
+                        An INS uses inertial measurements
+                        and mathematical integration to
+                        estimate position, velocity, and
+                        orientation over time.
+                    </p>
+
+                    <p>
+                        It can continue operating without
+                        external radio or satellite signals,
+                        which makes it valuable for underwater
+                        vehicles.
+                    </p>
+
+                    <p>
+                        However, small errors in acceleration,
+                        angular-rate measurements, alignment,
+                        and initial conditions can accumulate
+                        over time. This effect is known as
+                        inertial drift.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Doppler Velocity Log (DVL)</h3>
+
+                    <p>
+                        A DVL is an acoustic instrument that
+                        estimates the velocity of a moving
+                        underwater platform relative to the
+                        seabed or surrounding water.
+                    </p>
+
+                    <p>
+                        It transmits acoustic beams and
+                        measures Doppler frequency shifts
+                        in the returning echoes.
+                    </p>
+
+                    <p>
+                        When bottom lock is available,
+                        the DVL can estimate velocity
+                        relative to the seabed. This
+                        information can help constrain
+                        inertial navigation drift.
+                    </p>
+
+                    <p>
+                        When bottom lock is unavailable,
+                        some systems can operate in
+                        water-track mode, estimating
+                        velocity relative to the water
+                        rather than the seabed.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Compass and Heading Sensors</h3>
+
+                    <p>
+                        Heading sensors help estimate
+                        the direction in which a vehicle
+                        is pointing.
+                    </p>
+
+                    <p>
+                        Magnetic compasses use the Earth's
+                        magnetic field, but readings can
+                        be affected by nearby metal,
+                        electrical equipment, magnetic
+                        interference, and local magnetic
+                        conditions.
+                    </p>
+
+                    <p>
+                        Inertial gyroscopes and other
+                        heading-reference systems may
+                        be used to provide additional
+                        orientation information.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Depth Sensors</h3>
+
+                    <p>
+                        Depth measurements provide
+                        information about the vehicle's
+                        vertical position relative to
+                        the water surface.
+                    </p>
+
+                    <p>
+                        They are important for controlling
+                        mission depth and combining
+                        vertical information with
+                        horizontal navigation estimates.
+                    </p>
+                </div>
+
+                <div class="note">
+                    <strong>Key concept:</strong>
+                    INS estimates motion continuously,
+                    while DVL can provide velocity
+                    measurements that help limit
+                    accumulated navigation error.
+                    Neither instrument should be
+                    described as a perfect standalone
+                    underwater positioning solution.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ACOUSTIC POSITIONING -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">07 / Acoustic Positioning</div>
+                    <h2>LBL, SBL and USBL Systems</h2>
+
+                    <p>
+                        Acoustic positioning systems use
+                        sound signals and known reference
+                        geometry to estimate the position
+                        of submerged vehicles and equipment.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Why Use Acoustic Positioning?</h3>
+
+                    <p>
+                        A submerged robot may need an
+                        external position reference to
+                        reduce navigation uncertainty.
+                        Acoustic systems provide a way
+                        to exchange signals between
+                        the vehicle and reference
+                        transponders.
+                    </p>
+
+                    <p>
+                        Different architectures are
+                        designed for different deployment
+                        arrangements, operational areas,
+                        and accuracy requirements.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">SYSTEM 01</span>
+                    <h3>Long Baseline (LBL)</h3>
+
+                    <p>
+                        LBL systems use multiple acoustic
+                        transponders deployed at known
+                        positions, commonly on or near
+                        the seafloor.
+                    </p>
+
+                    <p>
+                        The underwater vehicle exchanges
+                        acoustic signals with these
+                        reference points. Measured
+                        acoustic ranges are combined
+                        with the known transponder
+                        positions to calculate the
+                        vehicle's position.
+                    </p>
+
+                    <ul>
+                        <li>Uses a network of fixed acoustic references.</li>
+                        <li>Suitable for a defined survey area.</li>
+                        <li>Can provide accurate local positioning.</li>
+                        <li>Requires deployment and calibration of the acoustic array.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">SYSTEM 02</span>
+                    <h3>Short Baseline (SBL)</h3>
+
+                    <p>
+                        SBL systems use multiple acoustic
+                        receivers mounted on a surface
+                        vessel.
+                    </p>
+
+                    <p>
+                        The spacing between these
+                        receivers provides a reference
+                        geometry for estimating the
+                        position of an underwater
+                        transponder.
+                    </p>
+
+                    <ul>
+                        <li>Receiver array installed on the support vessel.</li>
+                        <li>Uses range and geometric information.</li>
+                        <li>Requires suitable vessel motion and alignment information.</li>
+                        <li>Performance depends on geometry and deployment conditions.</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">SYSTEM 03</span>
+                    <h3>Ultra-Short Baseline (USBL)</h3>
+
+                    <p>
+                        USBL systems use a compact
+                        acoustic transceiver array,
+                        typically mounted on a support
+                        vessel or deployed from it.
+                    </p>
+
+                    <p>
+                        The system measures acoustic
+                        travel time and the direction
+                        of the received signal to
+                        estimate the position of an
+                        underwater transponder relative
+                        to the vessel.
+                    </p>
+
+                    <ul>
+                        <li>Compact transducer arrangement.</li>
+                        <li>Often used to track ROVs and underwater vehicles.</li>
+                        <li>Can provide position updates to a support vessel.</li>
+                        <li>Depends on vessel position, orientation, calibration, and acoustic conditions.</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>LBL</th>
+                                <th>SBL</th>
+                                <th>USBL</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Reference Arrangement</td>
+                                <td>Multiple fixed transponders</td>
+                                <td>Multiple vessel-mounted receivers</td>
+                                <td>Compact vessel-mounted array</td>
+                            </tr>
+
+                            <tr>
+                                <td>Deployment</td>
+                                <td>Reference network deployed in the operating area</td>
+                                <td>Receivers installed on support vessel</td>
+                                <td>Compact transceiver installed on support vessel</td>
+                            </tr>
+
+                            <tr>
+                                <td>Typical Role</td>
+                                <td>Local underwater positioning</td>
+                                <td>Underwater tracking</td>
+                                <td>Vehicle tracking and acoustic positioning</td>
+                            </tr>
+
+                            <tr>
+                                <td>Main Consideration</td>
+                                <td>Array setup and calibration</td>
+                                <td>Array geometry and vessel motion</td>
+                                <td>Range, calibration, and vessel attitude</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note">
+                    <strong>Important:</strong>
+                    There is no universally best acoustic
+                    positioning system. The appropriate
+                    choice depends on water depth, survey
+                    geometry, installation effort, range,
+                    vessel movement, and required accuracy.
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SENSOR FUSION -->
+
+        <section id="integration">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">08 / Sensor Fusion</div>
+                    <h2>How Navigation Systems Work Together</h2>
+
+                    <p>
+                        Reliable underwater navigation
+                        usually depends on combining
+                        complementary sensors rather
+                        than relying on one instrument.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What Is Sensor Fusion?</h3>
+
+                    <p>
+                        Sensor fusion is the process
+                        of combining information from
+                        multiple sensors to produce
+                        a more useful estimate of the
+                        vehicle's state or environment.
+                    </p>
+
+                    <p>
+                        Each sensor has limitations.
+                        Combining different measurement
+                        types can improve reliability,
+                        provided the sensors are
+                        correctly calibrated and
+                        synchronized.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>IMU / INS</h3>
+
+                        <p>
+                            Provides continuous estimates
+                            of vehicle motion and orientation.
+                        </p>
+
+                        <p>
+                            Limitation: inertial errors
+                            can accumulate over time.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>DVL</h3>
+
+                        <p>
+                            Provides acoustic velocity
+                            measurements relative to
+                            the seabed or water.
+                        </p>
+
+                        <p>
+                            Limitation: bottom lock
+                            and measurement quality
+                            depend on conditions.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Depth Sensor</h3>
+
+                        <p>
+                            Provides vertical position
+                            information based on
+                            pressure measurements.
+                        </p>
+
+                        <p>
+                            Limitation: does not
+                            determine horizontal
+                            geographic position.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Acoustic Positioning</h3>
+
+                        <p>
+                            Provides external position
+                            references through acoustic
+                            measurements.
+                        </p>
+
+                        <p>
+                            Limitation: depends on
+                            reference geometry,
+                            calibration, and acoustic
+                            conditions.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="content-card">
+                    <h3>Example: A Combined Navigation Architecture</h3>
+
+                    <p>
+                        Consider an AUV operating near
+                        the seafloor during a mapping
+                        mission.
+                    </p>
+
+                    <ol>
+                        <li>The IMU measures acceleration and angular motion.</li>
+                        <li>The INS estimates the vehicle's changing attitude, velocity, and position.</li>
+                        <li>The DVL measures velocity relative to the seabed when bottom lock is available.</li>
+                        <li>The pressure sensor provides depth information.</li>
+                        <li>An acoustic positioning system may provide external position updates.</li>
+                        <li>The navigation processor combines these measurements into an updated state estimate.</li>
+                    </ol>
+
+                    <p>
+                        This architecture can reduce
+                        uncertainty compared with
+                        relying on inertial measurements
+                        alone. Its actual performance
+                        depends on sensor quality,
+                        geometry, calibration, and
+                        environmental conditions.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>Common Sensor Fusion Algorithms</h3>
+
+                    <p>
+                        Navigation systems may use
+                        mathematical estimation
+                        algorithms to combine
+                        measurements and account
+                        for uncertainty.
+                    </p>
+
+                    <ul>
+                        <li><strong>Kalman Filter:</strong> estimates system state using a model and noisy measurements.</li>
+                        <li><strong>Extended Kalman Filter:</strong> applies Kalman filtering to nonlinear systems through linearization.</li>
+                        <li><strong>Unscented Kalman Filter:</strong> handles nonlinear transformations using selected sample points.</li>
+                        <li><strong>Particle Filter:</strong> represents uncertainty using a collection of weighted state hypotheses.</li>
+                    </ul>
+
+                    <p>
+                        The appropriate algorithm depends
+                        on the vehicle's motion model,
+                        sensor characteristics,
+                        computational resources,
+                        and required performance.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- OPERATIONAL WORKFLOW -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">09 / Operational Workflow</div>
+                    <h2>From Sensor Measurements to Navigation Decisions</h2>
+
+                    <p>
+                        A marine robotic platform must
+                        acquire, process, validate,
+                        and interpret measurements
+                        before they can support
+                        navigation and mission control.
+                    </p>
+                </div>
+
+                <div class="process-grid">
+
+                    <div class="process-step">
+                        <span>01</span>
+                        <h4>Data Acquisition</h4>
+                        <p>Sensors collect raw measurements from the vehicle and environment.</p>
+                    </div>
+
+                    <div class="process-step">
+                        <span>02</span>
+                        <h4>Calibration</h4>
+                        <p>Sensor offsets, alignment, and measurement characteristics are checked.</p>
+                    </div>
+
+                    <div class="process-step">
+                        <span>03</span>
+                        <h4>Processing</h4>
+                        <p>Measurements are filtered, synchronized, and transformed.</p>
+                    </div>
+
+                    <div class="process-step">
+                        <span>04</span>
+                        <h4>Sensor Fusion</h4>
+                        <p>Complementary data are combined to estimate vehicle state.</p>
+                    </div>
+
+                    <div class="process-step">
+                        <span>05</span>
+                        <h4>Navigation Output</h4>
+                        <p>Position, attitude, depth, and uncertainty support mission decisions.</p>
+                    </div>
+
+                </div>
+
+                <div class="content-card" style="margin-top:25px;">
+                    <h3>Data Quality and Synchronization</h3>
+
+                    <p>
+                        Different sensors may operate
+                        at different sampling rates.
+                        A camera may capture images
+                        at one rate, an IMU may
+                        generate measurements much
+                        faster, and a sonar system
+                        may produce data according
+                        to its ping schedule.
+                    </p>
+
+                    <p>
+                        Accurate interpretation
+                        requires timestamps,
+                        synchronization, coordinate
+                        transformations, and
+                        appropriate handling of
+                        measurement delays.
+                    </p>
+
+                    <p>
+                        Poor synchronization can
+                        create misleading results
+                        even when each individual
+                        sensor is functioning
+                        correctly.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- APPLICATIONS -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">10 / Practical Applications</div>
+                    <h2>Where Marine Sensors and Navigation Are Used</h2>
+
+                    <p>
+                        Sensing and navigation technologies
+                        support a wide range of underwater
+                        scientific, industrial, and
+                        operational missions.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>Seafloor Mapping</h3>
+
+                        <p>
+                            Multibeam and other sonar
+                            systems collect bathymetric
+                            information used to create
+                            maps of underwater terrain.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Underwater Infrastructure Inspection</h3>
+
+                        <p>
+                            Cameras, imaging sonar,
+                            and navigation systems
+                            support inspection of
+                            pipelines, cables, and
+                            subsea structures.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Marine Archaeology</h3>
+
+                        <p>
+                            Side-scan sonar and
+                            underwater imaging
+                            help locate and document
+                            shipwrecks and submerged
+                            cultural heritage sites.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Oceanographic Research</h3>
+
+                        <p>
+                            CTD, oxygen, current,
+                            and other environmental
+                            sensors support research
+                            into ocean processes.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Search and Survey Operations</h3>
+
+                        <p>
+                            Sonar and navigation
+                            systems help search
+                            large underwater areas
+                            and identify objects
+                            of interest.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Autonomous Vehicle Navigation</h3>
+
+                        <p>
+                            Sensor fusion and
+                            acoustic positioning
+                            help AUVs estimate
+                            their location and
+                            follow planned routes.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REAL WORLD CASE STUDY -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">11 / Real-World Engineering</div>
+                    <h2>Case Study: WHOI Sentry AUV</h2>
+
+                    <p>
+                        An operational example of how
+                        multiple navigation and sensing
+                        technologies work together
+                        in a deep-submergence vehicle.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <span class="number">AUTONOMOUS UNDERWATER VEHICLE</span>
+
+                    <h3>Sentry — Woods Hole Oceanographic Institution</h3>
+
+                    <p>
+                        Sentry is an autonomous underwater
+                        vehicle developed for deep-ocean
+                        scientific exploration and survey
+                        missions.
+                    </p>
+
+                    <p>
+                        Its navigation architecture
+                        uses a Doppler Velocity Log
+                        and an inertial navigation
+                        system, aided by acoustic
+                        navigation technologies
+                        such as USBL or LBL.
+                    </p>
+
+                    <p>
+                        This combination illustrates
+                        why underwater vehicles
+                        integrate different navigation
+                        technologies instead of
+                        depending on one sensor.
+                    </p>
+
+                    <p>
+                        Sentry also carries scientific
+                        instruments selected for
+                        individual missions. These
+                        may include specialized
+                        imaging and environmental
+                        measurement equipment.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What Can We Learn From This Architecture?</h3>
+
+                    <ul>
+                        <li>DVL contributes velocity measurements.</li>
+                        <li>INS provides continuous motion estimation.</li>
+                        <li>Acoustic systems provide external navigation references.</li>
+                        <li>Scientific payloads collect mission-specific measurements.</li>
+                        <li>Communication systems can support vehicle monitoring and mission updates.</li>
+                    </ul>
+
+                    <p>
+                        The important lesson is that
+                        a reliable underwater navigation
+                        solution is an integrated
+                        engineering architecture,
+                        not simply a GPS replacement.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CHALLENGES -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">12 / Technical Challenges</div>
+                    <h2>Limitations and Engineering Challenges</h2>
+
+                    <p>
+                        Marine sensors operate in a
+                        demanding environment where
+                        pressure, water properties,
+                        acoustic conditions, and
+                        mechanical movement can
+                        affect measurement quality.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>1. Inertial Drift</h3>
+
+                    <p>
+                        Small inertial sensor errors
+                        can accumulate during navigation.
+                        Long missions may require
+                        external references or
+                        velocity aiding to constrain
+                        the error.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>2. Acoustic Noise and Multipath</h3>
+
+                    <p>
+                        Machinery, vessels, marine
+                        life, reverberation, and
+                        reflections from surfaces
+                        can affect acoustic
+                        measurements and
+                        communication.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>3. Sound-Speed Variation</h3>
+
+                    <p>
+                        Temperature, salinity,
+                        and pressure affect sound
+                        propagation. Incorrect
+                        sound-speed assumptions
+                        can introduce range and
+                        positioning errors.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>4. Optical Visibility</h3>
+
+                    <p>
+                        Turbidity, suspended particles,
+                        low illumination, and
+                        backscatter can reduce
+                        camera image quality.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>5. Sensor Calibration</h3>
+
+                    <p>
+                        Incorrect calibration,
+                        mounting alignment,
+                        timing, and coordinate
+                        transformations can
+                        introduce systematic
+                        measurement errors.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>6. DVL Bottom-Lock Loss</h3>
+
+                    <p>
+                        A DVL may lose bottom lock
+                        when the seabed is outside
+                        its effective range or when
+                        acoustic returns are
+                        insufficient. Water-track
+                        operation may provide
+                        alternative information,
+                        but it measures velocity
+                        relative to the water.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>7. Pressure and Mechanical Reliability</h3>
+
+                    <p>
+                        Sensor housings, connectors,
+                        cables, and mounting
+                        structures must withstand
+                        the pressure and conditions
+                        associated with the
+                        intended operating depth.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>8. Data Integration Complexity</h3>
+
+                    <p>
+                        Combining data from
+                        different manufacturers
+                        and sensor interfaces
+                        requires compatible
+                        communication protocols,
+                        data formats, timestamps,
+                        coordinate frames, and
+                        software interfaces.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FUTURE -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">13 / Future Developments</div>
+                    <h2>The Future of Marine Robotic Sensing and Navigation</h2>
+
+                    <p>
+                        New sensors, estimation
+                        algorithms, and autonomous
+                        technologies are expanding
+                        the capabilities of marine
+                        robotic systems.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+
+                    <div class="content-card">
+                        <h3>AI-Assisted Perception</h3>
+
+                        <p>
+                            Machine learning can
+                            support object detection,
+                            image classification,
+                            seabed interpretation,
+                            and anomaly identification.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Visual-Inertial Navigation</h3>
+
+                        <p>
+                            Combining optical
+                            observations with inertial
+                            measurements may improve
+                            navigation in environments
+                            where visual features
+                            are available.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Advanced Acoustic Mapping</h3>
+
+                        <p>
+                            Improved sonar processing
+                            and imaging techniques
+                            can provide more detailed
+                            information about underwater
+                            environments.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Adaptive Sensor Fusion</h3>
+
+                        <p>
+                            Future systems may
+                            dynamically adjust the
+                            contribution of individual
+                            sensors according to
+                            their quality and
+                            uncertainty.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Cooperative Navigation</h3>
+
+                        <p>
+                            Multiple underwater
+                            vehicles may exchange
+                            selected information
+                            to improve their
+                            collective awareness
+                            and mission coordination.
+                        </p>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Digital Ocean Observation</h3>
+
+                        <p>
+                            Sensor networks and
+                            robotic platforms may
+                            contribute to connected
+                            ocean observation
+                            systems and improved
+                            environmental models.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- KNOWLEDGE REVIEW -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">14 / Knowledge Review</div>
+                    <h2>Essential Concepts to Remember</h2>
+
+                    <p>
+                        Review these technical
+                        principles before taking
+                        the final assessment.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h3>What You Should Understand</h3>
+
+                    <ul>
+                        <li>Marine robotic sensors collect information about the vehicle and its environment.</li>
+                        <li>Active sonar transmits acoustic pulses and analyzes returning echoes.</li>
+                        <li>Passive sonar listens for sounds without transmitting its own interrogation pulse.</li>
+                        <li>Multibeam sonar measures bathymetry across multiple acoustic beams.</li>
+                        <li>Side-scan sonar creates images of seafloor features but is not itself a direct bathymetric measurement system.</li>
+                        <li>Underwater cameras provide optical images but depend on visibility and lighting.</li>
+                        <li>CTD instruments measure conductivity, temperature, and pressure.</li>
+                        <li>An IMU measures acceleration and angular motion.</li>
+                        <li>An INS estimates motion and position but accumulates drift.</li>
+                        <li>A DVL measures velocity relative to the seabed or water.</li>
+                        <li>LBL, SBL, and USBL are different acoustic positioning architectures.</li>
+                        <li>Sensor fusion combines complementary measurements to improve state estimation.</li>
+                        <li>Underwater navigation requires uncertainty management and correct sensor calibration.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+
+        <section class="quiz-section" id="assessment">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">15 / Knowledge Assessment</div>
+                    <h2>Marine Sensors & Navigation Assessment</h2>
+
+                    <p>
+                        Test your understanding of
+                        sonar, environmental sensors,
+                        inertial navigation, acoustic
+                        positioning, and sensor fusion.
+                    </p>
+                </div>
+
+                <div class="quiz-container">
+
+                    <strong id="progressText">
+                        0 of 10 questions answered
+                    </strong>
+
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar"></div>
+                    </div>
+
+                    <form id="navigationQuiz">
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">01.</span> What is the main function of active sonar?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="a">
+                                To measure electrical battery capacity.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="b">
+                                To transmit sound pulses and analyze returning echoes.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="c">
+                                To receive GPS signals underwater.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q1" value="d">
+                                To measure seawater salinity directly.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. Active sonar emits acoustic signals and analyzes their echoes to detect objects or estimate distances.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">02.</span> Which sonar system is primarily used to produce detailed acoustic images of seafloor features?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="a">
+                                Pressure sensor.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="b">
+                                Inertial navigation system.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="c">
+                                Side-scan sonar.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q2" value="d">
+                                Magnetic compass.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. Side-scan sonar creates acoustic images that help identify objects, wrecks, and seabed characteristics.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="a">
+                            <h3><span class="question-number">03.</span> What does a CTD instrument measure?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="a">
+                                Conductivity, temperature, and pressure.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="b">
+                                Current, thrust, and direction.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="c">
+                                Communication, telemetry, and depth.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q3" value="d">
+                                Carbon, turbulence, and density.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: A. CTD measures conductivity, temperature, and pressure. Pressure is commonly used to estimate depth.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="d">
+                            <h3><span class="question-number">04.</span> What does a typical IMU contain?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="a">
+                                A multibeam sonar and camera only.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="b">
+                                A satellite transmitter and GPS antenna only.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="c">
+                                A CTD and dissolved oxygen sensor.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q4" value="d">
+                                Accelerometers and gyroscopes.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: D. Accelerometers measure linear acceleration and gyroscopes measure angular velocity. Some IMUs also include magnetometers.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">05.</span> What is a major limitation of an INS operating without external aiding?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="a">
+                                It cannot measure angular motion.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="b">
+                                Position errors can accumulate over time.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="c">
+                                It only operates above the water surface.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q5" value="d">
+                                It cannot operate with onboard power.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. Small inertial measurement errors accumulate during integration, producing navigation drift.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">06.</span> What does a DVL primarily measure?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="a">
+                                Seawater temperature only.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="b">
+                                The vehicle's battery voltage.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="c">
+                                Velocity relative to the seabed or surrounding water.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q6" value="d">
+                                Geographic position from GPS satellites underwater.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. A DVL uses Doppler acoustic measurements to estimate velocity relative to the seabed or water, depending on its operating mode.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="a">
+                            <h3><span class="question-number">07.</span> Which acoustic positioning system uses multiple fixed transponders in a known reference array?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="a">
+                                Long Baseline (LBL).
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="b">
+                                Ultra-Short Baseline (USBL).
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="c">
+                                Short Baseline (SBL).
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q7" value="d">
+                                Visual odometry.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: A. LBL uses multiple fixed acoustic reference transponders with known positions to estimate the underwater vehicle's location.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="d">
+                            <h3><span class="question-number">08.</span> What is the main purpose of sensor fusion?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="a">
+                                To remove the need for all sensor calibration.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="b">
+                                To replace every sensor with a camera.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="c">
+                                To make all sensors produce identical measurements.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q8" value="d">
+                                To combine complementary measurements into a more useful estimate.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: D. Sensor fusion combines measurements from different sources to improve state estimation and manage uncertainty.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="b">
+                            <h3><span class="question-number">09.</span> Why can sound-speed variation affect underwater acoustic positioning?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="a">
+                                It changes the color of camera images.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="b">
+                                It can affect the conversion of acoustic travel time into distance.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="c">
+                                It prevents pressure sensors from operating.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q9" value="d">
+                                It automatically disables the vehicle's computer.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: B. Acoustic range calculations depend on sound speed. Changes in temperature, salinity, and pressure can affect propagation speed and introduce positioning errors.
+                            </div>
+                        </div>
+
+                        <div class="question" data-answer="c">
+                            <h3><span class="question-number">10.</span> Which statement best describes reliable underwater navigation?</h3>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="a">
+                                A single pressure sensor can determine full geographic position.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="b">
+                                GPS always works normally at every underwater depth.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="c">
+                                Multiple complementary sensors may be combined to estimate position and manage uncertainty.
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="q10" value="d">
+                                Sensor calibration is unnecessary when using acoustic systems.
+                            </label>
+
+                            <div class="explanation">
+                                Correct answer: C. Underwater navigation relies on integrated measurements, calibration, external references where available, and continuous uncertainty management.
+                            </div>
+                        </div>
+
+                        <div class="quiz-actions">
+                            <button type="button" class="btn btn-primary" id="submitQuiz">
+                                Submit Assessment
+                            </button>
+
+                            <button type="button" class="btn btn-secondary" id="resetQuiz">
+                                Reset Quiz
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <div id="quizResult" aria-live="polite">
+                        <h3 id="resultTitle">Assessment Result</h3>
+                        <p id="resultScore"></p>
+                        <p id="resultMessage"></p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+
+        <section>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div class="eyebrow">16 / Technical References</div>
+                    <h2>Research and Further Reading</h2>
+
+                    <p>
+                        Institutional and technical
+                        resources for further study
+                        of sonar, underwater sensing,
+                        and marine robotic navigation.
+                    </p>
+                </div>
+
+                <div class="reference-list">
+
+                    <div class="reference-item">
+                        <a href="https://oceanexplorer.noaa.gov/technology/sonar/" target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Exploration — Sonar
+                        </a>
+                        <p>
+                            Active sonar, passive sonar,
+                            acoustic transducers, and
+                            underwater exploration.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://oceanexplorer.noaa.gov/technology/sonar-multibeam/" target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Exploration — Multibeam Sonar
+                        </a>
+                        <p>
+                            Multibeam acoustic mapping
+                            and bathymetric survey
+                            technology.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://oceanexplorer.noaa.gov/technology/sonar-side-scan/" target="_blank" rel="noopener noreferrer">
+                            NOAA Ocean Exploration — Side-Scan Sonar
+                        </a>
+                        <p>
+                            Seafloor imaging, object
+                            detection, and acoustic
+                            survey interpretation.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://nauticalcharts.noaa.gov/learn/hydrographic-survey-equipment.html" target="_blank" rel="noopener noreferrer">
+                            NOAA Office of Coast Survey — Hydrographic Survey Equipment
+                        </a>
+                        <p>
+                            Hydrographic survey
+                            instrumentation and
+                            sonar applications.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/auvs/sentry/" target="_blank" rel="noopener noreferrer">
+                            Woods Hole Oceanographic Institution — Sentry AUV
+                        </a>
+                        <p>
+                            Real-world underwater
+                            navigation architecture
+                            using DVL, INS, and
+                            acoustic positioning.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.whoi.edu/what-we-do/explore/ships/ships-atlantis/ships-atlantis-scientific-equipment/mapping-acoustic-systems/" target="_blank" rel="noopener noreferrer">
+                            WHOI — Mapping and Acoustic Systems
+                        </a>
+                        <p>
+                            Acoustic positioning
+                            and mapping equipment
+                            used in marine operations.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.marine-geo.org/references/descriptions/NavType.php" target="_blank" rel="noopener noreferrer">
+                            Marine Geoscience Data System — Navigation Types
+                        </a>
+                        <p>
+                            Navigation terminology
+                            and combined DVL,
+                            LBL, and INS approaches.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://dscl.lcsr.jhu.edu/Research/DVLNAV/" target="_blank" rel="noopener noreferrer">
+                            Johns Hopkins University — DVLNAV
+                        </a>
+                        <p>
+                            Research on DVL-aided
+                            underwater navigation
+                            and position estimation.
+                        </p>
+                    </div>
+
+                    <div class="reference-item">
+                        <a href="https://www.mdpi.com/2076-3417/14/21/9671" target="_blank" rel="noopener noreferrer">
+                            Applied Sciences — Positioning Systems for Unmanned Underwater Vehicles
+                        </a>
+                        <p>
+                            Technical review of
+                            underwater positioning
+                            technologies and
+                            their limitations.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container">
+
+            <p>
+                MARITERRA | Marine Technology Education Platform
+            </p>
+
+            <p style="margin-top:8px;">
+                Developed and designed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+
+            <p style="margin-top:8px;">
+                © 2026 MARITERRA. Educational purposes.
+            </p>
+
+        </div>
+    </footer>
+
+    <script>
+        const quizForm = document.getElementById("navigationQuiz");
+
+        const questions = [
+            ...document.querySelectorAll(".question")
+        ];
+
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+
+        const progressText = document.getElementById("progressText");
+        const progressBar = document.getElementById("progressBar");
+
+        const quizResult = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultScore = document.getElementById("resultScore");
+        const resultMessage = document.getElementById("resultMessage");
+
+        let submitted = false;
+
+        function updateProgress() {
+            const answered = questions.filter(question => {
+                return question.querySelector("input:checked");
+            }).length;
+
+            progressText.textContent =
+                `${answered} of ${questions.length} questions answered`;
+
+            progressBar.style.width =
+                `${(answered / questions.length) * 100}%`;
+        }
+
+        quizForm.addEventListener("change", function () {
+            if (!submitted) {
+                updateProgress();
+            }
+        });
+
+        submitButton.addEventListener("click", function () {
+            if (submitted) return;
+
+            const unanswered = questions.filter(question => {
+                return !question.querySelector("input:checked");
+            });
+
+            if (unanswered.length > 0) {
+                alert(
+                    `Please answer all questions first. Remaining: ${unanswered.length}`
+                );
+
+                unanswered[0].scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            let score = 0;
+
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.answer;
+
+                const selected =
+                    question.querySelector("input:checked");
+
+                const options =
+                    question.querySelectorAll(".option");
+
+                const explanation =
+                    question.querySelector(".explanation");
+
+                options.forEach(option => {
+                    const input = option.querySelector("input");
+
+                    input.disabled = true;
+
+                    if (input.value === correctAnswer) {
+                        option.classList.add("correct");
+                    }
+
+                    if (
+                        input.checked &&
+                        input.value !== correctAnswer
+                    ) {
+                        option.classList.add("incorrect");
+                    }
+                });
+
+                if (selected.value === correctAnswer) {
+                    score++;
+                }
+
+                explanation.classList.add("show");
+            });
+
+            submitted = true;
+
+            submitButton.disabled = true;
+
+            const percentage =
+                (score / questions.length) * 100;
+
+            resultTitle.textContent =
+                "Assessment Completed";
+
+            resultScore.textContent =
+                `Your score: ${score} / ${questions.length} (${percentage}%)`;
+
+            if (percentage === 100) {
+                resultMessage.textContent =
+                    "Excellent work. You demonstrated a strong understanding of marine robotic sensors and navigation.";
+            } else if (percentage >= 80) {
+                resultMessage.textContent =
+                    "Very good performance. Review the explanations to strengthen your technical understanding.";
+            } else if (percentage >= 60) {
+                resultMessage.textContent =
+                    "Good effort. Revisit the sonar and navigation sections to improve your understanding.";
+            } else {
+                resultMessage.textContent =
+                    "More study is recommended. Review the topic sections and try the assessment again.";
+            }
+
+            quizResult.style.display = "block";
+
+            quizResult.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            submitted = false;
+
+            submitButton.disabled = false;
+
+            questions.forEach(question => {
+                question.querySelectorAll(".option").forEach(option => {
+                    option.classList.remove("correct", "incorrect");
+                });
+
+                question.querySelectorAll("input").forEach(input => {
+                    input.disabled = false;
+                });
+
+                question.querySelector(".explanation").classList.remove("show");
+            });
+
+            quizResult.style.display = "none";
+
+            updateProgress();
+
+            document.getElementById("assessment").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+
+        updateProgress();
+    </script>
+
+</body>
+</html>

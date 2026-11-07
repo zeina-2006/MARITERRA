@@ -1,0 +1,1836 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about maritime navigation safety and reliability, including risk assessment, equipment failures, redundancy, emergency procedures, system testing, human factors, and cybersecurity.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Navigation Safety & Reliability</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070816;
+            --panel: #101126;
+            --panel-light: #171932;
+            --purple: #9333ea;
+            --purple-light: #c4b5fd;
+            --blue: #38bdf8;
+            --text: #f4f3ff;
+            --muted: #a5a5c2;
+            --border: rgba(196, 181, 253, 0.16);
+            --success: #4ade80;
+            --warning: #fbbf24;
+            --danger: #fb7185;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 85% 5%, rgba(147, 51, 234, 0.13), transparent 28%),
+                radial-gradient(circle at 5% 35%, rgba(56, 189, 248, 0.07), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 17px 7%;
+            background: rgba(7, 8, 22, 0.91);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--purple-light);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .back-link {
+            color: var(--muted);
+            font-size: 0.88rem;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            min-height: 410px;
+            padding: 100px 8% 85px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+            background:
+                linear-gradient(110deg, rgba(7, 8, 22, 0.98), rgba(22, 13, 48, 0.83)),
+                radial-gradient(circle at 80% 45%, rgba(147, 51, 234, 0.3), transparent 38%);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            right: 7%;
+            top: 5%;
+            border: 1px solid rgba(196, 181, 253, 0.12);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 35px rgba(147, 51, 234, 0.035),
+                0 0 0 75px rgba(56, 189, 248, 0.025);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .eyebrow {
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1.4;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            letter-spacing: 1px;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--purple-light), var(--blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 720px;
+            color: var(--muted);
+            font-size: 1.04rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .meta-tag {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.035);
+            color: var(--purple-light);
+            padding: 7px 14px;
+            border-radius: 30px;
+            font-size: 0.76rem;
+        }
+
+        .page-layout {
+            width: min(1250px, 88%);
+            margin: 55px auto 90px;
+            display: grid;
+            grid-template-columns: 245px 1fr;
+            gap: 38px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 95px;
+            padding: 24px 19px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: rgba(16, 17, 38, 0.8);
+        }
+
+        .sidebar h3 {
+            font-size: 0.78rem;
+            color: var(--purple-light);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 8px 10px;
+            margin: 3px 0;
+            border-radius: 7px;
+            color: var(--muted);
+            font-size: 0.78rem;
+            transition: 0.25s;
+        }
+
+        .sidebar a:hover {
+            color: white;
+            background: rgba(147, 51, 234, 0.16);
+            transform: translateX(4px);
+        }
+
+        .content {
+            min-width: 0;
+        }
+
+        .content-section {
+            margin-bottom: 55px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-number {
+            color: var(--blue);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .content-section h2 {
+            font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+            margin-bottom: 19px;
+            color: var(--purple-light);
+        }
+
+        .content-section h3 {
+            font-size: 0.95rem;
+            color: var(--blue);
+            margin: 22px 0 9px;
+        }
+
+        .content-section p {
+            color: var(--muted);
+            font-size: 0.94rem;
+            margin-bottom: 14px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 22px 0;
+        }
+
+        .info-card {
+            padding: 21px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.94), rgba(12, 13, 31, 0.92));
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            border-color: rgba(147, 51, 234, 0.65);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        .info-card h3 {
+            margin: 0 0 9px;
+            font-size: 0.9rem;
+        }
+
+        .info-card p {
+            font-size: 0.84rem;
+            margin: 0;
+        }
+
+        .info-strip {
+            margin: 22px 0;
+            padding: 18px 20px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.09);
+            border-radius: 0 10px 10px 0;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .info-strip strong {
+            color: var(--purple-light);
+        }
+
+        .warning-strip {
+            border-left-color: var(--warning);
+            background: rgba(251, 191, 36, 0.07);
+        }
+
+        .warning-strip strong {
+            color: var(--warning);
+        }
+
+        .danger-strip {
+            border-left-color: var(--danger);
+            background: rgba(251, 113, 133, 0.07);
+        }
+
+        .danger-strip strong {
+            color: var(--danger);
+        }
+
+        .data-list {
+            list-style: none;
+            margin: 15px 0 20px;
+        }
+
+        .data-list li {
+            position: relative;
+            padding: 8px 0 8px 24px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(196, 181, 253, 0.07);
+        }
+
+        .data-list li::before {
+            content: "◆";
+            position: absolute;
+            left: 3px;
+            top: 10px;
+            color: var(--purple);
+            font-size: 0.62rem;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        .flow-step {
+            text-align: center;
+            padding: 17px 10px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .flow-step span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--blue);
+            font-size: 0.7rem;
+            margin-bottom: 7px;
+        }
+
+        .flow-step strong {
+            display: block;
+            font-size: 0.77rem;
+        }
+
+        .flow-step small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+
+        .comparison-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 570px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 13px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.82rem;
+        }
+
+        th {
+            background: rgba(147, 51, 234, 0.15);
+            color: var(--purple-light);
+        }
+
+        td {
+            color: var(--muted);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .quiz-container {
+            padding: 28px;
+            background: linear-gradient(145deg, rgba(23, 25, 50, 0.98), rgba(10, 11, 27, 0.98));
+            border: 1px solid rgba(147, 51, 234, 0.38);
+            border-radius: 17px;
+        }
+
+        .quiz-intro {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-bottom: 22px;
+        }
+
+        .question {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question:last-of-type {
+            border-bottom: none;
+        }
+
+        .question h3 {
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0 0 13px;
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 9px 12px;
+            margin: 7px 0;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 0.84rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: rgba(147, 51, 234, 0.08);
+            border-color: var(--border);
+        }
+
+        .option input {
+            margin-top: 6px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: rgba(74, 222, 128, 0.55);
+            background: rgba(74, 222, 128, 0.08);
+            color: #bbf7d0;
+        }
+
+        .option.incorrect {
+            border-color: rgba(251, 113, 133, 0.5);
+            background: rgba(251, 113, 133, 0.07);
+            color: #fecdd3;
+        }
+
+        .explanation {
+            display: none;
+            margin: 10px 0 3px;
+            padding: 11px 13px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.07);
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .quiz-btn {
+            border: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .submit-btn {
+            color: white;
+            background: linear-gradient(90deg, var(--purple), #6d28d9);
+        }
+
+        .reset-btn {
+            color: var(--purple-light);
+            background: rgba(196, 181, 253, 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.12);
+        }
+
+        .quiz-result {
+            display: none;
+            margin-top: 22px;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result h3 {
+            color: var(--blue);
+            margin: 0 0 8px;
+        }
+
+        .quiz-result p {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .references {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: rgba(16, 17, 38, 0.7);
+        }
+
+        .references a {
+            color: var(--blue);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .references li {
+            margin: 9px 0;
+            color: var(--muted);
+            font-size: 0.83rem;
+        }
+
+        footer {
+            padding: 30px 7%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 900px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .sidebar nav {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px 12px;
+            }
+
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 14px 5%;
+            }
+
+            .logo {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 75px 6%;
+            }
+
+            .hero::after {
+                right: -180px;
+            }
+
+            .page-layout {
+                width: 90%;
+                margin-top: 35px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar nav {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-container {
+                padding: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+    <a href="smart-navigation.html" class="back-link">← Back to Smart Navigation</a>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="eyebrow">Smart Navigation / Topic 08</div>
+        <h1>Navigation Safety <span class="gradient-text">& Reliability</span></h1>
+        <p>
+            Understand how maritime navigation systems maintain safe and reliable
+            operations through risk assessment, equipment monitoring, redundancy,
+            emergency procedures, testing, and continuous improvement.
+        </p>
+        <div class="hero-meta">
+            <span class="meta-tag">Navigation Safety</span>
+            <span class="meta-tag">System Reliability</span>
+            <span class="meta-tag">Risk Assessment</span>
+            <span class="meta-tag">Emergency Procedures</span>
+        </div>
+    </div>
+</section>
+
+<div class="page-layout">
+
+    <aside class="sidebar">
+        <h3>TOPIC CONTENTS</h3>
+        <nav>
+            <a href="#introduction">01. Introduction</a>
+            <a href="#principles">02. Safety Principles</a>
+            <a href="#reliability">03. Reliability</a>
+            <a href="#risk">04. Risk Assessment</a>
+            <a href="#failures">05. Equipment Failures</a>
+            <a href="#redundancy">06. Redundancy</a>
+            <a href="#monitoring">07. Monitoring</a>
+            <a href="#emergency">08. Emergency Procedures</a>
+            <a href="#human">09. Human Factors</a>
+            <a href="#cybersecurity">10. Cybersecurity</a>
+            <a href="#testing">11. Testing & Maintenance</a>
+            <a href="#regulations">12. Regulations</a>
+            <a href="#improvement">13. Future Development</a>
+            <a href="#quiz">14. Knowledge Assessment</a>
+            <a href="#references">15. References</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section class="content-section" id="introduction">
+            <div class="section-number">SECTION 01</div>
+            <h2>Introduction to Navigation Safety and Reliability</h2>
+
+            <p>
+                Modern maritime navigation depends on a combination of electronic
+                equipment, sensors, communication networks, software, and human
+                decision-making. Systems such as GNSS receivers, radar, ECDIS,
+                gyrocompasses, speed logs, AIS, and integrated bridge systems help
+                bridge personnel understand the vessel's position and surrounding
+                environment.
+            </p>
+
+            <p>
+                However, navigation equipment can experience technical faults,
+                inaccurate measurements, power interruptions, communication problems,
+                software errors, or environmental interference. If these problems
+                are not identified and managed correctly, they may contribute to
+                unsafe navigation.
+            </p>
+
+            <p>
+                <strong>Navigation safety</strong> focuses on preventing accidents
+                and reducing risks during vessel operations. <strong>System reliability</strong>
+                refers to the ability of equipment and systems to perform their
+                required functions under specified conditions for a defined period.
+            </p>
+
+            <div class="info-strip">
+                <strong>Core idea:</strong> A reliable navigation system is not simply
+                one that works under normal conditions. It must also help personnel
+                recognize abnormal conditions, manage failures, and maintain safe
+                operations when equipment or information becomes unavailable.
+            </div>
+        </section>
+
+        <section class="content-section" id="principles">
+            <div class="section-number">SECTION 02</div>
+            <h2>Fundamental Principles of Navigation Safety</h2>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Situational Awareness</h3>
+                    <p>
+                        Maintaining an accurate understanding of the vessel's position,
+                        movement, nearby traffic, navigational hazards, and environmental
+                        conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Accuracy of Information</h3>
+                    <p>
+                        Using appropriate, current, and correctly interpreted
+                        navigational information from reliable sources.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Failure Preparedness</h3>
+                    <p>
+                        Preparing for equipment faults, data loss, power problems,
+                        and unexpected operating conditions before they occur.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Human Oversight</h3>
+                    <p>
+                        Ensuring that trained personnel understand system limitations,
+                        monitor performance, and take appropriate action when required.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Safety Is a System-Wide Responsibility</h3>
+
+            <p>
+                Navigation safety cannot depend on a single instrument or individual.
+                It requires coordination between the bridge team, technical personnel,
+                vessel management, equipment manufacturers, and established operating
+                procedures.
+            </p>
+
+            <p>
+                For example, a radar may function correctly while a GNSS receiver
+                provides an incorrect position. If the bridge team relies on only
+                one information source, the error may remain unnoticed. Comparing
+                information from independent sources can help identify inconsistencies.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Important:</strong> A clear electronic display does not
+                guarantee that the information shown is accurate. Navigation
+                information must be interpreted and cross-checked using appropriate
+                methods.
+            </div>
+        </section>
+
+        <section class="content-section" id="reliability">
+            <div class="section-number">SECTION 03</div>
+            <h2>Understanding System Reliability</h2>
+
+            <p>
+                Reliability is the probability that a system will perform its required
+                function without failure for a specified period under stated operating
+                conditions. It is an important consideration when designing, selecting,
+                installing, and maintaining maritime navigation equipment.
+            </p>
+
+            <h3>Availability</h3>
+            <p>
+                Availability describes whether a system is operational and ready for
+                use when required. A system may be reliable during operation but still
+                have poor availability if maintenance or repair takes a long time.
+            </p>
+
+            <h3>Maintainability</h3>
+            <p>
+                Maintainability describes how easily and quickly a system can be
+                inspected, repaired, or restored after a fault. Good maintainability
+                reduces downtime and supports safer operations.
+            </p>
+
+            <h3>Resilience</h3>
+            <p>
+                Resilience is the ability of a system or operation to withstand
+                disruptions, adapt to changing conditions, and recover its required
+                functions after an incident.
+            </p>
+
+            <div class="comparison-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Main Question</th>
+                            <th>Maritime Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Reliability</td>
+                            <td>Does it perform without failure?</td>
+                            <td>A GNSS receiver operates correctly during a voyage.</td>
+                        </tr>
+                        <tr>
+                            <td>Availability</td>
+                            <td>Is it ready when needed?</td>
+                            <td>A backup radar is operational when required.</td>
+                        </tr>
+                        <tr>
+                            <td>Maintainability</td>
+                            <td>Can it be restored efficiently?</td>
+                            <td>A faulty sensor can be inspected and repaired.</td>
+                        </tr>
+                        <tr>
+                            <td>Resilience</td>
+                            <td>Can operations recover from disruption?</td>
+                            <td>The bridge team can continue safely after equipment failure.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Reliability Depends on Operating Conditions</h3>
+
+            <p>
+                Equipment performance may be affected by vibration, temperature,
+                humidity, corrosion, electrical disturbances, mechanical wear,
+                installation quality, and maintenance practices. Reliability
+                assessments must therefore consider the actual environment in
+                which the equipment will operate.
+            </p>
+
+            <div class="info-strip">
+                <strong>Key distinction:</strong> Reliability, availability,
+                maintainability, and resilience are related concepts, but they
+                are not interchangeable. A complete safety assessment considers
+                all of them.
+            </div>
+        </section>
+
+        <section class="content-section" id="risk">
+            <div class="section-number">SECTION 04</div>
+            <h2>Risk Assessment in Maritime Navigation</h2>
+
+            <p>
+                Risk assessment is a structured process used to identify hazards,
+                understand how they may cause harm, estimate the level of risk,
+                and determine appropriate control measures.
+            </p>
+
+            <h3>What Is a Hazard?</h3>
+            <p>
+                A hazard is a condition or source with the potential to cause harm.
+                In navigation, examples include inaccurate position information,
+                poor visibility, equipment failure, restricted maneuvering space,
+                and dangerous traffic situations.
+            </p>
+
+            <h3>What Is Risk?</h3>
+            <p>
+                Risk considers both the likelihood that an unwanted event may occur
+                and the severity of its possible consequences. A low-probability
+                event may still require attention if its consequences could be severe.
+            </p>
+
+            <div class="process-flow">
+                <div class="flow-step">
+                    <span>01</span>
+                    <strong>Identify</strong>
+                    <small>Find potential hazards</small>
+                </div>
+                <div class="flow-step">
+                    <span>02</span>
+                    <strong>Analyze</strong>
+                    <small>Evaluate likelihood and impact</small>
+                </div>
+                <div class="flow-step">
+                    <span>03</span>
+                    <strong>Control</strong>
+                    <small>Apply risk-reduction measures</small>
+                </div>
+                <div class="flow-step">
+                    <span>04</span>
+                    <strong>Review</strong>
+                    <small>Monitor and reassess</small>
+                </div>
+            </div>
+
+            <h3>Risk Control Measures</h3>
+            <ul class="data-list">
+                <li>Using suitable and properly maintained navigation equipment.</li>
+                <li>Cross-checking position and movement information using appropriate independent methods.</li>
+                <li>Maintaining a proper lookout and safe speed.</li>
+                <li>Preparing alternative navigation arrangements for equipment failures.</li>
+                <li>Training bridge personnel to recognize alarms and abnormal readings.</li>
+                <li>Reviewing procedures after incidents, near misses, and equipment faults.</li>
+            </ul>
+
+            <div class="info-strip warning-strip">
+                <strong>Important:</strong> Risk assessment does not eliminate every
+                hazard. Its purpose is to understand risks, reduce them to an
+                acceptable level within the applicable safety framework, and
+                prepare for remaining risks.
+            </div>
+        </section>
+
+        <section class="content-section" id="failures">
+            <div class="section-number">SECTION 05</div>
+            <h2>Navigation Equipment Failures</h2>
+
+            <p>
+                A navigation system may fail completely, provide inaccurate
+                information, respond slowly, or continue operating while displaying
+                misleading data. Recognizing the type of failure is essential
+                for selecting the correct response.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>GNSS Failure</h3>
+                    <p>
+                        Satellite positioning may become unavailable or inaccurate
+                        because of signal blockage, interference, equipment faults,
+                        or other disruptions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Radar Failure</h3>
+                    <p>
+                        A radar system may experience transmitter, receiver,
+                        antenna, display, or processing problems that affect
+                        target detection and presentation.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Gyrocompass Failure</h3>
+                    <p>
+                        Incorrect heading information may affect radar presentation,
+                        heading control, and other systems that depend on heading data.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>ECDIS or Chart Data Problems</h3>
+                    <p>
+                        Software faults, incorrect settings, outdated information,
+                        or unsuitable chart data may affect route monitoring and
+                        navigational awareness.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Power Supply Failure</h3>
+                    <p>
+                        Loss of electrical power may interrupt navigation equipment,
+                        displays, sensors, or communication systems.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Communication Failure</h3>
+                    <p>
+                        Damaged connections, network faults, or data transmission
+                        problems may prevent systems from receiving or sharing
+                        required information.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Failure Modes</h3>
+
+            <p>
+                Equipment failures do not always appear as a complete shutdown.
+                Some failures are more difficult to identify because the system
+                continues operating but provides incorrect or inconsistent
+                information.
+            </p>
+
+            <ul class="data-list">
+                <li><strong>Total failure:</strong> The equipment stops performing its required function.</li>
+                <li><strong>Intermittent failure:</strong> The function becomes unavailable at irregular intervals.</li>
+                <li><strong>Degraded performance:</strong> The system continues operating with reduced capability.</li>
+                <li><strong>Incorrect output:</strong> The system provides information that appears normal but is inaccurate.</li>
+                <li><strong>Common-cause failure:</strong> One shared cause affects multiple systems or components.</li>
+            </ul>
+
+            <div class="info-strip danger-strip">
+                <strong>Critical warning:</strong> A system can remain switched on
+                and still be unsafe. Personnel must not assume that displayed
+                information is correct simply because the equipment shows no
+                obvious alarm.
+            </div>
+        </section>
+
+        <section class="content-section" id="redundancy">
+            <div class="section-number">SECTION 06</div>
+            <h2>Redundancy and Backup Systems</h2>
+
+            <p>
+                Redundancy is the use of additional components, equipment, or
+                arrangements so that a required function can continue if one
+                component fails. It is an important design principle in safety-critical
+                maritime systems.
+            </p>
+
+            <h3>Types of Redundancy</h3>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Hardware Redundancy</h3>
+                    <p>
+                        Providing additional physical equipment, such as a second
+                        navigation sensor or an alternative display unit.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Power Redundancy</h3>
+                    <p>
+                        Providing alternative power arrangements to reduce the
+                        effect of a single electrical supply failure.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Data Redundancy</h3>
+                    <p>
+                        Using alternative information sources to support cross-checking
+                        and reduce dependence on one data input.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Functional Redundancy</h3>
+                    <p>
+                        Providing an alternative method of performing an essential
+                        function if the primary method becomes unavailable.
+                    </p>
+                </div>
+            </div>
+
+            <h3>Example: Alternative Position Information</h3>
+
+            <p>
+                A vessel may use GNSS as its primary source of position information.
+                If that source becomes unreliable, personnel may need to compare
+                available information and use appropriate alternative methods,
+                such as radar ranges and bearings, visual observations, or other
+                approved positioning techniques depending on the situation.
+            </p>
+
+            <h3>Redundancy vs. Independence</h3>
+
+            <p>
+                Redundancy means that additional equipment or alternatives are
+                available. Independence means that the alternatives do not rely
+                on the same vulnerable components, sources, or failure points.
+            </p>
+
+            <div class="comparison-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Arrangement</th>
+                            <th>Potential Weakness</th>
+                            <th>Safety Consideration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Two receivers using one shared antenna</td>
+                            <td>Antenna failure may affect both receivers.</td>
+                            <td>Evaluate shared components and signal paths.</td>
+                        </tr>
+                        <tr>
+                            <td>Two systems using one power source</td>
+                            <td>Power failure may disable both systems.</td>
+                            <td>Assess alternative power arrangements.</td>
+                        </tr>
+                        <tr>
+                            <td>Two displays using one data input</td>
+                            <td>Incorrect source data may appear on both displays.</td>
+                            <td>Check the source and quality of the information.</td>
+                        </tr>
+                        <tr>
+                            <td>Different navigation methods</td>
+                            <td>Each method has its own limitations.</td>
+                            <td>Use suitable cross-checking and trained interpretation.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-strip danger-strip">
+                <strong>Critical design principle:</strong> Two backup devices do
+                not necessarily provide two independent safety paths. If both
+                depend on the same power supply, network, antenna, software,
+                or data source, one failure may affect them together.
+            </div>
+        </section>
+
+        <section class="content-section" id="monitoring">
+            <div class="section-number">SECTION 07</div>
+            <h2>System Monitoring and Alarm Management</h2>
+
+            <p>
+                Monitoring allows bridge personnel and technical teams to observe
+                equipment status, identify abnormal behavior, and respond before
+                a problem develops into a serious operational risk.
+            </p>
+
+            <h3>Equipment Status Monitoring</h3>
+            <p>
+                Navigation systems may provide information about power status,
+                sensor availability, communication links, equipment faults,
+                and operating conditions.
+            </p>
+
+            <h3>Alarm Systems</h3>
+            <p>
+                Alarms are designed to draw attention to conditions that require
+                awareness or action. Their meaning and priority depend on the
+                equipment design and applicable requirements.
+            </p>
+
+            <h3>Alarm Management</h3>
+            <p>
+                An excessive number of alarms can make it difficult for personnel
+                to identify the most important warnings. Clear alarm presentation,
+                appropriate configuration, and proper training help reduce
+                confusion and improve response.
+            </p>
+
+            <h3>Data Consistency Checks</h3>
+            <p>
+                Comparing information from different sources can reveal possible
+                errors. For example, an unexpected difference between reported
+                vessel movement and observed movement may indicate a sensor,
+                configuration, or data-processing problem.
+            </p>
+
+            <div class="info-strip">
+                <strong>Operational principle:</strong> Monitoring is useful only
+                when abnormal conditions are recognized, communicated clearly,
+                and followed by an appropriate response.
+            </div>
+        </section>
+
+        <section class="content-section" id="emergency">
+            <div class="section-number">SECTION 08</div>
+            <h2>Emergency Procedures and Safe Fallback</h2>
+
+            <p>
+                Emergency procedures describe the actions personnel should take
+                when an incident or equipment failure threatens safe navigation.
+                These procedures should be prepared, documented, understood,
+                and practiced.
+            </p>
+
+            <h3>Examples of Navigation Emergencies</h3>
+
+            <ul class="data-list">
+                <li>Loss or suspected corruption of primary positioning information.</li>
+                <li>Failure of radar or other essential navigation equipment.</li>
+                <li>Loss of electrical power to navigation systems.</li>
+                <li>Failure of steering or propulsion control.</li>
+                <li>Loss of communication with a remote operations center.</li>
+                <li>Unexpected system behavior or conflicting navigation information.</li>
+            </ul>
+
+            <h3>General Emergency Response Process</h3>
+
+            <div class="process-flow">
+                <div class="flow-step">
+                    <span>01</span>
+                    <strong>Recognize</strong>
+                    <small>Identify the abnormal condition</small>
+                </div>
+                <div class="flow-step">
+                    <span>02</span>
+                    <strong>Assess</strong>
+                    <small>Understand the operational risk</small>
+                </div>
+                <div class="flow-step">
+                    <span>03</span>
+                    <strong>Respond</strong>
+                    <small>Follow approved procedures</small>
+                </div>
+                <div class="flow-step">
+                    <span>04</span>
+                    <strong>Recover</strong>
+                    <small>Verify safe operation</small>
+                </div>
+            </div>
+
+            <h3>Safe Fallback Arrangements</h3>
+
+            <p>
+                A fallback arrangement defines what the vessel or its personnel
+                should do when a primary system becomes unavailable. Depending
+                on the vessel and situation, this may involve switching to an
+                alternative navigation method, using backup equipment, changing
+                the operational plan, or seeking assistance.
+            </p>
+
+            <p>
+                For remotely controlled or autonomous vessels, fallback planning
+                must also consider communication loss, degraded sensor information,
+                software faults, and the ability to maintain a safe condition
+                without immediate remote intervention.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Important:</strong> A fallback procedure must be designed
+                for the specific vessel and its equipment. A generic response
+                cannot safely replace the vessel's approved emergency procedures.
+            </div>
+        </section>
+
+        <section class="content-section" id="human">
+            <div class="section-number">SECTION 09</div>
+            <h2>Human Factors and Bridge Team Performance</h2>
+
+            <p>
+                Technology is only one part of navigation safety. Human performance,
+                communication, workload, training, and decision-making strongly
+                influence how navigation systems are used.
+            </p>
+
+            <h3>Situational Awareness</h3>
+            <p>
+                Bridge personnel must maintain an understanding of the vessel's
+                position, movement, surrounding traffic, hazards, and operational
+                conditions. Excessive dependence on a single electronic display
+                can weaken awareness of the wider situation.
+            </p>
+
+            <h3>Workload and Fatigue</h3>
+            <p>
+                Long working periods, fatigue, stress, and excessive information
+                can affect attention and judgment. Proper watchkeeping arrangements
+                and workload management support safer operations.
+            </p>
+
+            <h3>Training and Familiarization</h3>
+            <p>
+                Personnel should understand the equipment they use, including
+                its operating limits, alarm meanings, failure indications,
+                and alternative procedures.
+            </p>
+
+            <h3>Bridge Team Communication</h3>
+            <p>
+                Clear communication helps ensure that important information is
+                shared and that team members understand their responsibilities.
+                Unclear instructions or assumptions can increase operational risk.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Human factor warning:</strong> Automation can create
+                overreliance. When personnel assume that a system is always
+                correct, they may become less likely to question unusual
+                information or recognize developing problems.
+            </div>
+        </section>
+
+        <section class="content-section" id="cybersecurity">
+            <div class="section-number">SECTION 10</div>
+            <h2>Cybersecurity and Navigation System Reliability</h2>
+
+            <p>
+                Modern navigation equipment is increasingly connected through
+                onboard networks, software interfaces, satellite services,
+                and remote communication systems. Cybersecurity is therefore
+                an important part of protecting navigation reliability.
+            </p>
+
+            <h3>Potential Cyber Risks</h3>
+
+            <ul class="data-list">
+                <li><strong>Unauthorized access:</strong> attackers may attempt to access onboard systems.</li>
+                <li><strong>Data manipulation:</strong> incorrect information may be introduced into navigation or monitoring systems.</li>
+                <li><strong>Malware:</strong> malicious software may disrupt equipment or connected networks.</li>
+                <li><strong>Service disruption:</strong> communication or network services may become unavailable.</li>
+                <li><strong>Software vulnerabilities:</strong> outdated systems may contain weaknesses that can be exploited.</li>
+            </ul>
+
+            <h3>Protection Measures</h3>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Network Segmentation</h3>
+                    <p>
+                        Separating networks and restricting unnecessary connections
+                        can reduce the spread of a cybersecurity incident.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Access Management</h3>
+                    <p>
+                        Authentication and appropriate permissions help limit
+                        access to authorized users.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Security Monitoring</h3>
+                    <p>
+                        Monitoring system activity can help identify suspicious
+                        behavior and unexpected changes.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Backup and Recovery</h3>
+                    <p>
+                        Tested backups and recovery plans help restore systems
+                        and information after disruption.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-strip danger-strip">
+                <strong>Critical principle:</strong> Cybersecurity is not separate
+                from maritime safety. A cyber incident affecting positioning,
+                navigation data, communications, or control equipment can create
+                direct operational risks.
+            </div>
+        </section>
+
+        <section class="content-section" id="testing">
+            <div class="section-number">SECTION 11</div>
+            <h2>Testing, Inspection, and Preventive Maintenance</h2>
+
+            <p>
+                Regular testing and maintenance help identify developing faults,
+                verify equipment performance, and reduce the likelihood of
+                unexpected failures during navigation.
+            </p>
+
+            <h3>Routine Inspection</h3>
+            <p>
+                Inspections may include checking equipment condition, connections,
+                displays, power supplies, antennas, cables, and visible signs
+                of damage or corrosion.
+            </p>
+
+            <h3>Functional Testing</h3>
+            <p>
+                Functional tests verify whether equipment performs its intended
+                functions. Testing should follow the manufacturer's instructions,
+                vessel procedures, and applicable requirements.
+            </p>
+
+            <h3>Calibration and Verification</h3>
+            <p>
+                Some instruments require calibration or other verification
+                activities to ensure that measurements remain within acceptable
+                limits. Incorrect calibration can lead to misleading readings.
+            </p>
+
+            <h3>Preventive Maintenance</h3>
+            <p>
+                Preventive maintenance is performed according to a planned schedule
+                to reduce the likelihood of failure. It may include cleaning,
+                inspection, replacement of worn components, software maintenance,
+                and testing of backup arrangements.
+            </p>
+
+            <h3>Maintenance Records</h3>
+            <p>
+                Accurate records help technical teams understand equipment history,
+                identify recurring problems, plan maintenance, and demonstrate
+                that required checks have been completed.
+            </p>
+
+            <div class="info-strip">
+                <strong>Reliability principle:</strong> Equipment should not be
+                considered dependable simply because it worked during its last
+                voyage. Its condition and required functions must be checked
+                according to an appropriate maintenance and testing plan.
+            </div>
+        </section>
+
+        <section class="content-section" id="regulations">
+            <div class="section-number">SECTION 12</div>
+            <h2>International Regulations and Safety Frameworks</h2>
+
+            <p>
+                Maritime safety is supported by international conventions,
+                codes, standards, and operational requirements. Their purpose
+                is to establish safety expectations for ships, equipment,
+                personnel, and maritime operations.
+            </p>
+
+            <h3>SOLAS</h3>
+            <p>
+                The International Convention for the Safety of Life at Sea
+                (SOLAS) is one of the major international maritime safety
+                conventions. It addresses important aspects of ship safety,
+                including construction, equipment, and operational requirements.
+            </p>
+
+            <h3>COLREGs</h3>
+            <p>
+                The International Regulations for Preventing Collisions at Sea
+                establish rules for vessel conduct and collision avoidance.
+                They include requirements related to lookout, safe speed,
+                assessment of collision risk, and actions to avoid collisions.
+            </p>
+
+            <h3>ISM Code</h3>
+            <p>
+                The International Safety Management (ISM) Code provides an
+                international framework for the safe management and operation
+                of ships and for pollution prevention. It emphasizes safety
+                management responsibilities, procedures, and continuous
+                improvement.
+            </p>
+
+            <h3>STCW Convention</h3>
+            <p>
+                The International Convention on Standards of Training,
+                Certification and Watchkeeping for Seafarers establishes
+                international requirements relating to seafarer training,
+                certification, and watchkeeping.
+            </p>
+
+            <h3>Equipment Standards</h3>
+            <p>
+                International technical standards also address the performance
+                and testing of maritime navigation and radio communication
+                equipment. The applicable standards depend on the equipment
+                type, installation, and regulatory requirements.
+            </p>
+
+            <div class="info-strip warning-strip">
+                <strong>Regulatory note:</strong> Requirements can change and
+                may depend on vessel type, size, construction date, flag State,
+                voyage, and equipment category. Always verify the current
+                applicable rules rather than assuming that one requirement
+                applies to every ship.
+            </div>
+        </section>
+
+        <section class="content-section" id="improvement">
+            <div class="section-number">SECTION 13</div>
+            <h2>Future Development of Navigation Safety and Reliability</h2>
+
+            <p>
+                New technologies are creating opportunities to improve how
+                navigation equipment is monitored, maintained, and protected.
+                However, technological progress must be accompanied by careful
+                testing, training, and safety management.
+            </p>
+
+            <div class="card-grid">
+                <div class="info-card">
+                    <h3>Predictive Maintenance</h3>
+                    <p>
+                        Data analysis can help identify patterns that may indicate
+                        developing equipment faults before complete failure occurs.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>AI-Based Anomaly Detection</h3>
+                    <p>
+                        Intelligent systems can analyze equipment and sensor data
+                        to identify unusual behavior that requires investigation.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Digital Twins</h3>
+                    <p>
+                        Digital models can support system analysis, simulation,
+                        maintenance planning, and evaluation of operating scenarios.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Advanced Sensor Monitoring</h3>
+                    <p>
+                        Improved monitoring can help identify sensor degradation,
+                        inconsistent readings, and abnormal operating conditions.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Integrated Safety Systems</h3>
+                    <p>
+                        Better coordination between navigation, machinery,
+                        communication, and monitoring systems may improve
+                        operational awareness.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Cyber Resilience</h3>
+                    <p>
+                        Stronger protection, incident response, and recovery
+                        capabilities can help maintain safe operations during
+                        digital disruptions.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                Future maritime safety will depend on combining reliable
+                engineering, appropriate technology, skilled personnel,
+                effective procedures, and continuous evaluation of operational
+                risks.
+            </p>
+
+            <div class="info-strip">
+                <strong>Final perspective:</strong> The purpose of navigation
+                safety and reliability is not to promise that equipment will
+                never fail. It is to reduce the likelihood and consequences
+                of failures, recognize problems early, and maintain safe
+                operations when unexpected conditions occur.
+            </div>
+        </section>
+
+        <section class="content-section" id="quiz">
+            <div class="section-number">SECTION 14</div>
+            <h2>Knowledge Assessment</h2>
+
+            <p>
+                Test your understanding of Navigation Safety and Reliability.
+                Select one answer for each question. All ten questions are required.
+            </p>
+
+            <div class="quiz-container">
+                <p class="quiz-intro">
+                    10 Questions · One correct answer per question · Explanations appear
+                    after submission.
+                </p>
+
+                <form id="quizForm">
+
+                    <div class="question" data-question="0">
+                        <h3>1. What does navigation safety primarily aim to achieve?</h3>
+                        <label class="option"><input type="radio" name="q0" value="0"> Eliminate the need for bridge personnel.</label>
+                        <label class="option"><input type="radio" name="q0" value="1"> Prevent accidents and reduce risks during vessel operations.</label>
+                        <label class="option"><input type="radio" name="q0" value="2"> Replace all traditional navigation methods.</label>
+                        <div class="explanation">Navigation safety focuses on preventing accidents, identifying hazards, and reducing operational risks.</div>
+                    </div>
+
+                    <div class="question" data-question="1">
+                        <h3>2. What does system reliability mean?</h3>
+                        <label class="option"><input type="radio" name="q1" value="0"> The system always operates without requiring maintenance.</label>
+                        <label class="option"><input type="radio" name="q1" value="1"> The system has the highest purchase price.</label>
+                        <label class="option"><input type="radio" name="q1" value="2"> The system performs its required function without failure for a specified period under stated conditions.</label>
+                        <div class="explanation">Reliability describes the probability of performing a required function without failure under specified conditions and for a defined period.</div>
+                    </div>
+
+                    <div class="question" data-question="2">
+                        <h3>3. Which statement best describes risk assessment?</h3>
+                        <label class="option"><input type="radio" name="q2" value="0"> Identifying hazards, evaluating risks, and applying suitable controls.</label>
+                        <label class="option"><input type="radio" name="q2" value="1"> Ignoring hazards that have not caused an accident.</label>
+                        <label class="option"><input type="radio" name="q2" value="2"> Replacing equipment without investigating the problem.</label>
+                        <div class="explanation">Risk assessment identifies hazards, evaluates their likelihood and consequences, and determines appropriate control measures.</div>
+                    </div>
+
+                    <div class="question" data-question="3">
+                        <h3>4. What is a common-cause failure?</h3>
+                        <label class="option"><input type="radio" name="q3" value="0"> A failure that affects only an unrelated display.</label>
+                        <label class="option"><input type="radio" name="q3" value="1"> One shared cause that affects multiple components or systems.</label>
+                        <label class="option"><input type="radio" name="q3" value="2"> A failure that can never be predicted.</label>
+                        <div class="explanation">A common-cause failure occurs when one shared problem affects multiple components or systems, potentially defeating redundancy.</div>
+                    </div>
+
+                    <div class="question" data-question="4">
+                        <h3>5. Why is independence important when designing redundant systems?</h3>
+                        <label class="option"><input type="radio" name="q4" value="0"> It ensures that all equipment uses the same data source.</label>
+                        <label class="option"><input type="radio" name="q4" value="1"> It removes the need for testing.</label>
+                        <label class="option"><input type="radio" name="q4" value="2"> It reduces the possibility that one shared failure will affect all alternatives.</label>
+                        <div class="explanation">Independent arrangements reduce shared failure points, making backup functions more useful during faults.</div>
+                    </div>
+
+                    <div class="question" data-question="5">
+                        <h3>6. Which situation may indicate a navigation equipment failure even if the equipment remains switched on?</h3>
+                        <label class="option"><input type="radio" name="q5" value="0"> The system provides inaccurate or inconsistent information.</label>
+                        <label class="option"><input type="radio" name="q5" value="1"> The display has normal brightness.</label>
+                        <label class="option"><input type="radio" name="q5" value="2"> The equipment is installed in the bridge.</label>
+                        <div class="explanation">A system may remain powered while producing incorrect information. Operational status alone does not prove data accuracy.</div>
+                    </div>
+
+                    <div class="question" data-question="6">
+                        <h3>7. What is the purpose of a safe fallback arrangement?</h3>
+                        <label class="option"><input type="radio" name="q6" value="0"> To disable every navigation system during normal operations.</label>
+                        <label class="option"><input type="radio" name="q6" value="1"> To define how safe operation can be maintained when a primary function becomes unavailable.</label>
+                        <label class="option"><input type="radio" name="q6" value="2"> To avoid reporting equipment faults.</label>
+                        <div class="explanation">Fallback arrangements define alternative actions or functions when primary equipment or services fail.</div>
+                    </div>
+
+                    <div class="question" data-question="7">
+                        <h3>8. Which factor is an example of a human-factor risk?</h3>
+                        <label class="option"><input type="radio" name="q7" value="0"> Properly documented maintenance.</label>
+                        <label class="option"><input type="radio" name="q7" value="1"> Correctly configured backup equipment.</label>
+                        <label class="option"><input type="radio" name="q7" value="2"> Fatigue and excessive dependence on automation.</label>
+                        <div class="explanation">Fatigue and overreliance on automated systems can reduce attention, situational awareness, and decision quality.</div>
+                    </div>
+
+                    <div class="question" data-question="8">
+                        <h3>9. What is the main purpose of preventive maintenance?</h3>
+                        <label class="option"><input type="radio" name="q8" value="0"> To reduce the likelihood of equipment failure through planned maintenance activities.</label>
+                        <label class="option"><input type="radio" name="q8" value="1"> To wait until equipment stops working before inspecting it.</label>
+                        <label class="option"><input type="radio" name="q8" value="2"> To remove the need for maintenance records.</label>
+                        <div class="explanation">Preventive maintenance uses planned inspections and servicing to reduce the likelihood of unexpected failures.</div>
+                    </div>
+
+                    <div class="question" data-question="9">
+                        <h3>10. Which statement best describes the relationship between cybersecurity and navigation safety?</h3>
+                        <label class="option"><input type="radio" name="q9" value="0"> Cybersecurity is unrelated to navigation equipment.</label>
+                        <label class="option"><input type="radio" name="q9" value="1"> Cyber incidents can affect navigation data, communications, and control systems, creating operational risks.</label>
+                        <label class="option"><input type="radio" name="q9" value="2"> Cybersecurity is needed only for office computers.</label>
+                        <div class="explanation">Cyber incidents can affect systems and information needed for safe navigation, so cybersecurity is part of maritime safety management.</div>
+                    </div>
+
+                    <div class="quiz-actions">
+                        <button type="button" class="quiz-btn submit-btn" onclick="submitQuiz()">Submit Answers</button>
+                        <button type="button" class="quiz-btn reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+                    </div>
+
+                    <div class="quiz-result" id="quizResult" aria-live="polite">
+                        <h3 id="resultTitle">Your Result</h3>
+                        <p id="resultText"></p>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+        <section class="content-section" id="references">
+            <div class="section-number">SECTION 15</div>
+            <h2>Technical References and Further Reading</h2>
+
+            <div class="references">
+                <ul>
+                    <li>
+                        International Maritime Organization (IMO) —
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">Official IMO website</a>.
+                    </li>
+                    <li>
+                        IMO — International Convention for the Safety of Life at Sea (SOLAS) —
+                        <a href="https://www.imo.org/en/About/Conventions/Pages/International-Convention-for-the-Safety-of-Life-at-Sea-(SOLAS),-1974.aspx" target="_blank" rel="noopener noreferrer">SOLAS Convention information</a>.
+                    </li>
+                    <li>
+                        IMO — International Regulations for Preventing Collisions at Sea (COLREGs) —
+                        <a href="https://www.imo.org/en/About/Conventions/Pages/COLREG.aspx" target="_blank" rel="noopener noreferrer">COLREG Convention information</a>.
+                    </li>
+                    <li>
+                        IMO — International Safety Management (ISM) Code —
+                        <a href="https://www.imo.org/" target="_blank" rel="noopener noreferrer">IMO safety management resources</a>.
+                    </li>
+                    <li>
+                        IMO — Maritime Cyber Risk —
+                        <a href="https://www.imo.org/en/OurWork/Security/Pages/Cyber-security.aspx" target="_blank" rel="noopener noreferrer">Cybersecurity information</a>.
+                    </li>
+                    <li>
+                        International Electrotechnical Commission (IEC) —
+                        <a href="https://www.iec.ch/" target="_blank" rel="noopener noreferrer">International technical standards</a>.
+                    </li>
+                    <li>
+                        International Hydrographic Organization (IHO) —
+                        <a href="https://iho.int/" target="_blank" rel="noopener noreferrer">Hydrographic standards and maritime information</a>.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-strip warning-strip">
+                <strong>Study note:</strong> This topic provides an educational
+                introduction to navigation safety and system reliability. Actual
+                vessel procedures, equipment requirements, maintenance intervals,
+                and emergency responses must follow applicable regulations,
+                manufacturer documentation, and the vessel's approved safety
+                management procedures.
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<footer>
+    <p>MARITERRA — Maritime Knowledge & Technology</p>
+    <p>DESIGNED & DEVELOPED BY <strong>ENGINEER ZEINAB MOHAMED</strong></p>
+</footer>
+
+<script>
+    const correctAnswers = [1, 2, 0, 1, 2, 0, 1, 2, 0, 1];
+
+    function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        const resultBox = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultText = document.getElementById("resultText");
+
+        let score = 0;
+        let unanswered = [];
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+
+            if (!selected) {
+                unanswered.push(i + 1);
+            }
+        }
+
+        if (unanswered.length > 0) {
+            alert(
+                "Please answer all 10 questions before submitting. Missing questions: " +
+                unanswered.join(", ")
+            );
+            return;
+        }
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const question = document.querySelector(
+                `.question[data-question="${i}"]`
+            );
+
+            const selected = form.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+            const options = question.querySelectorAll(".option");
+            const explanation = question.querySelector(".explanation");
+
+            options.forEach(option => {
+                option.classList.remove("correct", "incorrect");
+
+                const input = option.querySelector("input");
+
+                if (Number(input.value) === correctAnswers[i]) {
+                    option.classList.add("correct");
+                }
+
+                if (
+                    input.checked &&
+                    Number(input.value) !== correctAnswers[i]
+                ) {
+                    option.classList.add("incorrect");
+                }
+
+                input.disabled = true;
+            });
+
+            if (Number(selected.value) === correctAnswers[i]) {
+                score++;
+            }
+
+            explanation.classList.add("show");
+        }
+
+        const percentage = score * 10;
+
+        resultTitle.textContent = `Your Score: ${score} / 10`;
+
+        resultText.textContent =
+            percentage >= 90
+                ? "Excellent work! You have a strong understanding of navigation safety and reliability."
+                : percentage >= 70
+                ? "Good work! Review the explanations to strengthen your technical understanding."
+                : percentage >= 50
+                ? "You have a basic understanding, but some important concepts need more revision."
+                : "More study is recommended. Review the topic carefully and try the quiz again.";
+
+        resultBox.classList.add("show");
+
+        resultBox.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        const submitButton = document.querySelector(".submit-btn");
+        submitButton.disabled = true;
+        submitButton.style.opacity = "0.55";
+    }
+
+    function resetQuiz() {
+        const form = document.getElementById("quizForm");
+
+        form.reset();
+
+        document.querySelectorAll(".option").forEach(option => {
+            option.classList.remove("correct", "incorrect");
+            option.querySelector("input").disabled = false;
+        });
+
+        document.querySelectorAll(".explanation").forEach(explanation => {
+            explanation.classList.remove("show");
+        });
+
+        document.getElementById("quizResult").classList.remove("show");
+
+        const submitButton = document.querySelector(".submit-btn");
+        submitButton.disabled = false;
+        submitButton.style.opacity = "1";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+</script>
+
+</body>
+</html>

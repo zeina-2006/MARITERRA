@@ -1,0 +1,1677 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore Marine Robotics through ROVs, AUVs, USVs, underwater gliders, marine sensors, navigation, propulsion, energy, control, and autonomous systems.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Marine Robotics</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           MARITERRA — MARINE ROBOTICS
+           FUTURISTIC MARITIME | PURPLE & BLUE
+        ========================================= */
+
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        /* GLOBAL */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1180px, 90%);
+            margin: auto;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--purple-light);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .section-label::before {
+            content: "";
+            width: 28px;
+            height: 2px;
+            background: var(--purple);
+        }
+
+        .section-heading {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .section-description {
+            max-width: 720px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.9;
+        }
+
+        /* BACKGROUND EFFECTS */
+
+        .background-glow {
+            position: fixed;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-one {
+            top: 5%;
+            left: -250px;
+            background: var(--purple);
+        }
+
+        .glow-two {
+            top: 55%;
+            right: -280px;
+            background: var(--blue);
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .logo {
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .nav-back {
+            border: 1px solid var(--border);
+            padding: 9px 16px;
+            border-radius: 7px;
+            color: var(--text);
+            font-size: 0.82rem;
+            transition: var(--transition);
+        }
+
+        .nav-back:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--white);
+            width: 42px;
+            height: 42px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            min-height: 510px;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 90px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(
+                    ellipse at 78% 40%,
+                    rgba(147, 51, 234, 0.17),
+                    transparent 48%
+                ),
+                radial-gradient(
+                    ellipse at 15% 90%,
+                    rgba(37, 99, 235, 0.12),
+                    transparent 45%
+                );
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(192, 132, 252, 0.3);
+            background: rgba(147, 51, 234, 0.08);
+            padding: 9px 15px;
+            border-radius: 30px;
+            color: var(--purple-light);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 28px;
+        }
+
+        .hero-tag span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--purple-light);
+            box-shadow: 0 0 12px var(--purple);
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.8rem, 7vw, 5.4rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: linear-gradient(
+                90deg,
+                var(--purple-light),
+                var(--blue-light)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 710px;
+            color: #b5b8c8;
+            font-size: 1.05rem;
+            line-height: 2;
+            margin-bottom: 35px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 23px;
+            border-radius: 7px;
+            background: linear-gradient(
+                110deg,
+                var(--purple-dark),
+                var(--purple)
+            );
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: var(--transition);
+            box-shadow: 0 8px 28px rgba(147, 51, 234, 0.2);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.35);
+        }
+
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--text);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .secondary-btn:hover {
+            border-color: var(--purple-light);
+            color: var(--purple-light);
+        }
+
+        /* OVERVIEW */
+
+        .overview {
+            padding: 100px 0 75px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 55px;
+            align-items: center;
+        }
+
+        .overview-text p {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+            line-height: 2;
+            margin-top: 15px;
+        }
+
+        .overview-panel {
+            position: relative;
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: linear-gradient(
+                145deg,
+                rgba(147, 51, 234, 0.12),
+                rgba(13, 16, 38, 0.85)
+            );
+        }
+
+        .overview-panel h3 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 22px;
+        }
+
+        .overview-stat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .overview-stat:last-child {
+            border-bottom: none;
+        }
+
+        .overview-stat span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .overview-stat strong {
+            color: var(--purple-light);
+            font-size: 0.9rem;
+        }
+
+        /* TOPICS */
+
+        .topics {
+            padding: 65px 0 110px;
+        }
+
+        .topics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 45px;
+        }
+
+        .topics-count {
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .topic-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 265px;
+            padding: 30px;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition:
+                transform var(--transition),
+                border-color var(--transition),
+                background var(--transition);
+        }
+
+        .topic-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                var(--purple),
+                var(--blue-light)
+            );
+            transition: width 0.45s ease;
+        }
+
+        .topic-card::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -95px;
+            bottom: -110px;
+            border-radius: 50%;
+            background: var(--purple);
+            opacity: 0;
+            filter: blur(75px);
+            transition: opacity var(--transition);
+            pointer-events: none;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(192, 132, 252, 0.55);
+            background: rgba(17, 20, 45, 0.96);
+        }
+
+        .topic-card:hover::before {
+            width: 100%;
+        }
+
+        .topic-card:hover::after {
+            opacity: 0.18;
+        }
+
+        .topic-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .topic-number {
+            color: var(--purple-light);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .topic-symbol {
+            display: grid;
+            place-items: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.12);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .topic-card h3 {
+            color: var(--white);
+            font-size: 1.28rem;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .topic-card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.85;
+            margin-bottom: 25px;
+        }
+
+        .topic-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+            color: var(--purple-light);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+
+        .topic-link span {
+            transition: transform var(--transition);
+        }
+
+        .topic-card:hover .topic-link span {
+            transform: translateX(5px);
+        }
+
+        /* LEARNING STRUCTURE */
+
+        .learning {
+            padding: 85px 0;
+            background: linear-gradient(
+                180deg,
+                transparent,
+                rgba(12, 16, 36, 0.7),
+                transparent
+            );
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .learning-header {
+            margin-bottom: 40px;
+        }
+
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .learning-item {
+            padding: 25px 22px;
+            background: rgba(13, 16, 38, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .learning-item:hover {
+            border-color: var(--purple);
+            transform: translateY(-5px);
+        }
+
+        .learning-number {
+            color: var(--purple-light);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 17px;
+        }
+
+        .learning-item h3 {
+            color: var(--white);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .learning-item p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            line-height: 1.8;
+        }
+
+        /* REFERENCES */
+
+        .references {
+            padding: 90px 0;
+        }
+
+        .references-header {
+            margin-bottom: 35px;
+        }
+
+        .reference-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .reference-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: rgba(13, 16, 38, 0.7);
+            transition: var(--transition);
+        }
+
+        .reference-link:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .reference-index {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .reference-info h3 {
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .reference-info p {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.7;
+        }
+
+        .reference-note {
+            margin-top: 25px;
+            padding: 18px 20px;
+            border-left: 3px solid var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+            color: var(--text-muted);
+            font-size: 0.84rem;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            border-top: 1px solid var(--border);
+            background: rgba(5, 6, 17, 0.8);
+            padding: 35px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .footer-brand span {
+            color: var(--purple-light);
+        }
+
+        .footer-credit {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-credit strong {
+            color: var(--purple-light);
+            font-weight: 600;
+        }
+
+        .footer-copy {
+            width: 100%;
+            padding-top: 20px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(192, 132, 252, 0.1);
+            text-align: center;
+            color: #777b8f;
+            font-size: 0.75rem;
+        }
+
+        /* REVEAL ANIMATION */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .learning-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-content {
+                min-height: 68px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 68px;
+                left: 0;
+                right: 0;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                padding: 12px 5% 20px;
+                background: rgba(7, 8, 22, 0.98);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 13px 0;
+            }
+
+            .nav-back {
+                display: none;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 85px 0 75px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero-description {
+                font-size: 0.94rem;
+            }
+
+            .overview {
+                padding: 75px 0 45px;
+            }
+
+            .topics {
+                padding: 55px 0 80px;
+            }
+
+            .topics-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topic-card {
+                min-height: 245px;
+                padding: 25px;
+            }
+
+            .reference-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 91%;
+            }
+
+            .hero h1 {
+                font-size: 2.55rem;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .hero-actions a {
+                justify-content: center;
+            }
+
+            .learning-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-panel {
+                padding: 23px;
+            }
+
+            .topic-card h3 {
+                font-size: 1.15rem;
+            }
+        }
+
+        /* ACCESSIBILITY */
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--purple-light);
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <!-- NAVIGATION -->
+
+    <header class="navbar">
+        <div class="container nav-content">
+
+            <a href="index.html" class="logo">
+                MARI<span>TERRA</span>
+            </a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navLinks"
+            >
+                ☰
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#topics">Topics</a></li>
+                <li><a href="#learning">Learning Structure</a></li>
+                <li><a href="#references">References</a></li>
+            </ul>
+
+            <a href="index.html" class="nav-back">
+                ← Main Website
+            </a>
+
+        </div>
+    </header>
+
+
+    <!-- HERO SECTION -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="container">
+
+                <div class="hero-content">
+
+                    <div class="hero-tag">
+                        <span></span>
+                        MARITERRA TECHNOLOGY SERIES
+                    </div>
+
+                    <h1>
+                        MARINE
+                        <span>ROBOTICS</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Explore the engineering behind marine robotic
+                        systems, from remotely operated underwater
+                        vehicles to autonomous platforms, intelligent
+                        sensors, navigation technologies, and advanced
+                        control systems used in ocean exploration and
+                        maritime operations.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a href="#topics" class="primary-btn">
+                            Explore Topics
+                            <span>→</span>
+                        </a>
+
+                        <a href="#overview" class="secondary-btn">
+                            Discover Marine Robotics
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- OVERVIEW SECTION -->
+
+        <section class="overview" id="overview">
+
+            <div class="container overview-grid">
+
+                <div class="overview-text reveal">
+
+                    <div class="section-label">
+                        Introduction
+                    </div>
+
+                    <h2 class="section-heading">
+                        Engineering Intelligent
+                        Systems for the Ocean
+                    </h2>
+
+                    <p>
+                        Marine robotics is an interdisciplinary field
+                        that combines mechanical engineering,
+                        electrical and electronic systems, control
+                        engineering, software development, sensing
+                        technologies, and ocean science.
+                    </p>
+
+                    <p>
+                        Marine robots are designed to perform tasks
+                        such as underwater exploration, seabed mapping,
+                        scientific measurements, environmental
+                        monitoring, infrastructure inspection, and
+                        offshore operations. Their design depends on
+                        the environment, mission requirements, depth,
+                        operating duration, communication method,
+                        and required level of autonomy.
+                    </p>
+
+                    <p>
+                        These systems include underwater vehicles,
+                        surface platforms, and specialized robotic
+                        equipment. Each type has different engineering
+                        requirements and operational capabilities.
+                    </p>
+
+                </div>
+
+
+                <div class="overview-panel reveal">
+
+                    <h3>Marine Robotics at a Glance</h3>
+
+                    <div class="overview-stat">
+                        <span>Operating Environments</span>
+                        <strong>Surface & Underwater</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>Control Approaches</span>
+                        <strong>Remote & Autonomous</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>Core Technologies</span>
+                        <strong>Sensors & Control</strong>
+                    </div>
+
+                    <div class="overview-stat">
+                        <span>Major Applications</span>
+                        <strong>Research & Operations</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOPICS SECTION -->
+
+        <section class="topics" id="topics">
+
+            <div class="container">
+
+                <div class="topics-header reveal">
+
+                    <div>
+                        <div class="section-label">
+                            Explore the Field
+                        </div>
+
+                        <h2 class="section-heading">
+                            Marine Robotics Topics
+                        </h2>
+
+                        <p class="section-description">
+                            Explore seven interconnected technical
+                            subjects. Each topic has a dedicated
+                            learning page with detailed engineering
+                            explanations, practical applications,
+                            technical challenges, future developments,
+                            and a knowledge assessment.
+                        </p>
+                    </div>
+
+                    <div class="topics-count">
+                        07 CORE TOPICS
+                    </div>
+
+                </div>
+
+
+                <div class="topics-grid">
+
+                    <!-- TOPIC 01 -->
+
+                    <a
+                        href="rov-systems.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 01</span>
+                            <span class="topic-symbol">ROV</span>
+                        </div>
+
+                        <h3>ROV Systems</h3>
+
+                        <p>
+                            Explore remotely operated underwater
+                            vehicles, their mechanical structures,
+                            tether systems, propulsion units,
+                            manipulators, and real-time operator
+                            control.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 02 -->
+
+                    <a
+                        href="auv-systems.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 02</span>
+                            <span class="topic-symbol">AUV</span>
+                        </div>
+
+                        <h3>AUV Systems</h3>
+
+                        <p>
+                            Understand autonomous underwater
+                            vehicles, mission planning, onboard
+                            computing, navigation, autonomous
+                            operation, and underwater survey
+                            capabilities.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 03 -->
+
+                    <a
+                        href="usv-systems.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 03</span>
+                            <span class="topic-symbol">USV</span>
+                        </div>
+
+                        <h3>USV Systems</h3>
+
+                        <p>
+                            Discover uncrewed surface vehicles,
+                            including hull designs, propulsion,
+                            onboard equipment, remote supervision,
+                            and autonomous surface operations.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 04 -->
+
+                    <a
+                        href="underwater-gliders.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 04</span>
+                            <span class="topic-symbol">UG</span>
+                        </div>
+
+                        <h3>Underwater Gliders</h3>
+
+                        <p>
+                            Learn how underwater gliders use
+                            buoyancy changes and hydrodynamic
+                            lift to travel through the ocean
+                            while collecting long-duration
+                            scientific measurements.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 05 -->
+
+                    <a
+                        href="marine-robotic-sensors-navigation.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 05</span>
+                            <span class="topic-symbol">S/N</span>
+                        </div>
+
+                        <h3>Marine Robotic Sensors & Navigation</h3>
+
+                        <p>
+                            Explore sonar, cameras, pressure sensors,
+                            inertial navigation, Doppler velocity
+                            logs, acoustic positioning, and
+                            underwater localization.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 06 -->
+
+                    <a
+                        href="propulsion-power-energy.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 06</span>
+                            <span class="topic-symbol">P/E</span>
+                        </div>
+
+                        <h3>Propulsion, Power & Energy Systems</h3>
+
+                        <p>
+                            Understand underwater propulsion,
+                            electric thrusters, motors, batteries,
+                            power management, energy efficiency,
+                            and mission endurance.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+
+                    <!-- TOPIC 07 -->
+
+                    <a
+                        href="robotics-control-autonomy-communication.html"
+                        class="topic-card reveal"
+                    >
+
+                        <div class="topic-top">
+                            <span class="topic-number">TOPIC 07</span>
+                            <span class="topic-symbol">C/A</span>
+                        </div>
+
+                        <h3>Robotics Control, Autonomy & Communication</h3>
+
+                        <p>
+                            Discover control architectures,
+                            autonomous decision-making, mission
+                            software, underwater communication,
+                            and human-robot interaction.
+                        </p>
+
+                        <span class="topic-link">
+                            Explore Topic <span>→</span>
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LEARNING STRUCTURE -->
+
+        <section class="learning" id="learning">
+
+            <div class="container">
+
+                <div class="learning-header reveal">
+
+                    <div class="section-label">
+                        Learning Approach
+                    </div>
+
+                    <h2 class="section-heading">
+                        How Each Topic Is Structured
+                    </h2>
+
+                    <p class="section-description">
+                        Every dedicated topic page follows a
+                        structured learning approach that connects
+                        engineering principles with real-world
+                        marine applications.
+                    </p>
+
+                </div>
+
+
+                <div class="learning-grid">
+
+                    <div class="learning-item reveal">
+
+                        <div class="learning-number">01 / FOUNDATIONS</div>
+
+                        <h3>Technical Foundations</h3>
+
+                        <p>
+                            Core concepts, engineering principles,
+                            system architecture, components,
+                            operating mechanisms, and technical
+                            terminology.
+                        </p>
+
+                    </div>
+
+
+                    <div class="learning-item reveal">
+
+                        <div class="learning-number">02 / APPLICATIONS</div>
+
+                        <h3>Practical Applications</h3>
+
+                        <p>
+                            Real-world missions, industrial uses,
+                            scientific research, engineering
+                            examples, and operational scenarios.
+                        </p>
+
+                    </div>
+
+
+                    <div class="learning-item reveal">
+
+                        <div class="learning-number">03 / CHALLENGES</div>
+
+                        <h3>Technical Challenges</h3>
+
+                        <p>
+                            Engineering limitations, environmental
+                            conditions, system reliability,
+                            operational risks, and design
+                            constraints.
+                        </p>
+
+                    </div>
+
+
+                    <div class="learning-item reveal">
+
+                        <div class="learning-number">04 / FUTURE</div>
+
+                        <h3>Future Developments</h3>
+
+                        <p>
+                            Emerging technologies, intelligent
+                            systems, research directions, improved
+                            autonomy, and future engineering
+                            possibilities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REFERENCES -->
+
+        <section class="references" id="references">
+
+            <div class="container">
+
+                <div class="references-header reveal">
+
+                    <div class="section-label">
+                        Scientific Sources
+                    </div>
+
+                    <h2 class="section-heading">
+                        Research & References
+                    </h2>
+
+                    <p class="section-description">
+                        The Marine Robotics learning materials are
+                        developed using scientific and technical
+                        resources from established oceanographic
+                        institutions and recognized organizations.
+                    </p>
+
+                </div>
+
+
+                <div class="reference-list">
+
+                    <a
+                        href="https://oceanexplorer.noaa.gov/technology/subs-rovs/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">01</span>
+
+                        <div class="reference-info">
+                            <h3>NOAA Ocean Exploration — ROVs</h3>
+
+                            <p>
+                                Technical introduction to remotely
+                                operated vehicles, tether systems,
+                                applications, and operational use.
+                            </p>
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="https://oceanexplorer.noaa.gov/technology/subs-auvs/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">02</span>
+
+                        <div class="reference-info">
+                            <h3>NOAA Ocean Exploration — AUVs</h3>
+
+                            <p>
+                                Autonomous underwater vehicle
+                                capabilities, mission operation,
+                                and ocean exploration applications.
+                            </p>
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="https://www.whoi.edu/what-we-do/explore/underwater-vehicles/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">03</span>
+
+                        <div class="reference-info">
+                            <h3>Woods Hole Oceanographic Institution</h3>
+
+                            <p>
+                                Overview of underwater vehicles,
+                                including ROVs, AUVs, hybrid vehicles,
+                                and towed systems.
+                            </p>
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="https://www2.whoi.edu/site/deepsubmergencelab/vehicles/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">04</span>
+
+                        <div class="reference-info">
+                            <h3>WHOI — Deep Submergence Laboratory</h3>
+
+                            <p>
+                                Engineering examples of deep-sea
+                                vehicles, hybrid systems, and
+                                scientific robotic platforms.
+                            </p>
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="https://oceanservice.noaa.gov/facts/auv-rov.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">05</span>
+
+                        <div class="reference-info">
+                            <h3>NOAA — AUV and ROV Comparison</h3>
+
+                            <p>
+                                Explanation of the main operational
+                                differences between autonomous and
+                                remotely operated underwater vehicles.
+                            </p>
+                        </div>
+
+                    </a>
+
+
+                    <a
+                        href="https://www.omao.noaa.gov/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="reference-link reveal"
+                    >
+
+                        <span class="reference-index">06</span>
+
+                        <div class="reference-info">
+                            <h3>NOAA Office of Marine and Aviation Operations</h3>
+
+                            <p>
+                                Operational information and resources
+                                related to uncrewed maritime systems
+                                and oceanographic operations.
+                            </p>
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <div class="reference-note reveal">
+                    References on this landing page provide
+                    introductory material. Each dedicated topic
+                    page will include its own specialized references,
+                    selected according to the technical content
+                    discussed on that page.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div class="footer-brand">
+                MARI<span>TERRA</span>
+            </div>
+
+            <div class="footer-credit">
+                Developed & Designed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </div>
+
+            <div class="footer-copy">
+                © 2026 MARITERRA. All Rights Reserved.
+                Educational content for maritime technology.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        // MOBILE NAVIGATION
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", function () {
+
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+            menuToggle.textContent = isOpen ? "×" : "☰";
+
+        });
+
+
+        // CLOSE MOBILE MENU AFTER CLICKING A LINK
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", function () {
+
+                navLinks.classList.remove("active");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                menuToggle.textContent = "☰";
+
+            });
+
+        });
+
+
+        // REVEAL ANIMATIONS
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+
+            const observer = new IntersectionObserver(
+                function (entries, observerInstance) {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            observerInstance.unobserve(entry.target);
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+
+        } else {
+
+            revealElements.forEach(element => {
+                element.classList.add("visible");
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

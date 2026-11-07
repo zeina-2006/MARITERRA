@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore advanced maritime technologies, marine robotics, smart navigation, autonomous ships, and artificial intelligence.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Maritime Technology</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================================
+           MARITERRA — TECHNOLOGY PAGE
+        ========================================= */
+
+        .technology-page {
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* PAGE INTRODUCTION */
+
+        .technology-page-intro {
+            text-align: center;
+            padding: 65px 20px 35px;
+        }
+
+        .technology-page-intro .section-label {
+            color: var(--purple-light);
+            letter-spacing: 3px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .technology-page-intro h1 {
+            color: var(--white);
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 18px;
+        }
+
+        .technology-page-intro h1 span {
+            color: var(--purple-light);
+        }
+
+        .technology-page-intro p {
+            max-width: 780px;
+            margin: auto;
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.9;
+        }
+
+        /* TECHNOLOGY HERO */
+
+        .technology-main-hero {
+            position: relative;
+            width: min(1200px, 92%);
+            min-height: 440px;
+            margin: 20px auto 75px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .technology-main-hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .technology-main-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(7, 8, 22, 0.96) 0%,
+                rgba(7, 8, 22, 0.78) 48%,
+                rgba(7, 8, 22, 0.18) 100%
+            );
+        }
+
+        .technology-main-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 65px;
+        }
+
+        .technology-main-content .hero-label {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .technology-main-content h2 {
+            color: var(--white);
+            font-size: clamp(34px, 5vw, 55px);
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+
+        .technology-main-content p {
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 28px;
+            max-width: 590px;
+        }
+
+        .technology-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white);
+            text-decoration: none;
+            border: 1px solid var(--purple);
+            padding: 12px 23px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .technology-back-link:hover {
+            background: var(--purple-dark);
+            border-color: var(--purple-light);
+            transform: translateY(-3px);
+        }
+
+        /* TECHNOLOGY TOPICS */
+
+        .technology-topics {
+            width: min(1320px, 94%);
+            margin: 0 auto;
+            padding-bottom: 90px;
+        }
+
+        .technology-topics-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .technology-topics-heading .section-label {
+            color: var(--purple-light);
+            letter-spacing: 3px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .technology-topics-heading h2 {
+            color: var(--white);
+            font-size: clamp(28px, 4vw, 42px);
+            margin-bottom: 15px;
+        }
+
+        .technology-topics-heading p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* CARDS GRID */
+
+        .technology-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .technology-topic-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .technology-topic-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--purple-light);
+            box-shadow: 0 12px 35px rgba(147, 51, 234, 0.16);
+        }
+
+        .technology-topic-image {
+            position: relative;
+            height: 230px;
+            overflow: hidden;
+        }
+
+        .technology-topic-image img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .technology-topic-card:hover .technology-topic-image img {
+            transform: scale(1.06);
+        }
+
+        .technology-topic-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 7px 12px;
+            color: var(--white);
+            background: rgba(7, 8, 22, 0.85);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        .technology-topic-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .technology-topic-content h3 {
+            color: var(--white);
+            font-size: 20px;
+            margin-bottom: 13px;
+        }
+
+        .technology-topic-content p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 22px;
+            flex: 1;
+        }
+
+        .technology-topic-action {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--purple-light);
+            font-size: 14px;
+            font-weight: 600;
+            border-top: 1px solid var(--border);
+            padding-top: 17px;
+        }
+
+        .technology-topic-action span:last-child {
+            font-size: 20px;
+            transition: var(--transition);
+        }
+
+        .technology-topic-card:hover .technology-topic-action span:last-child {
+            transform: translateX(6px);
+        }
+
+        /* BOTTOM INFORMATION */
+
+        .technology-bottom-note {
+            width: min(1000px, 92%);
+            margin: 0 auto 80px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--bg-light);
+        }
+
+        .technology-bottom-note h3 {
+            color: var(--white);
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .technology-bottom-note p {
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        .technology-footer {
+            border-top: 1px solid var(--border);
+            padding: 35px 20px;
+            text-align: center;
+            background: var(--bg-light);
+        }
+
+        .technology-footer .footer-brand {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .technology-footer p {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .technology-footer .footer-owner {
+            color: var(--purple-light);
+            margin-top: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 950px) {
+            .technology-cards-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .technology-main-hero {
+                min-height: 400px;
+            }
+
+            .technology-main-content {
+                padding: 45px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .technology-page-intro {
+                padding: 45px 20px 25px;
+            }
+
+            .technology-main-hero {
+                min-height: 390px;
+                margin-bottom: 55px;
+            }
+
+            .technology-main-content {
+                padding: 30px 25px;
+            }
+
+            .technology-main-overlay {
+                background: linear-gradient(
+                    90deg,
+                    rgba(7, 8, 22, 0.94),
+                    rgba(7, 8, 22, 0.65)
+                );
+            }
+
+            .technology-cards-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+
+            .technology-topic-image {
+                height: 240px;
+            }
+
+            .technology-bottom-note {
+                padding: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body class="technology-page">
+
+    <!-- HEADER -->
+
+    <header class="main-header">
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                <span>⚓</span>
+                <div>
+                    <strong>MARITERRA</strong>
+                    <small>The Future of Maritime Knowledge</small>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="academics.html">Academics</a></li>
+                <li><a href="technology.html" class="active">Technology</a></li>
+                <li><a href="maritime-world.html">Maritime World</a></li>
+                <li><a href="environment.html">Environment</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+
+    <!-- PAGE INTRODUCTION -->
+
+    <section class="technology-page-intro">
+
+        <div class="section-label">
+            INNOVATION AT SEA
+        </div>
+
+        <h1>
+            Maritime <span>Technology</span>
+        </h1>
+
+        <p>
+            Discover the technologies transforming the maritime industry.
+            Explore intelligent systems, advanced robotics, autonomous vessels,
+            and artificial intelligence shaping the future of the oceans.
+        </p>
+
+    </section>
+
+
+    <!-- TECHNOLOGY HERO -->
+
+    <section class="technology-main-hero">
+
+        <img
+            src="images/technology-hero.png"
+            alt="Advanced maritime technology and modern vessels"
+        >
+
+        <div class="technology-main-overlay"></div>
+
+        <div class="technology-main-content">
+
+            <span class="hero-label">
+                THE NEXT GENERATION OF MARITIME
+            </span>
+
+            <h2>
+                Engineering the Future of the Oceans
+            </h2>
+
+            <p>
+                Maritime technology connects engineering, digital intelligence,
+                automation, and scientific innovation to make maritime operations
+                smarter, safer, and more efficient.
+            </p>
+
+            <a href="#technology-topics" class="technology-back-link">
+                Explore Technologies
+                <span>↓</span>
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- TECHNOLOGY TOPICS -->
+
+    <main>
+
+        <section class="technology-topics" id="technology-topics">
+
+            <div class="technology-topics-heading">
+
+                <div class="section-label">
+                    EXPLORE THE FIELD
+                </div>
+
+                <h2>
+                    Explore Maritime Technologies
+                </h2>
+
+                <p>
+                    Each field introduces a different part of maritime innovation.
+                    Select a topic to explore its scientific foundations,
+                    practical applications, challenges, and future developments.
+                </p>
+
+            </div>
+
+
+            <div class="technology-cards-grid">
+
+
+                <!-- CARD 01 -->
+
+                <a
+                    href="technology-integration.html"
+                    class="technology-topic-card"
+                >
+
+                    <div class="technology-topic-image">
+
+                        <img
+                            src="images/technology-integration.png"
+                            alt="Technology Integration in the maritime industry"
+                        >
+
+                        <span class="technology-topic-number">
+                            01
+                        </span>
+
+                    </div>
+
+                    <div class="technology-topic-content">
+
+                        <h3>Technology Integration</h3>
+
+                        <p>
+                            Explore how different digital systems, communication
+                            technologies, sensors, and automated solutions work
+                            together across modern maritime operations.
+                        </p>
+
+                        <div class="technology-topic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- CARD 02 -->
+
+                <a
+                    href="marine-robotics.html"
+                    class="technology-topic-card"
+                >
+
+                    <div class="technology-topic-image">
+
+                        <img
+                            src="images/marine-robotics.png"
+                            alt="Marine Robotics and underwater robotic systems"
+                        >
+
+                        <span class="technology-topic-number">
+                            02
+                        </span>
+
+                    </div>
+
+                    <div class="technology-topic-content">
+
+                        <h3>Marine Robotics</h3>
+
+                        <p>
+                            Discover underwater robotic systems, remotely operated
+                            vehicles, autonomous underwater vehicles, and their
+                            role in exploration and marine research.
+                        </p>
+
+                        <div class="technology-topic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- CARD 03 -->
+
+                <a
+                    href="smart-navigation.html"
+                    class="technology-topic-card"
+                >
+
+                    <div class="technology-topic-image">
+
+                        <img
+                            src="images/smart-navigation.png"
+                            alt="Smart Navigation and digital maritime navigation"
+                        >
+
+                        <span class="technology-topic-number">
+                            03
+                        </span>
+
+                    </div>
+
+                    <div class="technology-topic-content">
+
+                        <h3>Smart Navigation</h3>
+
+                        <p>
+                            Learn how satellite positioning, electronic charts,
+                            navigation sensors, and intelligent systems support
+                            safer and more accurate maritime navigation.
+                        </p>
+
+                        <div class="technology-topic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- CARD 04 -->
+
+                <a
+                    href="autonomous-ships.html"
+                    class="technology-topic-card"
+                >
+
+                    <div class="technology-topic-image">
+
+                        <img
+                            src="images/autonomous-ships.png"
+                            alt="Autonomous Ships and maritime automation"
+                        >
+
+                        <span class="technology-topic-number">
+                            04
+                        </span>
+
+                    </div>
+
+                    <div class="technology-topic-content">
+
+                        <h3>Autonomous Ships</h3>
+
+                        <p>
+                            Explore vessels that use sensors, automation,
+                            communication networks, and intelligent control
+                            systems to perform maritime operations.
+                        </p>
+
+                        <div class="technology-topic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- CARD 05 -->
+
+                <a
+                    href="artificial-intelligence.html"
+                    class="technology-topic-card"
+                >
+
+                    <div class="technology-topic-image">
+
+                        <img
+                            src="images/artificial-intelligence.png"
+                            alt="Artificial Intelligence in the maritime industry"
+                        >
+
+                        <span class="technology-topic-number">
+                            05
+                        </span>
+
+                    </div>
+
+                    <div class="technology-topic-content">
+
+                        <h3>Artificial Intelligence</h3>
+
+                        <p>
+                            Understand how machine learning, predictive analytics,
+                            computer vision, and intelligent algorithms are used
+                            to support maritime decision-making.
+                        </p>
+
+                        <div class="technology-topic-action">
+                            <span>Explore Topic</span>
+                            <span>→</span>
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTTOM NOTE -->
+
+        <section class="technology-bottom-note">
+
+            <h3>
+                Technology Is Transforming the Maritime World
+            </h3>
+
+            <p>
+                From underwater exploration to intelligent navigation,
+                modern maritime technologies are changing how people understand,
+                operate, and protect the oceans. Explore each field to discover
+                the science and engineering behind these developments.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="technology-footer">
+
+        <div class="footer-brand">
+            MARITERRA
+        </div>
+
+        <p>
+            The Future of Maritime Knowledge
+        </p>
+
+        <p class="footer-owner">
+            Founded & Developed by Engineer Zeinab Mohamed
+        </p>
+
+        <p>
+            © 2026 MARITERRA. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1833 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Explore Integrated Bridge Systems, bridge equipment integration, navigation workstations, system architecture, safety, redundancy, and maritime operations.">
+
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Integrated Bridge Systems</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1150px, 90%);
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7, 8, 22, 0.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            min-height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .back-link {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--purple-light);
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            padding: 105px 0 90px;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    ellipse at 80% 20%,
+                    rgba(147, 51, 234, 0.19),
+                    transparent 40%
+                ),
+                radial-gradient(
+                    ellipse at 15% 80%,
+                    rgba(37, 99, 235, 0.13),
+                    transparent 40%
+                );
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+
+        .topic-number {
+            display: inline-block;
+            color: var(--purple-light);
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.3rem, 6vw, 4.5rem);
+            line-height: 1.15;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero-description {
+            max-width: 750px;
+            color: var(--text-muted);
+            font-size: 1.08rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .meta-item {
+            padding: 8px 15px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            color: var(--purple-light);
+            font-size: 0.82rem;
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        /* CONTENT */
+
+        .content-section {
+            padding: 75px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.08);
+        }
+
+        .section-heading {
+            margin-bottom: 35px;
+        }
+
+        .section-label {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .section-heading h2 {
+            color: var(--white);
+            font-size: clamp(1.7rem, 4vw, 2.5rem);
+            line-height: 1.3;
+            margin-top: 8px;
+        }
+
+        .section-heading p {
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-top: 12px;
+        }
+
+        .content-section h3 {
+            color: var(--purple-light);
+            font-size: 1.2rem;
+            margin: 28px 0 12px;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+        }
+
+        .content-section ul,
+        .content-section ol {
+            padding-left: 25px;
+            color: var(--text-muted);
+            margin: 12px 0 22px;
+        }
+
+        .content-section li {
+            margin-bottom: 9px;
+            padding-left: 5px;
+        }
+
+        .content-section li::marker {
+            color: var(--purple-light);
+        }
+
+        /* CARDS */
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple);
+            box-shadow: 0 10px 35px rgba(147, 51, 234, 0.1);
+        }
+
+        .info-card h3 {
+            margin: 0 0 12px;
+            color: var(--purple-light);
+            font-size: 1.08rem;
+        }
+
+        .info-card p {
+            font-size: 0.94rem;
+            margin: 0;
+        }
+
+        /* CALLOUT */
+
+        .callout {
+            margin: 30px 0;
+            padding: 23px 25px;
+            background: rgba(147, 51, 234, 0.07);
+            border-left: 3px solid var(--purple);
+            border-radius: 8px;
+        }
+
+        .callout strong {
+            display: block;
+            color: var(--purple-light);
+            margin-bottom: 8px;
+        }
+
+        .callout p {
+            margin: 0;
+        }
+
+        /* FLOW */
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin: 30px 0;
+        }
+
+        .flow-step {
+            position: relative;
+            text-align: center;
+            padding: 22px 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .flow-step span {
+            display: block;
+            color: var(--purple-light);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .flow-step p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* COMPARISON */
+
+        .comparison-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        .comparison-table td {
+            color: var(--text-muted);
+        }
+
+        /* QUIZ */
+
+        .quiz-section {
+            padding: 85px 0;
+            background:
+                radial-gradient(
+                    ellipse at 50% 0%,
+                    rgba(147, 51, 234, 0.12),
+                    transparent 55%
+                );
+        }
+
+        .quiz-intro {
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 15px 0 35px;
+        }
+
+        .quiz-question {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            display: block;
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .quiz-question h3 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 14px;
+            border: 1px solid rgba(192, 132, 252, 0.12);
+            border-radius: 9px;
+            margin: 9px 0;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            background: rgba(147, 51, 234, 0.07);
+        }
+
+        .option input {
+            margin-top: 7px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct-answer {
+            border-color: #16a34a;
+            background: rgba(22, 163, 74, 0.1);
+            color: #86efac;
+        }
+
+        .option.wrong-answer {
+            border-color: #dc2626;
+            background: rgba(220, 38, 38, 0.1);
+            color: #fca5a5;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(96, 165, 250, 0.07);
+            color: var(--text-muted);
+            font-size: 0.92rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation strong {
+            color: var(--blue-light);
+        }
+
+        .quiz-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: linear-gradient(
+                120deg,
+                var(--purple-dark),
+                var(--purple)
+            );
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--purple-light);
+            color: var(--purple-light);
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid var(--purple);
+            border-radius: 12px;
+            background: rgba(147, 51, 234, 0.08);
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box h3 {
+            color: var(--purple-light);
+            margin-bottom: 10px;
+        }
+
+        .score {
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* REFERENCES */
+
+        .reference-list a {
+            color: var(--blue-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .reference-list a:hover {
+            color: var(--purple-light);
+        }
+
+        .reference-list li {
+            margin-bottom: 15px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 35px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: #050611;
+        }
+
+        footer p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 650px) {
+            .hero {
+                padding: 75px 0 65px;
+            }
+
+            .content-section {
+                padding: 55px 0;
+            }
+
+            .nav-content {
+                min-height: 65px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .back-link {
+                font-size: 0.78rem;
+            }
+
+            .quiz-question {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                MARI<span>TERRA</span>
+            </a>
+
+            <a href="technology-integration.html" class="back-link">
+                ← Back to Technology Integration
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+
+    <header class="hero">
+        <div class="container hero-content">
+
+            <span class="topic-number">TOPIC 04 / TECHNOLOGY INTEGRATION</span>
+
+            <h1>
+                Integrated Bridge
+                <span>Systems (IBS)</span>
+            </h1>
+
+            <p class="hero-description">
+                Explore how navigation, communication, monitoring,
+                and control equipment work together on a ship's bridge
+                to support coordinated and informed maritime operations.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">Bridge Technology</span>
+                <span class="meta-item">Navigation Systems</span>
+                <span class="meta-item">System Integration</span>
+                <span class="meta-item">Maritime Safety</span>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- 01 INTRODUCTION -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">01 / Introduction</span>
+                    <h2>Understanding Integrated Bridge Systems</h2>
+                </div>
+
+                <p>
+                    A ship's bridge is the primary location from which
+                    navigation and many operational activities are monitored
+                    and controlled. Modern vessels use multiple electronic
+                    systems to provide information about position, heading,
+                    speed, surrounding traffic, weather, and equipment status.
+                </p>
+
+                <p>
+                    An <strong>Integrated Bridge System (IBS)</strong> is a
+                    concept in which interconnected systems allow operators
+                    to access sensor information and relevant controls from
+                    coordinated workstations.
+                </p>
+
+                <p>
+                    The objective is not simply to place several displays
+                    next to one another. It is to make information available
+                    in a consistent and useful way while supporting safe
+                    decision-making by qualified bridge personnel.
+                </p>
+
+                <div class="callout">
+                    <strong>Core Concept</strong>
+                    <p>
+                        Integration connects equipment and information.
+                        It does not remove the need for trained human
+                        operators, independent checks, or safe operating
+                        procedures.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 02 IBS AND INS -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">02 / Key Concepts</span>
+                    <h2>IBS vs. Integrated Navigation System (INS)</h2>
+                    <p>
+                        These terms are related, but they do not describe
+                        exactly the same scope of integration.
+                    </p>
+                </div>
+
+                <h3>Integrated Bridge System (IBS)</h3>
+
+                <p>
+                    IBS is a broader bridge integration concept. The
+                    historical IMO definition describes interconnected
+                    systems that provide centralized access to sensor
+                    information or command and control from workstations.
+                </p>
+
+                <p>
+                    The historical scope included combinations of functions
+                    such as passage execution, communications, machinery
+                    control, cargo operations, and safety and security.
+                </p>
+
+                <h3>Integrated Navigation System (INS)</h3>
+
+                <p>
+                    INS focuses specifically on navigation-related functions.
+                    It combines information from different navigation sensors
+                    and systems to support route planning, monitoring,
+                    situational awareness, and safe navigation.
+                </p>
+
+                <div class="comparison-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>IBS</th>
+                                <th>INS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Main scope</td>
+                                <td>Broader bridge operations</td>
+                                <td>Navigation functions</td>
+                            </tr>
+                            <tr>
+                                <td>Typical information</td>
+                                <td>Navigation, communication, machinery, and safety</td>
+                                <td>Position, heading, speed, route, and navigation alerts</td>
+                            </tr>
+                            <tr>
+                                <td>Main purpose</td>
+                                <td>Coordinated bridge operations</td>
+                                <td>Improved navigation safety and awareness</td>
+                            </tr>
+                            <tr>
+                                <td>Relationship</td>
+                                <td>May include navigation integration</td>
+                                <td>Can provide navigation functions within a wider bridge arrangement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="callout">
+                    <strong>Important Regulatory Context</strong>
+                    <p>
+                        IMO circular SN.1/Circ.288, issued in 2010,
+                        superseded the earlier IBS performance-standard
+                        recommendation in MSC.64(67), Annex 1. It introduced
+                        guidelines for Bridge Equipment and Systems (BES),
+                        their arrangement and integration. The historical
+                        IBS concept remains useful for understanding
+                        integrated bridge technology.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 03 COMPONENTS -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">03 / Components</span>
+                    <h2>Main Components of a Modern Bridge</h2>
+                    <p>
+                        An integrated bridge arrangement may connect several
+                        specialized devices and workstations.
+                    </p>
+                </div>
+
+                <div class="cards-grid">
+
+                    <article class="info-card">
+                        <h3>Electronic Chart Display and Information System</h3>
+                        <p>
+                            ECDIS displays electronic navigational charts
+                            and supports route planning and monitoring,
+                            when appropriately configured and supplied
+                            with valid data.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Radar</h3>
+                        <p>
+                            Radar detects and tracks objects using
+                            transmitted radio waves and their returned
+                            echoes. It supports traffic awareness and
+                            collision-avoidance assessment.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>GNSS Receiver</h3>
+                        <p>
+                            Global Navigation Satellite System receivers
+                            provide satellite-based positioning and
+                            timing information.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Gyrocompass</h3>
+                        <p>
+                            Provides heading information used by navigation
+                            displays, radar, and other connected equipment.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Automatic Identification System</h3>
+                        <p>
+                            AIS exchanges vessel identity, position,
+                            course, speed, and other relevant information
+                            with equipped stations and vessels.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Autopilot</h3>
+                        <p>
+                            Controls steering according to selected
+                            operating modes and valid control inputs.
+                            It does not replace navigational watchkeeping.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Bridge Alert Management</h3>
+                        <p>
+                            Organizes and presents alerts so that bridge
+                            personnel can identify and respond to
+                            relevant abnormal conditions.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Communication Equipment</h3>
+                        <p>
+                            Includes equipment such as VHF radio and
+                            other communication systems used for
+                            ship-to-ship and ship-to-shore communication.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 04 ARCHITECTURE -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">04 / Architecture</span>
+                    <h2>How Bridge Integration Works</h2>
+                </div>
+
+                <p>
+                    Integrated bridge arrangements depend on hardware,
+                    software, communication interfaces, data processing,
+                    and operator workstations. The exact architecture
+                    varies according to vessel type, equipment selection,
+                    and applicable requirements.
+                </p>
+
+                <h3>Typical Information Flow</h3>
+
+                <div class="flow">
+
+                    <div class="flow-step">
+                        <span>01</span>
+                        <p>Navigation and equipment sensors</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>02</span>
+                        <p>Data interfaces and networks</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>03</span>
+                        <p>Processing and validation</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>04</span>
+                        <p>Displays and workstations</p>
+                    </div>
+
+                    <div class="flow-step">
+                        <span>05</span>
+                        <p>Operator assessment and action</p>
+                    </div>
+
+                </div>
+
+                <h3>1. Sensors and Data Sources</h3>
+
+                <p>
+                    Equipment such as GNSS receivers, gyrocompasses,
+                    speed logs, echo sounders, and radar systems
+                    produces information used by bridge applications.
+                </p>
+
+                <h3>2. Interfaces and Communication Networks</h3>
+
+                <p>
+                    Interfaces transfer information between equipment.
+                    Depending on the installation, technologies may
+                    include serial connections and Ethernet-based
+                    maritime networks.
+                </p>
+
+                <h3>3. Data Processing</h3>
+
+                <p>
+                    Receiving systems interpret incoming messages,
+                    check data availability and status, and make
+                    information available to the relevant functions.
+                </p>
+
+                <h3>4. Displays and Workstations</h3>
+
+                <p>
+                    Operators access information through dedicated
+                    or multifunction displays. The presentation should
+                    help users understand the current situation without
+                    creating unnecessary confusion.
+                </p>
+
+                <h3>5. Human Decision-Making</h3>
+
+                <p>
+                    The officer on watch evaluates the available
+                    information, considers operating conditions,
+                    follows procedures, and takes appropriate action.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- 05 WORKSTATIONS -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">05 / Workstations</span>
+                    <h2>Bridge Workstations and Operator Interaction</h2>
+                </div>
+
+                <p>
+                    Workstations provide the interface through which
+                    bridge personnel monitor equipment and perform
+                    assigned tasks. Their arrangement should support
+                    visibility, accessibility, and safe operation.
+                </p>
+
+                <div class="cards-grid">
+
+                    <article class="info-card">
+                        <h3>Navigation Workstation</h3>
+                        <p>
+                            Supports route planning, chart monitoring,
+                            position assessment, and navigation-related
+                            information.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Conning Workstation</h3>
+                        <p>
+                            Presents information relevant to ship
+                            manoeuvring, such as heading, speed,
+                            and other selected operational data.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Communication Workstation</h3>
+                        <p>
+                            Provides access to communication equipment
+                            and related information needed by bridge
+                            personnel.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Monitoring Workstation</h3>
+                        <p>
+                            Supports observation of selected equipment
+                            conditions, alarms, and operational status.
+                        </p>
+                    </article>
+
+                </div>
+
+                <div class="callout">
+                    <strong>Human Factors Matter</strong>
+                    <p>
+                        A technically advanced bridge can still be unsafe
+                        if information is poorly arranged, alarms are
+                        confusing, or operators cannot identify the
+                        source and reliability of displayed data.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 06 DATA AND INTEROPERABILITY -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">06 / Data Exchange</span>
+                    <h2>Data Integration and Interoperability</h2>
+                </div>
+
+                <p>
+                    Bridge equipment must exchange information in
+                    formats and through interfaces that the receiving
+                    systems can understand.
+                </p>
+
+                <h3>Data Interfaces</h3>
+
+                <p>
+                    Maritime equipment may use standardized interfaces
+                    and protocols such as IEC 61162 series standards.
+                    The appropriate interface depends on the equipment,
+                    required data, system design, and applicable standard.
+                </p>
+
+                <h3>Data Compatibility</h3>
+
+                <p>
+                    Two devices being physically connected does not
+                    automatically mean that they can exchange useful
+                    information. Compatibility also depends on message
+                    formats, data identifiers, units, timing, and
+                    configuration.
+                </p>
+
+                <h3>Data Quality</h3>
+
+                <ul>
+                    <li><strong>Accuracy:</strong> How close the information is to the actual value.</li>
+                    <li><strong>Timeliness:</strong> Whether information is available when needed.</li>
+                    <li><strong>Validity:</strong> Whether the data meets the expected conditions.</li>
+                    <li><strong>Consistency:</strong> Whether connected systems use compatible references and values.</li>
+                    <li><strong>Availability:</strong> Whether information can be accessed when required.</li>
+                </ul>
+
+            </div>
+        </section>
+
+        <!-- 07 SAFETY AND REDUNDANCY -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">07 / Safety</span>
+                    <h2>System Reliability and Redundancy</h2>
+                </div>
+
+                <p>
+                    Integration creates operational benefits, but it
+                    also creates dependencies between connected systems.
+                    A failure in a shared data source or network may
+                    affect several functions if the architecture is
+                    not designed carefully.
+                </p>
+
+                <h3>Redundancy</h3>
+
+                <p>
+                    Redundancy means providing alternative equipment,
+                    paths, or resources so that a required function
+                    can continue when a component fails. The design
+                    must consider the specific failure being addressed.
+                </p>
+
+                <h3>Fault Isolation</h3>
+
+                <p>
+                    Fault isolation aims to prevent a failure in one
+                    component from unnecessarily affecting unrelated
+                    equipment or functions.
+                </p>
+
+                <h3>Independent Operation</h3>
+
+                <p>
+                    Appropriate arrangements should allow equipment
+                    to remain usable independently where required.
+                    Operators must also understand the limitations
+                    introduced by a failure.
+                </p>
+
+                <h3>Alarm Management</h3>
+
+                <p>
+                    Alerts should communicate abnormal conditions
+                    clearly and help operators identify the required
+                    response. Poorly managed alerts can contribute
+                    to distraction and alarm overload.
+                </p>
+
+                <div class="callout">
+                    <strong>Safety Principle</strong>
+                    <p>
+                        Integration should not create a single point
+                        of failure that can disable multiple essential
+                        functions without suitable protection or
+                        alternative arrangements.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 08 PRACTICAL SCENARIO -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">08 / Practical Application</span>
+                    <h2>A Practical Bridge Scenario</h2>
+                </div>
+
+                <p>
+                    Consider a vessel navigating through a busy
+                    traffic area near a coastal port.
+                </p>
+
+                <h3>Situation</h3>
+
+                <p>
+                    The bridge team needs to monitor the vessel's
+                    position, heading, speed, surrounding traffic,
+                    and planned route.
+                </p>
+
+                <h3>Information Available</h3>
+
+                <ul>
+                    <li>GNSS provides the vessel's position.</li>
+                    <li>The gyrocompass provides heading information.</li>
+                    <li>Radar supports detection and tracking of targets.</li>
+                    <li>AIS provides transmitted information about equipped vessels.</li>
+                    <li>ECDIS displays chart information and the planned route.</li>
+                </ul>
+
+                <h3>Operator Response</h3>
+
+                <p>
+                    The officer on watch compares information from
+                    relevant sources, assesses traffic and navigational
+                    conditions, and decides whether action is necessary.
+                    The bridge team follows the vessel's procedures
+                    and applicable collision-avoidance rules.
+                </p>
+
+                <div class="callout">
+                    <strong>What Does Integration Contribute?</strong>
+                    <p>
+                        It helps make relevant information available
+                        across coordinated workstations. It does not
+                        guarantee that every sensor is correct or that
+                        a collision will automatically be prevented.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 09 CHALLENGES -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">09 / Technical Challenges</span>
+                    <h2>Challenges in Bridge Integration</h2>
+                </div>
+
+                <div class="cards-grid">
+
+                    <article class="info-card">
+                        <h3>Compatibility Issues</h3>
+                        <p>
+                            Equipment from different manufacturers
+                            may use different interfaces, data formats,
+                            or configuration requirements.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Sensor Errors</h3>
+                        <p>
+                            Incorrect, unavailable, or degraded sensor
+                            information can affect the quality of
+                            information presented to operators.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Network Failures</h3>
+                        <p>
+                            Network faults can interrupt communication
+                            between connected devices and workstations.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Human-Machine Interface</h3>
+                        <p>
+                            Poor display design or excessive information
+                            can increase workload and make decisions
+                            more difficult.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Software and Configuration</h3>
+                        <p>
+                            Incorrect settings, software defects, and
+                            integration mistakes may affect system
+                            performance.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Cybersecurity</h3>
+                        <p>
+                            Connected systems may introduce cyber risks
+                            that require appropriate access controls,
+                            network protection, and monitoring.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 10 CYBERSECURITY -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">10 / Cybersecurity</span>
+                    <h2>Protecting Integrated Bridge Systems</h2>
+                </div>
+
+                <p>
+                    As bridge equipment becomes more interconnected,
+                    cybersecurity becomes an important part of
+                    maintaining safe and reliable maritime operations.
+                </p>
+
+                <h3>Potential Threats</h3>
+
+                <ul>
+                    <li>Unauthorized access to bridge networks.</li>
+                    <li>Malware introduced through removable media.</li>
+                    <li>Manipulation or disruption of data.</li>
+                    <li>Compromised remote access arrangements.</li>
+                    <li>Software vulnerabilities in connected equipment.</li>
+                </ul>
+
+                <h3>Security Measures</h3>
+
+                <ul>
+                    <li>Restrict access according to operational roles.</li>
+                    <li>Separate networks where appropriate.</li>
+                    <li>Control the use of removable media.</li>
+                    <li>Maintain secure configuration and software updates.</li>
+                    <li>Monitor relevant systems and investigate unusual activity.</li>
+                    <li>Prepare and test incident response procedures.</li>
+                </ul>
+
+                <p>
+                    Cybersecurity measures must be selected according
+                    to the vessel's risk assessment and must not
+                    interfere with the safe operation of essential
+                    navigation and control functions.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- 11 TESTING -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">11 / Verification</span>
+                    <h2>Testing and Maintenance</h2>
+                </div>
+
+                <p>
+                    An integrated bridge arrangement requires
+                    verification to confirm that equipment and
+                    connected functions operate as intended.
+                </p>
+
+                <h3>Important Verification Activities</h3>
+
+                <ul>
+                    <li><strong>Interface testing:</strong> Confirm that connected equipment exchanges the expected data.</li>
+                    <li><strong>Functional testing:</strong> Verify that individual functions perform their intended tasks.</li>
+                    <li><strong>Failure testing:</strong> Examine how the system responds to selected faults.</li>
+                    <li><strong>Alarm testing:</strong> Verify that alerts are presented and handled correctly.</li>
+                    <li><strong>Operational testing:</strong> Confirm that workstations support the intended operating procedures.</li>
+                    <li><strong>Maintenance:</strong> Keep equipment, configuration records, and relevant documentation up to date.</li>
+                </ul>
+
+                <div class="callout">
+                    <strong>Remember</strong>
+                    <p>
+                        Successful communication between two devices
+                        is not sufficient proof that the entire
+                        integrated bridge arrangement is safe.
+                        System-level testing and operational
+                        verification are also important.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 12 FUTURE -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">12 / Future Developments</span>
+                    <h2>The Future of Integrated Bridge Technology</h2>
+                </div>
+
+                <p>
+                    Maritime bridge technology continues to develop
+                    through improvements in digital connectivity,
+                    data processing, user interfaces, and automation.
+                </p>
+
+                <div class="cards-grid">
+
+                    <article class="info-card">
+                        <h3>Advanced Decision Support</h3>
+                        <p>
+                            Systems can combine relevant information
+                            to help operators assess navigational
+                            situations and operational risks.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Artificial Intelligence</h3>
+                        <p>
+                            AI may assist with pattern recognition,
+                            anomaly detection, and decision-support
+                            applications when properly validated.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Digital Connectivity</h3>
+                        <p>
+                            Improved data exchange can support
+                            coordination between vessels, ports,
+                            and shore-based services.
+                        </p>
+                    </article>
+
+                    <article class="info-card">
+                        <h3>Human-Centred Design</h3>
+                        <p>
+                            Future systems increasingly need to
+                            consider operator workload, usability,
+                            and clear presentation of information.
+                        </p>
+                    </article>
+
+                </div>
+
+                <p>
+                    These developments can support maritime operations,
+                    but their safety and effectiveness depend on
+                    appropriate design, testing, regulation, and
+                    qualified human oversight.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- 13 REFERENCES -->
+
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">13 / Scientific References</span>
+                    <h2>Technical References and Further Reading</h2>
+                    <p>
+                        The following official and technical references
+                        provide a foundation for studying bridge
+                        integration and navigation systems.
+                    </p>
+                </div>
+
+                <ol class="reference-list">
+
+                    <li>
+                        <strong>International Maritime Organization (IMO)</strong><br>
+                        Integrated Bridge System — overview and regulatory context.<br>
+                        <a href="https://www.imo.org/en/ourwork/safety/pages/integratedbridgesystems.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            Official IMO resource
+                        </a>
+                    </li>
+
+                    <li>
+                        <strong>IMO SN.1/Circ.288 (2010)</strong><br>
+                        Guidelines for Bridge Equipment and Systems,
+                        their Arrangement and Integration.<br>
+                        <a href="https://wwwcdn.imo.org/localresources/en/OurWork/Safety/Documents/IMO%20Documents%20related%20to/SN.1-Circ.288.pdf"
+                           target="_blank" rel="noopener noreferrer">
+                            Read the IMO circular
+                        </a>
+                    </li>
+
+                    <li>
+                        <strong>IMO Resolution MSC.64(67) (1996)</strong><br>
+                        Historical recommendation on performance
+                        standards for Integrated Bridge Systems.
+                        It was superseded by SN.1/Circ.288, Annex 1.<br>
+                        <a href="https://wwwcdn.imo.org/localresources/en/KnowledgeCentre/IndexofIMOResolutions/MSCResolutions/MSC.64%2867%29.pdf"
+                           target="_blank" rel="noopener noreferrer">
+                            Read the historical resolution
+                        </a>
+                    </li>
+
+                    <li>
+                        <strong>IMO Resolution MSC.252(83)</strong><br>
+                        Revised Performance Standards for
+                        Integrated Navigation Systems (INS).<br>
+                        <a href="https://www.imo.org/"
+                           target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization
+                        </a>
+                    </li>
+
+                    <li>
+                        <strong>IEC 61924-2:2021</strong><br>
+                        Integrated Navigation Systems — Modular
+                        Structure, Operational and Performance
+                        Requirements, and Testing.<br>
+                        <a href="https://webstore.iec.ch/en/publication/64432"
+                           target="_blank" rel="noopener noreferrer">
+                            IEC official publication
+                        </a>
+                    </li>
+
+                </ol>
+
+                <p>
+                    Note: Standards and IMO instruments may be amended.
+                    Always check the applicable edition and the vessel's
+                    regulatory requirements before using a reference
+                    for engineering or compliance decisions.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+
+        <section class="quiz-section" id="assessment">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Knowledge Assessment</span>
+                    <h2>Test Your Understanding</h2>
+                </div>
+
+                <p class="quiz-intro">
+                    Answer all 10 questions to evaluate your understanding
+                    of Integrated Bridge Systems, navigation integration,
+                    system reliability, and bridge operations.
+                    Each question has one correct answer.
+                </p>
+
+                <div id="quizContainer"></div>
+
+                <div class="quiz-actions">
+                    <button class="btn btn-primary" id="submitQuiz">
+                        Submit Assessment
+                    </button>
+
+                    <button class="btn btn-secondary" id="resetQuiz">
+                        Reset Assessment
+                    </button>
+                </div>
+
+                <div class="result-box" id="resultBox" aria-live="polite">
+                    <h3>Assessment Results</h3>
+                    <div class="score" id="score"></div>
+                    <p id="resultMessage"></p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <div class="container">
+            <p>
+                MARITERRA — Maritime Technology & Knowledge
+            </p>
+            <p>
+                Designed and Developed by
+                <strong>Engineer Zeinab Mohamed</strong>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the main purpose of an Integrated Bridge System (IBS)?",
+                options: [
+                    "To replace all bridge personnel with automation",
+                    "To connect bridge systems and provide coordinated access to information and controls",
+                    "To operate only the ship's propulsion engine",
+                    "To eliminate the need for navigation sensors"
+                ],
+                answer: 1,
+                explanation: "IBS is a bridge integration concept. It connects relevant systems to support coordinated access to sensor information and controls. It does not eliminate the need for qualified personnel."
+            },
+            {
+                question: "Which statement best describes the difference between IBS and INS?",
+                options: [
+                    "IBS and INS always mean exactly the same thing",
+                    "INS focuses on navigation integration, while IBS has a broader bridge-operation scope",
+                    "IBS is used only for satellite communication",
+                    "INS controls all cargo operations"
+                ],
+                answer: 1,
+                explanation: "INS focuses on navigation functions and related information. IBS historically describes a broader combination of bridge operations and systems."
+            },
+            {
+                question: "Which IMO circular superseded the earlier IBS performance-standard recommendation in MSC.64(67), Annex 1?",
+                options: [
+                    "SN.1/Circ.288",
+                    "MSC.302(87)",
+                    "SOLAS Chapter II-2",
+                    "MSC.252(83)"
+                ],
+                answer: 0,
+                explanation: "IMO SN.1/Circ.288 was issued in 2010 and introduced guidelines for bridge equipment and systems, their arrangement and integration, superseding the earlier IBS recommendation."
+            },
+            {
+                question: "What is the primary role of ECDIS?",
+                options: [
+                    "To transmit VHF distress calls",
+                    "To control the ship's engine temperature",
+                    "To display electronic navigational chart information and support route monitoring",
+                    "To measure water salinity"
+                ],
+                answer: 2,
+                explanation: "ECDIS displays electronic navigational chart information and supports route planning and monitoring when correctly configured and supplied with valid data."
+            },
+            {
+                question: "Why is interoperability important in an integrated bridge arrangement?",
+                options: [
+                    "It allows compatible systems to exchange and interpret information",
+                    "It removes the need for system testing",
+                    "It guarantees that every sensor is accurate",
+                    "It prevents all network failures"
+                ],
+                answer: 0,
+                explanation: "Interoperability allows different systems to exchange and interpret data correctly. Physical connection alone does not guarantee compatibility."
+            },
+            {
+                question: "What is the main purpose of redundancy in bridge systems?",
+                options: [
+                    "To increase the number of displays without a reason",
+                    "To provide alternative resources or paths when a component fails",
+                    "To make all equipment depend on one central computer",
+                    "To disable independent operation"
+                ],
+                answer: 1,
+                explanation: "Redundancy provides alternative equipment, paths, or resources to help maintain required functions when a component fails."
+            },
+            {
+                question: "A GNSS receiver primarily provides which type of information?",
+                options: [
+                    "Satellite-based position and timing information",
+                    "Cargo weight measurements",
+                    "Engine lubrication pressure",
+                    "VHF radio channel assignments"
+                ],
+                answer: 0,
+                explanation: "GNSS receivers use satellite signals to calculate positioning and timing information."
+            },
+            {
+                question: "What is a potential risk of poorly designed bridge integration?",
+                options: [
+                    "Guaranteed improvement in data accuracy",
+                    "Complete elimination of human error",
+                    "A failure in one shared component may affect multiple connected functions",
+                    "Automatic prevention of cyberattacks"
+                ],
+                answer: 2,
+                explanation: "Shared components and dependencies can create common points of failure. Architecture, fault isolation, and appropriate redundancy help reduce this risk."
+            },
+            {
+                question: "Which action is an appropriate cybersecurity measure for bridge equipment?",
+                options: [
+                    "Allow unrestricted access to every workstation",
+                    "Disable all monitoring functions",
+                    "Use uncontrolled removable media",
+                    "Apply role-based access and control removable media"
+                ],
+                answer: 3,
+                explanation: "Access restrictions and removable-media controls are examples of cybersecurity measures that help reduce unauthorized access and malware risks."
+            },
+            {
+                question: "Which statement about an integrated bridge system is most accurate?",
+                options: [
+                    "Integration guarantees collision avoidance",
+                    "Integrated information supports decisions, but qualified operators must still assess conditions and act",
+                    "AIS information is always complete and error-free",
+                    "A connected network makes independent checks unnecessary"
+                ],
+                answer: 1,
+                explanation: "Integration supports situational awareness and decision-making, but it cannot guarantee safety. Operators must assess information, recognize limitations, and follow procedures."
+            }
+        ];
+
+        const quizContainer = document.getElementById("quizContainer");
+        const resultBox = document.getElementById("resultBox");
+        const scoreElement = document.getElementById("score");
+        const resultMessage = document.getElementById("resultMessage");
+
+        function renderQuiz() {
+            quizContainer.innerHTML = "";
+
+            questions.forEach((item, index) => {
+                const questionElement = document.createElement("article");
+
+                questionElement.className = "quiz-question";
+                questionElement.dataset.index = index;
+
+                const number = document.createElement("span");
+                number.className = "question-number";
+                number.textContent = `QUESTION ${String(index + 1).padStart(2, "0")}`;
+
+                const heading = document.createElement("h3");
+                heading.textContent = item.question;
+
+                questionElement.appendChild(number);
+                questionElement.appendChild(heading);
+
+                item.options.forEach((option, optionIndex) => {
+                    const label = document.createElement("label");
+                    label.className = "option";
+
+                    const input = document.createElement("input");
+                    input.type = "radio";
+                    input.name = `question-${index}`;
+                    input.value = optionIndex;
+
+                    const text = document.createElement("span");
+                    text.textContent = option;
+
+                    label.appendChild(input);
+                    label.appendChild(text);
+
+                    questionElement.appendChild(label);
+                });
+
+                const explanation = document.createElement("div");
+                explanation.className = "explanation";
+                explanation.id = `explanation-${index}`;
+
+                questionElement.appendChild(explanation);
+                quizContainer.appendChild(questionElement);
+            });
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            let unanswered = 0;
+
+            questions.forEach((item, index) => {
+                const questionElement =
+                    quizContainer.querySelector(
+                        `[data-index="${index}"]`
+                    );
+
+                const selected = questionElement.querySelector(
+                    `input[name="question-${index}"]:checked`
+                );
+
+                const options = questionElement.querySelectorAll(".option");
+                const explanation = questionElement.querySelector(".explanation");
+
+                options.forEach((option, optionIndex) => {
+                    option.classList.remove(
+                        "correct-answer",
+                        "wrong-answer"
+                    );
+
+                    if (optionIndex === item.answer) {
+                        option.classList.add("correct-answer");
+                    }
+                });
+
+                if (!selected) {
+                    unanswered++;
+                } else {
+                    const selectedAnswer = Number(selected.value);
+
+                    if (selectedAnswer === item.answer) {
+                        score++;
+                    } else {
+                        options[selectedAnswer].classList.add("wrong-answer");
+                    }
+                }
+
+                const selectedText = selected
+                    ? item.options[Number(selected.value)]
+                    : "No answer selected";
+
+                explanation.innerHTML = `
+                    <strong>
+                        ${selected && Number(selected.value) === item.answer
+                            ? "Correct Answer"
+                            : "Incorrect Answer"}
+                    </strong>
+                    <br>
+                    Your answer: ${selectedText}
+                    <br>
+                    Correct answer: ${item.options[item.answer]}
+                    <br><br>
+                    <strong>Explanation:</strong>
+                    ${item.explanation}
+                `;
+
+                explanation.classList.add("show");
+
+                questionElement
+                    .querySelectorAll("input")
+                    .forEach(input => {
+                        input.disabled = true;
+                    });
+            });
+
+            const percentage = Math.round(
+                (score / questions.length) * 100
+            );
+
+            scoreElement.textContent =
+                `${score} / ${questions.length} (${percentage}%)`;
+
+            if (percentage >= 90) {
+                resultMessage.textContent =
+                    "Excellent work. You have demonstrated a strong understanding of integrated bridge systems.";
+            } else if (percentage >= 70) {
+                resultMessage.textContent =
+                    "Good performance. Review the explanations to strengthen your technical understanding.";
+            } else if (percentage >= 50) {
+                resultMessage.textContent =
+                    "You have a basic understanding, but several concepts need further review.";
+            } else {
+                resultMessage.textContent =
+                    "More study is recommended. Review the topic sections and try the assessment again.";
+            }
+
+            if (unanswered > 0) {
+                resultMessage.textContent +=
+                    ` You left ${unanswered} question(s) unanswered.`;
+            }
+
+            resultBox.classList.add("show");
+
+            document.getElementById("submitQuiz").disabled = true;
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function resetQuiz() {
+            renderQuiz();
+
+            resultBox.classList.remove("show");
+
+            scoreElement.textContent = "";
+            resultMessage.textContent = "";
+
+            document.getElementById("submitQuiz").disabled = false;
+
+            document.getElementById("assessment").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        document
+            .getElementById("submitQuiz")
+            .addEventListener("click", submitQuiz);
+
+        document
+            .getElementById("resetQuiz")
+            .addEventListener("click", resetQuiz);
+
+        renderQuiz();
+    </script>
+
+</body>
+</html>

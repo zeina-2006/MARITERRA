@@ -1,0 +1,2346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore maritime navigation sensors, integrated bridge systems, data interfaces, sensor integration, and navigational reliability.">
+    <meta name="author" content="Engineer Zeinab Mohamed">
+
+    <title>MARITERRA | Navigation Sensors & IBS</title>
+
+    <style>
+        :root {
+            --bg: #070816;
+            --bg-light: #0c1024;
+            --bg-card: rgba(13, 16, 38, 0.88);
+            --purple: #9333ea;
+            --purple-light: #c084fc;
+            --purple-dark: #6b21a8;
+            --blue: #2563eb;
+            --blue-light: #60a5fa;
+            --white: #ffffff;
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: rgba(192, 132, 252, 0.18);
+            --transition: 0.35s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            background: rgba(7, 8, 22, 0.94);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--purple-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-light);
+        }
+
+        .hero {
+            padding: 100px 8% 75px;
+            background:
+                radial-gradient(circle at 85% 15%, rgba(147, 51, 234, 0.19), transparent 32%),
+                radial-gradient(circle at 10% 90%, rgba(37, 99, 235, 0.10), transparent 30%),
+                var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .eyebrow {
+            color: var(--purple-light);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            color: var(--white);
+            font-size: clamp(2.3rem, 5vw, 4.2rem);
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: var(--purple-light);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 800px;
+            font-size: 1.05rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .meta-item {
+            border: 1px solid var(--border);
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--purple-light);
+            border-radius: 30px;
+            padding: 7px 16px;
+            font-size: 0.8rem;
+        }
+
+        .container {
+            width: min(1100px, 84%);
+            margin: auto;
+        }
+
+        .content-section {
+            padding: 75px 0;
+            border-bottom: 1px solid rgba(192, 132, 252, 0.10);
+        }
+
+        .section-label {
+            color: var(--purple-light);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            color: var(--white);
+            font-size: clamp(1.7rem, 3vw, 2.4rem);
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            max-width: 850px;
+            margin-bottom: 35px;
+        }
+
+        .content-section h3 {
+            color: var(--purple-light);
+            font-size: 1.2rem;
+            margin: 30px 0 12px;
+        }
+
+        .content-section p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .content-section strong {
+            color: var(--text);
+        }
+
+        .content-section ul,
+        .content-section ol {
+            padding-left: 25px;
+            margin: 14px 0 22px;
+            color: var(--text-muted);
+        }
+
+        .content-section li {
+            margin-bottom: 9px;
+            padding-left: 5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin: 28px 0;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-4px);
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+        }
+
+        .info-card p {
+            margin-bottom: 0;
+        }
+
+        .highlight-box {
+            background: rgba(147, 51, 234, 0.08);
+            border-left: 3px solid var(--purple);
+            padding: 22px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 25px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+        }
+
+        .technical-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .technical-table th,
+        .technical-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .technical-table th {
+            color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.12);
+        }
+
+        .technical-table td {
+            color: var(--text-muted);
+        }
+
+        .technical-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .process-step {
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 14px;
+            background: rgba(13, 16, 38, 0.7);
+        }
+
+        .process-step strong {
+            color: var(--purple-light);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .scenario {
+            background: rgba(37, 99, 235, 0.07);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+            border-radius: 14px;
+            padding: 24px;
+            margin: 25px 0;
+        }
+
+        .scenario h3 {
+            margin-top: 0;
+            color: var(--blue-light);
+        }
+
+        .quiz-section {
+            padding: 80px 0;
+            background:
+                radial-gradient(circle at 90% 10%, rgba(147, 51, 234, 0.12), transparent 30%),
+                var(--bg-light);
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: auto;
+            width: 84%;
+        }
+
+        .quiz-header {
+            margin-bottom: 35px;
+        }
+
+        .quiz-header p {
+            color: var(--text-muted);
+        }
+
+        .quiz-progress {
+            height: 7px;
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple-light));
+            transition: var(--transition);
+        }
+
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: var(--purple-light);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .question-card h3 {
+            color: var(--white);
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+        }
+
+        .option {
+            display: block;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 9px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            border-color: var(--purple);
+            color: var(--white);
+            background: rgba(147, 51, 234, 0.06);
+        }
+
+        .option input {
+            margin-right: 10px;
+            accent-color: var(--purple);
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.08);
+            color: #86efac;
+        }
+
+        .option.wrong {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+            color: #fca5a5;
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 13px 15px;
+            border-radius: 8px;
+            background: rgba(147, 51, 234, 0.08);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .quiz-button {
+            border: none;
+            background: linear-gradient(120deg, var(--purple-dark), var(--purple));
+            color: var(--white);
+            padding: 13px 28px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 10px 10px 10px 0;
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.25);
+        }
+
+        .quiz-button.secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--purple-light);
+        }
+
+        .quiz-result {
+            display: none;
+            padding: 25px;
+            margin-top: 25px;
+            background: rgba(147, 51, 234, 0.09);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .quiz-result h3 {
+            color: var(--purple-light);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .quiz-result p {
+            color: var(--text-muted);
+        }
+
+        .references {
+            padding: 60px 0;
+        }
+
+        .references a {
+            color: var(--purple-light);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .references li {
+            margin-bottom: 13px;
+            color: var(--text-muted);
+        }
+
+        footer {
+            padding: 30px 8%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer strong {
+            color: var(--purple-light);
+        }
+
+        .back-top {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--purple-light);
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 16px 6%;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 75px 7% 55px;
+            }
+
+            .container,
+            .quiz-container {
+                width: 88%;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .technical-table {
+                font-size: 0.85rem;
+            }
+
+            .technical-table th,
+            .technical-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo">MARI<span>TERRA</span></a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="technology.html">Technology Integration</a>
+            <a href="smart-navigation.html">Smart Navigation</a>
+            <a href="#quiz">Knowledge Test</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <div class="eyebrow">Smart Navigation & Digital Maritime Navigation / Topic 03</div>
+
+            <h1>Navigation Sensors <span>& Integrated Bridge Systems</span></h1>
+
+            <p>
+                Discover how maritime sensors measure vessel position, heading,
+                speed, depth, and movement, and how Integrated Bridge Systems
+                combine information from different onboard navigation systems
+                to support safer and more coordinated maritime operations.
+            </p>
+
+            <div class="hero-meta">
+                <span class="meta-item">TOPIC 03</span>
+                <span class="meta-item">Navigation Sensors</span>
+                <span class="meta-item">Integrated Bridge Systems</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- SECTION 01 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">01 / Foundations</div>
+                <h2 class="section-title">Understanding Maritime Navigation Sensors</h2>
+
+                <p class="section-intro">
+                    Navigation sensors are devices that measure or detect
+                    physical and geographical information related to a vessel
+                    and its surrounding environment. Their measurements help
+                    navigation systems determine where a vessel is, how it is
+                    moving, and what conditions exist around it.
+                </p>
+
+                <h3>What Is a Navigation Sensor?</h3>
+
+                <p>
+                    A navigation sensor is an instrument that collects
+                    information from the vessel or its environment and converts
+                    it into data that can be interpreted by navigators or
+                    processed by onboard electronic systems.
+                </p>
+
+                <p>
+                    Different sensors measure different physical quantities.
+                    A GNSS receiver calculates geographical position from
+                    satellite signals, while a gyrocompass measures the
+                    vessel's orientation relative to true north.
+                </p>
+
+                <p>
+                    Other instruments measure speed, depth, angular movement,
+                    and environmental conditions. These measurements can be
+                    displayed independently or distributed to other onboard
+                    equipment through suitable interfaces.
+                </p>
+
+                <h3>Why Are Navigation Sensors Important?</h3>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Position Awareness</h3>
+                        <p>
+                            Position sensors help determine the vessel's
+                            geographical location and support route monitoring.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Movement Monitoring</h3>
+                        <p>
+                            Heading, speed, and rate-of-turn information help
+                            officers understand how the vessel is moving.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Environmental Awareness</h3>
+                        <p>
+                            Depth and environmental measurements provide
+                            additional information about the surrounding
+                            maritime environment.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>System Integration</h3>
+                        <p>
+                            Sensor outputs can be shared with navigation
+                            equipment to support coordinated operations.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>Measured Data and Calculated Information</h3>
+
+                <p>
+                    An important engineering distinction is that not every
+                    navigation value displayed on a bridge is a direct
+                    measurement.
+                </p>
+
+                <ul>
+                    <li><strong>Measured data:</strong> Information obtained directly from a sensor, such as angular velocity or water depth.</li>
+                    <li><strong>Calculated data:</strong> Information derived by processing one or more measurements, such as a calculated geographical position.</li>
+                    <li><strong>Derived navigation information:</strong> Values such as course over ground or estimated movement based on available sensor data.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Key concept:</strong> A displayed value is only
+                        useful when its source, meaning, accuracy, and current
+                        validity are understood.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 02 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">02 / Position and Heading</div>
+                <h2 class="section-title">Position and Heading Sensors</h2>
+
+                <p class="section-intro">
+                    Position and heading are two fundamental categories of
+                    navigation information. They describe different aspects
+                    of a vessel's geographical location and orientation.
+                </p>
+
+                <h3>1. Global Navigation Satellite System (GNSS)</h3>
+
+                <p>
+                    GNSS is a general term for satellite navigation
+                    constellations that provide positioning, navigation,
+                    and timing services.
+                </p>
+
+                <p>
+                    Examples include GPS, Galileo, GLONASS, and BeiDou.
+                    A GNSS receiver processes signals from multiple satellites
+                    to estimate its geographical position and time.
+                </p>
+
+                <p>
+                    The receiver normally calculates position by measuring
+                    signal travel-time information and solving for its
+                    location relative to known satellite positions.
+                </p>
+
+                <h3>GNSS Applications on Ships</h3>
+
+                <ul>
+                    <li>Providing geographical position to navigation systems.</li>
+                    <li>Supporting route monitoring and voyage planning.</li>
+                    <li>Providing position information to compatible ECDIS equipment.</li>
+                    <li>Supporting AIS position reporting when connected as the relevant position source.</li>
+                    <li>Providing timing information to compatible onboard systems.</li>
+                </ul>
+
+                <h3>GNSS Limitations</h3>
+
+                <p>
+                    Satellite positioning depends on receiving usable signals.
+                    Its performance can be affected by signal obstruction,
+                    atmospheric conditions, multipath reflections, interference,
+                    jamming, and spoofing.
+                </p>
+
+                <p>
+                    For this reason, bridge teams should not assume that every
+                    displayed GNSS position is automatically correct. Independent
+                    cross-checks are important, especially in restricted waters.
+                </p>
+
+                <h3>2. Gyrocompass</h3>
+
+                <p>
+                    A gyrocompass is a navigation instrument that determines
+                    true north using gyroscopic principles and the Earth's
+                    rotation.
+                </p>
+
+                <p>
+                    It provides heading information that can be distributed
+                    to other navigation equipment, including radar, AIS,
+                    autopilot, and integrated bridge systems.
+                </p>
+
+                <p>
+                    Unlike a magnetic compass, a gyrocompass is not based on
+                    the Earth's magnetic field. However, it still requires
+                    appropriate installation, calibration, maintenance, and
+                    monitoring.
+                </p>
+
+                <h3>3. Magnetic Compass</h3>
+
+                <p>
+                    A magnetic compass uses the Earth's magnetic field to
+                    indicate magnetic north. It provides an independent
+                    heading reference and is an important part of traditional
+                    maritime navigation.
+                </p>
+
+                <p>
+                    Its readings can be affected by magnetic variation,
+                    deviation caused by magnetic influences aboard the vessel,
+                    and nearby magnetic equipment.
+                </p>
+
+                <h3>True Heading, Magnetic Heading, COG and SOG</h3>
+
+                <p>
+                    These navigation terms must not be treated as interchangeable.
+                    Each describes a different property of vessel movement
+                    or orientation.
+                </p>
+
+                <table class="technical-table">
+                    <thead>
+                        <tr>
+                            <th>Term</th>
+                            <th>Meaning</th>
+                            <th>Typical Source</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>True Heading</td>
+                            <td>The direction the vessel's bow points relative to true north.</td>
+                            <td>Gyrocompass</td>
+                        </tr>
+
+                        <tr>
+                            <td>Magnetic Heading</td>
+                            <td>The vessel's bow direction relative to magnetic north.</td>
+                            <td>Magnetic compass</td>
+                        </tr>
+
+                        <tr>
+                            <td>COG</td>
+                            <td>The actual direction of the vessel's movement over the Earth's surface.</td>
+                            <td>GNSS-derived information</td>
+                        </tr>
+
+                        <tr>
+                            <td>SOG</td>
+                            <td>The vessel's speed over the Earth's surface.</td>
+                            <td>GNSS-derived information</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Important example:</strong> A vessel can point
+                        north while moving northeast because of current or
+                        wind. Its heading and course over ground are therefore
+                        not necessarily identical.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 03 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">03 / Speed and Movement</div>
+                <h2 class="section-title">Speed, Distance and Motion Sensors</h2>
+
+                <p class="section-intro">
+                    Speed and motion sensors help the bridge team understand
+                    how fast a vessel is travelling, how far it has moved,
+                    and how its direction or orientation is changing.
+                </p>
+
+                <h3>1. Speed Log</h3>
+
+                <p>
+                    A speed log is a navigation instrument used to measure
+                    vessel speed. Different speed-log technologies use
+                    different physical principles.
+                </p>
+
+                <p>
+                    Some systems measure speed relative to the surrounding
+                    water, while others are designed to determine speed
+                    relative to the seabed.
+                </p>
+
+                <h3>Speed Through Water (STW)</h3>
+
+                <p>
+                    Speed through water describes the vessel's movement
+                    relative to the surrounding water.
+                </p>
+
+                <p>
+                    It is useful for understanding the vessel's movement
+                    through the water mass and for certain navigational
+                    and operational calculations.
+                </p>
+
+                <h3>Speed Over Ground (SOG)</h3>
+
+                <p>
+                    Speed over ground describes how fast the vessel moves
+                    relative to the Earth's surface.
+                </p>
+
+                <p>
+                    It is commonly calculated from successive GNSS position
+                    measurements.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Why can they differ?</strong> Ocean currents
+                        can cause the vessel's speed through water to differ
+                        from its speed over ground. Wind and other environmental
+                        forces can also influence the vessel's actual movement.
+                    </p>
+                </div>
+
+                <h3>2. Rate-of-Turn Indicator</h3>
+
+                <p>
+                    A Rate-of-Turn Indicator (ROT) measures how quickly a
+                    vessel is changing its heading, normally expressed in
+                    degrees per minute.
+                </p>
+
+                <p>
+                    This information helps officers assess turning behaviour
+                    and monitor manoeuvres, particularly in confined waters
+                    and during course alterations.
+                </p>
+
+                <h3>3. Inertial Measurement Unit (IMU)</h3>
+
+                <p>
+                    An Inertial Measurement Unit is an electronic sensor
+                    assembly that typically contains accelerometers and
+                    gyroscopes.
+                </p>
+
+                <p>
+                    Accelerometers measure linear acceleration, while
+                    gyroscopes measure angular velocity around one or more
+                    axes.
+                </p>
+
+                <p>
+                    IMU measurements can support motion monitoring, attitude
+                    estimation, stabilization, and navigation systems.
+                    An IMU alone does not automatically provide an accurate
+                    long-term geographical position.
+                </p>
+
+                <h3>Comparing Speed and Motion Sensors</h3>
+
+                <table class="technical-table">
+                    <thead>
+                        <tr>
+                            <th>Instrument</th>
+                            <th>Primary Measurement</th>
+                            <th>Navigation Use</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>Speed Log</td>
+                            <td>Speed through water or over ground, depending on technology.</td>
+                            <td>Speed and distance monitoring.</td>
+                        </tr>
+
+                        <tr>
+                            <td>Rate-of-Turn Indicator</td>
+                            <td>Angular turning rate.</td>
+                            <td>Monitoring course alterations.</td>
+                        </tr>
+
+                        <tr>
+                            <td>IMU</td>
+                            <td>Linear acceleration and angular velocity.</td>
+                            <td>Motion estimation and sensor integration.</td>
+                        </tr>
+
+                        <tr>
+                            <td>GNSS Receiver</td>
+                            <td>Satellite-derived position and timing.</td>
+                            <td>Position, SOG and COG calculations.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+
+        <!-- SECTION 04 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">04 / Environmental Sensors</div>
+                <h2 class="section-title">Depth and Environmental Measurement</h2>
+
+                <p class="section-intro">
+                    Environmental sensors provide additional information
+                    about the conditions surrounding a vessel. This information
+                    is important for safe navigation, operational planning,
+                    and understanding the maritime environment.
+                </p>
+
+                <h3>1. Echo Sounder</h3>
+
+                <p>
+                    An echo sounder is an instrument used to measure water
+                    depth beneath a vessel by transmitting acoustic pulses
+                    and measuring the time taken for the returning echo.
+                </p>
+
+                <p>
+                    The system normally uses a transducer installed in the
+                    hull or another suitable location. The transducer converts
+                    electrical energy into acoustic energy and receives
+                    returning acoustic signals.
+                </p>
+
+                <h3>How Echo Sounding Works</h3>
+
+                <ol>
+                    <li>The transducer generates an acoustic pulse.</li>
+                    <li>The pulse travels through the water toward the seabed.</li>
+                    <li>The seabed reflects part of the transmitted energy.</li>
+                    <li>The transducer receives the returning echo.</li>
+                    <li>The system measures the elapsed travel time.</li>
+                    <li>The instrument estimates depth using the assumed or configured speed of sound in water.</li>
+                </ol>
+
+                <p>
+                    A simplified depth calculation is:
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Depth = (Sound Velocity × Travel Time) ÷ 2</strong>
+                    </p>
+                    <p>
+                        The division by two accounts for the acoustic pulse
+                        travelling to the seabed and returning to the transducer.
+                    </p>
+                </div>
+
+                <p>
+                    The displayed depth depends on the instrument's reference
+                    setting, such as transducer location or another configured
+                    reference. Navigators must understand which reference
+                    is being used.
+                </p>
+
+                <h3>2. Anemometer</h3>
+
+                <p>
+                    An anemometer measures wind speed. Some marine systems
+                    also provide wind direction information through a
+                    combined wind sensor arrangement.
+                </p>
+
+                <p>
+                    Wind measurements help bridge teams assess environmental
+                    forces that can affect vessel handling, berthing, and
+                    manoeuvring.
+                </p>
+
+                <h3>3. Weather and Environmental Sensors</h3>
+
+                <p>
+                    Depending on vessel type and operational requirements,
+                    onboard environmental instruments may measure:
+                </p>
+
+                <ul>
+                    <li>Air temperature.</li>
+                    <li>Atmospheric pressure.</li>
+                    <li>Relative humidity.</li>
+                    <li>Wind speed and direction.</li>
+                    <li>Sea temperature.</li>
+                    <li>Other operational environmental parameters.</li>
+                </ul>
+
+                <h3>4. Water-Level and Current Information</h3>
+
+                <p>
+                    Water-level and current information may be obtained
+                    through dedicated sensors, external data services,
+                    hydrographic products, or other navigation information
+                    systems.
+                </p>
+
+                <p>
+                    These data sources can support the assessment of
+                    under-keel clearance, expected vessel movement, and
+                    local navigation conditions.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Technical limitation:</strong> An echo sounder
+                        measures depth beneath its transducer according to
+                        its configured reference. It does not independently
+                        provide a complete map of underwater terrain.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 05 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">05 / Data Communication</div>
+                <h2 class="section-title">Sensor Interfaces and Data Exchange</h2>
+
+                <p class="section-intro">
+                    Navigation equipment must exchange information in a
+                    compatible format before integrated systems can use
+                    the data. Interfaces and communication protocols make
+                    this exchange possible.
+                </p>
+
+                <h3>What Is a Maritime Data Interface?</h3>
+
+                <p>
+                    A data interface is a connection method that allows
+                    electronic devices to transmit and receive information.
+                    It defines how information is represented and exchanged
+                    between connected equipment.
+                </p>
+
+                <p>
+                    Navigation sensors may provide information to displays,
+                    computers, alarms, autopilots, and other bridge equipment.
+                    Compatible interfaces allow these systems to interpret
+                    the transmitted data.
+                </p>
+
+                <h3>IEC 61162</h3>
+
+                <p>
+                    The IEC 61162 series defines digital interfaces used
+                    by maritime navigation and radiocommunication equipment.
+                    Different parts of the series address different
+                    communication requirements.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>IEC 61162-1</h3>
+                        <p>
+                            Addresses digital communication using a single
+                            talker and multiple listeners. It is associated
+                            with serial maritime data exchange.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>IEC 61162-2</h3>
+                        <p>
+                            Addresses higher-speed serial data communication
+                            for suitable maritime applications.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>IEC 61162-450</h3>
+                        <p>
+                            Addresses digital communication over Ethernet
+                            networks for maritime navigation and
+                            radiocommunication equipment.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>IEC 61162-460</h3>
+                        <p>
+                            Adds safety and security-related requirements
+                            for suitable Ethernet-based maritime networks.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>Talkers and Listeners</h3>
+
+                <p>
+                    In a simple serial communication arrangement, a
+                    <strong>talker</strong> is a device that transmits
+                    information, while a <strong>listener</strong> receives
+                    and interprets that information.
+                </p>
+
+                <p>
+                    For example, a GNSS receiver may transmit position
+                    information to several compatible navigation systems.
+                    Each receiving device can use the information for
+                    its own functions.
+                </p>
+
+                <h3>Data Quality and Communication Problems</h3>
+
+                <p>
+                    Successful data exchange does not automatically mean
+                    that the information is accurate or suitable for use.
+                    Several technical conditions must be considered:
+                </p>
+
+                <ul>
+                    <li><strong>Compatibility:</strong> Connected equipment must support compatible interfaces and message formats.</li>
+                    <li><strong>Data integrity:</strong> Information must not be corrupted or altered during transmission.</li>
+                    <li><strong>Data latency:</strong> Information must arrive within a suitable time for its intended function.</li>
+                    <li><strong>Source identification:</strong> Systems should identify the source of information and its status.</li>
+                    <li><strong>Configuration:</strong> Incorrect input selection or interface settings can result in missing or misleading data.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Engineering principle:</strong> Data transmission
+                        and data accuracy are separate issues. A sensor can
+                        transmit information successfully even when the
+                        original measurement is wrong.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 06 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">06 / Integrated Bridge Systems</div>
+                <h2 class="section-title">Understanding Integrated Bridge Systems (IBS)</h2>
+
+                <p class="section-intro">
+                    An Integrated Bridge System connects multiple onboard
+                    systems to provide centralized access to information
+                    and, where appropriate, command and control functions
+                    from bridge workstations.
+                </p>
+
+                <h3>What Is an IBS?</h3>
+
+                <p>
+                    An <strong>Integrated Bridge System (IBS)</strong> is
+                    a combination of interconnected systems designed to
+                    improve the coordination and accessibility of onboard
+                    information and operational functions.
+                </p>
+
+                <p>
+                    Rather than requiring officers to interpret every
+                    instrument independently, an IBS can bring selected
+                    information together through integrated displays and
+                    workstations.
+                </p>
+
+                <p>
+                    The exact functions depend on the vessel's design,
+                    equipment, integration architecture, and applicable
+                    performance requirements.
+                </p>
+
+                <h3>Main Systems That May Be Integrated</h3>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>ECDIS</h3>
+                        <p>
+                            Provides electronic chart information, voyage
+                            planning, and route-monitoring functions.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Radar and ARPA</h3>
+                        <p>
+                            Support target detection, tracking, and
+                            collision-risk assessment.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>GNSS and Heading Systems</h3>
+                        <p>
+                            Supply position, heading, and related
+                            navigational information.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>AIS</h3>
+                        <p>
+                            Provides information transmitted by equipped
+                            vessels and other AIS stations.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Autopilot and Track Control</h3>
+                        <p>
+                            Support automatic heading or track control
+                            when appropriately configured and operated.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Communication Systems</h3>
+                        <p>
+                            Support communication between the bridge,
+                            other shipboard departments, and external
+                            maritime stations.
+                        </p>
+                    </div>
+                </div>
+
+                <h3>IBS Architecture</h3>
+
+                <p>
+                    An integrated bridge environment can be understood
+                    through several functional layers.
+                </p>
+
+                <div class="process-step">
+                    <strong>Layer 1 — Sensors and Data Sources</strong>
+                    GNSS receivers, gyrocompasses, speed logs, echo
+                    sounders, and other instruments collect information.
+                </div>
+
+                <div class="process-step">
+                    <strong>Layer 2 — Communication Interfaces</strong>
+                    Suitable serial and network interfaces transmit
+                    information between compatible onboard devices.
+                </div>
+
+                <div class="process-step">
+                    <strong>Layer 3 — Processing and Integration</strong>
+                    Computers and system components interpret, distribute,
+                    and coordinate information from different sources.
+                </div>
+
+                <div class="process-step">
+                    <strong>Layer 4 — Bridge Workstations</strong>
+                    Integrated displays present information and allow
+                    authorized operators to access relevant functions.
+                </div>
+
+                <div class="process-step">
+                    <strong>Layer 5 — Human Decision-Making</strong>
+                    Qualified officers interpret the information,
+                    evaluate conditions, and make operational decisions.
+                </div>
+
+                <h3>Benefits of IBS</h3>
+
+                <ul>
+                    <li>Centralized access to selected navigation information.</li>
+                    <li>Improved coordination between connected systems.</li>
+                    <li>Reduced need to switch between separate equipment interfaces.</li>
+                    <li>Better access to relevant information for bridge teams.</li>
+                    <li>Support for monitoring, alarms, and selected control functions.</li>
+                    <li>Potential improvement in operational efficiency when properly designed and used.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Important distinction:</strong> IBS does not
+                        mean that every navigation instrument becomes one
+                        device. Independent equipment may remain separate
+                        while sharing selected information through an
+                        integrated architecture.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 07 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">07 / Integrated Navigation</div>
+                <h2 class="section-title">Integrated Navigation Systems and Sensor Fusion</h2>
+
+                <p class="section-intro">
+                    Integrated Navigation Systems and sensor-fusion techniques
+                    combine information from multiple navigation sources
+                    to provide a more consistent understanding of vessel
+                    movement and surrounding conditions.
+                </p>
+
+                <h3>What Is an Integrated Navigation System?</h3>
+
+                <p>
+                    An <strong>Integrated Navigation System (INS)</strong>
+                    combines navigation functions and information from
+                    multiple sources to support a coordinated navigation
+                    environment.
+                </p>
+
+                <p>
+                    Depending on its category and capabilities, an INS may
+                    provide position, speed, heading, decision-support
+                    information, and selected automatic control functions.
+                </p>
+
+                <p>
+                    An INS and an IBS are related concepts, but they are
+                    not interchangeable terms. IBS can cover a broader
+                    integration of bridge operations, while INS focuses
+                    on integrated navigation functions.
+                </p>
+
+                <h3>What Is Sensor Fusion?</h3>
+
+                <p>
+                    Sensor fusion is the process of combining measurements
+                    or information from multiple sensors to estimate a
+                    system's state more reliably than using a single
+                    information source alone.
+                </p>
+
+                <p>
+                    For example, a navigation solution may combine GNSS
+                    position measurements with inertial measurements.
+                    This can help maintain useful motion information
+                    during short periods when satellite positioning
+                    becomes unavailable.
+                </p>
+
+                <h3>Examples of Sensor Fusion</h3>
+
+                <ul>
+                    <li><strong>GNSS + IMU:</strong> Combines satellite-derived position with inertial motion measurements.</li>
+                    <li><strong>Gyrocompass + GNSS:</strong> Allows comparison between heading and direction of movement.</li>
+                    <li><strong>Radar + AIS:</strong> Combines radar observations with transmitted target information.</li>
+                    <li><strong>GNSS + Speed Log:</strong> Allows comparison between speed over ground and speed through water.</li>
+                </ul>
+
+                <h3>Data Consistency and Integrity</h3>
+
+                <p>
+                    Integrated systems must assess whether information
+                    from different sources is consistent and suitable
+                    for its intended use.
+                </p>
+
+                <p>
+                    Sensor readings may differ because of measurement
+                    uncertainty, timing differences, installation
+                    errors, calibration problems, or different physical
+                    reference frames.
+                </p>
+
+                <p>
+                    A robust system should consider the source and
+                    integrity of information before using it for
+                    safety-related functions or automatic control.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Critical concept:</strong> Combining
+                        multiple sensors does not automatically eliminate
+                        errors. If two sensors share the same incorrect
+                        reference or are affected by a common failure,
+                        their agreement may still be misleading.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 08 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">08 / Reliability and Challenges</div>
+                <h2 class="section-title">System Reliability, Failures and Human Factors</h2>
+
+                <p class="section-intro">
+                    Integrated navigation environments must be designed
+                    and operated with attention to system availability,
+                    data integrity, fault detection, cybersecurity,
+                    and human performance.
+                </p>
+
+                <h3>1. Sensor Failure</h3>
+
+                <p>
+                    A sensor may stop providing information because of
+                    hardware damage, power interruption, internal faults,
+                    calibration problems, or environmental conditions.
+                </p>
+
+                <p>
+                    The resulting failure can affect any onboard system
+                    that depends on that sensor's information.
+                </p>
+
+                <h3>2. Incorrect or Misleading Data</h3>
+
+                <p>
+                    A sensor may continue transmitting information even
+                    when its measurements are inaccurate. This can be
+                    more difficult to identify than a complete loss
+                    of data.
+                </p>
+
+                <p>
+                    Data validation and comparison with independent
+                    sources can help detect abnormal measurements.
+                </p>
+
+                <h3>3. Communication and Network Failure</h3>
+
+                <p>
+                    Faulty cables, damaged connectors, incompatible
+                    interfaces, network congestion, configuration
+                    errors, and communication interruptions can
+                    prevent information from reaching the correct
+                    equipment.
+                </p>
+
+                <h3>4. Power Supply Problems</h3>
+
+                <p>
+                    Navigation equipment depends on suitable electrical
+                    power. Power interruptions or distribution faults
+                    can affect multiple systems, particularly when
+                    they share electrical supplies.
+                </p>
+
+                <h3>5. Common-Mode Failure</h3>
+
+                <p>
+                    Common-mode failure occurs when multiple systems
+                    are affected by the same underlying cause.
+                </p>
+
+                <p>
+                    For example, two navigation displays may appear
+                    independent but still rely on the same GNSS
+                    receiver or common power source. Losing that
+                    shared source can affect both displays.
+                </p>
+
+                <h3>6. Cybersecurity Risks</h3>
+
+                <p>
+                    Network-connected navigation systems can be exposed
+                    to unauthorized access, malicious software,
+                    compromised update media, or manipulation of
+                    information sources.
+                </p>
+
+                <p>
+                    Appropriate security measures include access
+                    control, network segmentation where suitable,
+                    approved software maintenance, monitoring,
+                    backup arrangements, and incident-response
+                    procedures.
+                </p>
+
+                <h3>7. Human Factors and Automation Dependence</h3>
+
+                <p>
+                    Integrated displays and automation can reduce
+                    routine workload, but they may also create
+                    over-reliance on system-generated information.
+                </p>
+
+                <p>
+                    Officers need to understand operating modes,
+                    alarm meanings, sensor sources, system limitations,
+                    and the conditions under which automatic functions
+                    should or should not be used.
+                </p>
+
+                <h3>Failure Detection and Operational Resilience</h3>
+
+                <p>
+                    Good system design should make failures visible
+                    to operators and prevent one subsystem failure
+                    from unnecessarily disabling unrelated equipment.
+                </p>
+
+                <p>
+                    The IMO's performance framework for IBS emphasizes
+                    fault indication and the ability to operate
+                    unaffected equipment independently when required.
+                </p>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Engineering principle:</strong> Integration
+                        should improve coordination without creating
+                        unnecessary dependence. A reliable bridge
+                        architecture must consider failure isolation,
+                        independent operation, and clear fault indications.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 09 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">09 / Practical Applications</div>
+                <h2 class="section-title">Navigation Sensors and IBS in Real Operations</h2>
+
+                <p class="section-intro">
+                    Navigation sensors and integrated systems support
+                    a wide range of vessel operations, from routine
+                    coastal navigation to complex manoeuvres in
+                    restricted waters.
+                </p>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Coastal Navigation</h3>
+                        <p>
+                            GNSS, gyrocompass, radar, and ECDIS information
+                            help bridge teams monitor vessel position,
+                            heading, and nearby hazards.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Port Approaches</h3>
+                        <p>
+                            Speed, heading, rate-of-turn, and depth
+                            information support manoeuvring in confined
+                            waters.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Open-Sea Navigation</h3>
+                        <p>
+                            Integrated navigation equipment supports
+                            voyage monitoring and provides access to
+                            relevant navigational information.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Offshore Operations</h3>
+                        <p>
+                            Navigation sensors and integrated systems
+                            support vessel movement monitoring around
+                            offshore facilities and operational zones.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="scenario">
+                    <h3>Practical Scenario: GNSS Failure During Navigation</h3>
+
+                    <p>
+                        A vessel is navigating through a coastal area
+                        when its primary GNSS receiver stops providing
+                        reliable position information.
+                    </p>
+
+                    <p>
+                        The bridge team notices the loss of position
+                        data and checks the system alarms. Officers
+                        compare available information with independent
+                        navigation sources, examine radar observations,
+                        and follow the vessel's procedures for
+                        degraded navigation.
+                    </p>
+
+                    <p>
+                        The team also verifies whether other systems
+                        are receiving information from the same
+                        failed source.
+                    </p>
+
+                    <p>
+                        <strong>Learning point:</strong> The ability
+                        to identify the failed source and understand
+                        which systems depend on it is essential for
+                        safe integrated navigation.
+                    </p>
+                </div>
+
+                <div class="scenario">
+                    <h3>Practical Scenario: Conflicting Speed Information</h3>
+
+                    <p>
+                        During a voyage, the speed log indicates a
+                        different speed from the GNSS-derived SOG.
+                        The bridge team must determine whether the
+                        difference is caused by current, measurement
+                        error, configuration, or another operational
+                        factor.
+                    </p>
+
+                    <p>
+                        <strong>Learning point:</strong> Different
+                        sensors can report different values without
+                        either instrument necessarily being defective.
+                        The reference and physical quantity being
+                        measured must be understood first.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">10 / Future Developments</div>
+                <h2 class="section-title">The Future of Integrated Maritime Navigation</h2>
+
+                <p class="section-intro">
+                    Advances in sensor technology, digital communication,
+                    data processing, and automation are creating new
+                    opportunities for more capable maritime navigation
+                    environments.
+                </p>
+
+                <h3>1. Advanced Sensor Fusion</h3>
+
+                <p>
+                    Future navigation systems can use more sophisticated
+                    methods to combine GNSS, inertial measurements,
+                    radar observations, and other available information.
+                </p>
+
+                <h3>2. Improved Integrity Monitoring</h3>
+
+                <p>
+                    Advanced monitoring methods can help identify
+                    inconsistent information, abnormal sensor behaviour,
+                    and potential failures before they affect critical
+                    navigation functions.
+                </p>
+
+                <h3>3. Digital Bridge Architecture</h3>
+
+                <p>
+                    Network-based equipment and standardized data
+                    exchange can support more flexible integration
+                    between navigation systems and bridge workstations.
+                </p>
+
+                <h3>4. Intelligent Decision Support</h3>
+
+                <p>
+                    Artificial intelligence and advanced analytics
+                    may help interpret large volumes of sensor data,
+                    identify unusual patterns, and support navigational
+                    risk assessment.
+                </p>
+
+                <h3>5. Autonomous and Remotely Operated Vessels</h3>
+
+                <p>
+                    Advanced sensor integration is important for
+                    autonomous and remotely operated vessels, where
+                    navigation systems may need to interpret
+                    environmental information and support automated
+                    decision-making.
+                </p>
+
+                <p>
+                    Such systems require careful validation,
+                    cybersecurity protection, dependable sensing,
+                    and clearly defined human oversight and
+                    operational responsibilities.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section class="content-section">
+            <div class="container">
+
+                <div class="section-label">11 / Knowledge Summary</div>
+                <h2 class="section-title">Key Concepts to Remember</h2>
+
+                <ul>
+                    <li>Navigation sensors collect information about vessel position, heading, speed, depth, and movement.</li>
+                    <li>GNSS provides satellite-derived positioning and timing information.</li>
+                    <li>Gyrocompasses provide true-heading information, while magnetic compasses use the Earth's magnetic field.</li>
+                    <li>Heading describes vessel orientation, while COG describes direction of movement over ground.</li>
+                    <li>Speed through water and speed over ground use different reference frames.</li>
+                    <li>Echo sounders estimate depth using acoustic pulse travel time.</li>
+                    <li>IMUs measure acceleration and angular velocity.</li>
+                    <li>IEC 61162 standards address digital data interfaces used by maritime equipment.</li>
+                    <li>IBS connects multiple systems to provide coordinated access to information and functions.</li>
+                    <li>INS focuses on integrated navigation functions and information.</li>
+                    <li>Sensor fusion combines information from different sources, but does not automatically remove all errors.</li>
+                    <li>System reliability requires fault detection, data integrity, independent operation, and human oversight.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>Final concept:</strong> Reliable maritime
+                        navigation depends not only on having advanced
+                        sensors, but also on understanding what they
+                        measure, how their data is exchanged, and
+                        how integrated systems respond when information
+                        becomes unavailable or unreliable.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- REFERENCES -->
+        <section class="references">
+            <div class="container">
+
+                <div class="section-label">Further Reading</div>
+                <h2 class="section-title">Technical References</h2>
+
+                <p class="section-intro">
+                    These international organizations and technical
+                    publications provide additional information about
+                    maritime navigation equipment, integrated bridge
+                    systems, and digital data interfaces.
+                </p>
+
+                <ul>
+                    <li>
+                        <a href="https://www.imo.org/en/ourwork/safety/pages/integratedbridgesystems.aspx"
+                           target="_blank" rel="noopener noreferrer">
+                            International Maritime Organization — Integrated Bridge Systems
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://wwwcdn.imo.org/localresources/en/KnowledgeCentre/IndexofIMOResolutions/MSCResolutions/MSC.64%2867%29.pdf"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO Resolution MSC.64(67) — Performance Standards
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.imorules.com/GUID-4F4A5435-5139-4451-A8BE-F5A6EDE6A9AA.html"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO Integrated Navigation System Performance Standards
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.mardep.gov.hk/filemanager/en/share/msnote/pdf/msin1275anx1.pdf"
+                           target="_blank" rel="noopener noreferrer">
+                            IMO MSC/Circ.1061 — Guidance for the Operational Use of Integrated Bridge Systems
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.iec.ch/"
+                           target="_blank" rel="noopener noreferrer">
+                            International Electrotechnical Commission (IEC)
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://knowledge.bsigroup.com/products/maritime-navigation-and-radiocommunication-equipment-and-systems-digital-interfaces-single-talker-and-multiple-listeners-6"
+                           target="_blank" rel="noopener noreferrer">
+                            IEC 61162-1:2024 — Maritime Digital Interfaces
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.gps.gov/"
+                           target="_blank" rel="noopener noreferrer">
+                            GPS.gov — Global Positioning System
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section class="quiz-section" id="quiz">
+
+            <div class="quiz-container">
+
+                <div class="quiz-header">
+                    <div class="section-label">Knowledge Assessment</div>
+                    <h2 class="section-title">Test Your Understanding</h2>
+
+                    <p>
+                        Answer all 10 questions to evaluate your understanding
+                        of navigation sensors, data interfaces, integrated
+                        bridge systems, and sensor reliability.
+                    </p>
+
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <form id="quizForm">
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 01 / 10</div>
+                        <h3>What is the primary function of a navigation sensor?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="0">
+                            To control every shipboard system automatically.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="1">
+                            To measure or detect information related to the vessel or its environment.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="2">
+                            To replace the navigation officer.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q1" value="3">
+                            To generate electronic charts.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Navigation sensors collect
+                            measurements and information about vessel
+                            position, movement, and environmental conditions.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 02 / 10</div>
+                        <h3>Which instrument normally provides true-heading information?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="0">
+                            Echo sounder
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="1">
+                            Gyrocompass
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="2">
+                            Speed log
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q2" value="3">
+                            Anemometer
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: A gyrocompass provides
+                            heading information referenced to true north.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 03 / 10</div>
+                        <h3>What does Course Over Ground (COG) describe?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="0">
+                            The direction the bow is pointing.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="1">
+                            The direction of vessel movement over the Earth's surface.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="2">
+                            The depth beneath the vessel.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q3" value="3">
+                            The vessel's turning rate.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: COG describes the actual direction
+                            of vessel movement over the Earth's surface.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 04 / 10</div>
+                        <h3>Why can Speed Through Water differ from Speed Over Ground?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="0">
+                            Because the two values always use different units.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="1">
+                            Because currents can affect movement relative to the seabed.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="2">
+                            Because an echo sounder measures vessel speed.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q4" value="3">
+                            Because the gyrocompass changes the speed.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Currents can make the vessel's
+                            movement over ground differ from its movement
+                            through the surrounding water.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 05 / 10</div>
+                        <h3>What physical principle does an echo sounder use to estimate depth?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="0">
+                            Satellite signal positioning.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="1">
+                            Magnetic field measurement.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="2">
+                            Acoustic pulse travel time.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q5" value="3">
+                            Atmospheric pressure measurement.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: An echo sounder estimates depth
+                            by measuring the travel time of an acoustic
+                            pulse travelling to the seabed and back.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 06 / 10</div>
+                        <h3>What does an IMU typically measure?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="0">
+                            Acceleration and angular velocity.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="1">
+                            Water depth and salinity only.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="2">
+                            Satellite identities.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q6" value="3">
+                            Chart update information.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: An IMU typically combines
+                            accelerometers and gyroscopes to measure
+                            linear acceleration and angular velocity.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 07 / 10</div>
+                        <h3>What is the main purpose of maritime data interfaces?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="0">
+                            To increase the physical speed of the vessel.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="1">
+                            To allow compatible equipment to exchange information.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="2">
+                            To replace all navigation sensors.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q7" value="3">
+                            To eliminate the need for system maintenance.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Data interfaces provide
+                            standardized methods for transmitting
+                            information between compatible maritime devices.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 08 / 10</div>
+                        <h3>What is an Integrated Bridge System (IBS)?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="0">
+                            A single sensor that measures vessel position.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="1">
+                            A combination of interconnected systems providing centralized access to information or control functions.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="2">
+                            A paper navigation chart.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q8" value="3">
+                            A satellite communication antenna only.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: IBS connects different systems
+                            to provide coordinated access to sensor
+                            information and selected operational functions.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 09 / 10</div>
+                        <h3>What is sensor fusion?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="0">
+                            Removing all sensors from the bridge.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="1">
+                            Combining information from multiple sensors to improve system-state estimation.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="2">
+                            Converting all sensor measurements into chart images.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q9" value="3">
+                            Using only one sensor for every navigation function.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Sensor fusion combines information
+                            from multiple sources to support a more complete
+                            and reliable estimate of vessel state.
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-number">QUESTION 10 / 10</div>
+                        <h3>Why is failure isolation important in an integrated bridge environment?</h3>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="0">
+                            It ensures that every system always uses the same sensor.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="1">
+                            It helps prevent one subsystem failure from unnecessarily disabling unrelated equipment.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="2">
+                            It eliminates the need for alarms.
+                        </label>
+
+                        <label class="option">
+                            <input type="radio" name="q10" value="3">
+                            It prevents officers from accessing independent equipment.
+                        </label>
+
+                        <div class="explanation">
+                            Correct answer: Failure isolation helps preserve
+                            the functionality of unaffected equipment and
+                            supports operational resilience.
+                        </div>
+                    </div>
+
+                    <button type="button" class="quiz-button" id="submitQuiz">
+                        Submit Answers
+                    </button>
+
+                    <button type="button" class="quiz-button secondary" id="resetQuiz">
+                        Reset Quiz
+                    </button>
+
+                </form>
+
+                <div class="quiz-result" id="quizResult" aria-live="polite">
+                    <h3 id="resultTitle">Your Result</h3>
+                    <p id="resultScore"></p>
+                    <p id="resultMessage"></p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>
+            MARITERRA — Maritime Technology & Digital Navigation
+        </p>
+
+        <p>
+            Educational project developed by
+            <strong>Engineer Zeinab Mohamed</strong>
+        </p>
+
+        <a href="#" class="back-top">Back to Top ↑</a>
+    </footer>
+
+    <script>
+        const correctAnswers = [1, 1, 1, 1, 2, 0, 1, 1, 1, 1];
+
+        const quizForm = document.getElementById("quizForm");
+        const submitButton = document.getElementById("submitQuiz");
+        const resetButton = document.getElementById("resetQuiz");
+        const progressBar = document.getElementById("progressBar");
+
+        const resultBox = document.getElementById("quizResult");
+        const resultTitle = document.getElementById("resultTitle");
+        const resultScore = document.getElementById("resultScore");
+        const resultMessage = document.getElementById("resultMessage");
+
+        function updateProgress() {
+            let answered = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) {
+                    answered++;
+                }
+            }
+
+            progressBar.style.width = `${answered * 10}%`;
+        }
+
+        quizForm.addEventListener("change", updateProgress);
+
+        submitButton.addEventListener("click", function () {
+            let score = 0;
+            let unanswered = [];
+
+            for (let i = 1; i <= 10; i++) {
+                const selected = document.querySelector(
+                    `input[name="q${i}"]:checked`
+                );
+
+                if (!selected) {
+                    unanswered.push(i);
+                }
+            }
+
+            if (unanswered.length > 0) {
+                alert(
+                    "Please answer all questions before submitting.\n" +
+                    "Unanswered questions: " + unanswered.join(", ")
+                );
+
+                const firstUnanswered = document.querySelectorAll(".question-card")[
+                    unanswered[0] - 1
+                ];
+
+                firstUnanswered.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+                return;
+            }
+
+            document.querySelectorAll(".question-card").forEach((card, index) => {
+                const questionNumber = index + 1;
+
+                const selected = document.querySelector(
+                    `input[name="q${questionNumber}"]:checked`
+                );
+
+                const options = card.querySelectorAll(".option");
+                const explanation = card.querySelector(".explanation");
+
+                options.forEach((option, optionIndex) => {
+                    option.classList.remove("correct", "wrong");
+
+                    if (optionIndex === correctAnswers[index]) {
+                        option.classList.add("correct");
+                    }
+                });
+
+                if (Number(selected.value) === correctAnswers[index]) {
+                    score++;
+                } else {
+                    selected.closest(".option").classList.add("wrong");
+                }
+
+                explanation.classList.add("show");
+            });
+
+            resultTitle.textContent =
+                score >= 8 ? "Excellent Performance!" :
+                score >= 6 ? "Good Work!" :
+                "Keep Learning!";
+
+            resultScore.textContent = `Your score: ${score} / 10`;
+
+            if (score >= 8) {
+                resultMessage.textContent =
+                    "You have a strong understanding of navigation sensors and integrated bridge systems. Review the explanations to strengthen your technical knowledge.";
+            } else if (score >= 6) {
+                resultMessage.textContent =
+                    "You understand several important concepts. Review the sections related to your incorrect answers and try again.";
+            } else {
+                resultMessage.textContent =
+                    "Review the learning material carefully, especially sensor functions, data interfaces, and integrated system reliability.";
+            }
+
+            resultBox.style.display = "block";
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            submitButton.disabled = true;
+            submitButton.style.opacity = "0.5";
+        });
+
+        resetButton.addEventListener("click", function () {
+            quizForm.reset();
+
+            document.querySelectorAll(".option").forEach(option => {
+                option.classList.remove("correct", "wrong");
+            });
+
+            document.querySelectorAll(".explanation").forEach(explanation => {
+                explanation.classList.remove("show");
+            });
+
+            resultBox.style.display = "none";
+            progressBar.style.width = "0%";
+
+            submitButton.disabled = false;
+            submitButton.style.opacity = "1";
+
+            document.getElementById("quiz").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+</body>
+</html>
